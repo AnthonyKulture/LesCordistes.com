@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="250" height="60" viewBox="0 0 250 60">
+    <rect width="250" height="60" rx="8" fill="#0f172a"/>
+    <rect width="60" height="60" rx="8" fill="#1d4ed8"/>
+    <!-- Checkmark Icon -->
+    <path d="M22 30l5 5 11-11" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Text -->
+    <text x="75" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" letter-spacing="0.5" fill="#94a3b8">ARTISAN VÉRIFIÉ</text>
+    <text x="75" y="42" font-family="Arial, sans-serif" font-size="15" font-weight="900" fill="#ffffff">LesCordistes.com</text>
+    <!-- Stars -->
+    <g transform="translate(185, 12)">
+        <polygon points="5,0 6.5,3.5 10,3.5 7,6 8,9.5 5,7.5 2,9.5 3,6 0,3.5 3.5,3.5" fill="#f59e0b"/>
+        <polygon points="17,0 18.5,3.5 22,3.5 19,6 20,9.5 17,7.5 14,9.5 15,6 12,3.5 15.5,3.5" fill="#f59e0b"/>
+        <polygon points="29,0 30.5,3.5 34,3.5 31,6 32,9.5 29,7.5 26,9.5 27,6 24,3.5 27.5,3.5" fill="#f59e0b"/>
+        <polygon points="41,0 42.5,3.5 46,3.5 43,6 44,9.5 41,7.5 38,9.5 39,6 36,3.5 39.5,3.5" fill="#f59e0b"/>
+        <polygon points="53,0 54.5,3.5 58,3.5 55,6 56,9.5 53,7.5 50,9.5 51,6 48,3.5 51.5,3.5" fill="#f59e0b"/>
+    </g>
+</svg>
