@@ -92,7 +92,7 @@ serve(async (req) => {
     }
 
     if (emailComponent) {
-      emailHtml = render(emailComponent);
+      emailHtml = await render(emailComponent);
     }
 
     const { data: resendData, error } = await resend.emails.send({

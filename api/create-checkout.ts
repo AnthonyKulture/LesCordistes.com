@@ -39,6 +39,7 @@ export default async function handler(req: any, res: any) {
             metadata: {
                 userId: userId,
                 creditsAmount: amount.toString(),
+                packId: packId,
             },
             client_reference_id: userId,
         });

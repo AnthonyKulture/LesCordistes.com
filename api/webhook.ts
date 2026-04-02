@@ -2,6 +2,12 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import { buffer } from 'micro';
 
+const PACK_LABELS: Record<string, string> = {
+    pack_starter: 'Starter',
+    pack_pro: 'Pro',
+    pack_business: 'Business',
+};
+
 // Disable body parsing by Vercel to allow raw body for Stripe signature validation
 export const config = {
     api: {
@@ -102,6 +108,37 @@ export default async function handler(req: any, res: any) {
                     }
                     
                     console.log(`✅ Succès : ${amount} crédits ajoutés à l'utilisateur ${userId}`);
+
+                    const packId = session.metadata?.packId ?? '';
+                    const packName = PACK_LABELS[packId] ?? `${amount} crédits`;
+                    const amountPaid = session.amount_total
+                        ? `${(session.amount_total / 100).toFixed(2)} €`
+                        : '';
+
+                    const { data: profile } = await supabase
+                        .from('profiles')
+                        .select('email, full_name')
+                        .eq('id', userId)
+                        .maybeSingle();
+
+                    if (profile?.email) {
+                        const { error: emailErr } = await supabase.functions.invoke('send-email', {
+                            body: {
+                                to: profile.email,
+                                subject: `🧾 Confirmation d'achat — Pack ${packName}`,
+                                templateId: 'payment-receipt',
+                                data: {
+                                    name: profile.full_name || 'Pro',
+                                    packName,
+                                    amount: amountPaid,
+                                    creditsAdded: amount,
+                                    date: new Date().toLocaleDateString('fr-FR'),
+                                    transactionId: session.id,
+                                },
+                            },
+                        });
+                        if (emailErr) console.error('❌ Erreur envoi email reçu:', emailErr);
+                    }
                 } else {
                     console.log(`ℹ️ Session ${session.id} déjà traitée.`);
                 }

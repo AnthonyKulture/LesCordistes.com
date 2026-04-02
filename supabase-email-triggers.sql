@@ -22,15 +22,16 @@ DECLARE
     v_url TEXT;
     v_anon_key TEXT;
 BEGIN
-    -- URL fixe de votre projet Supabase pour appeler l'Edge Function
     v_url := 'https://esvnvxkbnhvxpnlhyjsw.supabase.co/functions/v1/send-email';
-    
-    -- Appel asynchrone via pg_net
+    -- Clé anon publique (déjà exposée dans le bundle frontend — pas sensible)
+    v_anon_key := 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzdm52eGtibmh2eHBubGh5anN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMDQ3MjEsImV4cCI6MjA4ODg4MDcyMX0.8P53xQ3pnGud3-TuZQ-5Pnpv-29PW_pfkAvJuCfDOKs';
+
     PERFORM net.http_post(
         url := v_url,
         headers := jsonb_build_object(
             'Content-Type', 'application/json',
-            'Authorization', (SELECT current_setting('request.headers')::jsonb->>'authorization')
+            'Authorization', 'Bearer ' || v_anon_key,
+            'apikey', v_anon_key
         ),
         body := jsonb_build_object(
             'to', p_to,
