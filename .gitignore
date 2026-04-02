@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+ 
+# BMad Agent Output
+_bmad/
+_bmad-output/
+.agent/
+.gemini/
