@@ -11,7 +11,7 @@ export function DashboardSelector() {
     if (loading) return null;
 
     if (!profile) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/connexion" replace />;
     }
 
     // Admins see a specific dashboard (or we could let them use the pro one)

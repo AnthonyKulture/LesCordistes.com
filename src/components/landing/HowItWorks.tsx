@@ -26,10 +26,10 @@ export const HowItWorks: React.FC = () => {
                                 />
                             </div>
                             
-                            <div className="relative z-10 flex p-1.5 bg-white/90 backdrop-blur-sm rounded-full">
+                            <div className="relative z-10 flex p-1.5 bg-white/90 backdrop-blur-sm rounded-full w-full max-w-lg mx-auto overflow-hidden">
                                 <button 
                                     onClick={() => setHowItWorksTab('client')}
-                                    className={`px-8 py-3 rounded-full text-sm font-black uppercase tracking-wider transition-all duration-300 ${
+                                    className={`flex-1 px-4 sm:px-8 py-3 rounded-full text-[11px] sm:text-sm font-black uppercase tracking-wider transition-all duration-300 ${
                                         howItWorksTab === 'client' 
                                         ? 'bg-brand-blue text-white shadow-lg' 
                                         : 'text-slate-500 hover:text-brand-blue'
@@ -38,11 +38,9 @@ export const HowItWorks: React.FC = () => {
                                     Je cherche un cordiste
                                 </button>
                                 
-                                <div className="w-1.5" />
-
                                 <button 
                                     onClick={() => setHowItWorksTab('pro')}
-                                    className={`px-8 py-3 rounded-full text-sm font-black uppercase tracking-wider transition-all duration-300 ${
+                                    className={`flex-1 px-4 sm:px-8 py-3 rounded-full text-[11px] sm:text-sm font-black uppercase tracking-wider transition-all duration-300 ${
                                         howItWorksTab === 'pro' 
                                         ? 'bg-orange-500 text-white shadow-lg' 
                                         : 'text-slate-500 hover:text-orange-600'
@@ -156,7 +154,7 @@ export const HowItWorks: React.FC = () => {
                             </div>
 
                             <div className="relative pt-20 border-t border-dashed border-slate-200">
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-8 py-2.5 rounded-full border border-slate-200 text-orange-600 font-black text-xs uppercase tracking-[0.2em] shadow-sm">
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-6 py-2.5 rounded-full border border-slate-200 text-orange-600 font-black text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] shadow-sm text-center leading-tight whitespace-nowrap xs:whitespace-normal">
                                     Service Renfort entre Pros
                                 </div>
                                 

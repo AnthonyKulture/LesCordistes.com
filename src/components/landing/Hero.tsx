@@ -15,19 +15,19 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
             <div className="container relative z-10 w-full">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
                     <div className="w-full lg:w-1/2 animate-slide-up">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-brand-blue-light font-semibold text-sm mb-6 border border-blue-100/50 shadow-sm">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-brand-blue-light font-semibold text-sm mb-4 sm:mb-6 border border-blue-100/50 shadow-sm">
                             <span className="flex h-2 w-2 rounded-full bg-brand-blue-light animate-pulse"></span>
                             Plateforme N°1 en France
                         </div>
 
-                        <h1 className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-slate-900 mb-6 leading-[1.1] tracking-tight">
+                        <h1 className="text-4xl sm:text-5xl lg:text-[4rem] font-extrabold text-slate-900 mb-4 sm:mb-6 leading-[1.1] tracking-tight">
                             Trouvez des <span className="text-brand-blue-light">cordistes professionnels</span> pour vos travaux en hauteur
                         </h1>
-                        <p className="text-xl sm:text-2xl text-slate-600 mb-10 leading-relaxed max-w-2xl font-medium">
+                        <p className="text-lg sm:text-2xl text-slate-600 mb-6 sm:mb-10 leading-relaxed max-w-2xl font-medium">
                             La plateforme experte de mise en relation entre entreprises, particuliers et techniciens en travaux acrobatiques. Obtenez vos devis rapidement.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-5">
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-5">
                             {user ? (
                                 <Link to="/dashboard" className="w-full sm:w-auto">
                                     <Button variant="primary" className="w-full sm:w-auto text-lg px-8 py-4 shadow-xl shadow-brand-blue/20 hover:shadow-brand-blue/30 transition-all rounded-full flex items-center justify-center">

@@ -22,7 +22,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     }
 
     if (!user) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/connexion" replace />;
     }
 
     if (requireAdmin && profile?.role !== 'admin') {

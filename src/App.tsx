@@ -20,6 +20,8 @@ import { PostJob } from './pages/PostJob';
 import { JobSuccess } from './pages/JobSuccess';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { RegisterPro } from './pages/RegisterPro';
+import { RegisterClient } from './pages/RegisterClient';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ResetPassword } from './pages/ResetPassword';
 import { Profile } from './pages/Profile';
@@ -126,6 +128,11 @@ function App() {
 
                         <Route path="/post-job" element={<PostJob />} />
                         <Route path="/job-success" element={<JobSuccess />} />
+                        <Route path="/connexion" element={<Login />} />
+                        <Route path="/inscription" element={<Register />} />
+                        <Route path="/inscription-cordiste" element={<RegisterPro />} />
+                        <Route path="/inscription-client" element={<RegisterClient />} />
+                        {/* Redirections automatiques pour garder les anciens liens actifs */}
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/forgot-password" element={<ForgotPassword />} />

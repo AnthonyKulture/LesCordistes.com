@@ -148,7 +148,7 @@ export const Header: React.FC = () => {
                         {!user ? (
                             <div className="flex items-center gap-4 border-r border-slate-100 pr-4 mr-2">
                                 <Link 
-                                    to="/login" 
+                                    to="/connexion" 
                                     className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-brand-blue transition-all px-3 py-2 rounded-xl hover:bg-slate-50 border-1 border-transparent hover:border-slate-100"
                                 >
                                     <User size={18} className="text-slate-400 group-hover:text-brand-blue" />
@@ -269,7 +269,7 @@ export const Header: React.FC = () => {
 
                     {/* Mobile menu button */}
                     <div className="flex md:hidden items-center gap-4">
-                        <NotificationBell />
+                        {user && <NotificationBell />}
                         <button
                             className="p-2 text-slate-600 hover:bg-slate-50 rounded-xl transition-colors"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}

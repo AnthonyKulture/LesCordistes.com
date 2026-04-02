@@ -3,6 +3,7 @@ import { User, CheckCircle, ArrowRight, Mail, Phone, UserCircle, ChevronLeft, Sh
 import { Link } from 'react-router-dom';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
+import { GoogleSignInButton } from '../GoogleSignInButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { useToast } from '../ui/Toast';
@@ -339,6 +340,27 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
             </div>
 
             <form onSubmit={handleAuthAndSubmit} className="space-y-6">
+                
+                <div className="mb-2">
+                    <GoogleSignInButton 
+                        mode={isLogin ? 'signin' : 'signup'} 
+                        redirectTo={`${window.location.origin}/post-job`} 
+                        onBeforeClick={() => {
+                            if (!data.consent_sharing) {
+                                toast.error('Veuillez accepter la transmission de vos coordonnées avant de continuer avec Google.');
+                                return false;
+                            }
+                            return true;
+                        }}
+                    />
+                </div>
+
+                <div className="flex items-center gap-4 my-6">
+                    <div className="flex-1 h-px bg-slate-200"></div>
+                    <span className="text-sm font-semibold text-slate-400 uppercase tracking-wider">ou par email</span>
+                    <div className="flex-1 h-px bg-slate-200"></div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <AnimatePresence mode="popLayout">
                         {!isLogin && (

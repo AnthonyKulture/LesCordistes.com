@@ -15,10 +15,10 @@ export const SEOContent: React.FC = () => {
                         />
                     </div>
                     <div className="order-1 md:order-2">
-                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
                             Cordistes et travaux acrobatiques : <span className="text-brand-blue-light">Tout ce que vous devez savoir</span>
                         </h2>
-                        <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                        <p className="text-xl text-slate-600 mb-8 leading-relaxed">
                             Un cordiste est un technicien spécialisé dans les interventions en <strong>milieu périlleux</strong>. Grâce aux techniques d'alpinisme, ces professionnels atteignent les zones inaccessibles.
                         </p>
                         <ul className="space-y-4 mb-6">
@@ -29,11 +29,11 @@ export const SEOContent: React.FC = () => {
                             ].map((item, idx) => (
                                 <li key={idx} className="flex items-start gap-3">
                                     <CheckCircle className="text-brand-blue-light mt-1 flex-shrink-0" size={20} />
-                                    <span className="text-slate-700 text-sm"><strong>{item.title} :</strong> {item.desc}</span>
+                                    <span className="text-slate-700 text-base md:text-lg"><strong>{item.title} :</strong> {item.desc}</span>
                                 </li>
                             ))}
                         </ul>
-                        <p className="text-lg font-medium text-slate-900 border-l-4 border-brand-blue pl-4 py-1">
+                        <p className="text-xl font-medium text-slate-900 border-l-4 border-brand-blue pl-6 py-2 bg-white rounded-r-xl shadow-sm">
                             Choisir un cordiste, c'est opter pour l'efficacité technique là où les machines s'arrêtent.
                         </p>
                     </div>

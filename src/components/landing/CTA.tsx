@@ -39,7 +39,7 @@ export const CTA: React.FC<CTAProps> = ({ user }) => {
                                     Publier un projet gratuitement
                                 </Button>
                             </Link>
-                            <Link to="/register" className="w-full sm:w-auto">
+                            <Link to="/inscription-cordiste" className="w-full sm:w-auto">
                                 <Button variant="outline" className="w-full text-lg py-4 px-8 border-2 border-white text-white hover:bg-white hover:text-slate-900 transition-all shadow-2xl">
                                     S'inscrire comme Pro
                                 </Button>
