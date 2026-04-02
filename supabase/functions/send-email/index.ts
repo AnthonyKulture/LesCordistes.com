@@ -1,6 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { Resend } from 'npm:resend@3.2.0';
-import { render } from 'npm:@react-email/render@1.0.3';
+import { render } from 'npm:@react-email/render@0.0.17';
 import * as React from 'npm:react@19.2.0';
 
 // Import templates
