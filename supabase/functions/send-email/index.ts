@@ -1,7 +1,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { Resend } from 'npm:resend@3.2.0';
 import { render } from 'npm:@react-email/render@0.0.17';
-import * as React from 'npm:react@19.2.0';
+import * as React from 'npm:react@18.3.1';
 
 // Import templates
 import { WelcomeClientEmail } from '../_shared/templates/WelcomeClientEmail.tsx';
@@ -92,7 +92,7 @@ serve(async (req) => {
     }
 
     if (emailComponent) {
-      emailHtml = await render(emailComponent);
+      emailHtml = render(emailComponent);
     }
 
     const { data: resendData, error } = await resend.emails.send({
