@@ -51,6 +51,8 @@ export const PostJob: React.FC = () => {
     // Load draft on mount
     useEffect(() => {
         const draft = loadJobDraft();
+        const savedStep = localStorage.getItem('lescordistes_postjob_step');
+        
         if (draft) {
             setFormData(draft);
         }
@@ -64,16 +66,22 @@ export const PostJob: React.FC = () => {
             if (draft?.type && draft.type !== typeParam) {
                 // If switching type, better to reset to step 1
                 setCurrentStep(1);
+            } else if (draft && savedStep) {
+                // Correct type, restore step
+                const step = parseInt(savedStep, 10);
+                const max = typeParam === 'renfort_pro' ? 7 : 5;
+                if (step > 1 && step <= max) setCurrentStep(step);
             }
         } else if (!draft?.type) {
             // No param and no draft type? Default to standard
             updateFormData({ type: 'standard' });
         } else if (draft.type === 'renfort_pro' && !window.location.search.includes('type=renfort_pro')) {
-            // We have a renfort draft but we are at the standard URL?
-            // This is ambiguous, but usually /post-job means standard.
-            // Let's force standard to avoid confusion, or keep it if it's what they were last doing.
-            // USER feedback says they are seeing tech steps in standard form, so let's force standard if no param.
             updateFormData({ type: 'standard' });
+        } else if (draft && savedStep) {
+            // Restore step if we have a draft and no conflicting param
+            const step = parseInt(savedStep, 10);
+            const max = draft.type === 'renfort_pro' ? 7 : 5;
+            if (step > 1 && step <= max) setCurrentStep(step);
         }
 
         // Handle return from email confirmation
@@ -83,9 +91,10 @@ export const PostJob: React.FC = () => {
         }
     }, []);
 
-    // Scroll to top on step change
+    // Scroll to top and save step on step change
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        localStorage.setItem('lescordistes_postjob_step', currentStep.toString());
     }, [currentStep]);
 
     // Save draft on change

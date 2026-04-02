@@ -331,13 +331,30 @@ const JobRow: React.FC<JobRowProps> = ({ job, onApprove, onReject, onViewLeads, 
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
-                        <FileText size={12} /> Description
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-100 italic">
-                        "{job.description}"
-                    </p>
+                <div className="space-y-4">
+                    <div>
+                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                            <FileText size={12} /> Description
+                        </h4>
+                        <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-100 italic">
+                            "{job.description}"
+                        </p>
+                    </div>
+
+                    {job.photos_url && job.photos_url.length > 0 && (
+                        <div>
+                            <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                                Photos ({job.photos_url.length})
+                            </h4>
+                            <div className="flex gap-2 overflow-x-auto pb-2">
+                                {job.photos_url.map((url, idx) => (
+                                    <a key={idx} href={url} target="_blank" rel="noopener noreferrer" className="shrink-0 hover:opacity-80 transition-opacity">
+                                        <img src={url} alt={`Photo ${idx+1}`} className="h-16 w-16 object-cover rounded-lg border border-slate-200 shadow-sm" />
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {job.type === 'renfort_pro' && (

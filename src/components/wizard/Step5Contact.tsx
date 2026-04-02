@@ -184,6 +184,20 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         );
     }
 
+    const handleLoggedInSubmit = () => {
+        if (!validate()) {
+            toast.error('Veuillez remplir les champs manquants (ex: téléphone) de votre profil.');
+            return;
+        }
+        
+        if (!data.consent_sharing) {
+            toast.error('Veuillez accepter la transmission de vos coordonnées');
+            return;
+        }
+
+        onSubmit(false, user!.id);
+    };
+
     // ─── Logged-in user: simplified confirmation ───
     if (user) {
         return (
@@ -206,30 +220,71 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-1">
-                        <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                            <UserCircle size={14} /> Nom
+                    {profile?.full_name ? (
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-1">
+                            <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                                <UserCircle size={14} /> Nom
+                            </div>
+                            <span className="text-slate-900 font-semibold truncate">
+                                {data.contact_name || profile.full_name}
+                            </span>
                         </div>
-                        <span className="text-slate-900 font-semibold truncate">
-                            {data.contact_name || profile?.full_name || '—'}
-                        </span>
-                    </div>
-                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-1">
-                        <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                            <Mail size={14} /> Email
+                    ) : (
+                        <div className="col-span-1">
+                            <Input
+                                label="Nom Complet *"
+                                type="text"
+                                placeholder="Jean Dupont"
+                                value={data.contact_name || ''}
+                                onChange={(e) => updateData({ contact_name: e.target.value })}
+                                error={errors.contact_name}
+                            />
                         </div>
-                        <span className="text-slate-900 font-semibold truncate">
-                            {data.contact_email || user.email || '—'}
-                        </span>
-                    </div>
-                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-1">
-                        <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                            <Phone size={14} /> Téléphone
+                    )}
+
+                    {profile?.email || user.email ? (
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-1">
+                            <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                                <Mail size={14} /> Email
+                            </div>
+                            <span className="text-slate-900 font-semibold truncate">
+                                {data.contact_email || profile?.email || user.email}
+                            </span>
                         </div>
-                        <span className="text-slate-900 font-semibold truncate">
-                            {data.contact_phone || profile?.phone || '—'}
-                        </span>
-                    </div>
+                    ) : (
+                        <div className="col-span-1">
+                            <Input
+                                label="Adresse Email *"
+                                type="email"
+                                placeholder="votre@email.com"
+                                value={data.contact_email || ''}
+                                onChange={(e) => updateData({ contact_email: e.target.value })}
+                                error={errors.contact_email}
+                            />
+                        </div>
+                    )}
+
+                    {profile?.phone ? (
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-1">
+                            <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                                <Phone size={14} /> Téléphone
+                            </div>
+                            <span className="text-slate-900 font-semibold truncate">
+                                {data.contact_phone || profile.phone}
+                            </span>
+                        </div>
+                    ) : (
+                        <div className="col-span-1">
+                            <Input
+                                label="Téléphone *"
+                                type="tel"
+                                placeholder="+33 6 12 34 56 78"
+                                value={data.contact_phone || ''}
+                                onChange={(e) => updateData({ contact_phone: e.target.value })}
+                                error={errors.contact_phone}
+                            />
+                        </div>
+                    )}
                 </div>
 
                 <div className="bg-green-50/50 border border-green-100 rounded-2xl p-6 shadow-sm space-y-4 mb-4">
@@ -272,7 +327,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                     )}
                     <Button
                         variant="primary"
-                        onClick={() => onSubmit(false, user.id)}
+                        onClick={handleLoggedInSubmit}
                         isLoading={isSubmitting}
                         className="flex-grow h-16 text-xl font-bold shadow-xl shadow-brand-blue/30 group"
                     >
