@@ -32,69 +32,85 @@ export default async function handler(req: any, res: any) {
             return res.status(400).send(`Webhook Error: ${err.message}`);
         }
 
-        // Handle the checkount.session.completed event
+        // Handle the checkout.session.completed event
         if (event.type === 'checkout.session.completed') {
             const session = event.data.object as Stripe.Checkout.Session;
+            console.log('🔔 Webhook reçu pour la session:', session.id);
+            
             const userId = session.metadata?.userId;
             const amountStr = session.metadata?.creditsAmount;
             
+            console.log('📋 Metadata extraites:', { userId, amountStr });
+
             if (userId && amountStr) {
                 const amount = parseInt(amountStr, 10);
                 
-                // Init Supabase with service role key to bypass RLS
-                const supabaseUrl = process.env.VITE_SUPABASE_URL;
+                // On essaie les deux variantes de noms de variables (Vercel vs Local)
+                const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL;
                 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
                 
                 if (!supabaseUrl || !supabaseServiceKey) {
-                    console.error('Missing Supabase env vars');
-                    return res.status(500).send('Internal Server Error');
+                    console.error('❌ Erreur : Variables Supabase manquantes dans Vercel.');
+                    return res.status(500).send('Configuration Error');
                 }
 
                 const supabase = createClient(supabaseUrl, supabaseServiceKey);
                 
-                // Check if transaction was already processed
                 const transactionId = `stripe_${event.id}`;
+                console.log('🔍 Vérification de la transaction:', transactionId);
+
                 const { data: existingTx } = await supabase
                     .from('credit_transactions')
                     .select('id')
                     .eq('id', transactionId)
-                    .single();
+                    .maybeSingle();
                     
                 if (!existingTx) {
-                    // Update user's credit balance
-                    const { data: currentCredits, error: fetchErr } = await supabase
+                    console.log('➕ Ajout de credits pour l\'user:', userId);
+                    
+                    const { data: currentCredits } = await supabase
                         .from('credits')
                         .select('balance')
                         .eq('pro_id', userId)
-                        .single();
+                        .maybeSingle();
                         
                     const currentBalance = currentCredits?.balance || 0;
                     
-                    await supabase.from('credits').upsert({
+                    const { error: upsertErr } = await supabase.from('credits').upsert({
                         pro_id: userId,
                         balance: currentBalance + amount,
                         updated_at: new Date().toISOString()
                     }, { onConflict: 'pro_id' });
+
+                    if (upsertErr) {
+                        console.error('❌ Erreur lors de l\'upsert des crédits:', upsertErr);
+                        throw upsertErr;
+                    }
                     
-                    // Insert transaction record
-                    await supabase.from('credit_transactions').insert({
+                    const { error: txErr } = await supabase.from('credit_transactions').insert({
                         id: transactionId,
                         pro_id: userId,
                         type: 'purchase',
                         amount: amount,
                         description: `Achat Stripe - Session ${session.id}`,
                     });
+
+                    if (txErr) {
+                        console.error('❌ Erreur lors de l\'insertion de la transaction:', txErr);
+                    }
                     
-                    console.log(`Successfully credited ${amount} to user ${userId}`);
+                    console.log(`✅ Succès : ${amount} crédits ajoutés à l'utilisateur ${userId}`);
                 } else {
-                    console.log(`Transaction ${transactionId} already processed.`);
+                    console.log(`ℹ️ Transaction ${transactionId} déjà traitée.`);
                 }
+            } else {
+                console.warn('⚠️ Webhook reçu mais userId ou amountStr manquants dans metadata');
             }
         }
 
         res.status(200).json({ received: true });
     } catch (err: any) {
-        console.error('Webhook error:', err);
-        res.status(500).send('Webhook Process Error');
+        console.error('🔥 Erreur critique Webhook:', err.message);
+        res.status(500).send(`Webhook Process Error: ${err.message}`);
     }
 }
