@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Shield, HelpCircle, AlertTriangle, Building, Home, Factory } from 'lucide-react';
+import { Shield, HelpCircle, Building, Home, Factory } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useCredits } from '../hooks/useCredits';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../components/ui/Toast';
-import { useQueryClient } from '@tanstack/react-query';
 import { CREDIT_PACKS } from '../constants/creditPacks';
 
 export const Credits: React.FC = () => {
     const { user } = useAuth();
-    const { balance, addCredits } = useCredits();
+    const { balance } = useCredits();
     const navigate = useNavigate();
     const toast = useToast();
-    const queryClient = useQueryClient();
     const [isProcessing, setIsProcessing] = useState<string | null>(null);
 
-    const handleBuyCredits = async (packId: string, amount: number) => {
+    const handleBuyCredits = async (packId: string, amount: number, stripePriceId: string) => {
         if (!user) {
             navigate('/login');
             return;
@@ -25,20 +23,33 @@ export const Credits: React.FC = () => {
 
         setIsProcessing(packId);
         
-        // Mode démo / Simulation de paiement
         try {
-            await new Promise(r => setTimeout(r, 800));
-            await addCredits.mutateAsync({
-                amount: amount,
-                description: `Achat pack ${packId} – ${amount} crédits (Mode Démo)`,
+            const response = await fetch('/api/create-checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    packId,
+                    amount,
+                    userId: user.id,
+                    stripePriceId
+                })
             });
-            toast.success(`Simulation : Vous avez ajouté ${amount} crédits à votre compte ! (Mode Démo)`);
-            setIsProcessing(null);
-            queryClient.invalidateQueries({ queryKey: ['credits'] });
-            queryClient.invalidateQueries({ queryKey: ['credit-transactions'] });
-        } catch (error) {
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || data.error || 'Erreur lors de la création de la session');
+            }
+
+            if (data.url) {
+                // Redirect user to Stripe checkout
+                window.location.assign(data.url);
+            } else {
+                throw new Error('URL Stripe non reçue');
+            }
+        } catch (error: any) {
             console.error(error);
-            toast.error('Erreur lors de la simulation d\'achat');
+            toast.error(error.message || 'Une erreur est survenue avec le paiement.');
             setIsProcessing(null);
         }
     };
@@ -54,7 +65,7 @@ export const Credits: React.FC = () => {
             </Helmet>
             <div className="container max-w-5xl">
                 
-                {/* P-M06: Bandeau mode démo visible */}
+                {/* Banner */}
                 <div className="text-center mb-12">
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">Acheter des crédits</h1>
                     <p className="text-slate-600 max-w-xl mx-auto">
@@ -62,10 +73,6 @@ export const Credits: React.FC = () => {
                         <strong> 1 crédit = 1 contact client débloqué.</strong>
                     </p>
                     <p className="mt-2 font-bold text-slate-900">Solde actuel : {balance} crédit{balance !== 1 ? 's' : ''}</p>
-                    <div className="mt-3 inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-700 text-sm px-4 py-2 rounded-full">
-                        <AlertTriangle size={15} />
-                        Mode démo — Le paiement Stripe n'est pas encore activé
-                    </div>
                 </div>
 
 
@@ -107,7 +114,7 @@ export const Credits: React.FC = () => {
                                         <Button 
                                             variant={pack.popular ? "primary" : "outline"} 
                                             className="w-full"
-                                            onClick={() => handleBuyCredits(pack.id, pack.credits)}
+                                            onClick={() => handleBuyCredits(pack.id, pack.credits, pack.stripePriceId)}
                                             isLoading={isProcessing === pack.id}
                                             disabled={isProcessing !== null && isProcessing !== pack.id}
                                         >

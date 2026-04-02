@@ -18,6 +18,7 @@ const PublicProfile = lazy(() => import('./pages/PublicProfile').then(m => ({ de
 const JobBoard = lazy(() => import('./pages/JobBoard').then(m => ({ default: m.JobBoard })));
 import { PostJob } from './pages/PostJob';
 import { JobSuccess } from './pages/JobSuccess';
+import { PaymentSuccess } from './pages/PaymentSuccess';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { RegisterPro } from './pages/RegisterPro';
@@ -128,6 +129,11 @@ function App() {
 
                         <Route path="/post-job" element={<PostJob />} />
                         <Route path="/job-success" element={<JobSuccess />} />
+                        <Route path="/payment-success" element={
+                            <ProtectedRoute>
+                                <PaymentSuccess />
+                            </ProtectedRoute>
+                        } />
                         <Route path="/connexion" element={<Login />} />
                         <Route path="/inscription" element={<Register />} />
                         <Route path="/inscription-cordiste" element={<RegisterPro />} />
