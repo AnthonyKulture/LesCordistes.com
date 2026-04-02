@@ -82,33 +82,7 @@ export function useCredits() {
             queryClient.invalidateQueries({ queryKey: ['credit-transactions', user?.id] });
         },
     });
-
-    // Add credits (called after Stripe payment / webhook)
-    const addCredits = useMutation({
-        mutationFn: async ({ amount, description }: { amount: number; description: string }) => {
-            if (!user) throw new Error('Not authenticated');
-            const balance = credits?.balance || 0;
-
-            await (supabase as any).from('credit_transactions').insert({
-                pro_id: user.id,
-                type: 'purchase',
-                amount,
-                description,
-            });
-
-            await (supabase as any).from('credits').upsert({
-                pro_id: user.id,
-                balance: balance + amount,
-                updated_at: new Date().toISOString(),
-            }, { onConflict: 'pro_id' });
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['credits', user?.id] });
-            queryClient.invalidateQueries({ queryKey: ['credit-transactions', user?.id] });
-        },
-    });
-
-    const isJobUnlocked = (jobId: string) => unlockedLeads?.includes(jobId) || false;
+    const isJobUnlocked = (jobId: string) => (unlockedLeads || []).includes(jobId);
 
     return {
         balance: credits?.balance || 0,
@@ -117,6 +91,5 @@ export function useCredits() {
         unlockedLeads: unlockedLeads || [],
         isJobUnlocked,
         unlockLead,
-        addCredits,
     };
 }

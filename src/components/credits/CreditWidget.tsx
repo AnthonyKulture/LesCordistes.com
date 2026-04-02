@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Coins, TrendingUp, TrendingDown, Clock, X, Zap, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useCredits } from '../../hooks/useCredits';
+import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { CREDIT_PACKS } from '../../constants/creditPacks';
+import type { CreditTransaction } from '../../types';
 
 interface CreditPurchaseModalProps {
     isOpen: boolean;
@@ -11,23 +13,35 @@ interface CreditPurchaseModalProps {
 }
 
 export const CreditPurchaseModal: React.FC<CreditPurchaseModalProps> = ({ isOpen, onClose }) => {
-    const { addCredits } = useCredits();
-    const [purchasing, setPurchasing] = useState<number | null>(null);
+    const { user } = useAuth();
+    const [purchasing, setPurchasing] = useState<string | null>(null);
 
     if (!isOpen) return null;
 
-    const handlePurchase = async (credits: number, label: string) => {
-        setPurchasing(credits);
+    const handlePurchase = async (packId: string, credits: number, stripePriceId: string) => {
+        if (!user) return;
+        setPurchasing(packId);
         try {
-            // TODO: Integrate with Stripe
-            await new Promise(r => setTimeout(r, 800));
-            await addCredits.mutateAsync({
-                amount: credits,
-                description: `Achat pack ${label} – ${credits} crédits`,
+            const response = await fetch('/api/create-checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    packId,
+                    amount: credits,
+                    userId: user.id,
+                    stripePriceId
+                })
             });
-            onClose();
+
+            const data = await response.json();
+            if (data.url) {
+                window.location.assign(data.url);
+            } else {
+                throw new Error(data.message || 'Erreur Stripe');
+            }
         } catch (e) {
             console.error(e);
+            alert("Erreur lors de l'initialisation du paiement.");
         } finally {
             setPurchasing(null);
         }
@@ -80,8 +94,8 @@ export const CreditPurchaseModal: React.FC<CreditPurchaseModalProps> = ({ isOpen
                                 <span className="text-xl font-bold text-slate-900">{pack.price}€</span>
                                 <Button
                                     variant={pack.popular ? 'primary' : 'outline'}
-                                    onClick={() => handlePurchase(pack.credits, pack.label)}
-                                    isLoading={purchasing === pack.credits}
+                                    onClick={() => handlePurchase(pack.id, pack.credits, pack.stripePriceId)}
+                                    isLoading={purchasing === pack.id}
                                 >
                                     Acheter
                                 </Button>
@@ -157,7 +171,7 @@ export const CreditWidget: React.FC<CreditWidgetProps> = ({ compact = false }) =
                             Historique
                         </h3>
                         <div className="space-y-1.5">
-                            {transactions.slice(0, 5).map(tx => (
+                            {transactions.slice(0, 5).map((tx: CreditTransaction) => (
                                 <div key={tx.id} className="flex items-center justify-between text-sm">
                                     <div className="flex items-center gap-2">
                                         {tx.type === 'purchase' ? (
