@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Shield, HelpCircle, Building, Home, Factory } from 'lucide-react';
+import { Shield, HelpCircle, Building, Home, Factory, AlertTriangle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useCredits } from '../hooks/useCredits';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useToast } from '../components/ui/Toast';
 import { CREDIT_PACKS } from '../constants/creditPacks';
 
@@ -12,6 +12,8 @@ export const Credits: React.FC = () => {
     const { user } = useAuth();
     const { balance } = useCredits();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const isCanceled = searchParams.get('canceled') === 'true';
     const toast = useToast();
     const [isProcessing, setIsProcessing] = useState<string | null>(null);
 
@@ -65,6 +67,26 @@ export const Credits: React.FC = () => {
             </Helmet>
             <div className="container max-w-5xl">
                 
+                {isCanceled && (
+                    <div className="mb-8 bg-amber-50 border border-amber-200 text-amber-700 px-4 py-3 rounded-xl flex items-center justify-between shadow-sm animate-in fade-in slide-in-from-top-4 duration-500">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-amber-100 rounded-full">
+                                <AlertTriangle size={20} />
+                            </div>
+                            <div>
+                                <p className="font-bold">Paiement annulé</p>
+                                <p className="text-sm opacity-90">Votre transaction n'a pas abouti. Aucun crédit n'a été décompté.</p>
+                            </div>
+                        </div>
+                        <button 
+                            onClick={() => navigate('/credits', { replace: true })}
+                            className="text-xs font-bold uppercase tracking-widest hover:underline"
+                        >
+                            Fermer
+                        </button>
+                    </div>
+                )}
+
                 {/* Banner */}
                 <div className="text-center mb-12">
                     <h1 className="text-3xl font-bold text-slate-900 mb-2">Acheter des crédits</h1>
