@@ -10,7 +10,7 @@ export default async function handler(req: any, res: any) {
     }
 
     try {
-        const { packId, userId, amount, stripePriceId } = req.body;
+        const { packId, userId, amount, stripePriceId, email } = req.body;
 
         if (!packId || !userId || !stripePriceId) {
             return res.status(400).json({ error: 'Missing required parameters' });
@@ -23,6 +23,7 @@ export default async function handler(req: any, res: any) {
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
+            customer_email: email, // Pre-fill email
             line_items: [
                 {
                     price: stripePriceId,

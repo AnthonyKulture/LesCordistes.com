@@ -29,6 +29,7 @@ export const CreditPurchaseModal: React.FC<CreditPurchaseModalProps> = ({ isOpen
                     packId,
                     amount: credits,
                     userId: user.id,
+                    email: user.email,
                     stripePriceId
                 })
             });

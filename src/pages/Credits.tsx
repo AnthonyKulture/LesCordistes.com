@@ -33,6 +33,7 @@ export const Credits: React.FC = () => {
                     packId,
                     amount,
                     userId: user.id,
+                    email: user.email,
                     stripePriceId
                 })
             });
