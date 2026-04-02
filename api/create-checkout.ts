@@ -24,6 +24,8 @@ export default async function handler(req: any, res: any) {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             customer_email: email, // Pre-fill email
+            billing_address_collection: 'required', // Indispensable pour la facture
+            tax_id_collection: { enabled: true },   // Permet au pro de mettre son No de TVA
             line_items: [
                 {
                     price: stripePriceId,
@@ -31,6 +33,7 @@ export default async function handler(req: any, res: any) {
                 },
             ],
             mode: 'payment',
+            invoice_creation: { enabled: true }, // Génère la facture automatiquement
             success_url: `${DOMAIN}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${DOMAIN}/credits?canceled=true`,
             metadata: {
