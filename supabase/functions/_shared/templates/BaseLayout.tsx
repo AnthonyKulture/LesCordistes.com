@@ -11,7 +11,6 @@ import {
   Text,
   Font,
   Link,
-  Heading,
 } from 'npm:@react-email/components@0.0.34';
 
 interface BaseLayoutProps {
@@ -19,36 +18,14 @@ interface BaseLayoutProps {
   children: React.ReactNode;
 }
 
-const main = {
-  backgroundColor: '#f6f9fc',
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-};
-
-const container = {
-  backgroundColor: '#ffffff',
-  margin: '0 auto',
-  padding: '20px 0 48px',
-  marginBottom: '64px',
-};
-
-const header = {
-  padding: '32px',
-};
-
-const footer = {
-  color: '#8898aa',
-  fontSize: '12px',
-  lineHeight: '16px',
-  textAlign: 'center' as const,
-  padding: '0 32px',
-};
-
-const brandBlue = '#0f172a'; // Slate-900 
-const brandOrange = '#f97316'; // Orange-500
+const brandBlue = '#243355';
+const brandBlueLight = '#5B8DDB';
+const slate600 = '#475569';
+const slate400 = '#94a3b8';
+const slate200 = '#e2e8f0';
 
 export const BaseLayout = ({ previewText, children }: BaseLayoutProps) => (
-  <Html>
+  <Html lang="fr">
     <Head>
       <Font
         fontFamily="Inter"
@@ -58,32 +35,49 @@ export const BaseLayout = ({ previewText, children }: BaseLayoutProps) => (
       />
     </Head>
     <Preview>{previewText}</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Section style={header}>
-          <Text style={{ fontSize: '24px', fontWeight: 'bold', color: brandBlue, margin: '0' }}>
-            LesCordistes<span style={{ color: brandOrange }}>.com</span>
-          </Text>
-        </Section>
-        <Section style={{ padding: '0 32px' }}>
-          {children}
-        </Section>
-        <Hr style={{ borderColor: '#e6ebf1', margin: '20px 0' }} />
-        <Section style={footer}>
-          <Text>
-            © 2026 LesCordistes.com - Le réseau n°1 des travaux en hauteur.
-          </Text>
-          <Text>
-            <Link href="https://lescordistes.com" style={{ color: brandBlue, textDecoration: 'underline' }}>
-              Visiter le site
-            </Link>
-            {' • '}
-            <Link href="https://lescordistes.com/dashboard" style={{ color: brandBlue, textDecoration: 'underline' }}>
-              Mon compte
-            </Link>
-          </Text>
-        </Section>
+    <Body style={{ backgroundColor: '#f1f5f9', margin: '0', padding: '0', fontFamily: 'Inter, Arial, sans-serif' }}>
+
+      {/* Header */}
+      <Section style={{ backgroundColor: brandBlue, padding: '28px 40px' }}>
+        <Img
+          src="https://lescordistes.com/lescordistes.com-white-logo.png"
+          alt="LesCordistes.com"
+          height="36"
+          style={{ display: 'block' }}
+        />
+      </Section>
+
+      {/* Body */}
+      <Container style={{
+        backgroundColor: '#ffffff',
+        maxWidth: '600px',
+        margin: '0 auto',
+        padding: '40px 40px 48px',
+      }}>
+        {children}
       </Container>
+
+      {/* Footer */}
+      <Container style={{ maxWidth: '600px', margin: '0 auto', padding: '24px 40px 40px' }}>
+        <Hr style={{ borderColor: slate200, margin: '0 0 20px' }} />
+        <Text style={{ fontSize: '12px', color: slate400, textAlign: 'center', margin: '0 0 8px', lineHeight: '18px' }}>
+          © 2026 LesCordistes.com — Le réseau n°1 des travaux en hauteur
+        </Text>
+        <Text style={{ fontSize: '12px', color: slate400, textAlign: 'center', margin: '0', lineHeight: '18px' }}>
+          <Link href="https://lescordistes.com" style={{ color: brandBlueLight, textDecoration: 'none' }}>
+            Visiter le site
+          </Link>
+          {'  ·  '}
+          <Link href="https://lescordistes.com/dashboard" style={{ color: brandBlueLight, textDecoration: 'none' }}>
+            Mon espace
+          </Link>
+          {'  ·  '}
+          <Link href="mailto:contact@lescordistes.com" style={{ color: brandBlueLight, textDecoration: 'none' }}>
+            Nous contacter
+          </Link>
+        </Text>
+      </Container>
+
     </Body>
   </Html>
 );
