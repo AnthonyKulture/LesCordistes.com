@@ -32,7 +32,9 @@ function base(previewText: string, content: string): string {
 <!-- Header -->
 <table width="100%" cellpadding="0" cellspacing="0" style="background:${B};">
   <tr><td align="center" style="padding:24px 40px;">
-    <img src="https://lescordistes.com/lescordistes.com-white-logo.png" alt="LesCordistes.com" height="36" style="display:block;"/>
+    <a href="https://lescordistes.com" style="text-decoration:none;">
+      <span style="font-family:Inter,Arial,sans-serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.3px;">Les<span style="color:${BL};">Cordistes</span><span style="color:#ffffff;opacity:0.6;">.com</span></span>
+    </a>
   </td></tr>
 </table>
 
@@ -61,7 +63,7 @@ function base(previewText: string, content: string): string {
           &nbsp;·&nbsp;
           <a href="https://lescordistes.com/dashboard" style="color:${BL};text-decoration:none;">Mon espace</a>
           &nbsp;·&nbsp;
-          <a href="mailto:contact@lescordistes.com" style="color:${BL};text-decoration:none;">Nous contacter</a>
+          <a href="mailto:anthony@lescordistes.com" style="color:${BL};text-decoration:none;">Nous contacter</a>
         </p>
       </td></tr>
     </table>
@@ -160,7 +162,7 @@ function jobStatus(data: Record<string, string>): string {
     }
     ${btn('https://lescordistes.com/dashboard/client', isApproved ? 'Voir mon tableau de bord' : 'Modifier mon projet')}
     <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
-    <p style="font-size:13px;color:${S5};margin:0;">Une question ? <a href="mailto:contact@lescordistes.com" style="color:${BL};text-decoration:none;">contact@lescordistes.com</a></p>
+    <p style="font-size:13px;color:${S5};margin:0;">Une question ? <a href="mailto:anthony@lescordistes.com" style="color:${BL};text-decoration:none;">anthony@lescordistes.com</a></p>
   `);
 }
 

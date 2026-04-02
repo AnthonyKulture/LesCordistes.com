@@ -72,7 +72,7 @@ BEGIN
 
     -- 2. Alerte Admin
     PERFORM private.invoke_send_email(
-        'admin@lescordistes.com', -- À remplacer par l'email admin réel
+        'anthony@lescordistes.com', -- À remplacer par l'email admin réel
         'Nouveau Profil : ' || NEW.role,
         'admin-alert',
         jsonb_build_object(
@@ -106,7 +106,7 @@ AS $$
 BEGIN
     -- 1. Email Admin pour modération
     PERFORM private.invoke_send_email(
-        'admin@lescordistes.com',
+        'anthony@lescordistes.com',
         '⚖️ Modération requise : ' || NEW.title,
         'admin-alert',
         jsonb_build_object(
@@ -212,7 +212,7 @@ BEGIN
 
     -- 4. Email à l'Admin
     PERFORM private.invoke_send_email(
-        'admin@lescordistes.com',
+        'anthony@lescordistes.com',
         '💰 Lead Débloqué : ' || v_job_title,
         'admin-alert',
         jsonb_build_object(
