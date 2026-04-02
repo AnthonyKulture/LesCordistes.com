@@ -9,7 +9,7 @@ export const CREDIT_PACKS = [
         description: 'Freelance ou phase de test',
         pricePerLead: '20€',
         discount: null,
-        stripePriceId: 'price_1THiqbIQAyGYRDp7y1VZwNFQ',
+        stripePriceId: 'price_1THkdkEtXlkrbl73ys2vzLuu',
     },
     {
         id: 'pack_pro',
@@ -20,7 +20,7 @@ export const CREDIT_PACKS = [
         description: 'Utilisateur régulier',
         pricePerLead: '15€',
         discount: '-25%',
-        stripePriceId: 'price_1THiqbIQAyGYRDp7Wwqsj60E',
+        stripePriceId: 'price_1THke5EtXlkrbl731GY9n6pb',
     },
     {
         id: 'pack_business',
@@ -31,7 +31,7 @@ export const CREDIT_PACKS = [
         description: 'Agence / Volume',
         pricePerLead: '14€',
         discount: '-30%',
-        stripePriceId: 'price_1THioeIQAyGYRDp7tpT4WhBb',
+        stripePriceId: 'price_1THketEtXlkrbl73xmw5Qy4M',
     },
 ] as const;
 
