@@ -124,7 +124,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                         return (
                             <Link
                                 key={`${item.path}-${idx}`}
-                                href={tem.path}
+                                href={item.path}
                                 className={`
                                     relative flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 group
                                     ${isActive
