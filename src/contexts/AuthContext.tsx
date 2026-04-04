@@ -17,12 +17,12 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const supabase = createSupabaseBrowserClient();
     const [user, setUser] = useState<User | null>(null);
     const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
 
     const loadProfile = async (userId: string) => {
+        const supabase = createSupabaseBrowserClient();
         setLoading(true);
         try {
             const { data, error } = await supabase
@@ -47,6 +47,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     useEffect(() => {
+        const supabase = createSupabaseBrowserClient();
+
         // Get initial session
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
@@ -74,6 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const signOut = async () => {
+        const supabase = createSupabaseBrowserClient();
         await supabase.auth.signOut();
         setUser(null);
         setProfile(null);
