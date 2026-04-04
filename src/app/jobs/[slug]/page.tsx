@@ -65,11 +65,77 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 }
 
+function buildJobPostingSchema(job: Job, slug: string) {
+    const baseSalary = job.budget_min || job.budget_max || job.daily_rate
+        ? {
+            '@type': 'MonetaryAmount',
+            currency: 'EUR',
+            ...(job.daily_rate
+                ? { value: { '@type': 'QuantitativeValue', value: job.daily_rate, unitText: 'DAY' } }
+                : {
+                    value: {
+                        '@type': 'QuantitativeValue',
+                        ...(job.budget_min ? { minValue: job.budget_min } : {}),
+                        ...(job.budget_max ? { maxValue: job.budget_max } : {}),
+                        unitText: 'TOTAL',
+                    },
+                }),
+          }
+        : undefined
+
+    return {
+        '@context': 'https://schema.org',
+        '@type': 'JobPosting',
+        title: job.title,
+        description: job.description,
+        datePosted: job.created_at,
+        ...(job.deadline ? { validThrough: job.deadline } : {}),
+        employmentType: job.contract_type === 'subcontracting' ? 'CONTRACTOR' : 'OTHER',
+        hiringOrganization: {
+            '@type': 'Organization',
+            name: 'LesCordistes.com',
+            sameAs: 'https://lescordistes.com',
+            logo: 'https://lescordistes.com/lescordistes.com-white-logo.png',
+        },
+        jobLocation: {
+            '@type': 'Place',
+            address: {
+                '@type': 'PostalAddress',
+                addressLocality: job.location_city,
+                addressCountry: 'FR',
+                ...(job.location_department ? { addressRegion: job.location_department } : {}),
+                ...(job.location_address ? { streetAddress: job.location_address } : {}),
+            },
+        },
+        ...(baseSalary ? { baseSalary } : {}),
+        url: `https://lescordistes.com/jobs/${slug}`,
+        ...(job.photos_url?.[0] ? { image: job.photos_url[0] } : {}),
+        occupationalCategory: categoryLabels[job.category] ?? 'Travaux en hauteur',
+        skills: 'Travaux sur cordes, accès difficile',
+        jobBenefits: 'Mission ponctuelle, paiement à la prestation',
+        identifier: {
+            '@type': 'PropertyValue',
+            name: 'LesCordistes',
+            value: job.id,
+        },
+    }
+}
+
 export default async function JobDetailPage({ params }: Props) {
     const { slug } = await params
-    // Fetch server-side for SEO hydration (live jobs only)
-    // Non-live jobs (pending/rejected) remain accessible client-side for owner/admin
     const job = await getJob(slug)
 
-    return <JobDetail initialJob={job} />
+    return (
+        <>
+            {job && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(buildJobPostingSchema(job, slug)),
+                    }}
+                />
+            )}
+            <JobDetail initialJob={job} />
+        </>
+    )
 }
