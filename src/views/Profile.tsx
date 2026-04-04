@@ -4,7 +4,8 @@ import React, { useState, useRef } from 'react';
 import { User, Award, Camera } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase, uploadJobPhoto } from '../lib/supabase';
+import { uploadJobPhoto } from '../lib/supabase';
+import { createSupabaseBrowserClient } from '../lib/supabase-browser';
 import { useToast } from '../components/ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { FRENCH_DEPARTMENTS } from '../constants/departments';
@@ -135,7 +136,9 @@ export const Profile: React.FC = () => {
         if (!user) return;
         setIsSaving(true);
         try {
-            const { error } = await (supabase
+            // createSupabaseBrowserClient() par appel — garantit la session auth courante
+            const client = createSupabaseBrowserClient();
+            const { error } = await (client
                 .from('profiles') as any)
                 .update({
                     full_name: formData.full_name || null,
