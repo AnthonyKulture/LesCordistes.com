@@ -116,20 +116,49 @@ export const Profile: React.FC = () => {
                 const url = await uploadJobPhoto(file, `portfolio-${user.id}`);
                 if (url) urls.push(url);
             }
-            setFormData(prev => ({
-                ...prev,
-                portfolio_photos: [...prev.portfolio_photos, ...urls].slice(0, 12),
-            }));
+
+            setFormData(prev => {
+                const updated = [...prev.portfolio_photos, ...urls].slice(0, 12);
+
+                // Sauvegarde auto en base immédiatement après l'upload
+                const client = createSupabaseBrowserClient();
+                (client.from('profiles') as any)
+                    .update({ portfolio_photos: updated })
+                    .eq('id', user.id)
+                    .then(({ error }: { error: any }) => {
+                        if (error) {
+                            toast.error('Erreur lors de la sauvegarde des photos');
+                        } else {
+                            toast.success('Photos sauvegardées !');
+                            refreshProfile();
+                        }
+                    });
+
+                return { ...prev, portfolio_photos: updated };
+            });
         } finally {
             setIsUploadingPhoto(false);
+            // Reset input pour permettre de re-sélectionner les mêmes fichiers
+            e.target.value = '';
         }
     };
 
     const removePhoto = (url: string) => {
-        setFormData(prev => ({
-            ...prev,
-            portfolio_photos: prev.portfolio_photos.filter(u => u !== url),
-        }));
+        if (!user) return;
+        setFormData(prev => {
+            const updated = prev.portfolio_photos.filter(u => u !== url);
+
+            // Sauvegarde auto
+            const client = createSupabaseBrowserClient();
+            (client.from('profiles') as any)
+                .update({ portfolio_photos: updated })
+                .eq('id', user.id)
+                .then(({ error }: { error: any }) => {
+                    if (!error) refreshProfile();
+                });
+
+            return { ...prev, portfolio_photos: updated };
+        });
     };
 
     const handleSave = async () => {

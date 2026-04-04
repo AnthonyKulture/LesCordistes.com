@@ -25,7 +25,7 @@ export const PortfolioManager: React.FC<PortfolioManagerProps> = ({
                     <Camera size={18} className="text-brand-blue" />
                     Photos de chantier ({photos.length}/12)
                 </h2>
-                {isEditing && (
+                {photos.length < 12 && (
                     <Button
                         variant="outline"
                         onClick={() => photoInputRef.current?.click()}
@@ -70,11 +70,9 @@ export const PortfolioManager: React.FC<PortfolioManagerProps> = ({
                 <div className="text-center py-16 border-2 border-dashed border-slate-200 rounded-xl">
                     <Camera className="mx-auto text-slate-300 mb-3" size={40} />
                     <p className="text-slate-500 mb-3">Ajoutez des photos de vos chantiers</p>
-                    {isEditing && (
-                        <Button variant="outline" onClick={() => photoInputRef.current?.click()}>
-                            Choisir des photos
-                        </Button>
-                    )}
+                    <Button variant="outline" onClick={() => photoInputRef.current?.click()}>
+                        Choisir des photos
+                    </Button>
                 </div>
             )}
         </div>
