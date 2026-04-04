@@ -31,12 +31,7 @@
     { "source": "/register", "destination": "/inscription", "permanent": true },
     { "source": "/register/", "destination": "/inscription", "permanent": true }
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
+  "framework": "nextjs",
   "headers": [
     {
       "source": "/(.*)",
