@@ -24,7 +24,7 @@ import {
 import type { Job } from '../../types';
 
 export function ClientDashboard() {
-    const navigate = useRouter();
+    const router = useRouter();
     const { mode } = useDashboardMode();
     const { user } = useAuth();
     const toast = useToast();

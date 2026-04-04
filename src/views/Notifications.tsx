@@ -38,7 +38,7 @@ function timeAgo(date: string): string {
 
 export const NotificationsPage: React.FC = () => {
     const { notifications, unreadCount, markAsRead, markAllRead, isLoading, hasMore, loadMore } = useNotifications();
-    const navigate = useRouter();
+    const router = useRouter();
 
     const handleClick = (notif: Notification) => {
         if (!notif.read) markAsRead.mutate(notif.id);

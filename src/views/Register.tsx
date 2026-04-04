@@ -10,14 +10,14 @@ import { AuthLayout } from '../components/layout/AuthLayout';
 
 export function Register() {
     const { user, loading: authLoading } = useAuth();
-    const navigate = useRouter();
+    const router = useRouter();
     const [error, setError] = React.useState('');
 
     React.useEffect(() => {
         if (!authLoading && user) {
             router.push('/dashboard');
         }
-    }, [user, authLoading, navigate]);
+    }, [user, authLoading, router]);
 
     const handleGoogleError = (errorMessage: string) => {
         setError(errorMessage);

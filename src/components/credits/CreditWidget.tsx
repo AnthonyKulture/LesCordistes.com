@@ -123,7 +123,7 @@ interface CreditWidgetProps {
 export const CreditWidget: React.FC<CreditWidgetProps> = ({ compact = false }) => {
     const { balance, transactions, isLoading } = useCredits();
     const [showModal, setShowModal] = useState(false);
-    const navigate = useRouter();
+    const router = useRouter();
 
     if (isLoading) return null;
 

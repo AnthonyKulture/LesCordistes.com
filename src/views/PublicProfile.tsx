@@ -16,7 +16,7 @@ import type { Profile, Review } from '../types';
 
 export const PublicProfile: React.FC = () => {
     const { id } = useParams<{ id: string }>();
-    const navigate = useRouter();
+    const router = useRouter();
     const { user, profile } = useAuth();
     const { startConversation } = useMessaging();
 

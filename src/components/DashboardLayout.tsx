@@ -27,7 +27,7 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
     ;
-    const navigate = useRouter();
+    const router = useRouter();
     const pathname = usePathname();
     const { user, profile, signOut } = useAuth();
     const { mode, setMode } = useDashboardMode();

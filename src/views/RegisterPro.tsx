@@ -12,7 +12,7 @@ import { AuthLayout } from '../components/layout/AuthLayout';
 
 export function RegisterPro() {
     const { user, loading: authLoading } = useAuth();
-    const navigate = useRouter();
+    const router = useRouter();
     
     const [formData, setFormData] = React.useState({
         email: '',
@@ -27,7 +27,7 @@ export function RegisterPro() {
         if (!authLoading && user) {
             router.push('/dashboard');
         }
-    }, [user, authLoading, navigate]);
+    }, [user, authLoading, router]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({

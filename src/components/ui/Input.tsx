@@ -15,7 +15,7 @@ export const Input: React.FC<InputProps> = ({
     const inputId = id || label?.toLowerCase().replace(/\s+/g, '-');
 
     return (
-        <div className="w-full">
+        <div className="w-full" suppressHydrationWarning>
             {label && (
                 <label
                     htmlFor={inputId}

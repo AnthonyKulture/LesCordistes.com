@@ -6,7 +6,7 @@ import { CheckCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 export const PaymentSuccess: React.FC = () => {
-    const navigate = useRouter();
+    const router = useRouter();
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
 
@@ -17,7 +17,7 @@ export const PaymentSuccess: React.FC = () => {
         }, 5000);
 
         return () => clearTimeout(timer);
-    }, [navigate]);
+    }, [router]);
 
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 text-center">

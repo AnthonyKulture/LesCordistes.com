@@ -8,7 +8,7 @@ import { Input } from '../components/ui/Input';
 import { Card, CardHeader, CardBody } from '../components/ui/Card';
 
 export function ForgotPassword() {
-    const navigate = useRouter();
+    const router = useRouter();
     const [email, setEmail] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');

@@ -27,7 +27,7 @@ import {
 import type { Job } from '../../types';
 
 export function ProDashboard() {
-    const navigate = useRouter();
+    const router = useRouter();
     const { user, profile } = useAuth();
     const { balance, unlockedLeads: unlockedJobIds } = useCredits();
     const { setMode } = useDashboardMode();

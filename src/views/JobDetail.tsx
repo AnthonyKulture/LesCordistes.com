@@ -83,7 +83,7 @@ const tradeLabels: Record<string, string> = {
 
 export const JobDetail: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
-    const navigate = useRouter();
+    const router = useRouter();
     const { user, profile } = useAuth();
     const { isJobUnlocked } = useCredits();
     const { startConversation } = useMessaging();
@@ -243,7 +243,7 @@ export const JobDetail: React.FC = () => {
                             unlockCount={unlockCount || 0}
                             refetchUnlockCount={refetchUnlockCount}
                             startConversation={startConversation}
-                            navigate={(path: string) => navigate.push(path)}
+                            navigate={(path: string) => router.push(path)}
                         />
                     </div>
                 </div>

@@ -411,7 +411,7 @@ const JobRow: React.FC<JobRowProps> = ({ job, onApprove, onReject, onViewLeads, 
 );
 
 export function AdminDashboard() {
-    const navigate = useRouter();
+    const router = useRouter();
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<Tab>('pending');
     const [rejectingJob, setRejectingJob] = useState<Job | null>(null);

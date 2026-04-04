@@ -12,7 +12,7 @@ import { CREDIT_PACKS } from '../constants/creditPacks';
 export const Credits: React.FC = () => {
     const { user } = useAuth();
     const { balance } = useCredits();
-    const navigate = useRouter();
+    const router = useRouter();
     const [searchParams] = useSearchParams();
     const isCanceled = searchParams.get('canceled') === 'true';
     const toast = useToast();

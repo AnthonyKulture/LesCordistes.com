@@ -8,7 +8,7 @@ import { Input } from '../components/ui/Input';
 import { Card, CardHeader, CardBody } from '../components/ui/Card';
 
 export function ResetPassword() {
-    const navigate = useRouter();
+    const router = useRouter();
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);

@@ -12,7 +12,7 @@ import { AuthLayout } from '../components/layout/AuthLayout';
 
 export function Login() {
     const { user, loading: authLoading } = useAuth();
-    const navigate = useRouter();
+    const router = useRouter();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
@@ -22,7 +22,7 @@ export function Login() {
         if (!authLoading && user) {
             router.push('/dashboard');
         }
-    }, [user, authLoading, navigate]);
+    }, [user, authLoading, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

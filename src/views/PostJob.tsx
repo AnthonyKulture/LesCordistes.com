@@ -20,7 +20,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { JobFormData } from '../types';
 
 export const PostJob: React.FC = () => {
-    const navigate = useRouter();
+    const router = useRouter();
     const toast = useToast();
     const { profile } = useAuth();
     const [currentStep, setCurrentStep] = useState(1);
