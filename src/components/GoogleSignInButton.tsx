@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { supabase } from '../lib/supabase';
+import { createSupabaseBrowserClient } from '../lib/supabase-browser';
 
 interface GoogleSignInButtonProps {
     mode?: 'signin' | 'signup';
@@ -21,6 +21,7 @@ export function GoogleSignInButton({ mode = 'signin', redirectTo, onBeforeClick,
 
         try {
             setLoading(true);
+            const supabase = createSupabaseBrowserClient();
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
