@@ -26,7 +26,7 @@ export const JobStatusEmail = ({ name, jobTitle, status, rejectionReason }: JobS
     >
       <Section>
         <Heading style={{ fontSize: '24px', fontWeight: 'bold' }}>
-          {isApproved ? '✅ Votre mission est en ligne !' : '❌ Votre mission a été refusée'}
+          {isApproved ? 'Votre mission est en ligne !' : 'Votre mission a été refusée'}
         </Heading>
         <Text style={{ fontSize: '16px', lineHeight: '24px' }}>
           Bonjour {name},

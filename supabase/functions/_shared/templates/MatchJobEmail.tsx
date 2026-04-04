@@ -19,10 +19,10 @@ const brandBlue = '#0f172a';
 const brandOrange = '#f97316';
 
 export const MatchJobEmail = ({ proName, jobTitle, location, jobId, isRenfort }: MatchJobEmailProps) => (
-  <BaseLayout previewText={`🔔 Nouvelle mission à ${location} : ${jobTitle}`}>
+  <BaseLayout previewText={`Nouvelle mission à ${location} : ${jobTitle}`}>
     <Section>
       <Heading style={{ fontSize: '24px', fontWeight: 'bold' }}>
-        🔔 Nouvelle mission dans votre zone !
+        Nouvelle mission dans votre zone !
       </Heading>
       <Text style={{ fontSize: '16px', lineHeight: '24px' }}>
         Bonjour {proName},
@@ -33,7 +33,7 @@ export const MatchJobEmail = ({ proName, jobTitle, location, jobId, isRenfort }:
       
       <Section style={{ backgroundColor: '#f1f5f9', padding: '16px', borderRadius: '8px', margin: '16px 0' }}>
         <Text style={{ margin: '0', fontWeight: 'bold', fontSize: '18px' }}>{jobTitle}</Text>
-        <Text style={{ margin: '4px 0 0', color: '#64748b' }}>📍 {location}</Text>
+        <Text style={{ margin: '4px 0 0', color: '#64748b' }}>{location}</Text>
       </Section>
 
       <Section style={{ padding: '24px 0' }}>

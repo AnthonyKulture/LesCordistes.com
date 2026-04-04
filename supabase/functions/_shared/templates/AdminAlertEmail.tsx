@@ -18,10 +18,10 @@ const brandBlue = '#0f172a';
 const brandOrange = '#f97316';
 
 export const AdminAlertEmail = ({ title, message, link, linkText }: AdminAlertEmailProps) => (
-  <BaseLayout previewText={`LesCordistes - Alerte Admin : ${title}`}>
+  <BaseLayout previewText={`LesCordistes - Admin : ${title}`}>
     <Section>
       <Heading style={{ fontSize: '24px', fontWeight: 'bold' }}>
-        ⚙️ Alerte Admin : {title}
+        Alerte Admin : {title}
       </Heading>
       <Text style={{ fontSize: '16px', lineHeight: '24px' }}>
         {message}

@@ -33,7 +33,7 @@ export const PaymentReceiptEmail = ({
   <BaseLayout previewText={`Reçu de paiement - Pack ${packName} - LesCordistes.com`}>
     <Section>
       <Heading style={{ fontSize: '24px', fontWeight: 'bold' }}>
-        🧾 Reçu de votre commande
+        Reçu de votre commande
       </Heading>
       <Text style={{ fontSize: '16px', lineHeight: '24px' }}>
         Bonjour {name},

@@ -20,7 +20,7 @@ export const VerifyEmail = ({ name, verificationUrl }: VerifyEmailProps) => (
   <BaseLayout previewText="Confirmez votre adresse email - LesCordistes.com">
     <Section>
       <Heading style={{ fontSize: '24px', fontWeight: 'bold' }}>
-        📧 Confirmation de votre compte
+        Confirmation de votre compte
       </Heading>
       <Text style={{ fontSize: '16px', lineHeight: '24px' }}>
         Bonjour {name || 'sur LesCordistes.com'},

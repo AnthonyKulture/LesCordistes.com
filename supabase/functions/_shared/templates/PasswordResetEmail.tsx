@@ -20,7 +20,7 @@ export const PasswordResetEmail = ({ name, resetUrl }: PasswordResetEmailProps) 
   <BaseLayout previewText="Réinitialisation de votre mot de passe - LesCordistes.com">
     <Section>
       <Heading style={{ fontSize: '24px', fontWeight: 'bold' }}>
-        🔑 Réinitialisation de mot de passe
+        Réinitialisation de mot de passe
       </Heading>
       <Text style={{ fontSize: '16px', lineHeight: '24px' }}>
         Bonjour {name || 'sur LesCordistes.com'},

@@ -18,7 +18,7 @@ export const WelcomeProEmail = ({ name }: WelcomeProEmailProps) => (
   <BaseLayout previewText="Bienvenue sur LesCordistes.com !">
     <Section>
       <Heading style={{ fontSize: '24px', fontWeight: 'bold' }}>
-        🧗 Bonjour {name},
+        Bonjour {name},
       </Heading>
       <Text style={{ fontSize: '16px', lineHeight: '24px' }}>
         Bienvenue sur <strong>LesCordistes.com</strong>, le réseau n°1 pour trouver des missions de travaux sur cordes.

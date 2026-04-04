@@ -12,6 +12,7 @@ import { PaymentReceiptEmail } from '../_shared/templates/PaymentReceiptEmail.ts
 import { VerifyEmail } from '../_shared/templates/VerifyEmail.tsx';
 import { MatchJobEmail } from '../_shared/templates/MatchJobEmail.tsx';
 import { PasswordResetEmail } from '../_shared/templates/PasswordResetEmail.tsx';
+import { NewMessageEmail } from '../_shared/templates/NewMessageEmail.tsx';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -85,6 +86,15 @@ serve(async (req) => {
         emailComponent = React.createElement(PasswordResetEmail, {
           name: data.name,
           resetUrl: data.resetUrl
+        });
+        break;
+      case 'new-message':
+        emailComponent = React.createElement(NewMessageEmail, {
+          recipientName: data.recipientName,
+          senderName: data.senderName,
+          messagePreview: data.messagePreview,
+          conversationUrl: data.conversationUrl,
+          jobTitle: data.jobTitle,
         });
         break;
       default:
