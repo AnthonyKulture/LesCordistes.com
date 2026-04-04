@@ -3,12 +3,12 @@
 import React, { useState } from 'react';
 import {
   Tag,
-  Eraser, 
-  Construction, 
-  BrickWall, 
-  Paintbrush, 
-  Factory, 
-  Tent, 
+  Eraser,
+  Construction,
+  BrickWall,
+  Paintbrush,
+  Factory,
+  Tent,
   ClipboardList,
   CheckCircle2
 } from 'lucide-react';
@@ -23,7 +23,12 @@ interface Step2Props {
 }
 
 export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }) => {
-    const [selectedCategory, setSelectedCategory] = useState<JobCategory | undefined>(data.category);
+    // Reconstruire la sélection initiale depuis category + secondary_trades
+    const initialSelected: JobCategory[] = data.category
+        ? [data.category, ...((data.secondary_trades || []) as JobCategory[])]
+        : [];
+
+    const [selected, setSelected] = useState<JobCategory[]>(initialSelected);
 
     const categories = [
         { value: 'cleaning' as JobCategory, label: 'Nettoyage', icon: Eraser, color: 'text-blue-500', bg: 'bg-blue-50', description: 'Nettoyage de façades, vitres' },
@@ -35,15 +40,23 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
         { value: 'other' as JobCategory, label: 'Autre', icon: ClipboardList, color: 'text-gray-500', bg: 'bg-gray-50', description: 'Autre type de mission' },
     ];
 
-    const handleSelect = (category: JobCategory) => {
-        setSelectedCategory(category);
-        updateData({ category });
+    const handleToggle = (value: JobCategory) => {
+        const next = selected.includes(value)
+            ? selected.filter(v => v !== value)
+            : [...selected, value];
+
+        setSelected(next);
+
+        // Toujours stocker le 1er sélectionné comme category principale (compatibilité DB)
+        // Les suivants vont dans secondary_trades (champ DB existant)
+        updateData({
+            category: next[0],
+            secondary_trades: next.length > 1 ? next.slice(1) : [],
+        });
     };
 
     const handleNext = () => {
-        if (selectedCategory) {
-            onNext();
-        }
+        if (selected.length > 0) onNext();
     };
 
     return (
@@ -53,16 +66,30 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
                     <div className="p-1.5 bg-brand-blue/10 rounded-lg">
                         <Tag className="text-brand-blue" size={20} />
                     </div>
-                    <h2 className="text-xl font-bold text-slate-900">Quel type de travail ?</h2>
+                    <h2 className="text-xl font-bold text-slate-900">Quel(s) type(s) de travaux ?</h2>
                 </div>
-                <p className="text-sm text-slate-500">Sélectionnez la catégorie qui correspond le mieux à votre mission.</p>
+                <p className="text-sm text-slate-500">
+                    Sélectionnez un ou plusieurs types de travaux correspondant à votre mission.
+                </p>
             </div>
+
+            {selected.length > 1 && (
+                <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 px-3 py-2 bg-brand-blue/5 border border-brand-blue/20 rounded-xl text-xs font-bold text-brand-blue"
+                >
+                    <CheckCircle2 size={14} />
+                    {selected.length} types sélectionnés
+                </motion.div>
+            )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {categories.map((cat, index) => {
                     const Icon = cat.icon;
-                    const isSelected = selectedCategory === cat.value;
-                    
+                    const isSelected = selected.includes(cat.value);
+                    const order = selected.indexOf(cat.value);
+
                     return (
                         <motion.button
                             key={cat.value}
@@ -71,7 +98,7 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
                             transition={{ delay: index * 0.05 }}
                             whileHover={{ scale: 1.01 }}
                             whileTap={{ scale: 0.99 }}
-                            onClick={() => handleSelect(cat.value)}
+                            onClick={() => handleToggle(cat.value)}
                             className={`relative group p-4 rounded-xl border-2 transition-all text-left flex items-start gap-3 ${
                                 isSelected
                                     ? 'border-brand-blue bg-blue-50/50 shadow-md ring-1 ring-brand-blue/10'
@@ -83,8 +110,8 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
                             }`}>
                                 <Icon size={20} />
                             </div>
-                            
-                            <div className="flex-grow min-w-0 pr-4">
+
+                            <div className="flex-grow min-w-0 pr-6">
                                 <h3 className={`font-bold text-sm mb-0.5 truncate ${isSelected ? 'text-brand-blue' : 'text-slate-900'}`}>
                                     {cat.label}
                                 </h3>
@@ -97,9 +124,9 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
                                 <motion.div
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
-                                    className="absolute top-2 right-2 text-brand-blue"
+                                    className="absolute top-2 right-2 flex items-center justify-center w-5 h-5 rounded-full bg-brand-blue text-white text-[10px] font-black"
                                 >
-                                    <CheckCircle2 size={18} fill="currentColor" className="text-white fill-brand-blue" />
+                                    {order + 1}
                                 </motion.div>
                             )}
                         </motion.button>
@@ -111,12 +138,17 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
                 <Button
                     variant="primary"
                     onClick={handleNext}
-                    disabled={!selectedCategory}
+                    disabled={selected.length === 0}
                     className={`w-full h-12 text-base font-bold transition-all ${
-                        selectedCategory ? 'shadow-lg shadow-brand-blue/20' : 'opacity-50'
+                        selected.length > 0 ? 'shadow-lg shadow-brand-blue/20' : 'opacity-50'
                     }`}
                 >
                     Continuer
+                    {selected.length > 0 && (
+                        <span className="ml-2 text-xs opacity-70">
+                            ({selected.length} sélectionné{selected.length > 1 ? 's' : ''})
+                        </span>
+                    )}
                 </Button>
             </div>
         </div>

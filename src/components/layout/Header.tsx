@@ -101,9 +101,18 @@ export const Header: React.FC = () => {
                         {/* Secondary Navigation (Desktop) - Only for visitors */}
                         {!user && (
                             <nav className="hidden xl:flex items-center gap-8">
-                                <a href="#how-it-works" className="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors">
+                                <button
+                                    onClick={() => {
+                                        if (pathname === '/') {
+                                            document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                                        } else {
+                                            router.push('/#how-it-works');
+                                        }
+                                    }}
+                                    className="text-sm font-bold text-slate-500 hover:text-brand-blue transition-colors"
+                                >
                                     Comment ça marche ?
-                                </a>
+                                </button>
                             </nav>
                         )}
                     </div>
