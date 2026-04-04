@@ -64,7 +64,7 @@ function NotifItem({ notif, onClick }: { notif: Notification; onClick: (n: Notif
 export const NotificationBell: React.FC = () => {
     const { notifications, unreadCount, markAsRead, markAllRead } = useNotifications();
     const [open, setOpen] = useState(false);
-    const navigate = useRouter();
+    const router = useRouter();
     const panelRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

@@ -24,7 +24,7 @@ const categoryConfig: Record<string, { label: string; emoji: string; color: stri
 export const JobCard: React.FC<JobCardProps> = ({ job }) => {
     const { user, profile } = useAuth();
     const { isJobUnlocked } = useCredits();
-    const navigate = useRouter();
+    const router = useRouter();
 
     const cat = categoryConfig[job.category] || categoryConfig.other;
     const isPro = profile?.role === 'pro';

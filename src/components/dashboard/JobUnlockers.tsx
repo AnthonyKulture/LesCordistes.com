@@ -10,7 +10,7 @@ interface JobUnlockersProps {
 }
 
 export const JobUnlockers: React.FC<JobUnlockersProps> = ({ jobId }) => {
-    const navigate = useRouter();
+    const router = useRouter();
     const { data: pros, isLoading } = useQuery({
         queryKey: ['unlocked-pros', jobId],
         queryFn: async () => {

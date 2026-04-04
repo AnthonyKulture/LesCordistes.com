@@ -109,7 +109,7 @@ interface JobMapProps {
 }
 
 export const JobMap: React.FC<JobMapProps> = ({ jobs, height = '500px' }) => {
-    const navigate = useRouter();
+    const router = useRouter();
 
     const jobsWithCoords: JobWithCoords[] = jobs
         .map(job => {
