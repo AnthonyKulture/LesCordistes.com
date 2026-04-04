@@ -81,7 +81,11 @@ const tradeLabels: Record<string, string> = {
     lifelines: '🧗 Pose de lignes de vie',
 };
 
-export const JobDetail: React.FC = () => {
+interface JobDetailProps {
+    initialJob?: Job | null;
+}
+
+export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
     const { slug } = useParams<{ slug: string }>();
     const router = useRouter();
     const { user, profile } = useAuth();
@@ -101,6 +105,8 @@ export const JobDetail: React.FC = () => {
             return data as Job;
         },
         enabled: !!slug,
+        // Hydrate from server-side fetch — avoids client waterfall for live jobs
+        initialData: initialJob ?? undefined,
     });
 
     const { data: unlockCount, refetch: refetchUnlockCount } = useQuery({
