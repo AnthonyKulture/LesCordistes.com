@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Image as ImageIcon, Upload, X, Lightbulb, Check } from 'lucide-react';
 import { Button } from '../ui/Button';

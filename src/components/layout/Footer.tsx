@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Facebook, Twitter, Linkedin, Mail } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -26,12 +26,12 @@ export const Footer: React.FC = () => {
                         <h3 className="font-semibold mb-4">Pour les Clients</h3>
                         <ul className="space-y-2 text-slate-400 text-sm">
                             <li>
-                                <Link to="/post-job" className="hover:text-brand-blue transition-colors">
+                                <Link href="/post-job" className="hover:text-brand-blue transition-colors">
                                     Publier un projet
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/jobs" className="hover:text-brand-blue transition-colors">
+                                <Link href="/jobs" className="hover:text-brand-blue transition-colors">
                                     Découvrir les cordistes
                                 </Link>
                             </li>
@@ -42,17 +42,17 @@ export const Footer: React.FC = () => {
                         <h3 className="font-semibold mb-4">Pour les Cordistes</h3>
                         <ul className="space-y-2 text-slate-400 text-sm">
                             <li>
-                                <Link to="/jobs" className="hover:text-brand-blue transition-colors">
+                                <Link href="/jobs" className="hover:text-brand-blue transition-colors">
                                     Trouver des missions
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/credits" className="hover:text-brand-blue transition-colors">
+                                <Link href="/credits" className="hover:text-brand-blue transition-colors">
                                     Acheter des crédits
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/inscription-cordiste" className="hover:text-brand-blue transition-colors">
+                                <Link href="/inscription-cordiste" className="hover:text-brand-blue transition-colors">
                                     S'inscrire
                                 </Link>
                             </li>
@@ -81,10 +81,10 @@ export const Footer: React.FC = () => {
                 <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400 text-sm">
                     <p className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
                         <span>&copy; {new Date().getFullYear()} LesCordistes.com - Tous droits réservés</span>
-                        <Link to="/cgu" className="hover:text-brand-blue transition-colors">CGU</Link>
-                        <Link to="/cgv" className="hover:text-brand-blue transition-colors">CGV</Link>
-                        <Link to="/confidentialite" className="hover:text-brand-blue transition-colors">Confidentialité</Link>
-                        <Link to="/mentions-legales" className="hover:text-brand-blue transition-colors">Mentions Légales</Link>
+                        <Link href="/cgu" className="hover:text-brand-blue transition-colors">CGU</Link>
+                        <Link href="/cgv" className="hover:text-brand-blue transition-colors">CGV</Link>
+                        <Link href="/confidentialite" className="hover:text-brand-blue transition-colors">Confidentialité</Link>
+                        <Link href="/mentions-legales" className="hover:text-brand-blue transition-colors">Mentions Légales</Link>
                     </p>
                 </div>
             </div>

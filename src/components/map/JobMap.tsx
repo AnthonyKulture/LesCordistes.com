@@ -1,6 +1,8 @@
+'use client'
+
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { Job } from '../../types';
@@ -107,7 +109,7 @@ interface JobMapProps {
 }
 
 export const JobMap: React.FC<JobMapProps> = ({ jobs, height = '500px' }) => {
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     const jobsWithCoords: JobWithCoords[] = jobs
         .map(job => {
@@ -161,7 +163,7 @@ export const JobMap: React.FC<JobMapProps> = ({ jobs, height = '500px' }) => {
                                     </p>
                                 )}
                                 <button
-                                    onClick={() => job.slug && navigate(`/jobs/${job.slug}`)}
+                                    onClick={() => job.slug && router.push(`/jobs/${job.slug}`)}
                                     className="w-full text-xs bg-brand-blue text-white py-1.5 px-3 rounded-lg font-medium hover:bg-brand-blue/90 transition-colors"
                                 >
                                     Voir la mission →

@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../../lib/supabase';
 
@@ -8,7 +10,7 @@ interface JobUnlockersProps {
 }
 
 export const JobUnlockers: React.FC<JobUnlockersProps> = ({ jobId }) => {
-    const navigate = useNavigate();
+    const navigate = useRouter();
     const { data: pros, isLoading } = useQuery({
         queryKey: ['unlocked-pros', jobId],
         queryFn: async () => {
@@ -39,7 +41,7 @@ export const JobUnlockers: React.FC<JobUnlockersProps> = ({ jobId }) => {
                             key={pro.id}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                navigate(`/pros/${pro.id}`);
+                                router.push(`/pros/${pro.id}`);
                             }}
                             className="flex items-center gap-2 p-1 pr-3 bg-white border border-slate-100 rounded-full hover:border-brand-blue hover:shadow-sm transition-all group"
                             title="Voir le profil"

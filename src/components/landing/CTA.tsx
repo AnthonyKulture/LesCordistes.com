@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '../ui/Button';
 import type { User } from '@supabase/supabase-js';
 
@@ -24,14 +24,14 @@ export const CTA: React.FC<CTAProps> = ({ user }) => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                     {user ? (
-                        <Link to="/dashboard" className="w-full sm:w-auto">
+                        <Link href="/dashboard" className="w-full sm:w-auto">
                             <Button variant="primary" className="w-full text-lg py-4 px-8 shadow-2xl hover:scale-105 transition-transform">
                                 Aller au tableau de bord
                             </Button>
                         </Link>
                     ) : (
                         <>
-                            <Link to="/post-job" className="w-full sm:w-auto">
+                            <Link href="/post-job" className="w-full sm:w-auto">
                                 <Button 
                                     variant="primary" 
                                     className="w-full text-lg py-4 px-8 shadow-2xl hover:scale-105 transition-transform bg-white text-brand-blue hover:bg-slate-100 ring-4 ring-white/10"
@@ -39,7 +39,7 @@ export const CTA: React.FC<CTAProps> = ({ user }) => {
                                     Publier un projet gratuitement
                                 </Button>
                             </Link>
-                            <Link to="/inscription-cordiste" className="w-full sm:w-auto">
+                            <Link href="/inscription-cordiste" className="w-full sm:w-auto">
                                 <Button variant="outline" className="w-full text-lg py-4 px-8 border-2 border-white text-white hover:bg-white hover:text-slate-900 transition-all shadow-2xl">
                                     S'inscrire comme Pro
                                 </Button>

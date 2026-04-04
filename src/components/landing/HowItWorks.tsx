@@ -1,5 +1,7 @@
+'use client'
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowRight, Shield, Users } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -98,7 +100,7 @@ export const HowItWorks: React.FC = () => {
                             </div>
 
                             <div className="flex flex-col items-center gap-6 pt-10 border-t border-slate-100/50">
-                                <Link to="/post-job" className="w-full sm:w-auto">
+                                <Link href="/post-job" className="w-full sm:w-auto">
                                     <Button variant="primary" className="w-full sm:w-auto text-lg px-12 py-4 shadow-xl shadow-brand-blue/20 hover:shadow-brand-blue/30 transition-all rounded-full flex items-center justify-center">
                                         Publier un projet
                                         <ArrowRight size={20} className="ml-2" />
@@ -168,7 +170,7 @@ export const HowItWorks: React.FC = () => {
                                             <p className="text-slate-600 font-medium leading-relaxed mb-6">
                                                 Un imprévu, un chantier complexe ou un pic d'activité ? Trouvez un collaborateur qualifié en quelques clics.
                                             </p>
-                                            <Link to="/post-job?type=renfort_pro">
+                                            <Link href="/post-job?type=renfort_pro">
                                                 <Button variant="outline" className="border-orange-200 text-orange-700 hover:bg-orange-50 rounded-full px-8 py-3 font-bold transition-all">
                                                     Publier une demande de renfort
                                                     <ArrowRight size={18} className="ml-2" />

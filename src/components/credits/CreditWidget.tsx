@@ -1,9 +1,11 @@
+'use client'
+
 import React, { useState } from 'react';
 import { Coins, TrendingUp, TrendingDown, Clock, X, Zap, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useCredits } from '../../hooks/useCredits';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { CREDIT_PACKS } from '../../constants/creditPacks';
 import type { CreditTransaction } from '../../types';
 
@@ -121,7 +123,7 @@ interface CreditWidgetProps {
 export const CreditWidget: React.FC<CreditWidgetProps> = ({ compact = false }) => {
     const { balance, transactions, isLoading } = useCredits();
     const [showModal, setShowModal] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     if (isLoading) return null;
 
@@ -192,7 +194,7 @@ export const CreditWidget: React.FC<CreditWidgetProps> = ({ compact = false }) =
                         </div>
                         {transactions.length > 5 && (
                             <button
-                                onClick={() => navigate('/credits')}
+                                onClick={() => router.push('/credits')}
                                 className="mt-2 text-xs text-brand-blue hover:underline flex items-center gap-1"
                             >
                                 Voir tout l'historique <ExternalLink size={11} />

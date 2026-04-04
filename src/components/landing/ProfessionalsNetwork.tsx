@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -54,7 +54,7 @@ export const ProfessionalsNetwork: React.FC = () => {
                             ))}
                         </div>
 
-                        <Link to="/inscription-cordiste">
+                        <Link href="/inscription-cordiste">
                             <Button variant="primary" className="text-lg w-full sm:w-auto shadow-lg hover:shadow-slate-500/30">
                                 S'inscrire comme Pro
                                 <ArrowRight size={20} className="ml-2" />

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 
@@ -16,6 +18,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     const { profile } = useAuth();
     const [isSwitching, setIsSwitching] = useState(false);
     const [mode, setMode] = useState<DashboardMode>(() => {
+        if (typeof window === 'undefined') return 'worker';
         const saved = localStorage.getItem('dashboardMode');
         return (saved as DashboardMode) || 'worker';
     });
@@ -29,7 +32,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
     // Persist mode for pro users
     useEffect(() => {
-        if (profile?.role === 'pro' || profile?.role === 'admin') {
+        if (typeof window !== 'undefined' && (profile?.role === 'pro' || profile?.role === 'admin')) {
             localStorage.setItem('dashboardMode', mode);
         }
     }, [mode, profile]);

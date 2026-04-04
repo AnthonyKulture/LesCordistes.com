@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import { Lock, Coins, Check, Loader } from 'lucide-react';
 import { useCredits } from '../../hooks/useCredits';

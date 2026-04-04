@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lescordistes-next",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["/Users/anthony/Documents/Anthony/Projet Web/lescordistes/.claude/worktrees/bold-ride/node_modules/.bin/next", "dev", "--port", "3000"],
+      "port": 3000,
+      "cwd": "/Users/anthony/Documents/Anthony/Projet Web/lescordistes/.claude/worktrees/bold-ride"
+    }
+  ]
+}

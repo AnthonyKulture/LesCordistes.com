@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface AuthLayoutProps {
     children: React.ReactNode;
@@ -41,14 +41,14 @@ export function AuthLayout({
                         <nav className="px-6 sm:px-8 pt-8 pb-2" aria-label="Authentification navigation">
                             <div className="flex p-1 space-x-1 bg-slate-100/80 rounded-xl border border-slate-200/50">
                                 <Link 
-                                    to="/connexion"
+                                    href="/connexion"
                                     className={`w-full text-center py-2 text-sm font-semibold rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue ${authMode === 'login' ? 'bg-white text-brand-blue shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
                                     aria-current={authMode === 'login' ? 'page' : undefined}
                                 >
                                     Connexion
                                 </Link>
                                 <Link 
-                                    to="/inscription"
+                                    href="/inscription"
                                     className={`w-full text-center py-2 text-sm font-semibold rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-blue ${authMode === 'register' ? 'bg-white text-brand-blue shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
                                     aria-current={authMode === 'register' ? 'page' : undefined}
                                 >

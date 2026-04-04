@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Award, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import type { User } from '@supabase/supabase-js';
@@ -29,7 +29,7 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
 
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-5">
                             {user ? (
-                                <Link to="/dashboard" className="w-full sm:w-auto">
+                                <Link href="/dashboard" className="w-full sm:w-auto">
                                     <Button variant="primary" className="w-full sm:w-auto text-lg px-8 py-4 shadow-xl shadow-brand-blue/20 hover:shadow-brand-blue/30 transition-all rounded-full flex items-center justify-center">
                                         Accéder à mon tableau de bord
                                         <ArrowRight size={20} className="ml-2" />
@@ -37,13 +37,13 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                                 </Link>
                             ) : (
                                 <>
-                                    <Link to="/post-job" className="w-full sm:w-auto">
+                                    <Link href="/post-job" className="w-full sm:w-auto">
                                         <Button variant="primary" className="w-full sm:w-auto text-lg px-8 py-4 shadow-xl shadow-brand-blue/20 hover:shadow-brand-blue/30 transition-all rounded-full flex items-center justify-center">
                                             Publier un projet
                                             <ArrowRight size={20} className="ml-2" />
                                         </Button>
                                     </Link>
-                                    <Link to="/jobs" className="w-full sm:w-auto">
+                                    <Link href="/jobs" className="w-full sm:w-auto">
                                         <Button variant="outline" className="w-full sm:w-auto text-lg px-8 py-4 bg-brand-blue/5 border-brand-blue/20 text-brand-blue-light hover:bg-brand-blue/10 rounded-full flex items-center justify-center transition-all duration-300">
                                             Trouver des missions
                                         </Button>

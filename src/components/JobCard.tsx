@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { MapPin, Calendar, Euro, Clock, Ruler, Lock, ChevronRight, ShieldCheck, HelpCircle } from 'lucide-react';
 import type { Job } from '../types';
 import { useAuth } from '../contexts/AuthContext';
@@ -22,7 +24,7 @@ const categoryConfig: Record<string, { label: string; emoji: string; color: stri
 export const JobCard: React.FC<JobCardProps> = ({ job }) => {
     const { user, profile } = useAuth();
     const { isJobUnlocked } = useCredits();
-    const navigate = useNavigate();
+    const navigate = useRouter();
 
     const cat = categoryConfig[job.category] || categoryConfig.other;
     const isPro = profile?.role === 'pro';
@@ -32,7 +34,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
     const daysAgo = Math.floor((Date.now() - new Date(job.created_at).getTime()) / 86400000);
 
     const handleClick = () => {
-        if (job.slug) navigate(`/jobs/${job.slug}`);
+        if (job.slug) router.push(`/jobs/${job.slug}`);
     };
 
     return (

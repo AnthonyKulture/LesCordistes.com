@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useMemo } from 'react';
 import { FileText, Sparkles, TrendingUp, AlertCircle } from 'lucide-react';
 import { Input } from '../ui/Input';

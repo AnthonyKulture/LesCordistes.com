@@ -1,6 +1,8 @@
+'use client'
+
 import React, { useState } from 'react';
-import { 
-  Tag, 
+import {
+  Tag,
   Eraser, 
   Construction, 
   BrickWall, 

@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
 import {
     LayoutDashboard,
@@ -23,15 +26,16 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
-    const location = useLocation();
-    const navigate = useNavigate();
+    ;
+    const navigate = useRouter();
+    const pathname = usePathname();
     const { user, profile, signOut } = useAuth();
     const { mode, setMode } = useDashboardMode();
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
     const handleSignOut = async () => {
         await signOut();
-        navigate('/');
+        router.push('/');
     };
 
     const menuItems = React.useMemo(() => {
@@ -115,12 +119,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <nav className="px-3 pt-6 space-y-1 overflow-y-auto h-[calc(100vh-210px)]">
                     {menuItems.map((item, idx) => {
                         const Icon = item.icon;
-                        const isActive = location.pathname === item.path && !(item as any).action;
+                        const isActive = pathname === item.path && !(item as any).action;
 
                         return (
                             <Link
                                 key={`${item.path}-${idx}`}
-                                to={item.path}
+                                href={tem.path}
                                 className={`
                                     relative flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 group
                                     ${isActive

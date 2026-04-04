@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Calendar, ShieldCheck, Check } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { TextArea } from '../ui/TextArea';
@@ -130,7 +130,7 @@ export const StepReinfortConditions: React.FC<Props> = ({ data, updateData, onNe
 
             <div className="pt-4 space-y-4">
                 <p className="text-[10px] text-slate-400 text-center leading-relaxed">
-                    En continuant, vous acceptez les <Link to="/cgu" className="underline hover:text-brand-blue transition-colors">CGU</Link> et les <Link to="/cgv" className="underline hover:text-brand-blue transition-colors">CGV</Link> de LesCordistes.com.
+                    En continuant, vous acceptez les <Link href="/cgu" className="underline hover:text-brand-blue transition-colors">CGU</Link> et les <Link href="/cgv" className="underline hover:text-brand-blue transition-colors">CGV</Link> de LesCordistes.com.
                 </p>
                 <button
                     onClick={onNext}

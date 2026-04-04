@@ -1,5 +1,7 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+'use client'
+
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '../contexts/AuthContext';
 
 interface ProtectedRouteProps {
@@ -12,6 +14,16 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     requireAdmin = false
 }) => {
     const { user, profile, loading } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!loading && !user) {
+            router.replace('/connexion');
+        }
+        if (!loading && user && requireAdmin && profile?.role !== 'admin') {
+            router.replace('/');
+        }
+    }, [loading, user, profile, requireAdmin, router]);
 
     if (loading) {
         return (
@@ -21,13 +33,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         );
     }
 
-    if (!user) {
-        return <Navigate to="/connexion" replace />;
-    }
-
-    if (requireAdmin && profile?.role !== 'admin') {
-        return <Navigate to="/" replace />;
-    }
+    if (!user) return null;
+    if (requireAdmin && profile?.role !== 'admin') return null;
 
     return <>{children}</>;
 };

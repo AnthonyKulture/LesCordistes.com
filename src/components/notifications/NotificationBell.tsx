@@ -1,6 +1,8 @@
+'use client'
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Bell, X, CheckCheck, Briefcase, Star, Coins, MessageCircle, Info, Zap } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useNotifications, type Notification } from '../../hooks/useNotifications';
 
 const notifIcons: Record<string, React.FC<any>> = {
@@ -62,7 +64,7 @@ function NotifItem({ notif, onClick }: { notif: Notification; onClick: (n: Notif
 export const NotificationBell: React.FC = () => {
     const { notifications, unreadCount, markAsRead, markAllRead } = useNotifications();
     const [open, setOpen] = useState(false);
-    const navigate = useNavigate();
+    const navigate = useRouter();
     const panelRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -77,7 +79,7 @@ export const NotificationBell: React.FC = () => {
 
     const handleNotifClick = (notif: Notification) => {
         if (!notif.read) markAsRead.mutate(notif.id);
-        if (notif.link) navigate(notif.link);
+        if (notif.link) router.push(notif.link);
         setOpen(false);
     };
 
@@ -137,7 +139,7 @@ export const NotificationBell: React.FC = () => {
                     {notifications.length > 0 && (
                         <div className="border-t border-slate-100 p-2">
                             <button
-                                onClick={() => { navigate('/notifications'); setOpen(false); }}
+                                onClick={() => { router.push('/notifications'); setOpen(false); }}
                                 className="w-full text-xs text-slate-500 hover:text-brand-blue py-1.5 transition-colors"
                             >
                                 Voir toutes les notifications →

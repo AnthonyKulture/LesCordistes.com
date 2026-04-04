@@ -1,5 +1,8 @@
+'use client'
+
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { 
     Menu, 
     X, 
@@ -27,8 +30,8 @@ export const Header: React.FC = () => {
     const { user, profile, signOut } = useAuth();
     const { mode, toggleMode, isSwitching } = useDashboardMode();
     const { globalUnreadCount } = useMessaging();
-    const navigate = useNavigate();
-    const location = useLocation();
+    const router = useRouter();
+    const pathname = usePathname();
 
     // Close profile dropdown when clicking outside
     useEffect(() => {
@@ -45,11 +48,11 @@ export const Header: React.FC = () => {
     useEffect(() => {
         setIsMenuOpen(false);
         setIsProfileOpen(false);
-    }, [location]);
+    }, [pathname]);
 
     const handleSignOut = async () => {
         await signOut();
-        navigate('/');
+        router.push('/');
     };
 
     const isPro = profile?.role === 'pro';
@@ -87,7 +90,7 @@ export const Header: React.FC = () => {
                 <div className="flex items-center justify-between h-24">
                     {/* LEFT: Logo & Secondary Nav */}
                     <div className="flex items-center gap-12 flex-shrink-0">
-                        <Link to="/" className="flex items-center">
+                        <Link href="/" className="flex items-center">
                             <img
                                 src="/lescordistes.comFichier 10.png"
                                 alt="LesCordistes Logo"
@@ -148,13 +151,13 @@ export const Header: React.FC = () => {
                         {!user ? (
                             <div className="flex items-center gap-4 border-r border-slate-100 pr-4 mr-2">
                                 <Link 
-                                    to="/connexion" 
+                                    href="/connexion" 
                                     className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-brand-blue transition-all px-3 py-2 rounded-xl hover:bg-slate-50 border-1 border-transparent hover:border-slate-100"
                                 >
                                     <User size={18} className="text-slate-400 group-hover:text-brand-blue" />
                                     Connexion
                                 </Link>
-                                <Link to="/jobs">
+                                <Link href="/jobs">
                                     <Button 
                                         variant="outline" 
                                         size="sm" 
@@ -167,7 +170,7 @@ export const Header: React.FC = () => {
                         ) : (
                             <div className="flex items-center gap-4 lg:gap-6 border-r border-slate-100 pr-4 mr-2">
                                 <Link 
-                                    to="/messages" 
+                                    href="/messages" 
                                     className="p-2 text-slate-500 hover:text-brand-blue transition-all hover:bg-slate-50 rounded-xl relative group"
                                     title="Messages"
                                 >
@@ -216,19 +219,19 @@ export const Header: React.FC = () => {
                                                     <p className="text-xs font-medium text-slate-500 truncate">{user.email}</p>
                                                 </div>
 
-                                                <Link to="/dashboard" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-colors font-bold text-sm">
+                                                <Link href="/dashboard" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-colors font-bold text-sm">
                                                     <LayoutDashboard size={18} />
                                                     Tableau de bord
                                                 </Link>
                                                 
                                                 {profile?.role === 'admin' && (
-                                                    <Link to="/admin" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-colors font-bold text-sm">
+                                                    <Link href="/admin" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-colors font-bold text-sm">
                                                         <Settings size={18} />
                                                         Administration
                                                     </Link>
                                                 )}
 
-                                                <Link to="/profile" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-colors font-bold text-sm">
+                                                <Link href="/profile" className="flex items-center gap-3 px-5 py-3 text-slate-600 hover:bg-slate-50 hover:text-brand-blue transition-colors font-bold text-sm">
                                                     <User size={18} />
                                                     Mon Profil
                                                 </Link>
@@ -254,7 +257,7 @@ export const Header: React.FC = () => {
                             <Button 
                                 variant={ctaVariant}
                                 size="sm"
-                                onClick={() => navigate(ctaUrl)}
+                                onClick={() => router.push(ctaUrl)}
                                 className={`flex items-center gap-2 font-bold px-6 shadow-lg shadow-brand-blue/10 ${
                                     ctaVariant === 'outline' 
                                     ? 'border-orange-200 text-orange-700 bg-orange-50/50 hover:bg-orange-50' 
@@ -321,7 +324,7 @@ export const Header: React.FC = () => {
                                 <div className="grid grid-cols-1 gap-4">
                                     {showHeaderCTA && (
                                         <Link 
-                                            to={ctaUrl} 
+                                            href={taUrl} 
                                             className={`flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm transition-all ${
                                                 ctaVariant === 'outline'
                                                 ? 'bg-orange-50 text-orange-700 border-2 border-orange-100'
@@ -332,11 +335,11 @@ export const Header: React.FC = () => {
                                             {ctaLabel}
                                         </Link>
                                     )}
-                                    <Link to="/messages" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
+                                    <Link href="/messages" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
                                         <MessageCircle size={20} />
                                         Messages
                                     </Link>
-                                    <Link to="/dashboard" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
+                                    <Link href="/dashboard" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
                                         <LayoutDashboard size={20} />
                                         Tableau de bord
                                     </Link>

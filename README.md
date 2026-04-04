@@ -1,152 +1,104 @@
-# LesCordistes.com - Marketplace Platform
+# LesCordistes.com
 
-A production-ready freemium SaaS marketplace connecting clients with rope access technicians (cordistes).
+Marketplace connectant clients et cordistes (techniciens travaux en hauteur).
+Stack : **Next.js 15 App Router · TypeScript · Supabase · Stripe · Tailwind CSS**
 
-## Features
-
-### For Clients
-- **Free Job Posting**: Post missions via a 5-step wizard without registration
-- **Multi-step Form**: Location, category, details, photos, and contact information
-- **Email Verification**: Jobs are validated by admin before going live
-
-### For Professionals (Cordistes)
-- **Free Tier**: Browse missions with basic information (title, city, description)
-- **Credit System**: Unlock leads using a pay-as-you-go credit model
-
-### Admin Dashboard
-- **Job Moderation**: Approve or reject pending missions
-- **User Management**: View registered professionals
-- **Protected Routes**: Admin-only access
+---
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS with custom Safety Orange (#FF6B00) branding
-- **Icons**: Lucide React
-- **Backend**: Supabase (PostgreSQL, Auth, Storage)
-- **State Management**: React Query (TanStack Query)
-- **Routing**: React Router v6
+| Couche | Technologie |
+|--------|-------------|
+| Framework | Next.js 15 (App Router) + React 19 |
+| Styling | Tailwind CSS (`#243355` Brand Blue / `#5B8DDB`) |
+| Backend | Supabase (PostgreSQL + Auth + Storage) |
+| Auth SSR | `@supabase/ssr` |
+| State | TanStack Query v5 |
+| Paiement | Stripe Checkout + Webhooks |
+| Email | Resend (via Supabase Edge Functions) |
+| Déploiement | Vercel |
 
-## Getting Started
+---
 
-### Prerequisites
+## Démarrage
 
-1. Create a Supabase project at [supabase.com](https://supabase.com)
-2. Copy `.env.example` to `.env.local` and add your Supabase credentials:
-   ```
-   VITE_SUPABASE_URL=your_project_url
-   VITE_SUPABASE_ANON_KEY=your_anon_key
-   ```
+### Prérequis
 
-### Database Setup
+1. Créer un projet Supabase sur [supabase.com](https://supabase.com)
+2. Créer `.env.local` :
 
-1. Go to your Supabase SQL Editor
-2. Run the SQL schema from `supabase-schema.sql`
-3. This will create:
-   - `profiles` table with RLS policies
-   - `jobs` table with RLS policies
-   - Storage bucket for job photos
-   - Automated triggers for profile creation
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_pk
+NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your_mapbox_token
+STRIPE_SECRET_KEY=your_stripe_sk
+STRIPE_WEBHOOK_SECRET=your_webhook_secret
+```
 
 ### Installation
 
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
+npm run dev        # http://localhost:3000
+npm run build      # Build production (286 pages SSG/SSR)
 ```
 
-## Project Structure
+---
+
+## Structure
 
 ```
 src/
-├── components/
-│   ├── ui/              # Reusable UI components
-│   ├── layout/          # Header, Footer
-│   ├── wizard/          # Job posting wizard steps
-│   ├── JobCard.tsx      # Job listing card with blur logic
-│   └── ProtectedRoute.tsx
-├── pages/
-│   ├── Landing.tsx      # Home page
-│   ├── JobBoard.tsx     # Marketplace
-│   ├── PostJob.tsx      # Job posting wizard
-│   ├── Login.tsx
-│   ├── Register.tsx
-│   ├── Profile.tsx
-│       └── Credits.tsx
-│   └── admin/
-│       └── Dashboard.tsx
-├── hooks/
-│   └── useAuth.ts       # Authentication hook
-├── lib/
-│   ├── supabase.ts      # Supabase client
-│   └── database.types.ts
-├── types/
-│   └── index.ts         # TypeScript types
-├── App.tsx              # Router setup
-└── main.tsx             # Entry point
+├── app/               # Pages Next.js App Router
+│   ├── (seo)/         # 258 pages SEO statiques (SSG)
+│   ├── (protected)/   # Routes auth-requises
+│   └── api/           # Route Handlers (Stripe)
+├── components/        # Composants UI réutilisables
+├── views/             # Vues complètes ('use client')
+├── contexts/          # AuthContext, DashboardContext
+├── lib/               # Clients Supabase (browser/server/legacy)
+└── constants/         # Données SEO (villes, services, lexique)
 ```
 
-## Key Features Implementation
+---
 
-### Blur Logic for Non-Subscribers
+## Fonctionnalités
 
-The `JobCard` component conditionally renders contact information:
-- **Not logged in**: Shows blurred placeholder with "Register" CTA
-- **Pro user (Locked)**: Shows blurred placeholder with "Unlock Lead" button (1 credit)
-- **Pro user (Unlocked)**: Shows full contact details (name, email, phone, address)
+### Pour les Clients
+- Dépôt de mission via wizard 5 étapes (sans inscription requise)
+- Validation par email + modération admin
 
-### Row Level Security (RLS)
+### Pour les Pros (Cordistes)
+- Browse missions gratuit (titre, ville, description)
+- **Système Crédits** : 1 crédit = accès coordonnées complètes
+- Packs : Starter 5cr/50€ · Pro 10cr/90€ · Business 20cr/160€
 
-Supabase RLS policies ensure:
-- Everyone can view live jobs (basic info)
-- Only professionals who unlocked the lead can access `client_contact_info`
-- Only admins can approve/reject jobs
-- Users can only update their own profiles
+### SEO Programmatique
+- 23 pages villes (`/cordiste-[ville]`)
+- 230 pages ville×service (`/cordiste-[ville]/[service]`)
+- 5 articles lexique (`/lexique/[slug]`)
+- JSON-LD schemas, 301 redirects depuis l'ancien WordPress
 
-### Multi-Step Wizard
+### Admin
+- Modération annonces (`pending` → `live` / `rejected`)
+- Gestion utilisateurs
 
-The job posting wizard includes:
-1. **Location**: City, department, address
-2. **Category**: Visual selection with icons
-3. **Details**: Title, description, height, difficulty
-4. **Photos**: Drag & drop upload (max 5)
-5. **Contact**: Name, email, phone with validation
+---
 
-## Environment Variables
+## Créer un admin
 
-```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```sql
+UPDATE profiles SET role = 'admin' WHERE email = 'votre@email.com';
 ```
 
-## Credit Model
+---
 
-- **Free**: Browse missions, see basic info
-- **Unlock Lead (1 credit)**: 
-  - Full contact details
-  - Direct messaging
-- **Credit Packs**:
-  - 5 credits: 45€
-  - 10 credits: 80€
-  - 20 credits: 140€
+## RLS Supabase
 
-## Admin Access
+- `client_contact_info` : inaccessible sans lead débloqué au niveau SQL
+- Middleware Next.js : refresh JWT Supabase sur chaque requête
 
-To create an admin user:
-1. Register a normal account
-2. In Supabase, update the `profiles` table:
-   ```sql
-   UPDATE profiles 
-   SET role = 'admin' 
-   WHERE email = 'your@email.com';
-   ```
+---
 
-## License
-
-MIT
+*Dernière mise à jour : 3 Avril 2026*

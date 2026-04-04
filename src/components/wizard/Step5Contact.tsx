@@ -1,6 +1,8 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { User, CheckCircle, ArrowRight, Mail, Phone, UserCircle, ChevronLeft, ShieldCheck, Check } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
 import { GoogleSignInButton } from '../GoogleSignInButton';
@@ -310,7 +312,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         </div>
                         <p className="text-xs text-green-900 leading-relaxed font-bold text-left">
                             J'accepte que mes coordonnées soient transmises aux professionnels sélectionnés pour répondre à ma demande *
-                            <Link to="/confidentialite" className="text-green-700 underline ml-2 font-normal">En savoir plus</Link>
+                            <Link href="/confidentialite" className="text-green-700 underline ml-2 font-normal">En savoir plus</Link>
                         </p>
                     </div>
                 </div>
@@ -389,7 +391,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                     </div>
                     <p className="text-[11px] text-green-900 leading-relaxed font-bold">
                         J'accepte que mes coordonnées soient transmises aux professionnels sélectionnés *
-                        <Link to="/confidentialite" className="text-green-700 underline ml-2 font-normal">Détails</Link>
+                        <Link href="/confidentialite" className="text-green-700 underline ml-2 font-normal">Détails</Link>
                     </p>
                 </div>
             </div>

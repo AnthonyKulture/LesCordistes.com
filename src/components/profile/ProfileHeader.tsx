@@ -1,6 +1,6 @@
 import React from 'react';
 import { User, Briefcase, Eye } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '../ui/Button';
 import type { Profile } from '../../types';
 
@@ -44,7 +44,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
                 <div className="flex items-center gap-3">
                     <Link
-                        to={profile?.role === 'pro' ? '/dashboard/pro' : '/dashboard/client'}
+                        href={rofile?.role === 'pro' ? '/dashboard/pro' : '/dashboard/client'}
                         className="flex items-center gap-1.5 text-sm text-brand-blue hover:underline"
                     >
                         <Briefcase size={16} />
@@ -52,7 +52,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                     </Link>
                     {isPro && (
                         <Link
-                            to={`/pros/${profile.id}`}
+                            href={`/pros/${profile.id}`}
                             className="flex items-center gap-1.5 text-sm text-brand-blue hover:underline"
                         >
                             <Eye size={16} />

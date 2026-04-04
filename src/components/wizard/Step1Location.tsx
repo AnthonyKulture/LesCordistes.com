@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Loader, CheckCircle2, Search, X } from 'lucide-react';
 import { Input } from '../ui/Input';
@@ -26,7 +28,7 @@ export const Step1Location: React.FC<Step1Props> = ({ data, updateData, onNext }
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+    const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
     // Debounced search for addresses using Mapbox Geocoding API (v5) for robust France & Monaco support
     useEffect(() => {

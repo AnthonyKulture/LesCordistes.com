@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { PRIORITY_CITIES } from '../../constants/seoData';
 
 export const SEOInternalLinks: React.FC<{ currentCitySlug?: string }> = ({ currentCitySlug }) => {
@@ -27,7 +27,7 @@ export const SEOInternalLinks: React.FC<{ currentCitySlug?: string }> = ({ curre
                 {linkedCities.map(city => (
                     <Link 
                         key={city.slug} 
-                        to={`/cordiste-${city.slug}`}
+                        href={`/cordiste-${city.slug}`}
                         className="text-sm bg-white border border-slate-200 text-slate-700 hover:text-brand-blue hover:border-brand-blue px-3 py-1.5 rounded-full transition-colors"
                     >
                         Cordiste à {city.name}
@@ -36,7 +36,7 @@ export const SEOInternalLinks: React.FC<{ currentCitySlug?: string }> = ({ curre
             </div>
             
             <div className="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center text-sm">
-                <Link to="/lexique" className="text-slate-500 hover:text-brand-blue flex items-center gap-2 transition-colors font-medium">
+                <Link href="/lexique" className="text-slate-500 hover:text-brand-blue flex items-center gap-2 transition-colors font-medium">
                     <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-500 flex justify-center items-center text-xs font-bold font-serif leading-none">i</span>
                     Consulter le Dictionnaire Officiel de l'Accès Difficile
                 </Link>

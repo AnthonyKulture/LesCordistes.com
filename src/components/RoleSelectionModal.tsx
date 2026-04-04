@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import { User, Briefcase } from 'lucide-react';
 import { Button } from './ui/Button';
