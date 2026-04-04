@@ -11,7 +11,6 @@ import { useAuth } from '../contexts/AuthContext';
 import { useCredits } from '../hooks/useCredits';
 import { useMessaging } from '../hooks/useMessaging';
 import type { Job } from '../types';
-import { Helmet } from 'react-helmet-async';
 
 // Extracted Components
 import { JobHeader } from '../components/job-detail/JobHeader';
@@ -155,33 +154,7 @@ export const JobDetail: React.FC = () => {
 
     return (
         <>
-            <Helmet>
-                <title>{category} - {job.location_city || 'France'} | Mission Cordiste</title>
-                <meta name="description" content={`Découvrez la mission: ${job.title} en ${category}. Rejoignez LesCordistes.com pour accéder aux détails du chantier et proposer vos services.`} />
-                <link rel="canonical" href={`https://lescordistes.com/jobs/${job.slug}`} />
-                <script type="application/ld+json">
-                    {JSON.stringify({
-                        "@context": "https://schema.org/",
-                        "@type": "JobPosting",
-                        "title": job.title,
-                        "description": job.description,
-                        "datePosted": job.created_at,
-                        "hiringOrganization": {
-                            "@type": "Organization",
-                            "name": job.client_type ? clientTypeLabels[job.client_type] || "Client Confidentiel" : "Client Confidentiel",
-                            "sameAs": "https://lescordistes.com"
-                        },
-                        "jobLocation": {
-                            "@type": "Place",
-                            "address": {
-                                "@type": "PostalAddress",
-                                "addressLocality": job.location_city || "France",
-                                "addressCountry": "FR"
-                            }
-                        }
-                    })}
-                </script>
-            </Helmet>
+            
 
             <div className="min-h-screen bg-slate-50">
                 <div className="container max-w-5xl py-6">

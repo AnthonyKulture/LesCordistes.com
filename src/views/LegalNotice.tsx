@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Building2, Globe, Shield, Scale, Info, MapPin } from 'lucide-react';
 
@@ -79,13 +78,7 @@ export const LegalNotice: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 py-16 px-4">
-            <Helmet>
-                <title>Mentions Légales - LesCordistes.com</title>
-                <meta name="description" content="Informations légales concernant l'éditeur et l'hébergeur du site LesCordistes.com." />
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
-            </Helmet>
+            
 
             <div className="max-w-4xl mx-auto">
                 <motion.div

@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useParams } from 'next/navigation'
 import Link from 'next/link';
 import { SEO_GLOSSARY, GLOSSARY_CATEGORIES } from '../../constants/seoGlossary';
@@ -29,12 +28,7 @@ export const GlossaryArticle: React.FC<Props> = ({ slugProp }) => {
 
     return (
         <div className="min-h-screen bg-slate-50 pt-24 pb-16">
-            <Helmet>
-                <title>{term.title} - Définition Travaux en Hauteur | LesCordistes</title>
-                <meta name="description" content={`Définition de ${term.title} : ${term.definition}. Comprendre les standards industriels du travail sur cordes et de l'accès difficile en sécurité.`} />
-                <link rel="canonical" href={`https://lescordistes.com/lexique/${term.slug}`} />
-                <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-            </Helmet>
+            
 
             <div className="container max-w-3xl">
                 <Link href="/lexique" className="inline-flex items-center text-brand-blue hover:text-brand-blue-light font-medium mb-10 group">

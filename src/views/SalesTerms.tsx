@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { CreditCard, Zap, ShieldCheck, HelpCircle, FileCheck, Euro, Scale } from 'lucide-react';
 
@@ -43,13 +42,7 @@ export const SalesTerms: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 py-16 px-4">
-            <Helmet>
-                <title>Conditions Générales de Vente (CGV) - LesCordistes.com</title>
-                <meta name="description" content="Consultez les CGV de LesCordistes.com pour l'achat de packs de crédits, le barème de consommation et les garanties de modération des leads." />
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
-            </Helmet>
+            
 
             <div className="max-w-4xl mx-auto">
                 <motion.div

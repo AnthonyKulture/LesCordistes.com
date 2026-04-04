@@ -3,7 +3,6 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'next/navigation'
 import Link from 'next/link';
-import { Helmet } from 'react-helmet-async';
 import { PRIORITY_CITIES, SEO_SERVICES, getLocalReviews } from '../../constants/seoData';
 import { getEditorialContent } from '../../constants/seoUniqueContent';
 import { TrustBadges } from '../../components/seo/TrustBadges';
@@ -94,15 +93,7 @@ export const CitySEOPage: React.FC<Props> = ({ citySlug: propCitySlug }) => {
 
     return (
         <div className="min-h-screen bg-white">
-            <Helmet>
-                <title>Cordiste {name} : Travaux en Hauteur & Accès Difficiles | LesCordistes</title>
-                <meta name="description" content={`Trouvez un cordiste qualifié à ${name} pour vos travaux en accès difficile. Devis gratuit sous 48h. Experts certifiés CQP/IRATA.`} />
-                <meta name="geo.region" content={`${codeISO}-${department}`} />
-                <meta name="geo.placename" content={name} />
-                <meta name="geo.position" content={`${lat};${lng}`} />
-                <link rel="canonical" href={`https://lescordistes.com/cordiste-${citySlug}`} />
-                <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-            </Helmet>
+            
 
             <div className="bg-slate-900 text-white pt-24 pb-16">
                 <div className="container max-w-4xl text-center">

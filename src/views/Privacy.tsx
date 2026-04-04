@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Shield, Lock, Eye, Clock, UserCheck, HardDrive, FileText, Mail } from 'lucide-react';
 
@@ -89,13 +88,7 @@ export const Privacy: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 py-16 px-4">
-            <Helmet>
-                <title>Politique de Confidentialité (RGPD) - LesCordistes.com</title>
-                <meta name="description" content="Découvrez comment LesCordistes.com protège vos données personnelles conformément au RGPD. Transparence, sécurité et contrôle de vos informations." />
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
-            </Helmet>
+            
 
             <div className="max-w-4xl mx-auto">
                 <motion.div

@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import Link from 'next/link';
 import { SEO_GLOSSARY, GLOSSARY_CATEGORIES } from '../../constants/seoGlossary';
 import { BookOpen } from 'lucide-react';
@@ -9,11 +8,7 @@ import { BookOpen } from 'lucide-react';
 export const GlossaryHub: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-50 pt-24 pb-16">
-            <Helmet>
-                <title>Le Lexique du Travail en Hauteur & Access Difficile | LesCordistes</title>
-                <meta name="description" content="Découvrez notre dictionnaire complet du travail sur cordes : CQP, IRATA, EPI, ancrages et réglementations. Le guide de référence des travaux en hauteur." />
-                <link rel="canonical" href="https://lescordistes.com/lexique" />
-            </Helmet>
+            
 
             <div className="container max-w-5xl">
                 <div className="text-center mb-16">

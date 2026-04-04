@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import Link from 'next/link';
 
 interface AuthLayoutProps {
@@ -21,12 +20,7 @@ export function AuthLayout({
 }: AuthLayoutProps) {
     return (
         <div className="flex flex-col items-center pt-8 sm:pt-16 pb-12 relative overflow-hidden bg-slate-50 flex-grow min-h-[calc(100vh-80px)]">
-            <Helmet>
-                <title>{seoTitle}</title>
-                <meta name="description" content={seoDescription} />
-                <link rel="canonical" href={seoCanonical} />
-                {jsonLd && <script type="application/ld+json">{jsonLd}</script>}
-            </Helmet>
+            
 
             {/* Éléments de design dynamique (Subtle modern aesthetics) */}
             <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-500 opacity-[0.05] blur-[100px] pointer-events-none" aria-hidden="true" />

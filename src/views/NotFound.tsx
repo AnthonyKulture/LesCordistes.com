@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import Link from 'next/link';
 import { Home, Search } from 'lucide-react';
 import { Button } from '../components/ui/Button';
@@ -9,10 +8,7 @@ import { Button } from '../components/ui/Button';
 export const NotFound: React.FC = () => {
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center py-12">
-            <Helmet>
-                <title>Page introuvable | LesCordistes.com</title>
-                <meta name="robots" content="noindex" />
-            </Helmet>
+            
             <div className="container max-w-lg text-center">
                 <div className="text-8xl font-extrabold text-slate-200 mb-4">404</div>
                 <h1 className="text-3xl font-bold text-slate-900 mb-3">Page introuvable</h1>

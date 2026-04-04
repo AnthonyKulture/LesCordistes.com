@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Check } from 'lucide-react';
 import { Button } from '../components/ui/Button';
@@ -390,11 +389,7 @@ export const PostJob: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 py-6 sm:py-12">
-            <Helmet>
-                <title>Publier une mission | LesCordistes.com</title>
-                <meta name="description" content="Publiez gratuitement votre demande de travaux en hauteur ou votre recherche de renfort. Recevez des candidatures de cordistes certifiés." />
-                <link rel="canonical" href="https://lescordistes.com/post-job" />
-            </Helmet>
+            
             <div className="container max-w-3xl">
                 {/* Progress Bar */}
                 <div className="mb-8">

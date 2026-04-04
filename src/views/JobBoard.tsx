@@ -12,7 +12,6 @@ import { Button } from '../components/ui/Button';
 import { FRENCH_DEPARTMENTS } from '../constants/departments';
 import { CATEGORY_LABELS } from '../constants/categories';
 import type { Job } from '../types';
-import { Helmet } from 'react-helmet-async';
 
 const JobMap = lazy(() => import('../components/map/JobMap').then(m => ({ default: m.JobMap })));
 
@@ -80,11 +79,7 @@ export const JobBoard: React.FC = () => {
 
     return (
         <>
-        <Helmet>
-            <title>Missions Cordistes et Chantiers d'Accès Difficile | LesCordistes.com</title>
-            <meta name="description" content="Découvrez une large sélection d'annonces de travail en hauteur. Filtrez par spécialité : maçonnerie, peinture, nettoyage de façade sur corde." />
-            <link rel="canonical" href="https://lescordistes.com/jobs" />
-        </Helmet>
+        
         <div className="min-h-screen bg-slate-50 py-10">
             <div className="container max-w-7xl">
                 {/* Header */}

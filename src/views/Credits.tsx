@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Shield, HelpCircle, Building, Home, Factory, AlertTriangle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
@@ -63,11 +62,7 @@ export const Credits: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 py-12">
-            <Helmet>
-                <title>Acheter des crédits | LesCordistes.com</title>
-                <meta name="description" content="Achetez des packs de crédits pour débloquer les coordonnées des clients et postuler aux missions de travaux en hauteur sur LesCordistes.com." />
-                <link rel="canonical" href="https://lescordistes.com/credits" />
-            </Helmet>
+            
             <div className="container max-w-5xl">
                 
                 {isCanceled && (

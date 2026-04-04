@@ -13,7 +13,6 @@ import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useMessaging } from '../hooks/useMessaging';
 import type { Profile, Review } from '../types';
-import { Helmet } from 'react-helmet-async';
 
 export const PublicProfile: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -126,36 +125,7 @@ export const PublicProfile: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50">
-            <Helmet>
-                <title>{seoTitle}</title>
-                <meta name="description" content={seoDesc} />
-                <link rel="canonical" href={`https://lescordistes.com/pros/${pro.id}`} />
-                <meta name="geo.placename" content={mainCity} />
-                <script type="application/ld+json">
-                    {JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": pro.company_name ? "LocalBusiness" : "Person",
-                        "name": pro.full_name || "Cordiste",
-                        "image": pro.portfolio_photos?.[0] || "https://lescordistes.com/logo.png",
-                        "description": pro.bio || `Cordiste professionnel spécialisé en travaux en hauteur à ${mainCity}`,
-                        "jobTitle": "Cordiste",
-                        "url": `https://lescordistes.com/pros/${pro.id}`,
-                        ...(pro.company_name && { "legalName": pro.company_name }),
-                        ...(avgRating && {
-                            "aggregateRating": {
-                                "@type": "AggregateRating",
-                                "ratingValue": avgRating,
-                                "reviewCount": reviews?.length || 1
-                            }
-                        }),
-                        "address": {
-                            "@type": "PostalAddress",
-                            "addressLocality": mainCity,
-                            "addressCountry": "FR"
-                        }
-                    })}
-                </script>
-            </Helmet>
+            
             {/* Breadcrumb */}
             <div className="bg-white border-b border-slate-100">
                 <div className="container max-w-4xl py-3">

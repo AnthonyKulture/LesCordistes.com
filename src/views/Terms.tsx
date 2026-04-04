@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Shield, Scale, Lock, CheckCircle, FileText, AlertTriangle } from 'lucide-react';
 
@@ -98,13 +97,7 @@ export const Terms: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 py-16 px-4">
-            <Helmet>
-                <title>Conditions Générales d’Utilisation (CGU) - LesCordistes.com</title>
-                <meta name="description" content="Consultez les CGU de LesCordistes.com. Notre rôle d'intermédiaire, vos engagements en sécurité et protection des données (RGPD)." />
-                <script type="application/ld+json">
-                    {JSON.stringify(schemaData)}
-                </script>
-            </Helmet>
+            
 
             <div className="max-w-4xl mx-auto">
                 <motion.div
