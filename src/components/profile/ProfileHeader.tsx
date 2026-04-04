@@ -44,7 +44,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
                 <div className="flex items-center gap-3">
                     <Link
-                        href={rofile?.role === 'pro' ? '/dashboard/pro' : '/dashboard/client'}
+                        href={profile.role === 'pro' ? '/dashboard/pro' : '/dashboard/client'}
                         className="flex items-center gap-1.5 text-sm text-brand-blue hover:underline"
                     >
                         <Briefcase size={16} />

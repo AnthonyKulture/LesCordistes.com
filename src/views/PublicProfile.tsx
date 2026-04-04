@@ -139,7 +139,7 @@ export const PublicProfile: React.FC = () => {
 
             <div className="container max-w-4xl py-8">
                 <button
-                    onClick={() => router.push(-1)}
+                    onClick={() => router.back()}
                     className="flex items-center gap-2 text-slate-600 hover:text-brand-blue mb-6 transition-colors"
                 >
                     <ArrowLeft size={20} />

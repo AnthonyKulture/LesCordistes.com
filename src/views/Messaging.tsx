@@ -164,7 +164,7 @@ export const MessagingPage: React.FC = () => {
     const { user } = useAuth();
     const { conversations, loadingConvos } = useMessaging();
     const [selected, setSelected] = useState<Conversation | null>(null);
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
     const conversationIdFromUrl = searchParams.get('id');
 
     useEffect(() => {

@@ -103,7 +103,7 @@ export const CitySEOPage: React.FC<Props> = ({ citySlug: propCitySlug }) => {
                     <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
                         Spécialistes des travaux en hauteur pour le nettoyage, la maintenance industrielle et le génie civil dans le secteur de {name}.
                     </p>
-                    <Link href="/post-job" state={{ type: 'standard' }}>
+                    <Link href="/post-job">
                         <Button size="lg" className="bg-brand-blue hover:bg-brand-blue-light text-white px-8 py-3 text-lg">
                             Publiez votre besoin en 3 min - Devis sous 48h
                         </Button>

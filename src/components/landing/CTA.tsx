@@ -4,7 +4,7 @@ import { Button } from '../ui/Button';
 import type { User } from '@supabase/supabase-js';
 
 interface CTAProps {
-    user: User | null;
+    user?: User | null;
 }
 
 export const CTA: React.FC<CTAProps> = ({ user }) => {

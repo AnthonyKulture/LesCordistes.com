@@ -33,13 +33,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const serviceData = SEO_SERVICES.find((s) => s.slug === serviceSlug)
     if (!city || !serviceData) return {}
 
+    const titleTemplate = serviceData.metaTitle?.replace('{city}', city.name)
+    const descTemplate = serviceData.metaDesc?.replace('{city}', city.name)
+
     return {
-        title: `${serviceData.name} à ${city.name} — Cordiste Certifié`,
-        description: `Besoin de ${serviceData.name.toLowerCase()} à ${city.name} ? Nos cordistes certifiés interviennent en accès difficile. Devis rapide, sécurité garantie CQP/IRATA.`,
+        title: titleTemplate || `${serviceData.name} à ${city.name} — Cordiste Certifié`,
+        description: descTemplate || `Besoin de ${serviceData.name.toLowerCase()} à ${city.name} ? Nos cordistes certifiés interviennent en accès difficile. Devis rapide, sécurité garantie CQP/IRATA.`,
         alternates: { canonical: `https://lescordistes.com/cordiste-${citySlug}/${serviceSlug}` },
         openGraph: {
-            title: `${serviceData.name} à ${city.name} — Intervention Cordiste`,
-            description: `Cordiste certifié pour ${serviceData.name.toLowerCase()} à ${city.name}. Devis sous 48h.`,
+            title: titleTemplate || `${serviceData.name} à ${city.name} — Intervention Cordiste`,
+            description: descTemplate || `Cordiste certifié pour ${serviceData.name.toLowerCase()} à ${city.name}. Devis sous 48h.`,
             url: `https://lescordistes.com/cordiste-${citySlug}/${serviceSlug}`,
         },
         other: {
@@ -64,6 +67,10 @@ export default async function CityServiceSEOPage({ params }: Props) {
     const { rating, count } = getLocalReviews(name, serviceName)
     const editorial = getEditorialContent(citySlug)
     const codeISO = country || 'FR'
+
+    const isGrandPublic = serviceData.cluster === 'grand_public'
+    const h1 = serviceData.h1Template?.replace('{city}', name) || `${serviceName} à ${name}`
+    const intro = serviceData.introTemplate?.replace('{city}', name) || description
 
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -95,11 +102,13 @@ export default async function CityServiceSEOPage({ params }: Props) {
                         </Link>
                     </div>
                     <h1 className="text-4xl md:text-5xl font-black mb-6">
-                        {serviceName} à {name} :{' '}
-                        <br />
-                        <span className="text-brand-blue-light">Intervention sur Cordes</span>
+                        {isGrandPublic ? (
+                            h1
+                        ) : (
+                            <>{serviceName} à {name} :{' '}<br /><span className="text-brand-blue-light">Intervention sur Cordes</span></>
+                        )}
                     </h1>
-                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">{description}</p>
+                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">{intro}</p>
                     <Link
                         href="/post-job"
                         className="inline-block bg-brand-blue hover:bg-brand-blue-light text-white px-8 py-3 text-lg font-bold rounded-xl transition-colors"

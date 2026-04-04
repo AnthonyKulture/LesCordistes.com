@@ -7,7 +7,7 @@ import { Button } from '../components/ui/Button';
 
 export const PaymentSuccess: React.FC = () => {
     const router = useRouter();
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
     const sessionId = searchParams.get('session_id');
 
     useEffect(() => {

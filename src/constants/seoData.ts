@@ -39,9 +39,13 @@ export interface SEOServiceCluster {
   id: string;
   slug: string;
   name: string;
-  cluster: 'urbain' | 'industriel' | 'genie_civil';
+  cluster: 'urbain' | 'industriel' | 'genie_civil' | 'grand_public';
   description: string;
   keywords: string[];
+  metaTitle?: string;
+  metaDesc?: string;
+  h1Template?: string;
+  introTemplate?: string;
 }
 
 export const SEO_SERVICES: SEOServiceCluster[] = [
@@ -129,6 +133,80 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     cluster: 'genie_civil',
     description: 'Dévégétalisation, purge rocheuse et pose de grillages de protection.',
     keywords: ['purge falaise', 'grillage pendelé', 'protection chutes de pierres', 'confortement rocheux', 'dévégétalisation']
+  },
+
+  // Grand public
+  {
+    id: 'ravalement-facade',
+    slug: 'ravalement-facade',
+    name: 'Ravalement de façade',
+    cluster: 'grand_public',
+    description: 'Rénovation complète de façades : nettoyage, enduits, peinture et traitement des fissures sans échafaudage.',
+    keywords: ['ravalement façade', 'devis ravalement', 'entreprise ravalement', 'façade peinture', 'enduit façade', 'nettoyage façade immeuble'],
+    metaTitle: 'Ravalement de Façade à {city} — Devis Gratuit Sous 48h',
+    metaDesc: 'Ravalement de façade à {city} par des techniciens spécialisés. Intervention sans échafaudage, devis gratuit sous 48h. Certifiés et assurés.',
+    h1Template: 'Ravalement de Façade à {city} : Intervention Sans Échafaudage',
+    introTemplate: 'Vous cherchez un professionnel pour le ravalement de votre façade à {city} ? Nos techniciens spécialisés en accès difficile interviennent sans nacelle ni échafaudage, ce qui réduit les coûts et les délais.'
+  },
+  {
+    id: 'nettoyage-toiture',
+    slug: 'nettoyage-toiture',
+    name: 'Nettoyage et démoussage de toiture',
+    cluster: 'grand_public',
+    description: 'Nettoyage haute pression, traitement antimousse et hydrofuge sur toutes toitures inaccessibles.',
+    keywords: ['nettoyage toiture', 'démoussage toit', 'traitement mousse toit', 'hydrofuge toiture', 'nettoyer toit', 'entretien toiture'],
+    metaTitle: 'Nettoyage Toiture à {city} — Démoussage & Traitement Hydrofuge',
+    metaDesc: 'Nettoyage et démoussage de toiture à {city}. Intervention rapide sans échafaudage. Traitement hydrofuge inclus. Devis gratuit.',
+    h1Template: 'Nettoyage & Démoussage de Toiture à {city}',
+    introTemplate: 'Votre toit est recouvert de mousse, de lichens ou de dépôts ? Nos spécialistes interviennent à {city} pour nettoyer, démoussage et traiter votre toiture, quelle que soit sa hauteur ou son accessibilité.'
+  },
+  {
+    id: 'couverture-reparation',
+    slug: 'couverture-reparation',
+    name: 'Couverture et réparation de toiture',
+    cluster: 'grand_public',
+    description: 'Réparation de fuites, remplacement de tuiles et ardoises sur toitures à forte pente ou inaccessibles.',
+    keywords: ['couvreur', 'réparation toiture', 'fuite toit', 'tuiles cassées', 'ardoise toiture', 'réparation charpente'],
+    metaTitle: 'Couverture & Réparation Toiture à {city} — Intervention Rapide',
+    metaDesc: 'Couvreur à {city} pour réparation de fuites, remplacement de tuiles et ardoises. Intervention rapide sans échafaudage. Devis gratuit.',
+    h1Template: 'Couverture & Réparation de Toiture à {city} : Intervention Sans Échafaudage',
+    introTemplate: 'Une fuite, des tuiles cassées ou une charpente fragilisée à {city} ? Nos couvreurs spécialisés interviennent en accès difficile pour réparer votre toiture rapidement, sans l\'installation coûteuse d\'un échafaudage.'
+  },
+  {
+    id: 'peinture-facade',
+    slug: 'peinture-facade',
+    name: 'Peinture de façade',
+    cluster: 'grand_public',
+    description: 'Application de peintures et traitements de protection sur façades de grande hauteur.',
+    keywords: ['peinture façade', 'peintre façadier', 'peinture immeuble', 'traitement façade', 'peinture extérieure hauteur'],
+    metaTitle: 'Peinture de Façade à {city} — Peintre Spécialisé Hauteur',
+    metaDesc: 'Peinture et ravalement de façade à {city} par des peintres spécialisés en hauteur. Rendu professionnel sans nacelle. Devis gratuit sous 48h.',
+    h1Template: 'Peinture de Façade à {city} : Résultat Professionnel en Hauteur',
+    introTemplate: 'Pour la peinture de votre façade à {city}, nos peintres spécialisés en travaux en hauteur garantissent un rendu impeccable, même sur des surfaces difficiles d\'accès, sans nacelle ni échafaudage encombrant.'
+  },
+  {
+    id: 'maconnerie-facade',
+    slug: 'maconnerie-facade',
+    name: 'Maçonnerie et joints de façade',
+    cluster: 'grand_public',
+    description: 'Reprise de joints, traitement des fissures et consolidation de façades en hauteur.',
+    keywords: ['maçonnerie façade', 'joints de façade', 'rejointoiement', 'fissure façade', 'consolidation façade', 'maçon hauteur'],
+    metaTitle: 'Maçonnerie & Joints de Façade à {city} — Spécialiste Hauteur',
+    metaDesc: 'Reprise de joints, fissures et maçonnerie de façade à {city}. Intervention en hauteur sans échafaudage. Devis gratuit.',
+    h1Template: 'Maçonnerie & Rejointoiement de Façade à {city}',
+    introTemplate: 'Des joints dégradés ou des fissures sur votre façade à {city} ? Nos maçons spécialisés en travaux en hauteur interviennent pour reprendre les joints, traiter les fissures et consolider vos façades sans nécessiter de structure d\'échafaudage lourde.'
+  },
+  {
+    id: 'isolation-exterieure',
+    slug: 'isolation-exterieure',
+    name: 'Isolation thermique par l\'extérieur (ITE)',
+    cluster: 'grand_public',
+    description: 'Pose de systèmes d\'isolation thermique sur bâtiments de grande hauteur sans échafaudage.',
+    keywords: ['isolation extérieure', 'ITE', 'isolation façade', 'isolation thermique extérieure', 'économie énergie façade'],
+    metaTitle: 'Isolation Extérieure (ITE) à {city} — Sans Échafaudage',
+    metaDesc: 'Isolation thermique par l\'extérieur à {city}. Nos spécialistes posent votre ITE sans échafaudage, économisant jusqu\'à 40% sur le budget. Devis gratuit.',
+    h1Template: 'Isolation Thermique par l\'Extérieur (ITE) à {city} Sans Échafaudage',
+    introTemplate: 'Réduisez vos factures d\'énergie avec une isolation thermique par l\'extérieur à {city}. Nos techniciens spécialisés posent votre ITE sans échafaudage traditionnel, ce qui peut réduire le coût global de votre projet jusqu\'à 40%.'
   }
 ];
 

@@ -13,7 +13,7 @@ export const Credits: React.FC = () => {
     const { user } = useAuth();
     const { balance } = useCredits();
     const router = useRouter();
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
     const isCanceled = searchParams.get('canceled') === 'true';
     const toast = useToast();
     const [isProcessing, setIsProcessing] = useState<string | null>(null);
@@ -77,7 +77,7 @@ export const Credits: React.FC = () => {
                             </div>
                         </div>
                         <button 
-                            onClick={() => router.push('/credits', { replace: true })}
+                            onClick={() => router.replace('/credits')}
                             className="text-xs font-bold uppercase tracking-widest hover:underline"
                         >
                             Fermer

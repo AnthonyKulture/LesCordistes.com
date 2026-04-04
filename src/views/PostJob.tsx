@@ -12,7 +12,7 @@ import { Step5Contact } from '../components/wizard/Step5Contact';
 import { StepReinfortTechnical } from '../components/wizard/StepReinfortTechnical';
 import { StepReinfortTrades } from '../components/wizard/StepReinfortTrades';
 import { StepReinfortConditions } from '../components/wizard/StepReinfortConditions';
-import { supabase, uploadJobPhoto } from '../lib/supabase';
+import { createSupabaseBrowserClient, uploadJobPhoto } from '../lib/supabase-browser';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ui/Toast';
 import { saveJobDraft, loadJobDraft, clearJobDraft } from '../lib/storage';
@@ -22,7 +22,7 @@ import type { JobFormData } from '../types';
 export const PostJob: React.FC = () => {
     const router = useRouter();
     const toast = useToast();
-    const { profile } = useAuth();
+    const { user: authUser, profile } = useAuth();
     const [currentStep, setCurrentStep] = useState(1);
     const [direction, setDirection] = useState(0); // For slide animation
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -133,6 +133,7 @@ export const PostJob: React.FC = () => {
     const handleSubmit = async (isNewUser?: boolean, userId?: string) => {
         setIsSubmitting(true);
         try {
+            const supabase = createSupabaseBrowserClient();
             // Create job ID for photo uploads
             const jobId = crypto.randomUUID();
 
@@ -155,8 +156,7 @@ export const PostJob: React.FC = () => {
                 photoUrls = results.filter((url): url is string => url !== null);
             }
 
-            // Get the current user
-            let { data: { user: authUser } } = await supabase.auth.getUser();
+            // Get the current user from AuthContext (session-aware)
             const currentUserId = userId || authUser?.id;
             
             // If new user (registration flow), wait a moment for the profile trigger/sync to complete
@@ -182,11 +182,7 @@ export const PostJob: React.FC = () => {
                 }
             }
 
-            // Refresh user session to get latest profile data
-            const { data: refreshData } = await supabase.auth.getUser();
-            const currentUser = refreshData.user;
-
-            const finalUserId = userId || currentUser?.id;
+            const finalUserId = userId || authUser?.id;
 
             // Insert job into database
             const jobData = {
@@ -246,7 +242,7 @@ export const PostJob: React.FC = () => {
             clearJobDraft();
 
             // Navigate to success page
-            router.push(`/job-success${isNewUser ? '?new=1' : ''}`, { state: { isNewUser, jobId } });
+            router.push(`/job-success${isNewUser ? '?new=1' : ''}`);
         } catch (error: any) {
             console.error('Full Error details:', error);
             const errorMessage = error.message || 'Une erreur est survenue lors de la soumission. Veuillez réessayer.';

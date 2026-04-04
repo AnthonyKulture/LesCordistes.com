@@ -2,6 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import type { Database } from './database.types'
 
+type CookieToSet = { name: string; value: string; options: Record<string, unknown> }
+
 // Appeler dans chaque Server Component / Route Handler — jamais au niveau module
 export async function createSupabaseServerClient() {
     const cookieStore = await cookies()
@@ -14,10 +16,10 @@ export async function createSupabaseServerClient() {
                 getAll() {
                     return cookieStore.getAll()
                 },
-                setAll(cookiesToSet) {
+                setAll(cookiesToSet: CookieToSet[]) {
                     try {
                         cookiesToSet.forEach(({ name, value, options }) =>
-                            cookieStore.set(name, value, options)
+                            cookieStore.set(name, value, options as Parameters<typeof cookieStore.set>[2])
                         )
                     } catch {
                         // Ignoré dans les Server Components (lecture seule)
@@ -30,7 +32,8 @@ export async function createSupabaseServerClient() {
 
 // Client admin avec service role — uniquement pour les Route Handlers serveur
 export function createSupabaseAdminClient() {
-    const { createClient } = require('@supabase/supabase-js')
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { createClient } = require('@supabase/supabase-js') as { createClient: typeof import('@supabase/supabase-js').createClient }
     return createClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.SUPABASE_SERVICE_ROLE_KEY!

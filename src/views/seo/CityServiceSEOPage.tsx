@@ -73,7 +73,7 @@ export const CityServiceSEOPage: React.FC<Props> = ({ citySlug: propCitySlug, se
                     <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
                         {description}
                     </p>
-                    <Link href="/post-job" state={{ type: 'standard' }}>
+                    <Link href="/post-job">
                         <Button size="lg" className="bg-brand-blue hover:bg-brand-blue-light text-white px-8 py-3 text-lg">
                             Demander un devis pour {serviceName.toLowerCase()}
                         </Button>

@@ -5,7 +5,7 @@ import { Button } from '../ui/Button';
 import type { User } from '@supabase/supabase-js';
 
 interface HeroProps {
-    user: User | null;
+    user?: User | null;
 }
 
 export const Hero: React.FC<HeroProps> = ({ user }) => {

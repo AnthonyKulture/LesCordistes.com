@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '../../lib/supabase';
+import { createSupabaseBrowserClient } from '../../lib/supabase-browser';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../components/ui/Toast';
 import { DashboardLayout } from '../../components/DashboardLayout';
@@ -28,6 +28,7 @@ export function ClientDashboard() {
     const { mode } = useDashboardMode();
     const { user } = useAuth();
     const toast = useToast();
+    const supabase = createSupabaseBrowserClient();
     const queryClient = useQueryClient();
     const [deletingJobId, setDeletingJobId] = useState<string | null>(null);
     const [completingJob, setCompletingJob] = useState<Job | null>(null);
