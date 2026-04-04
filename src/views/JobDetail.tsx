@@ -243,7 +243,7 @@ export const JobDetail: React.FC = () => {
                             unlockCount={unlockCount || 0}
                             refetchUnlockCount={refetchUnlockCount}
                             startConversation={startConversation}
-                            navigate={navigate}
+                            navigate={(path: string) => navigate.push(path)}
                         />
                     </div>
                 </div>
