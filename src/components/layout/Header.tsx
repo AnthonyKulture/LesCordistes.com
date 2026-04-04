@@ -324,7 +324,7 @@ export const Header: React.FC = () => {
                                 <div className="grid grid-cols-1 gap-4">
                                     {showHeaderCTA && (
                                         <Link 
-                                            href={taUrl} 
+                                            href={ctaUrl}
                                             className={`flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm transition-all ${
                                                 ctaVariant === 'outline'
                                                 ? 'bg-orange-50 text-orange-700 border-2 border-orange-100'
