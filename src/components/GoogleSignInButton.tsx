@@ -24,7 +24,7 @@ export function GoogleSignInButton({ mode = 'signin', redirectTo, onBeforeClick,
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: redirectTo || window.location.origin,
+                    redirectTo: redirectTo || `${window.location.origin}/auth/callback`,
                     queryParams: {
                         access_type: 'offline',
                         prompt: 'consent',
