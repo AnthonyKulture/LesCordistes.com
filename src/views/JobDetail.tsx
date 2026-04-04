@@ -163,7 +163,7 @@ export const JobDetail: React.FC = () => {
                         <Link href="/" className="hover:text-brand-blue">Accueil</Link>
                         <ChevronRight size={14} />
                         <Link 
-                            href={sOwner || profile?.role === 'client' ? "/dashboard" : "/jobs"} 
+                            href={isOwner || profile?.role === 'client' ? "/dashboard" : "/jobs"}
                             className="hover:text-brand-blue"
                         >
                             {isOwner || profile?.role === 'client' ? "Tableau de bord" : "Missions"}
