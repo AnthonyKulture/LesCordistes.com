@@ -87,7 +87,8 @@ export const PostJob: React.FC = () => {
 
         // Handle return from email confirmation
         if (params.get('confirmed') === 'true') {
-            setCurrentStep(isRenfort ? 7 : 5);
+            const isRenfortDraft = draft?.type === 'renfort_pro';
+            setCurrentStep(isRenfortDraft ? 7 : 5);
             toast.success("Compte activé ! Vous pouvez maintenant publier votre mission.");
         }
     }, []);

@@ -104,7 +104,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                             phone: data.contact_phone,
                             client_type: data.client_type,
                         },
-                        emailRedirectTo: `${window.location.origin}/post-job?confirmed=true`,
+                        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/post-job?confirmed=true')}`,
                     },
                 });
                 
@@ -165,11 +165,12 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         Vérifiez votre boîte mail !
                     </h3>
                     <p className="text-slate-600 mb-6">
-                        Un lien de confirmation a été envoyé à <strong className="text-slate-900">{registeredEmail}</strong>. 
-                        Cliquez dessus pour activer votre compte et publier votre mission automatiquement.
+                        Un lien de confirmation a été envoyé à <strong className="text-slate-900">{registeredEmail}</strong>.
+                        Cliquez dessus pour activer votre compte.
                     </p>
-                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 text-sm text-slate-500 mb-6">
-                        <p>Une fois l'email confirmé, vous serez redirigé ici pour finaliser l'envoi de votre mission en un clic.</p>
+                    <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 text-sm text-blue-800 mb-6 space-y-1">
+                        <p className="font-semibold">Votre brouillon est conservé.</p>
+                        <p>Après confirmation, vous serez redirigé sur cette page avec votre session active. Il vous suffira de cliquer sur <strong>« Publier ma mission »</strong>.</p>
                     </div>
                     <Button 
                         variant="outline" 
