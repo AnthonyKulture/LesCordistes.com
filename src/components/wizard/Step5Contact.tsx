@@ -26,9 +26,18 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
     const [isLogin, setIsLogin] = useState(false);
     const [authLoading, setAuthLoading] = useState(false);
     const [needsConfirmation, setNeedsConfirmation] = useState(false);
+    const [pendingSubmit, setPendingSubmit] = useState(false);
     const [registeredEmail, setRegisteredEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState<Record<string, string>>({});
+
+    // Auto-submit when email confirmed in another tab
+    useEffect(() => {
+        if (needsConfirmation && user && !pendingSubmit) {
+            setPendingSubmit(true);
+            onSubmit(true, user.id);
+        }
+    }, [user, needsConfirmation]);
 
     // Auto-fill contact info from profile when logged in
     useEffect(() => {
@@ -170,7 +179,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                     </p>
                     <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 text-sm text-blue-800 mb-6 space-y-1">
                         <p className="font-semibold">Votre brouillon est conservé.</p>
-                        <p>Après confirmation, vous serez redirigé sur cette page avec votre session active. Il vous suffira de cliquer sur <strong>« Publier ma mission »</strong>.</p>
+                        <p>Laissez cette page ouverte — dès que vous aurez cliqué sur le lien, votre mission sera publiée automatiquement.</p>
                     </div>
                     <Button 
                         variant="outline" 
