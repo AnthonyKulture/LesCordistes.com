@@ -23,12 +23,12 @@ interface Step5Props {
 export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit, isSubmitting, onBack }) => {
     const { user, profile } = useAuth();
     const toast = useToast();
-    const [isLogin, setIsLogin] = useState(false);
     const [authLoading, setAuthLoading] = useState(false);
     const [needsConfirmation, setNeedsConfirmation] = useState(false);
     const [pendingSubmit, setPendingSubmit] = useState(false);
     const [registeredEmail, setRegisteredEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [showManualLogin, setShowManualLogin] = useState(false);
+    const [manualPassword, setManualPassword] = useState('');
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     // Auto-submit when email confirmed in another tab
@@ -50,12 +50,9 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         }
     }, [user, profile]);
 
-    const validate = () => {
+    const validateContact = () => {
         const newErrors: Record<string, string> = {};
-
-        if (!data.contact_name?.trim()) {
-            newErrors.contact_name = 'Le nom est requis';
-        }
+        if (!data.contact_name?.trim()) newErrors.contact_name = 'Le nom est requis';
         if (!data.contact_email?.trim()) {
             newErrors.contact_email = 'L\'email est requis';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.contact_email)) {
@@ -66,85 +63,68 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         } else if (!/^[\d\s+()-]{10,}$/.test(data.contact_phone)) {
             newErrors.contact_phone = 'Numéro de téléphone invalide';
         }
-
-        if (!user && !password) {
-            newErrors.password = 'Un mot de passe est requis pour créer votre compte';
-        } else if (!user && password.length < 6) {
-            newErrors.password = 'Le mot de passe doit faire au moins 6 caractères';
-        }
-
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleAuthAndSubmit = async (e: React.FormEvent) => {
+    const handleMagicLink = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!validate()) return;
-
-        if (user) {
-            onSubmit(false, user.id);
+        if (!validateContact()) return;
+        if (!data.consent_sharing) {
+            toast.error('Veuillez accepter la transmission de vos coordonnées');
             return;
         }
 
         setAuthLoading(true);
-        if (!data.consent_sharing) {
-            toast.error('Veuillez accepter la transmission de vos coordonnées');
+        try {
+            const { error } = await supabase.auth.signInWithOtp({
+                email: data.contact_email!,
+                options: {
+                    data: {
+                        full_name: data.contact_name,
+                        role: data.type === 'renfort_pro' ? 'pro' : 'client',
+                        phone: data.contact_phone,
+                        client_type: data.client_type,
+                    },
+                    emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/post-job?confirmed=true')}`,
+                },
+            });
+
+            if (error) {
+                if (error.message.includes('rate limit')) {
+                    toast.error('Trop de tentatives. Veuillez patienter quelques minutes.');
+                    return;
+                }
+                throw error;
+            }
+
+            setRegisteredEmail(data.contact_email!);
+            setNeedsConfirmation(true);
+        } catch (error: any) {
+            console.error('Auth error:', error);
+            toast.error(error.message || 'Erreur lors de l\'envoi du lien.');
+        } finally {
             setAuthLoading(false);
+        }
+    };
+
+    const handleManualLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!data.contact_email?.trim() || !manualPassword) {
+            toast.error('Email et mot de passe requis');
             return;
         }
-
+        setAuthLoading(true);
         try {
-            if (isLogin) {
-                const { data: authData, error } = await supabase.auth.signInWithPassword({
-                    email: data.contact_email!,
-                    password,
-                });
-                if (error) throw error;
-                toast.success('Bon retour !');
-                onSubmit(false, authData.user?.id);
-            } else {
-                const { data: authData, error } = await supabase.auth.signUp({
-                    email: data.contact_email!,
-                    password,
-                    options: {
-                        data: {
-                            full_name: data.contact_name,
-                            role: data.type === 'renfort_pro' ? 'pro' : 'client',
-                            phone: data.contact_phone,
-                            client_type: data.client_type,
-                        },
-                        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/post-job?confirmed=true')}`,
-                    },
-                });
-                
-                if (error) {
-                    // Check for already registered error
-                    if (error.message.includes('already registered') || error.status === 422) {
-                        toast.error('Un compte existe déjà avec cet email. Connectez-vous !');
-                        setIsLogin(true); // Switch to login tab
-                        return;
-                    }
-                    if (error.message.includes('rate limit')) {
-                        toast.error('Trop de tentatives. Veuillez patienter ou utiliser un autre email.');
-                        return;
-                    }
-                    throw error;
-                }
-                
-                if (authData.session) {
-                    toast.success('Compte créé !');
-                    onSubmit(true, authData.user?.id);
-                } else {
-                    // Email confirmation is required
-                    setRegisteredEmail(data.contact_email!);
-                    setNeedsConfirmation(true);
-                    toast.success('Compte créé ! Veuillez confirmer votre email.');
-                }
-            }
+            const { data: authData, error } = await supabase.auth.signInWithPassword({
+                email: data.contact_email!,
+                password: manualPassword,
+            });
+            if (error) throw error;
+            toast.success('Bon retour !');
+            onSubmit(false, authData.user?.id);
         } catch (error: any) {
-            console.error('Auth error detail:', error);
-            const msg = error.message || 'Erreur d\'authentification';
-            toast.error(msg);
+            toast.error(error.message || 'Identifiants incorrects');
         } finally {
             setAuthLoading(false);
         }
@@ -155,10 +135,10 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
     };
 
-    // ─── Email Confirmation Needed ───
+    // ─── En attente de confirmation Magic Link ───
     if (needsConfirmation) {
         return (
-            <motion.div 
+            <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -174,46 +154,76 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         Vérifiez votre boîte mail !
                     </h3>
                     <p className="text-slate-600 mb-6">
-                        Un lien de confirmation a été envoyé à <strong className="text-slate-900">{registeredEmail}</strong>.
+                        Un lien magique a été envoyé à <strong className="text-slate-900">{registeredEmail}</strong>.
                         Cliquez dessus pour activer votre compte.
                     </p>
                     <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 text-sm text-blue-800 mb-6 space-y-1">
                         <p className="font-semibold">Votre brouillon est conservé.</p>
                         <p>Laissez cette page ouverte — dès que vous aurez cliqué sur le lien, votre mission sera publiée automatiquement.</p>
                     </div>
-                    <Button 
-                        variant="outline" 
-                        onClick={() => {
-                            setNeedsConfirmation(false);
-                            setIsLogin(true);
-                        }}
-                        className="w-full"
-                    >
-                        Se connecter manuellement
-                    </Button>
+
+                    <AnimatePresence>
+                        {showManualLogin ? (
+                            <motion.form
+                                key="manual"
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                onSubmit={handleManualLogin}
+                                className="space-y-3 text-left"
+                            >
+                                <Input
+                                    label="Mot de passe"
+                                    type="password"
+                                    placeholder="Votre mot de passe"
+                                    value={manualPassword}
+                                    onChange={(e) => setManualPassword(e.target.value)}
+                                    className="h-12"
+                                />
+                                <Button
+                                    variant="primary"
+                                    type="submit"
+                                    isLoading={authLoading}
+                                    className="w-full"
+                                >
+                                    Se connecter et publier
+                                </Button>
+                            </motion.form>
+                        ) : (
+                            <Button
+                                variant="outline"
+                                onClick={() => setShowManualLogin(true)}
+                                className="w-full"
+                            >
+                                J'ai déjà un mot de passe — me connecter
+                            </Button>
+                        )}
+                    </AnimatePresence>
                 </div>
             </motion.div>
         );
     }
 
     const handleLoggedInSubmit = () => {
-        if (!validate()) {
-            toast.error('Veuillez remplir les champs manquants (ex: téléphone) de votre profil.');
+        const newErrors: Record<string, string> = {};
+        if (!data.contact_name?.trim()) newErrors.contact_name = 'Le nom est requis';
+        if (!data.contact_phone?.trim()) newErrors.contact_phone = 'Le téléphone est requis';
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length > 0) {
+            toast.error('Veuillez remplir les champs manquants.');
             return;
         }
-        
         if (!data.consent_sharing) {
             toast.error('Veuillez accepter la transmission de vos coordonnées');
             return;
         }
-
         onSubmit(false, user!.id);
     };
 
-    // ─── Logged-in user: simplified confirmation ───
+    // ─── Utilisateur connecté ───
     if (user) {
         return (
-            <motion.div 
+            <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -307,7 +317,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         <div className="space-y-1">
                             <h4 className="font-bold text-green-900">Confidentialité & Sécurité (RGPD)</h4>
                             <p className="text-sm text-green-800 leading-relaxed opacity-90">
-                                Vos données sont protégées et ne seront <strong>jamais revendues</strong>. 
+                                Vos données sont protégées et ne seront <strong>jamais revendues</strong>.
                                 Seuls les professionnels qualifiés ayant débloqué votre mission peuvent y accéder.
                             </p>
                         </div>
@@ -354,9 +364,9 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         );
     }
 
-    // ─── Guest user: full form with registration/login ───
+    // ─── Visiteur non connecté ───
     return (
-        <motion.div 
+        <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -368,14 +378,8 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         <User className="text-brand-blue" size={28} />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-bold text-slate-900">
-                            {isLogin ? 'Bon retour !' : 'Dernière étape'}
-                        </h2>
-                        <p className="text-slate-600">
-                            {isLogin
-                                ? 'Connectez-vous pour finaliser la publication.'
-                                : 'Créez votre compte client pour gérer vos devis.'}
-                        </p>
+                        <h2 className="text-2xl font-bold text-slate-900">Dernière étape</h2>
+                        <p className="text-slate-600">Recevez un lien magique pour publier votre mission.</p>
                     </div>
                 </div>
             </div>
@@ -406,12 +410,11 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                 </div>
             </div>
 
-            <form onSubmit={handleAuthAndSubmit} className="space-y-6">
-                
+            <form onSubmit={handleMagicLink} className="space-y-6">
                 <div className="mb-2">
-                    <GoogleSignInButton 
-                        mode={isLogin ? 'signin' : 'signup'} 
-                        redirectTo={`${window.location.origin}/post-job`} 
+                    <GoogleSignInButton
+                        mode="signup"
+                        redirectTo={`${window.location.origin}/post-job`}
                         onBeforeClick={() => {
                             if (!data.consent_sharing) {
                                 toast.error('Veuillez accepter la transmission de vos coordonnées avant de continuer avec Google.');
@@ -429,26 +432,15 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <AnimatePresence mode="popLayout">
-                        {!isLogin && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                            >
-                                <Input
-                                    label="Nom complet *"
-                                    type="text"
-                                    placeholder="Ex: Jean Dupont"
-                                    value={data.contact_name || ''}
-                                    onChange={(e) => updateData({ contact_name: e.target.value })}
-                                    error={errors.contact_name}
-                                    className="h-12"
-                                />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                    
+                    <Input
+                        label="Nom complet *"
+                        type="text"
+                        placeholder="Ex: Jean Dupont"
+                        value={data.contact_name || ''}
+                        onChange={(e) => updateData({ contact_name: e.target.value })}
+                        error={errors.contact_name}
+                        className="h-12"
+                    />
                     <Input
                         label="Votre adresse email *"
                         type="email"
@@ -460,48 +452,15 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                     />
                 </div>
 
-                <AnimatePresence mode="popLayout">
-                    {!isLogin && (
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                        >
-                            <Input
-                                label="Téléphone *"
-                                type="tel"
-                                placeholder="+33 6 12 34 56 78"
-                                value={data.contact_phone || ''}
-                                onChange={(e) => updateData({ contact_phone: e.target.value })}
-                                error={errors.contact_phone}
-                                className="h-12"
-                            />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-
-                <div className="space-y-3">
-                    <Input
-                        label={isLogin ? "Mot de passe *" : "Choisissez un mot de passe *"}
-                        type="password"
-                        placeholder="Minimum 6 caractères"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        error={errors.password}
-                        className="h-12"
-                    />
-                    <div className="flex justify-between items-center px-1">
-                        <button
-                            type="button"
-                            onClick={() => setIsLogin(!isLogin)}
-                            className="text-sm text-brand-blue hover:text-blue-700 font-bold transition-colors"
-                        >
-                            {isLogin ? "Pas encore de compte ? S'inscrire" : "Déjà un compte ? Se connecter"}
-                        </button>
-                    </div>
-                </div>
-
-
+                <Input
+                    label="Téléphone *"
+                    type="tel"
+                    placeholder="+33 6 12 34 56 78"
+                    value={data.contact_phone || ''}
+                    onChange={(e) => updateData({ contact_phone: e.target.value })}
+                    error={errors.contact_phone}
+                    className="h-12"
+                />
 
                 <div className="pt-4 flex flex-col sm:flex-row gap-3">
                     {onBack && (
@@ -517,17 +476,17 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                     <Button
                         variant="primary"
                         type="submit"
-                        isLoading={isSubmitting || authLoading}
-                        disabled={isSubmitting || authLoading || !data.consent_sharing}
+                        isLoading={authLoading}
+                        disabled={authLoading || !data.consent_sharing}
                         className={`flex-grow h-16 text-xl font-bold transition-all ${
                             !data.consent_sharing ? 'opacity-50 grayscale cursor-not-allowed' : 'shadow-xl shadow-brand-blue/30 group'
                         }`}
                     >
-                        {isSubmitting || authLoading
-                            ? 'Traitement...'
-                            : isLogin
-                                ? 'Se connecter et publier'
-                                : 'Créer mon compte et publier'}
+                        {authLoading ? 'Envoi en cours...' : (
+                            <span className="flex items-center justify-center gap-2">
+                                Recevoir mon lien magique <Mail size={20} />
+                            </span>
+                        )}
                     </Button>
                 </div>
             </form>
