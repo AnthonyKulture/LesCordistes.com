@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { PRIORITY_CITIES, SEO_SERVICES, getLocalReviews, getServiceCityContext, DEFAULT_SERVICE_FAQS } from '@/constants/seoData'
+import { PRIORITY_CITIES, SEO_SERVICES, getServiceCityContext, DEFAULT_SERVICE_FAQS } from '@/constants/seoData'
 import { getEditorialContent } from '@/constants/seoUniqueContent'
 import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS } from '@/constants/seoConfig'
 import { TrustBadges } from '@/components/seo/TrustBadges'
@@ -65,7 +65,6 @@ export default async function CityServiceSEOPage({ params }: Props) {
 
     const { name, lat, lng, department, country } = cityData
     const { name: serviceName, description, keywords } = serviceData
-    const { rating, count } = getLocalReviews(name, serviceName)
     const editorial = getEditorialContent(citySlug)
     const serviceContext = getServiceCityContext(serviceSlug, citySlug)
     const faqs = serviceData.faqs ?? DEFAULT_SERVICE_FAQS

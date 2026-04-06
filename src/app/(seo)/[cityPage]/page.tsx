@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { PRIORITY_CITIES, SEO_SERVICES, getLocalReviews } from '@/constants/seoData'
+import { PRIORITY_CITIES, SEO_SERVICES } from '@/constants/seoData'
 import { getEditorialContent } from '@/constants/seoUniqueContent'
 import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS } from '@/constants/seoConfig'
 import { TrustBadges } from '@/components/seo/TrustBadges'
@@ -52,7 +52,6 @@ export default async function CitySEOPage({ params }: Props) {
     if (!cityData) notFound()
 
     const { name, lat, lng, region, department, country } = cityData
-    const { rating, count } = getLocalReviews(name)
     const editorial = getEditorialContent(citySlug)
     const codeISO = country || 'FR'
 
