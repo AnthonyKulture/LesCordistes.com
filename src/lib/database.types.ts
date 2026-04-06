@@ -14,6 +14,8 @@ export interface Database {
                     id: string
                     email: string
                     role: 'client' | 'pro' | 'admin'
+                    first_name: string | null
+                    last_name: string | null
                     full_name: string | null
                     phone: string | null
                     bio: string | null
@@ -35,6 +37,8 @@ export interface Database {
                     id: string
                     email: string
                     role?: 'client' | 'pro' | 'admin'
+                    first_name?: string | null
+                    last_name?: string | null
                     full_name?: string | null
                     phone?: string | null
                     bio?: string | null
@@ -54,6 +58,8 @@ export interface Database {
                     id?: string
                     email?: string
                     role?: 'client' | 'pro' | 'admin'
+                    first_name?: string | null
+                    last_name?: string | null
                     full_name?: string | null
                     phone?: string | null
                     bio?: string | null

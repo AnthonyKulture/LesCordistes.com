@@ -26,11 +26,19 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 <div className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                         <Input
-                            label="Nom complet"
-                            value={formData.full_name}
-                            onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                            placeholder="Jean Dupont"
+                            label="Prénom"
+                            value={formData.first_name}
+                            onChange={(e) => setFormData({ ...formData, first_name: e.target.value, full_name: [e.target.value, formData.last_name].filter(Boolean).join(' ') })}
+                            placeholder="Jean"
                         />
+                        <Input
+                            label="Nom"
+                            value={formData.last_name}
+                            onChange={(e) => setFormData({ ...formData, last_name: e.target.value, full_name: [formData.first_name, e.target.value].filter(Boolean).join(' ') })}
+                            placeholder="Dupont"
+                        />
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-4">
                         <Input
                             label="Téléphone"
                             value={formData.phone}
@@ -96,9 +104,15 @@ export const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 <div className="space-y-4 text-slate-700">
                     <div className="grid sm:grid-cols-2 gap-4">
                         <div>
-                            <p className="text-xs text-slate-400 mb-0.5">Nom complet</p>
-                            <p className="font-medium">{profile.full_name || <span className="text-slate-400 italic">Non renseigné</span>}</p>
+                            <p className="text-xs text-slate-400 mb-0.5">Prénom</p>
+                            <p className="font-medium">{profile.first_name || <span className="text-slate-400 italic">Non renseigné</span>}</p>
                         </div>
+                        <div>
+                            <p className="text-xs text-slate-400 mb-0.5">Nom</p>
+                            <p className="font-medium">{profile.last_name || <span className="text-slate-400 italic">Non renseigné</span>}</p>
+                        </div>
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-4">
                         <div>
                             <p className="text-xs text-slate-400 mb-0.5">Téléphone</p>
                             <p className="font-medium">{profile.phone || <span className="text-slate-400 italic">Non renseigné</span>}</p>

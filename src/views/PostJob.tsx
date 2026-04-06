@@ -165,16 +165,26 @@ export const PostJob: React.FC = () => {
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
 
-            // Sync profile fields — toujours pour le téléphone, et pour les nouveaux users
-            // on force le rôle et le nom (signInWithOtp ne passe pas les metadata au trigger)
+            // Sync profile fields — phone toujours, role/full_name pour les nouveaux comptes.
+            // "Nouveau compte" = isNewUser (cross-tab) OU ?confirmed=true dans l'URL (redirect flow).
+            // signInWithOtp ne passe pas les metadata au trigger Supabase, on force ici.
             if (currentUserId) {
+                const isFromConfirmRedirect = new URLSearchParams(window.location.search).get('confirmed') === 'true';
+                const shouldSyncIdentity = isNewUser || isFromConfirmRedirect;
+
+                const fullName = [formData.contact_first_name, formData.contact_last_name].filter(Boolean).join(' ');
                 const profileUpdate: Record<string, any> = {
                     phone: formData.contact_phone || null,
                     client_type: formData.client_type || null,
                 };
-                if (isNewUser) {
+                if (shouldSyncIdentity) {
                     profileUpdate.role = formData.type === 'renfort_pro' ? 'pro' : 'client';
-                    profileUpdate.full_name = formData.contact_name || null;
+                    if (formData.contact_first_name) profileUpdate.first_name = formData.contact_first_name;
+                    if (formData.contact_last_name) profileUpdate.last_name = formData.contact_last_name;
+                    if (fullName) profileUpdate.full_name = fullName;
+                    if (formData.type === 'renfort_pro' && formData.contact_company_name && !formData.is_auto_entrepreneur) {
+                        profileUpdate.company_name = formData.contact_company_name;
+                    }
                 }
                 const { error: profileError } = await (supabase
                     .from('profiles') as any)
@@ -211,9 +221,12 @@ export const PostJob: React.FC = () => {
                 status: 'pending',
                 created_by: finalUserId || null,
                 client_contact_info: {
-                    name: formData.contact_name || '',
+                    first_name: formData.contact_first_name || '',
+                    last_name: formData.contact_last_name || '',
+                    name: [formData.contact_first_name, formData.contact_last_name].filter(Boolean).join(' ') || '',
                     email: formData.contact_email || '',
                     phone: formData.contact_phone || '',
+                    ...(formData.contact_company_name && !formData.is_auto_entrepreneur ? { company_name: formData.contact_company_name } : {}),
                 },
                 // B2B fields
                 internal_reference: formData.internal_reference,

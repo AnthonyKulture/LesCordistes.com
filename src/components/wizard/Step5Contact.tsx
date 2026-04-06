@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { User, CheckCircle, ArrowRight, Mail, Phone, UserCircle, ChevronLeft, ShieldCheck, Check } from 'lucide-react';
+import { User, CheckCircle, ArrowRight, Mail, Phone, UserCircle, ChevronLeft, ShieldCheck, Check, Building2 } from 'lucide-react';
 import Link from 'next/link';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
@@ -31,6 +31,8 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
     const [manualPassword, setManualPassword] = useState('');
     const [errors, setErrors] = useState<Record<string, string>>({});
 
+    const isRenfort = data.type === 'renfort_pro';
+
     // Auto-submit when email confirmed in another tab
     useEffect(() => {
         if (needsConfirmation && user && !pendingSubmit) {
@@ -43,7 +45,13 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
     useEffect(() => {
         if (user && profile) {
             const updates: Partial<JobFormData> = {};
-            if (!data.contact_name && profile.full_name) updates.contact_name = profile.full_name;
+            if (!data.contact_first_name && profile.first_name) updates.contact_first_name = profile.first_name;
+            if (!data.contact_last_name && profile.last_name) updates.contact_last_name = profile.last_name;
+            if (!data.contact_first_name && !data.contact_last_name && profile.full_name) {
+                const parts = profile.full_name.split(' ');
+                updates.contact_first_name = parts[0] || '';
+                updates.contact_last_name = parts.slice(1).join(' ') || '';
+            }
             if (!data.contact_email && (profile.email || user.email)) updates.contact_email = profile.email || user.email || '';
             if (!data.contact_phone && profile.phone) updates.contact_phone = profile.phone;
             if (Object.keys(updates).length > 0) updateData(updates);
@@ -52,7 +60,11 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
 
     const validateContact = () => {
         const newErrors: Record<string, string> = {};
-        if (!data.contact_name?.trim()) newErrors.contact_name = 'Le nom est requis';
+        if (!data.contact_first_name?.trim()) newErrors.contact_first_name = 'Le prénom est requis';
+        if (!data.contact_last_name?.trim()) newErrors.contact_last_name = 'Le nom est requis';
+        if (isRenfort && !data.is_auto_entrepreneur && !data.contact_company_name?.trim()) {
+            newErrors.contact_company_name = 'La dénomination commerciale est requise';
+        }
         if (!data.contact_email?.trim()) {
             newErrors.contact_email = 'L\'email est requis';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.contact_email)) {
@@ -75,14 +87,18 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
             return;
         }
 
+        const fullName = [data.contact_first_name, data.contact_last_name].filter(Boolean).join(' ');
+
         setAuthLoading(true);
         try {
             const { error } = await supabase.auth.signInWithOtp({
                 email: data.contact_email!,
                 options: {
                     data: {
-                        full_name: data.contact_name,
-                        role: data.type === 'renfort_pro' ? 'pro' : 'client',
+                        full_name: fullName,
+                        first_name: data.contact_first_name,
+                        last_name: data.contact_last_name,
+                        role: isRenfort ? 'pro' : 'client',
                         phone: data.contact_phone,
                         client_type: data.client_type,
                     },
@@ -206,7 +222,11 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
 
     const handleLoggedInSubmit = () => {
         const newErrors: Record<string, string> = {};
-        if (!data.contact_name?.trim()) newErrors.contact_name = 'Le nom est requis';
+        if (!data.contact_first_name?.trim()) newErrors.contact_first_name = 'Le prénom est requis';
+        if (!data.contact_last_name?.trim()) newErrors.contact_last_name = 'Le nom est requis';
+        if (isRenfort && !data.is_auto_entrepreneur && !data.contact_company_name?.trim()) {
+            newErrors.contact_company_name = 'La dénomination commerciale est requise';
+        }
         if (!data.contact_phone?.trim()) newErrors.contact_phone = 'Le téléphone est requis';
         setErrors(newErrors);
         if (Object.keys(newErrors).length > 0) {
@@ -219,6 +239,9 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         }
         onSubmit(false, user!.id);
     };
+
+    const displayFullName = profile?.full_name || [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || '';
+    const contactFullName = [data.contact_first_name, data.contact_last_name].filter(Boolean).join(' ');
 
     // ─── Utilisateur connecté ───
     if (user) {
@@ -242,24 +265,32 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {profile?.full_name ? (
+                    {displayFullName ? (
                         <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-1">
                             <div className="flex items-center gap-2 text-slate-400 text-xs font-bold uppercase tracking-wider">
                                 <UserCircle size={14} /> Nom
                             </div>
                             <span className="text-slate-900 font-semibold truncate">
-                                {data.contact_name || profile.full_name}
+                                {contactFullName || displayFullName}
                             </span>
                         </div>
                     ) : (
-                        <div className="col-span-1">
+                        <div className="col-span-1 grid grid-cols-2 gap-2">
                             <Input
-                                label="Nom Complet *"
+                                label="Prénom *"
                                 type="text"
-                                placeholder="Jean Dupont"
-                                value={data.contact_name || ''}
-                                onChange={(e) => updateData({ contact_name: e.target.value })}
-                                error={errors.contact_name}
+                                placeholder="Jean"
+                                value={data.contact_first_name || ''}
+                                onChange={(e) => updateData({ contact_first_name: e.target.value })}
+                                error={errors.contact_first_name}
+                            />
+                            <Input
+                                label="Nom *"
+                                type="text"
+                                placeholder="Dupont"
+                                value={data.contact_last_name || ''}
+                                onChange={(e) => updateData({ contact_last_name: e.target.value })}
+                                error={errors.contact_last_name}
                             />
                         </div>
                     )}
@@ -308,6 +339,32 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         </div>
                     )}
                 </div>
+
+                {isRenfort && (
+                    <div className="space-y-3">
+                        <div
+                            className="flex items-center gap-3 cursor-pointer"
+                            onClick={() => updateData({ is_auto_entrepreneur: !data.is_auto_entrepreneur })}
+                        >
+                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
+                                data.is_auto_entrepreneur ? 'bg-brand-blue border-brand-blue' : 'border-slate-300'
+                            }`}>
+                                {data.is_auto_entrepreneur && <Check size={12} strokeWidth={3} className="text-white" />}
+                            </div>
+                            <span className="text-sm font-medium text-slate-700">Je suis auto-entrepreneur (pas de société)</span>
+                        </div>
+                        {!data.is_auto_entrepreneur && (
+                            <Input
+                                label="Dénomination commerciale / Nom de l'entreprise *"
+                                type="text"
+                                placeholder="Ex: Cordistes Pro SAS"
+                                value={data.contact_company_name || ''}
+                                onChange={(e) => updateData({ contact_company_name: e.target.value })}
+                                error={errors.contact_company_name}
+                            />
+                        )}
+                    </div>
+                )}
 
                 <div className="bg-green-50/50 border border-green-100 rounded-2xl p-6 shadow-sm space-y-4 mb-4">
                     <div className="flex gap-4 text-left">
@@ -433,14 +490,53 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
-                        label="Nom complet *"
+                        label="Prénom *"
                         type="text"
-                        placeholder="Ex: Jean Dupont"
-                        value={data.contact_name || ''}
-                        onChange={(e) => updateData({ contact_name: e.target.value })}
-                        error={errors.contact_name}
+                        placeholder="Jean"
+                        value={data.contact_first_name || ''}
+                        onChange={(e) => updateData({ contact_first_name: e.target.value })}
+                        error={errors.contact_first_name}
                         className="h-12"
                     />
+                    <Input
+                        label="Nom *"
+                        type="text"
+                        placeholder="Dupont"
+                        value={data.contact_last_name || ''}
+                        onChange={(e) => updateData({ contact_last_name: e.target.value })}
+                        error={errors.contact_last_name}
+                        className="h-12"
+                    />
+                </div>
+
+                {isRenfort && (
+                    <div className="space-y-3">
+                        <div
+                            className="flex items-center gap-3 cursor-pointer"
+                            onClick={() => updateData({ is_auto_entrepreneur: !data.is_auto_entrepreneur })}
+                        >
+                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors shrink-0 ${
+                                data.is_auto_entrepreneur ? 'bg-brand-blue border-brand-blue' : 'border-slate-300'
+                            }`}>
+                                {data.is_auto_entrepreneur && <Check size={12} strokeWidth={3} className="text-white" />}
+                            </div>
+                            <span className="text-sm font-medium text-slate-700">Je suis auto-entrepreneur (pas de société)</span>
+                        </div>
+                        {!data.is_auto_entrepreneur && (
+                            <Input
+                                label="Dénomination commerciale / Nom de l'entreprise *"
+                                type="text"
+                                placeholder="Ex: Cordistes Pro SAS"
+                                value={data.contact_company_name || ''}
+                                onChange={(e) => updateData({ contact_company_name: e.target.value })}
+                                error={errors.contact_company_name}
+                                className="h-12"
+                            />
+                        )}
+                    </div>
+                )}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
                         label="Votre adresse email *"
                         type="email"
@@ -450,17 +546,16 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         error={errors.contact_email}
                         className="h-12"
                     />
+                    <Input
+                        label="Téléphone *"
+                        type="tel"
+                        placeholder="+33 6 12 34 56 78"
+                        value={data.contact_phone || ''}
+                        onChange={(e) => updateData({ contact_phone: e.target.value })}
+                        error={errors.contact_phone}
+                        className="h-12"
+                    />
                 </div>
-
-                <Input
-                    label="Téléphone *"
-                    type="tel"
-                    placeholder="+33 6 12 34 56 78"
-                    value={data.contact_phone || ''}
-                    onChange={(e) => updateData({ contact_phone: e.target.value })}
-                    error={errors.contact_phone}
-                    className="h-12"
-                />
 
                 <div className="pt-4 flex flex-col sm:flex-row gap-3">
                     {onBack && (

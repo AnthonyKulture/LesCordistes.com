@@ -35,6 +35,8 @@ const SKILLS_LIST = [
 ];
 
 interface ProfileFormData {
+    first_name: string;
+    last_name: string;
     full_name: string;
     phone: string;
     bio: string;
@@ -61,6 +63,8 @@ export const Profile: React.FC = () => {
     const photoInputRef = useRef<HTMLInputElement>(null);
 
     const [formData, setFormData] = useState<ProfileFormData>({
+        first_name: '',
+        last_name: '',
         full_name: '',
         phone: '',
         bio: '',
@@ -79,6 +83,8 @@ export const Profile: React.FC = () => {
     React.useEffect(() => {
         if (profile) {
             setFormData({
+                first_name: profile.first_name || '',
+                last_name: profile.last_name || '',
                 full_name: profile.full_name || '',
                 phone: profile.phone || '',
                 bio: profile.bio || '',
@@ -199,6 +205,8 @@ export const Profile: React.FC = () => {
             const { error } = await (client
                 .from('profiles') as any)
                 .update({
+                    first_name: formData.first_name || null,
+                    last_name: formData.last_name || null,
                     full_name: formData.full_name || null,
                     phone: formData.phone || null,
                     bio: formData.bio || null,
@@ -382,6 +390,8 @@ export const Profile: React.FC = () => {
                                 setIsEditing(false);
                                 // Sync back
                                 setFormData({
+                                    first_name: profile.first_name || '',
+                                    last_name: profile.last_name || '',
                                     full_name: profile.full_name || '',
                                     phone: profile.phone || '',
                                     bio: profile.bio || '',

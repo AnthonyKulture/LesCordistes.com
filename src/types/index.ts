@@ -2,6 +2,8 @@ export interface Profile {
     id: string;
     email: string;
     role: 'client' | 'pro' | 'admin';
+    first_name?: string;
+    last_name?: string;
     full_name?: string;
     phone?: string;
     bio?: string;
@@ -52,9 +54,12 @@ export interface Job {
     latitude?: number;
     longitude?: number;
     client_contact_info: {
-        name: string;
+        first_name: string;
+        last_name: string;
+        name: string; // full name (first + last), conservé pour la rétro-compatibilité
         email: string;
         phone: string;
+        company_name?: string;
     };
     created_by?: string;
     unlocked_leads_count?: number;
@@ -94,7 +99,10 @@ export interface JobFormData {
     photos?: File[];
     latitude?: number;
     longitude?: number;
-    contact_name: string;
+    contact_first_name: string;
+    contact_last_name: string;
+    contact_company_name?: string;
+    is_auto_entrepreneur?: boolean;
     contact_email: string;
     contact_phone: string;
     credit_cost?: number;
