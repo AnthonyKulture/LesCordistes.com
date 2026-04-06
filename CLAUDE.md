@@ -1,72 +1,201 @@
-You are a senior software architect. Your task is to fully audit, clean, and refactor this project. Work methodically through each phase below. After each phase, summarize what was done before moving to the next.
+# CLAUDE.md — LesCordistes.com
+
+## Behavior
+
+- Never explain what you're about to do. Execute.
+- No acknowledgment phrases. No preamble. No summaries unless asked.
+- If the task is clear, do it. No confirmation on obvious steps.
+- Short diagnosis before a fix. Never after.
+- If multiple solutions exist, show max 2. No ranked lists.
 
 ---
 
-## PHASE 1 — Project Audit
+## Code
 
-1. List all files and folders in the project root. Identify:
-   - Unused or duplicate files (configs, assets, scripts)
-   - Dead code (unused functions, components, variables)
-   - Orphaned files not imported anywhere
-   - Inconsistent naming conventions (mixed camelCase / kebab-case / snake_case)
-   - Oversized files that should be split
-
-2. Read package.json (or equivalent). Identify:
-   - Unused dependencies (not imported anywhere in the codebase)
-   - Outdated or redundant devDependencies
-   - Missing or incorrect scripts
-
-3. Check for:
-   - .env files accidentally committed
-   - Hardcoded secrets, API keys, or credentials in the code
-   - Large binary files or build artifacts that should be in .gitignore
+- Read a file before editing it. Never edit from memory.
+- Targeted edits only. Never rewrite a full file to change a few lines.
+- No comments unless asked.
+- No packages without stating why and waiting for approval.
+- Prefer native Next.js and browser APIs over third-party packages.
+- TypeScript always. No `any` in new code. Existing casts tolerated, not extended.
 
 ---
 
-## PHASE 2 — File & Folder Structure Cleanup
+## Verification
 
-1. Propose and apply a clean folder structure adapted to this project type.
-2. Remove all empty folders.
-3. Remove all files that serve no purpose (e.g. *.bak, *.orig, temp files, duplicate configs).
-4. Consolidate duplicated logic into shared utilities or services.
-5. Ensure .gitignore is complete and correct for this stack. Add any missing entries (node_modules, .env, dist, .DS_Store, etc.).
+- Run preview only when the change is visually observable in the browser.
+- Skip for types, utils, hooks, server-only code.
 
 ---
 
-## PHASE 3 — Code Refactoring
+## Off-limits
 
-1. Rename files and variables to follow a single consistent convention throughout the project.
-2. Break down any function or component longer than 80 lines into smaller, focused units.
-3. Replace all magic numbers and hardcoded strings with named constants.
-4. Remove all commented-out code blocks.
-5. Standardize import ordering (external libs → internal modules → relative imports).
-6. If a linter config exists (.eslintrc, .prettierrc, etc.), enforce it. If not, create a sensible one for this stack and apply it.
-
----
-
-## PHASE 4 — GitHub & Git Cleanup
-
-1. Run: `git worktree list` — identify and remove all stale or merged worktrees with `git worktree remove` and `git worktree prune`.
-2. Run: `git branch -a` — list all local and remote branches. For each branch:
-   - Check if it has been merged into main/master
-   - If merged and stale: delete locally with `git branch -d` and remotely with `git push origin --delete`
-   - If unmerged but abandoned (no commits in 30+ days): flag it for manual review
-3. Run: `git remote prune origin` to clean up remote tracking refs that no longer exist.
-4. Check for large files in git history using: `git rev-list --objects --all | sort -k 2 | uniq` — flag anything unexpectedly large.
-5. Verify the default branch name and that the remote origin is correctly set.
+- Do not touch `.env` files.
+- Do not refactor outside the current task scope.
+- Do not run `npm install` without explicit approval.
+- Do not stage, commit, or push anything without explicit user instruction.
+- Never `git add .` — always stage explicit file paths.
+- Never stage or commit files whose absolute path starts with the main repo root when cwd is a worktree.
 
 ---
 
-## PHASE 5 — Final Verification
+## Session Start — Run This First
+```bash
+bash scripts/session-init.sh   # prune stale worktrees + stale locks
+bash scripts/setup-worktree.sh # symlink node_modules + .env.local + launch.json
+```
 
-1. Run the project's test suite (if any). All tests must pass.
-2. Run the build command. The build must succeed with no errors or warnings.
-3. Run the linter. Zero errors, zero warnings.
-4. Produce a clean summary report with:
-   - Files deleted
-   - Files renamed or moved
-   - Dependencies removed
-   - Branches and worktrees cleaned
-   - Remaining TODOs or items requiring manual decision
+Both scripts must run before any dev server or file edit.
 
-Do not skip any phase. If you are uncertain about deleting something, ask before proceeding.
+---
+
+## Worktrees (Critical)
+
+- `Primary working directory` = the current worktree. All Read/Edit/Write use THIS path.
+- ✅ `/Users/anthony/Documents/Anthony/Projet Web/lescordistes/.claude/worktrees/<name>/src/...`
+- ❌ `/Users/anthony/Documents/Anthony/Projet Web/lescordistes/src/...`
+- If a preview server is running from another worktree → `preview_stop`, then restart.
+- Always `next dev` — never `next dev --turbopack` (Turbopack rejects cross-worktree symlinks).
+- Real `node_modules` lives in `bold-ride/node_modules`.
+- `index.lock` error at session start = stale lock. Run `scripts/session-init.sh`. Never `rm` it manually.
+
+---
+
+## Architecture
+
+| Layer | Tech |
+|---|---|
+| Framework | Next.js 15 App Router + React 19 + TypeScript |
+| Styling | Tailwind CSS — `#243355` brand-blue · `#5B8DDB` brand-blue-light |
+| Backend | Supabase — PostgreSQL · Auth · Storage · Edge Functions (Deno) |
+| Auth SSR | `@supabase/ssr` — `createBrowserClient` (client) · `createServerClient` per request (server) |
+| State | TanStack Query v5 |
+| Icons | Lucide React |
+| Payments | Stripe Checkout + Webhooks |
+| Email | Resend via Edge Function `send-email` |
+| Deploy | Vercel |
+
+---
+
+## Code Structure
+src/
+├── app/
+│   ├── layout.tsx                  # Root layout — Providers, Header, Footer
+│   ├── page.tsx                    # Landing SSR + JSON-LD
+│   ├── (seo)/                      # 258 SSG pages (generateStaticParams)
+│   │   ├── [cityPage]/             # 23 cities
+│   │   │   └── [service]/          # 230 city×service
+│   │   └── lexique/                # 5 glossary articles
+│   ├── (protected)/                # Client-side auth guard
+│   │   ├── dashboard/
+│   │   ├── credits/
+│   │   ├── messages/
+│   │   ├── profile/
+│   │   └── pro/widget/
+│   ├── api/
+│   │   ├── create-checkout/route.ts
+│   │   └── webhook/route.ts        # Stripe — raw body via req.text()
+│   ├── jobs/[slug]/
+│   ├── pros/[id]/
+│   ├── connexion/
+│   ├── inscription/
+│   └── post-job/                   # 5-step mission wizard
+├── components/
+│   ├── ui/                         # Button, Input, Toast, Card…
+│   ├── layout/                     # Header, Footer, ModeSwitcher, ModeTransitionOverlay
+│   ├── wizard/                     # Steps 1–5
+│   ├── dashboard/                  # StatCard, JobListItem, JobUnlockers, CompleteJobModal
+│   ├── credits/                    # CreditWidget, UnlockLeadButton
+│   ├── DashboardLayout.tsx
+│   └── Providers.tsx               # QueryClient + Auth + Toast + Dashboard contexts
+├── contexts/
+│   ├── AuthContext.tsx             # createBrowserClient, user + profile
+│   └── DashboardContext.tsx        # worker/recruiter mode — localStorage SSR-safe
+├── hooks/                          # useCredits, useNotifications, useMessaging, useReviews
+├── lib/
+│   ├── supabase-browser.ts         # createSupabaseBrowserClient() — client only
+│   ├── supabase-server.ts          # createSupabaseServerClient() — server, new per request
+│   └── supabase.ts                 # Legacy singleton (storage SSR-safe)
+├── views/
+│   └── dashboards/                 # ProDashboard, ClientDashboard, DashboardSelector
+├── constants/                      # seoData.ts, seoGlossary.ts
+└── types/                          # TypeScript interfaces + database.types.ts
+
+---
+
+## Next.js Rules
+
+- **Supabase client** → `createSupabaseBrowserClient()` from `supabase-browser.ts`. Never on server.
+- **Supabase server** → `createSupabaseServerClient()` from `supabase-server.ts`. New instance per request.
+- **`'use client'`** → required on any component using hooks, state, window, or localStorage.
+- **`useSearchParams()`** → always wrapped in `<Suspense>` in the parent `page.tsx`.
+- **`localStorage`** → always guarded by `typeof window !== 'undefined'`.
+- **Stripe webhook** → `req.text()` for raw body. Never `req.json()`.
+- **Middleware** → `supabase.auth.getUser()` on every request. JWT refresh is mandatory.
+
+---
+
+## Business Logic
+
+Marketplace connecting clients and rope-access professionals, credit-gated.
+
+| Role | Access |
+|---|---|
+| `client` | Posts missions via 5-step wizard. Recruiter dashboard only. |
+| `pro` | Browses missions for free. Unlocking a lead costs 1 credit (reveals full contact info). Dual mode: worker / recruiter. |
+| `admin` | Moderates `pending → live`, manages users. |
+
+**Credit packs** — Starter 5cr/50€ · Pro 10cr/90€ · Business 20cr/160€
+
+**Mission types** — Standard (individuals) · Renfort PRO (B2B subcontracting)
+
+**Pro dashboard modes** via `DashboardContext`:
+- `worker` → `ProDashboard` (browse missions, unlock leads)
+- `recruiter` → `ClientDashboard` (post subcontracting requests)
+
+---
+
+## Supabase Schema
+
+| Table | Purpose |
+|---|---|
+| `profiles` | role, bio, certifications, avatar, intervention_zones |
+| `jobs` | status: `pending › live › rejected › completed › cancelled` |
+| `unlocked_leads` | Pro ↔ Job join — gates access to `client_contact_info` |
+| `credits` + `credit_transactions` | balance + history |
+| `reviews` | client → pro ratings |
+| `notifications` | in-app |
+| `conversations` + `messages` | internal messaging |
+
+**RLS** : `client_contact_info` is inaccessible at SQL level without an unlocked lead row.
+
+---
+
+## Emails (Edge Function)
+
+- Entry: `supabase/functions/send-email/index.ts`
+- Native HTML templates — no react-email (incompatible with Deno)
+- Templates: `welcome-client` · `welcome-pro` · `admin-alert` · `job-status` · `match-job` · `payment-receipt` · `verify-email` · `password-reset`
+- SQL triggers: `supabase-email-triggers.sql` — re-run in SQL Editor after any change
+- Deploy: `npx supabase functions deploy send-email --project-ref esvnvxkbnhvxpnlhyjsw`
+
+---
+
+## SEO (258 SSG pages)
+
+- `/cordiste-[ville]` — 23 cities
+- `/cordiste-[ville]/[service]` — 230 city×service
+- `/lexique/[slug]` — 5 glossary articles
+- JSON-LD schemas: LocalBusiness, FAQPage, Service, DefinedTerm, Organization, WebSite
+- WordPress → Next.js 301 redirects in `next.config.ts`
+
+---
+
+## References
+
+| Key | Value |
+|---|---|
+| Supabase project ref | `esvnvxkbnhvxpnlhyjsw` |
+| Admin email | `anthony@lescordistes.com` |
+| Node/npm | `/Users/anthony/.nvm/versions/node/v22.14.0/bin/` |
+| Mode switcher spec | `bmad-transition-switcher.md` |
