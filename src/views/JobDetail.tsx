@@ -150,7 +150,11 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
         );
     }
 
-    const category = categoryLabels[job.category] || job.category;
+    const VALID_CATEGORIES = ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'other'];
+    const allCategories = [
+        job.category,
+        ...((job.secondary_trades || []).filter(t => VALID_CATEGORIES.includes(t))),
+    ].map(c => categoryLabels[c] || c);
     const clientType = job.client_type ? clientTypeLabels[job.client_type] : null;
 
     // Pro with sub OR credit-unlocked lead
@@ -219,10 +223,10 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
                     <div className="grid lg:grid-cols-3 gap-6">
                         {/* LEFT — Main content */}
                         <div className="lg:col-span-2 space-y-5">
-                            <JobHeader 
-                                job={job} 
-                                category={category} 
-                                clientType={clientType} 
+                            <JobHeader
+                                job={job}
+                                categories={allCategories}
+                                clientType={clientType}
                             />
                             <JobDescription description={job.description} />
                             <JobPhotos photos={job.photos_url || []} isLocked={!canViewContact} />
@@ -235,9 +239,9 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
                         </div>
 
                         {/* RIGHT — Sidebar */}
-                        <JobSidebar 
+                        <JobSidebar
                             job={job}
-                            category={category}
+                            categories={allCategories}
                             contractTypeLabels={contractTypeLabels}
                             levelLabels={levelLabels}
                             structureTypeLabels={structureTypeLabels}

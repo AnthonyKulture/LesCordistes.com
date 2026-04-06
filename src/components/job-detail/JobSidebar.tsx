@@ -6,7 +6,7 @@ import type { Job, Profile } from '../../types';
 
 interface JobSidebarProps {
     job: Job;
-    category: string;
+    categories: string[];
     contractTypeLabels: Record<string, string>;
     levelLabels: Record<string, string>;
     structureTypeLabels: Record<string, string>;
@@ -21,10 +21,10 @@ interface JobSidebarProps {
     navigate: (path: string) => void;
 }
 
-export const JobSidebar: React.FC<JobSidebarProps> = ({ 
-    job, category, contractTypeLabels, levelLabels, structureTypeLabels, 
-    user, profile, isOwner, canViewContact, isFull, 
-    unlockCount, refetchUnlockCount, startConversation, navigate 
+export const JobSidebar: React.FC<JobSidebarProps> = ({
+    job, categories, contractTypeLabels, levelLabels, structureTypeLabels,
+    user, profile, isOwner, canViewContact, isFull,
+    unlockCount, refetchUnlockCount, startConversation, navigate
 }) => {
     const isPro = profile?.role === 'pro';
 
@@ -44,7 +44,11 @@ export const JobSidebar: React.FC<JobSidebarProps> = ({
                     </div>
                     <div className="flex justify-between pt-3">
                         <span className="text-slate-500">Catégorie</span>
-                        <span className="font-medium text-slate-800 text-right max-w-[60%]">{category}</span>
+                        <div className="flex flex-wrap justify-end gap-1 max-w-[60%]">
+                            {categories.map((cat, i) => (
+                                <span key={i} className="font-medium text-slate-800 text-right">{cat}{i < categories.length - 1 ? ',' : ''}</span>
+                            ))}
+                        </div>
                     </div>
                     <div className="flex justify-between pt-3">
                         <span className="text-slate-500">Ville</span>

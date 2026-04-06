@@ -4,17 +4,21 @@ import type { Job } from '../../types';
 
 interface JobHeaderProps {
     job: Job;
-    category: string;
+    categories: string[];
     clientType: string | null;
 }
 
-export const JobHeader: React.FC<JobHeaderProps> = ({ job, category, clientType }) => {
+export const JobHeader: React.FC<JobHeaderProps> = ({ job, categories, clientType }) => {
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
             <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
-                <span className="text-sm px-3 py-1 bg-brand-blue/10 text-brand-blue rounded-full font-medium">
-                    {category}
-                </span>
+                <div className="flex flex-wrap gap-1.5">
+                    {categories.map((cat, i) => (
+                        <span key={i} className="text-sm px-3 py-1 bg-brand-blue/10 text-brand-blue rounded-full font-medium">
+                            {cat}
+                        </span>
+                    ))}
+                </div>
                 {clientType && (
                     <span className="text-sm px-3 py-1 bg-slate-100 text-slate-700 rounded-full font-medium border border-slate-200">
                         {clientType}
