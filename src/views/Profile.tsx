@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { User, Award, Camera } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
 import { useAuth } from '../contexts/AuthContext';
 import { uploadJobPhoto } from '../lib/supabase';
 import { createSupabaseBrowserClient } from '../lib/supabase-browser';

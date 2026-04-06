@@ -165,21 +165,23 @@ export const PostJob: React.FC = () => {
                 await new Promise(resolve => setTimeout(resolve, 1000));
             }
 
-            // Sync phone number to profile if present in form
-            if (currentUserId && formData.contact_phone) {
-                console.log('Syncing phone to profile for user:', currentUserId);
+            // Sync profile fields — toujours pour le téléphone, et pour les nouveaux users
+            // on force le rôle et le nom (signInWithOtp ne passe pas les metadata au trigger)
+            if (currentUserId) {
+                const profileUpdate: Record<string, any> = {
+                    phone: formData.contact_phone || null,
+                    client_type: formData.client_type || null,
+                };
+                if (isNewUser) {
+                    profileUpdate.role = formData.type === 'renfort_pro' ? 'pro' : 'client';
+                    profileUpdate.full_name = formData.contact_name || null;
+                }
                 const { error: profileError } = await (supabase
                     .from('profiles') as any)
-                    .update({ 
-                        phone: formData.contact_phone,
-                        client_type: formData.client_type 
-                    })
+                    .update(profileUpdate)
                     .eq('id', currentUserId);
-                
                 if (profileError) {
-                    console.error('Error syncing phone to profile:', profileError);
-                } else {
-                    console.log('Phone synced to profile successfully:', formData.contact_phone);
+                    console.error('Error syncing profile:', profileError);
                 }
             }
 
