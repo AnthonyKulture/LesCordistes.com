@@ -95,6 +95,9 @@ export const Profile: React.FC = () => {
     }, [profile]);
 
     const [newEquipment, setNewEquipment] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
+    const [savingPassword, setSavingPassword] = useState(false);
 
     const toggleArrayItem = (field: 'certifications' | 'skills' | 'intervention_zones', value: string) => {
         setFormData(prev => ({
@@ -159,6 +162,31 @@ export const Profile: React.FC = () => {
 
             return { ...prev, portfolio_photos: updated };
         });
+    };
+
+    const handlePasswordSave = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (newPassword.length < 6) {
+            toast.error('Le mot de passe doit faire au moins 6 caractères');
+            return;
+        }
+        if (newPassword !== newPasswordConfirm) {
+            toast.error('Les mots de passe ne correspondent pas');
+            return;
+        }
+        setSavingPassword(true);
+        try {
+            const client = createSupabaseBrowserClient();
+            const { error } = await client.auth.updateUser({ password: newPassword });
+            if (error) throw error;
+            toast.success('Mot de passe défini avec succès !');
+            setNewPassword('');
+            setNewPasswordConfirm('');
+        } catch (error: any) {
+            toast.error(error.message || 'Erreur lors de la mise à jour du mot de passe');
+        } finally {
+            setSavingPassword(false);
+        }
     };
 
     const handleSave = async () => {
@@ -267,13 +295,44 @@ export const Profile: React.FC = () => {
 
                 <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
                     {activeTab === 'info' && (
-                        <PersonalInfoForm 
-                            isEditing={isEditing}
-                            formData={formData}
-                            setFormData={setFormData}
-                            profile={profile as ProfileType}
-                            isPro={isPro}
-                        />
+                        <div className="space-y-8">
+                            <PersonalInfoForm
+                                isEditing={isEditing}
+                                formData={formData}
+                                setFormData={setFormData}
+                                profile={profile as ProfileType}
+                                isPro={isPro}
+                            />
+
+                            <div className="pt-6 border-t border-slate-100">
+                                <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Sécurité</h3>
+                                <form onSubmit={handlePasswordSave} className="space-y-3 max-w-sm">
+                                    <Input
+                                        label="Nouveau mot de passe"
+                                        type="password"
+                                        placeholder="Minimum 6 caractères"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                    />
+                                    <Input
+                                        label="Confirmer le mot de passe"
+                                        type="password"
+                                        placeholder="Répétez le mot de passe"
+                                        value={newPasswordConfirm}
+                                        onChange={(e) => setNewPasswordConfirm(e.target.value)}
+                                    />
+                                    <Button
+                                        type="submit"
+                                        variant="outline"
+                                        isLoading={savingPassword}
+                                        disabled={!newPassword || !newPasswordConfirm}
+                                        className="w-full"
+                                    >
+                                        {savingPassword ? 'Enregistrement...' : 'Définir le mot de passe'}
+                                    </Button>
+                                </form>
+                            </div>
+                        </div>
                     )}
 
                     {activeTab === 'pro' && isPro && (

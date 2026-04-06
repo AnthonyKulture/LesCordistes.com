@@ -17,6 +17,10 @@ export function Login() {
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
+    const [showMagicLink, setShowMagicLink] = React.useState(false);
+    const [magicEmail, setMagicEmail] = React.useState('');
+    const [magicSent, setMagicSent] = React.useState(false);
+    const [magicLoading, setMagicLoading] = React.useState(false);
 
     React.useEffect(() => {
         if (!authLoading && user) {
@@ -46,6 +50,26 @@ export function Login() {
 
     const handleGoogleError = (errorMessage: string) => {
         setError(errorMessage);
+    };
+
+    const handleMagicLink = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!magicEmail) return;
+        setMagicLoading(true);
+        try {
+            const { error } = await supabase.auth.signInWithOtp({
+                email: magicEmail,
+                options: {
+                    emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/dashboard')}`,
+                },
+            });
+            if (error) throw error;
+            setMagicSent(true);
+        } catch (err: any) {
+            setError(err.message || 'Erreur lors de l\'envoi du lien');
+        } finally {
+            setMagicLoading(false);
+        }
     };
 
     const isRegistered = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('registered') === '1';
@@ -161,6 +185,46 @@ export function Login() {
                             {loading ? 'Connexion en cours...' : 'Se connecter'}
                         </Button>
                     </form>
+
+                    <div className="mt-4 text-center">
+                        <button
+                            type="button"
+                            onClick={() => { setShowMagicLink(!showMagicLink); setMagicSent(false); setError(''); }}
+                            className="text-xs text-slate-400 hover:text-brand-blue transition-colors underline underline-offset-2"
+                        >
+                            Pas de mot de passe ? Recevoir un lien de connexion
+                        </button>
+                    </div>
+
+                    {showMagicLink && (
+                        <div className="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            {magicSent ? (
+                                <p className="text-sm text-green-700 font-medium text-center">
+                                    Lien envoyé à <strong>{magicEmail}</strong>. Vérifiez votre boîte mail.
+                                </p>
+                            ) : (
+                                <form onSubmit={handleMagicLink} className="space-y-3">
+                                    <p className="text-xs text-slate-500">Entrez votre email et recevez un lien de connexion instantané.</p>
+                                    <Input
+                                        label="Email"
+                                        type="email"
+                                        value={magicEmail}
+                                        onChange={(e) => setMagicEmail(e.target.value)}
+                                        placeholder="votre@email.com"
+                                        required
+                                    />
+                                    <Button
+                                        type="submit"
+                                        variant="outline"
+                                        className="w-full"
+                                        disabled={magicLoading || !magicEmail}
+                                    >
+                                        {magicLoading ? 'Envoi...' : 'Recevoir le lien'}
+                                    </Button>
+                                </form>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </AuthLayout>
