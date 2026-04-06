@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Mail, Phone } from 'lucide-react';
+import { SEO_PHONE, SEO_PHONE_DISPLAY, SEO_EMAIL } from '@/constants/seoConfig';
 
 export const Footer: React.FC = () => {
     return (
@@ -19,6 +20,16 @@ export const Footer: React.FC = () => {
                         <p className="text-slate-400 text-sm">
                             La plateforme qui connecte les professionnels du travail en hauteur avec leurs clients.
                         </p>
+                        <div className="mt-4 space-y-2">
+                            <a href={`tel:${SEO_PHONE}`} className="flex items-center gap-2 text-slate-300 hover:text-brand-blue-light text-sm transition-colors">
+                                <Phone size={15} />
+                                <span>{SEO_PHONE_DISPLAY}</span>
+                            </a>
+                            <a href={`mailto:${SEO_EMAIL}`} className="flex items-center gap-2 text-slate-300 hover:text-brand-blue-light text-sm transition-colors">
+                                <Mail size={15} />
+                                <span>{SEO_EMAIL}</span>
+                            </a>
+                        </div>
                     </div>
 
                     {/* Links */}
@@ -71,7 +82,7 @@ export const Footer: React.FC = () => {
                             <a href="#" className="text-slate-400 hover:text-brand-blue transition-colors">
                                 <Linkedin size={20} />
                             </a>
-                            <a href="#" className="text-slate-400 hover:text-brand-blue transition-colors">
+                            <a href={`mailto:${SEO_EMAIL}`} className="text-slate-400 hover:text-brand-blue transition-colors">
                                 <Mail size={20} />
                             </a>
                         </div>

@@ -46,7 +46,28 @@ export interface SEOServiceCluster {
   metaDesc?: string;
   h1Template?: string;
   introTemplate?: string;
+  faqs?: FAQ[];
 }
+
+export interface FAQ {
+  question: string  // {city} remplacé dynamiquement
+  answer: string    // {city} remplacé dynamiquement
+}
+
+export const DEFAULT_SERVICE_FAQS: FAQ[] = [
+  {
+    question: "Quel est le prix d'une intervention cordiste à {city} ?",
+    answer: "Le tarif d'une intervention sur cordes à {city} dépend de la complexité de l'accès et du type de travaux. En moyenne, comptez entre 350€ et 600€ HT par jour et par cordiste. Devis gratuit sous 48h via notre plateforme.",
+  },
+  {
+    question: "Vos cordistes intervenant à {city} sont-ils certifiés ?",
+    answer: "Oui, tous les professionnels inscrits sur notre plateforme possèdent des certifications obligatoires (CQP ou IRATA) et une assurance RC Pro vérifiée, garantissant une sécurité maximale lors des travaux en hauteur à {city}.",
+  },
+  {
+    question: "Combien de temps pour obtenir un devis à {city} ?",
+    answer: "Grâce à notre réseau de professionnels locaux à {city}, vous recevez des devis sous 48h. Pour les urgences, une mise en relation express est possible sous 24h.",
+  },
+]
 
 export const SEO_SERVICES: SEOServiceCluster[] = [
   // Urbain
@@ -56,7 +77,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Nettoyage de façades',
     cluster: 'urbain',
     description: 'Démoussage, dépollution et lavage haute-pression de façades inaccessibles.',
-    keywords: ['nettoyage façade', 'démoussage', 'dépollution', 'lavage haute pression', 'façadier cordiste']
+    keywords: ['nettoyage façade', 'démoussage', 'dépollution', 'lavage haute pression', 'façadier cordiste'],
+    faqs: [
+      { question: "Combien coûte un nettoyage de façade par cordiste à {city} ?", answer: "Le prix d'un nettoyage de façade à {city} varie entre 8€ et 25€/m² selon le niveau d'encrassement, la technique (haute pression, gommage, produits chimiques) et la hauteur. Devis gratuit sous 48h." },
+      { question: "Quelles façades peut-on nettoyer par accès sur cordes à {city} ?", answer: "Tous types : pierre de taille, béton, brique, bardage métallique ou composite. Nos cordistes à {city} interviennent dès le 2ème étage, quelle que soit la configuration architecturale." },
+      { question: "Faut-il une autorisation pour le nettoyage de façade par cordiste à {city} ?", answer: "Dans la plupart des cas à {city}, l'accès sur cordes ne nécessite pas d'autorisation d'occupation du domaine public (AOT), contrairement à un échafaudage. Cela accélère considérablement le démarrage." },
+    ],
   },
   {
     id: 'lavage-vitres',
@@ -64,7 +90,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Lavage de vitres',
     cluster: 'urbain',
     description: 'Entretien des verrières, atriums et façades vitrées de grande hauteur.',
-    keywords: ['laveur de vitre cordiste', 'verrières', 'atriums', 'nettoyage vitrerie hauteur']
+    keywords: ['laveur de vitre cordiste', 'verrières', 'atriums', 'nettoyage vitrerie hauteur'],
+    faqs: [
+      { question: "Quel est le prix du lavage de vitres en hauteur à {city} ?", answer: "Le tarif du lavage de vitres par cordiste à {city} dépend de la surface vitrée et de la hauteur. Comptez entre 3€ et 10€ par m² de vitre. Un devis précis est fourni sous 48h." },
+      { question: "Quelle fréquence d'entretien pour les vitres en hauteur à {city} ?", answer: "Pour les bâtiments tertiaires à {city}, 2 à 4 passages annuels sont recommandés. Pour les façades proches d'axes routiers ou en milieu industriel, une fréquence trimestrielle est conseillée." },
+      { question: "Le lavage de vitres par cordiste est-il adapté aux verrières et atriums à {city} ?", answer: "Oui, c'est même la solution idéale pour les verrières et atriums à {city} inaccessibles par les méthodes traditionnelles. Nos cordistes utilisent des perches spécifiques et des produits adaptés au verre traité." },
+    ],
   },
   {
     id: 'toiture-zinguerie',
@@ -72,7 +103,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Toiture et Zinguerie',
     cluster: 'urbain',
     description: 'Réparation de chéneaux, remplacement de tuiles et ardoises sur toitures difficiles d\'accès.',
-    keywords: ['couvreur cordiste', 'zinguerie', 'réparation chéneaux', 'fuite toiture']
+    keywords: ['couvreur cordiste', 'zinguerie', 'réparation chéneaux', 'fuite toiture'],
+    faqs: [
+      { question: "Peut-on réparer une toiture sans échafaudage à {city} ?", answer: "Oui. Nos couvreurs-cordistes interviennent à {city} sans échafaudage ni nacelle pour remplacer des tuiles isolées, réparer des chéneaux ou traiter des fissures, réduisant ainsi les délais et le coût global." },
+      { question: "Quel est le tarif d'une réparation de toiture par cordiste à {city} ?", answer: "Le coût dépend de la nature de l'intervention : remplacement de tuiles (à partir de 150€), réparation de chéneau (200-600€), traitement complet de toiture sur devis. Intervention sous 48h à {city}." },
+      { question: "Les cordistes peuvent-ils intervenir sur tous types de toitures à {city} ?", answer: "Oui : tuiles, ardoises, zinc, bac acier, shingle. La technique sur cordes est particulièrement adaptée aux toitures à forte pente à {city}, inaccessibles en sécurité par d'autres moyens." },
+    ],
   },
   {
     id: 'securisation-anti-pigeons',
@@ -80,7 +116,63 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Sécurisation et filets anti-pigeons',
     cluster: 'urbain',
     description: 'Pose de pics anti-volatiles, filets de sécurité et lignes de vie sur les bâtiments.',
-    keywords: ['dépigeonnage', 'filet anti-pigeon', 'pose ligne de vie', 'purge façade', 'mise en sécurité']
+    keywords: ['dépigeonnage', 'filet anti-pigeon', 'pose ligne de vie', 'purge façade', 'mise en sécurité'],
+    faqs: [
+      { question: "Quel est le prix d'une installation anti-pigeons par cordiste à {city} ?", answer: "La pose de pics ou de filets anti-pigeons à {city} varie entre 15€ et 60€ par mètre linéaire selon le dispositif choisi. Pour un immeuble standard, comptez entre 500€ et 2 500€ pour un traitement complet." },
+      { question: "Quelle solution anti-pigeons est la plus efficace à {city} ?", answer: "Les filets de protection sont la solution la plus durable à {city}, combinés à des pics inox pour les corniches et appuis de fenêtres. Nos cordistes évaluent gratuitement le meilleur dispositif selon votre bâtiment." },
+      { question: "Le dépigeonnage par cordiste est-il respectueux des animaux à {city} ?", answer: "Oui. Les dispositifs posés par nos cordistes à {city} sont dissuasifs et non nuisibles : ils éloignent les pigeons sans les blesser, conformément à la réglementation sur la protection des animaux." },
+    ],
+  },
+  {
+    id: 'nettoyage-panneaux-solaires',
+    slug: 'nettoyage-panneaux-solaires',
+    name: 'Nettoyage de panneaux solaires',
+    cluster: 'urbain',
+    description: 'Démoussage et nettoyage de panneaux photovoltaïques sur toitures inaccessibles pour maximiser le rendement.',
+    keywords: ['nettoyage panneaux solaires', 'entretien photovoltaïque', 'démoussage panneaux', 'rendement solaire', 'cordiste photovoltaïque'],
+    metaTitle: 'Nettoyage Panneaux Solaires à {city} — Cordiste Certifié',
+    metaDesc: 'Nettoyage et entretien de panneaux photovoltaïques à {city} par cordiste. Restaurez le rendement de vos panneaux solaires. Devis gratuit sous 48h.',
+    h1Template: 'Nettoyage de Panneaux Solaires à {city} : Rendement Optimal Garanti',
+    introTemplate: 'Des panneaux solaires encrassés perdent jusqu\'à 30% de leur rendement. Nos cordistes interviennent à {city} pour nettoyer vos panneaux photovoltaïques en toute sécurité, sans endommager les cellules ni les câblages.',
+    faqs: [
+      { question: "Pourquoi faire nettoyer ses panneaux solaires par un cordiste à {city} ?", answer: "Des panneaux encrassés (mousse, lichens, pollution) perdent jusqu'à 30% de rendement. À {city}, un nettoyage annuel par cordiste est la solution la plus sûre sur les toitures inaccessibles sans endommager les panneaux." },
+      { question: "Quel est le prix du nettoyage de panneaux solaires à {city} ?", answer: "Le nettoyage de panneaux photovoltaïques par cordiste à {city} coûte entre 3€ et 8€ par panneau selon leur accessibilité et leur encrassement. Pour une installation de 20 panneaux, comptez entre 80€ et 200€." },
+      { question: "À quelle fréquence nettoyer ses panneaux solaires à {city} ?", answer: "Un nettoyage annuel est recommandé dans la majorité des régions. À {city}, si votre installation est proche d'axes routiers ou en zone de forte pollution, un entretien semestriel optimise le rendement." },
+    ],
+  },
+  {
+    id: 'etancheite-infiltrations',
+    slug: 'etancheite-infiltrations',
+    name: 'Étanchéité et traitement des infiltrations',
+    cluster: 'urbain',
+    description: 'Traitement des fuites, application de membranes d\'étanchéité et hydrofuge sur toitures-terrasses et façades.',
+    keywords: ['étanchéité toiture terrasse', 'traitement infiltration', 'hydrofuge façade', 'fuite terrasse', 'membrane étanchéité'],
+    metaTitle: 'Étanchéité & Infiltrations à {city} — Cordiste Spécialisé',
+    metaDesc: 'Traitement des infiltrations et étanchéité de toiture-terrasse à {city} sans échafaudage. Diagnostic gratuit, intervention rapide. Cordistes certifiés.',
+    h1Template: 'Étanchéité & Traitement des Infiltrations à {city} Sans Échafaudage',
+    introTemplate: 'Une infiltration non traitée peut causer des dégâts considérables. Nos cordistes à {city} diagnostiquent et traitent les fuites de toitures-terrasses, acrotères et façades en accès difficile, sans l\'installation coûteuse d\'un échafaudage.',
+    faqs: [
+      { question: "Comment détecter une infiltration sur toiture-terrasse à {city} ?", answer: "Les signes d'alerte sont : taches d'humidité sur les plafonds, cloques sur les revêtements, végétation sur la terrasse. Nos cordistes à {city} réalisent un diagnostic complet pour localiser précisément la source." },
+      { question: "Quel est le coût d'un traitement d'étanchéité par cordiste à {city} ?", answer: "Une réparation localisée à {city} démarre à partir de 300€. Un traitement complet de toiture-terrasse (20-50m²) se situe entre 800€ et 3 000€ selon l'état et la technique utilisée. Devis gratuit sous 48h." },
+      { question: "L'accès sur cordes est-il adapté pour les toitures-terrasses à {city} ?", answer: "Oui, notamment pour les immeubles de plus de 3 étages à {city} où les toitures-terrasses sont inaccessibles sans nacelle. Le travail sur cordes permet une intervention ciblée sans mobiliser de matériel lourd." },
+    ],
+  },
+  {
+    id: 'pose-enseignes-hauteur',
+    slug: 'pose-enseignes-hauteur',
+    name: 'Pose et maintenance d\'enseignes en hauteur',
+    cluster: 'urbain',
+    description: 'Installation, remplacement et maintenance d\'enseignes lumineuses, banderoles et signalétique sur façades inaccessibles.',
+    keywords: ['pose enseigne hauteur', 'enseigne lumineuse cordiste', 'signalétique façade', 'banderole hauteur', 'lettrage façade'],
+    metaTitle: 'Pose d\'Enseignes en Hauteur à {city} — Cordiste Spécialisé',
+    metaDesc: 'Installation et maintenance d\'enseignes et signalétiques en hauteur à {city} par cordiste certifié. Intervention sans nacelle. Devis sous 48h.',
+    h1Template: 'Pose d\'Enseignes & Signalétique en Hauteur à {city}',
+    introTemplate: 'L\'installation d\'enseignes sur des façades de grande hauteur à {city} exige une précision et une sécurité maximales. Nos cordistes spécialisés posent, remplacent et entretiennent vos enseignes lumineuses et signalétiques sans contraindre votre activité.',
+    faqs: [
+      { question: "Quel est le prix de la pose d'une enseigne en hauteur à {city} ?", answer: "La pose d'une enseigne par cordiste à {city} dépend de la hauteur, du poids et du type d'enseigne. Comptez entre 300€ et 1 500€ pour une intervention standard. Devis gratuit sous 48h." },
+      { question: "Les cordistes peuvent-ils poser des enseignes lumineuses à {city} ?", answer: "Oui, nos cordistes à {city} travaillent en binôme avec des électriciens pour la pose d'enseignes lumineuses : caissons lumineux, lettres découpées rétroéclairées, néons ou enseignes LED." },
+      { question: "Combien de temps dure la pose d'une enseigne en hauteur à {city} ?", answer: "Une pose standard à {city} prend généralement 2 à 4 heures. Pour les enseignes volumineuses ou nécessitant des travaux électriques, une demi-journée à une journée complète est à prévoir." },
+    ],
   },
 
   // Industriel
@@ -90,7 +182,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Maintenance éolienne',
     cluster: 'industriel',
     description: 'Inspection, contrôle et réparation sur pales et mâts d\'éoliennes onshore/offshore.',
-    keywords: ['cordiste éolien', 'inspection pales', 'réparation fibre', 'offshore', 'onshore']
+    keywords: ['cordiste éolien', 'inspection pales', 'réparation fibre', 'offshore', 'onshore'],
+    faqs: [
+      { question: "Quelles interventions les cordistes éoliens réalisent-ils à {city} ?", answer: "Nos techniciens éoliens à {city} et sa région réalisent : inspections visuelles de pales, réparations de fissures en fibre de verre, remplacement de composants de nacelle, nettoyage et peinture de mâts." },
+      { question: "Quelle certification est requise pour la maintenance éolienne à {city} ?", answer: "Outre la certification IRATA ou CQP, nos techniciens possèdent les habilitations GWO (Global Wind Organisation) — Basic Safety Training et spécialisations métier — indispensables sur les parcs éoliens proches de {city}." },
+      { question: "Combien coûte une inspection de pale d'éolienne à {city} ?", answer: "L'inspection visuelle d'une éolienne par cordiste (3 pales + nacelle) se situe entre 800€ et 2 500€ selon l'accessibilité du site. Une réparation de pale composite est facturée sur devis selon l'étendue des dégâts." },
+    ],
   },
   {
     id: 'pylones-telecom',
@@ -98,7 +195,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Pylônes et Télécom',
     cluster: 'industriel',
     description: 'Installation et maintenance d\'antennes sur pylônes haute tension et télécoms.',
-    keywords: ['monteur pylône', 'maintenance télécom', 'antenne GSM', 'haute tension']
+    keywords: ['monteur pylône', 'maintenance télécom', 'antenne GSM', 'haute tension'],
+    faqs: [
+      { question: "Quelles habilitations sont nécessaires pour travailler sur pylônes à {city} ?", answer: "Nos techniciens pylônes disposent de l'habilitation électrique B0/H0 ou HE (selon la tension), de la certification IRATA ou CQP Travaux en Hauteur, et des formations spécifiques aux opérateurs télécom (Bouygues, SFR, Orange) présents à {city}." },
+      { question: "Quel est le coût d'une intervention sur pylône télécom à {city} ?", answer: "Une intervention standard sur pylône télécom à {city} (inspection ou remplacement d'antenne) se situe entre 600€ et 2 000€ selon la hauteur du pylône et la complexité des travaux. Devis sous 48h." },
+      { question: "Les cordistes peuvent-ils intervenir sur pylônes haute tension à {city} ?", answer: "Oui, nos techniciens habilités HE à {city} interviennent sur les ouvrages de transport d'énergie RTE avec des distances de sécurité strictes, dans le cadre de protocoles définis avec le gestionnaire de réseau." },
+    ],
   },
   {
     id: 'cnd-controle-non-destructif',
@@ -106,7 +208,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Contrôles Non Destructifs (CND)',
     cluster: 'industriel',
     description: 'Inspections UT, MT, PT et VT sur structures industrielles inaccessibles.',
-    keywords: ['CND', 'inspection visuelle', 'ressuage', 'magnétoscopie', 'ultrasons', 'cordiste inspecteur']
+    keywords: ['CND', 'inspection visuelle', 'ressuage', 'magnétoscopie', 'ultrasons', 'cordiste inspecteur'],
+    faqs: [
+      { question: "Quelles méthodes CND vos techniciens maîtrisent-ils à {city} ?", answer: "Nos inspecteurs-cordistes à {city} réalisent : contrôle visuel (VT), ressuage (PT), magnétoscopie (MT), ultrasons (UT) et thermographie infrarouge sur structures industrielles inaccessibles." },
+      { question: "Dans quels secteurs industriels intervenez-vous pour du CND à {city} ?", answer: "Pétrochimie, énergie (nucléaire, éolien), ponts et ouvrages d'art, aéronautique, navires. Nos techniciens certifiés COFREND niveau 2 ou 3 s'adaptent aux normes de chaque secteur industriel autour de {city}." },
+      { question: "Un rapport certifié est-il fourni après inspection CND à {city} ?", answer: "Oui. Chaque intervention CND à {city} donne lieu à un rapport de contrôle normé, signé par un technicien certifié COFREND, accepté par les organismes d'inspection et les donneurs d'ordre industriels." },
+    ],
   },
   {
     id: 'silos-cheminees',
@@ -114,7 +221,46 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Entretien de silos et cheminées',
     cluster: 'industriel',
     description: 'Nettoyage, purge et peinture sur silos agricoles, industriels et cheminées d\'usine.',
-    keywords: ['nettoyage silo', 'cheminée industrielle', 'espace confiné', 'fumisterie']
+    keywords: ['nettoyage silo', 'cheminée industrielle', 'espace confiné', 'fumisterie'],
+    faqs: [
+      { question: "Peut-on entretenir une cheminée industrielle par cordiste à {city} ?", answer: "Oui. Nos techniciens à {city} interviennent sur les cheminées d'usines jusqu'à 120m pour : inspection visuelle, peinture anticorrosion, réfection des joints et purge des bétons dégradés." },
+      { question: "Quel est le coût du nettoyage d'un silo par cordiste à {city} ?", answer: "L'entretien d'un silo par cordiste à {city} dépend de sa hauteur et de son état. Un nettoyage standard se situe entre 1 500€ et 6 000€. Un devis est établi après inspection préalable gratuite." },
+      { question: "Vos cordistes sont-ils formés au travail en espace confiné à {city} ?", answer: "Oui. En complément de leur certification cordiste, nos techniciens intervenant sur silos et cuves à {city} sont formés et habilités travail en espace confiné (ATEX si nécessaire) selon la norme NF EN 60079." },
+    ],
+  },
+  {
+    id: 'peinture-industrielle',
+    slug: 'peinture-industrielle',
+    name: 'Peinture industrielle et anticorrosion',
+    cluster: 'industriel',
+    description: 'Application de peintures anticorrosion et de protection sur structures métalliques, charpentes et ouvrages d\'art.',
+    keywords: ['peinture industrielle', 'anticorrosion', 'peinture charpente métallique', 'traitement rouille', 'peinture pont', 'cordiste peintre industriel'],
+    metaTitle: 'Peinture Industrielle & Anticorrosion à {city} — Cordiste Spécialisé',
+    metaDesc: 'Peinture industrielle et traitement anticorrosion à {city} sur structures métalliques inaccessibles. Cordistes certifiés IRATA. Devis gratuit.',
+    h1Template: 'Peinture Industrielle & Anticorrosion à {city} : Structures Métalliques',
+    introTemplate: 'La corrosion des structures métalliques inaccessibles représente un risque structurel majeur. Nos cordistes spécialisés à {city} appliquent des systèmes de peinture anticorrosion haute performance sur charpentes, passerelles, silos et ouvrages d\'art, sans arrêt de l\'activité industrielle.',
+    faqs: [
+      { question: "Sur quelles structures métalliques intervenez-vous à {city} ?", answer: "Charpentes industrielles, passerelles, ponts, pylônes, silos, réservoirs, structures portuaires. Nos cordistes peintres industriels à {city} maîtrisent les systèmes anticorrosion certifiés ISO 12944 pour tous types de structures." },
+      { question: "Quelle est la durabilité d'un traitement anticorrosion par cordiste à {city} ?", answer: "Un système anticorrosion haute durabilité (C4-C5) appliqué par nos techniciens à {city} garantit une protection de 10 à 25 ans selon les conditions d'exposition. Le coût est largement amorti par rapport au remplacement de la structure." },
+      { question: "Faut-il arrêter l'activité industrielle pour une peinture par cordiste à {city} ?", answer: "Généralement non. L'accès sur cordes permet d'intervenir par zones successives sans arrêt complet de la production à {city}. Nos équipes s'adaptent aux contraintes d'exploitation de votre site." },
+    ],
+  },
+  {
+    id: 'calorifugeage-isolation-tuyauteries',
+    slug: 'calorifugeage-isolation-tuyauteries',
+    name: 'Calorifugeage et isolation de tuyauteries',
+    cluster: 'industriel',
+    description: 'Pose et réfection d\'isolations thermiques sur tuyauteries et réseaux industriels en hauteur.',
+    keywords: ['calorifugeage', 'isolation tuyauterie', 'calorifugeur cordiste', 'isolation thermique industrielle', 'réfection calorifuge'],
+    metaTitle: 'Calorifugeage & Isolation Tuyauteries à {city} — Cordiste',
+    metaDesc: 'Calorifugeage et isolation de tuyauteries industrielles en hauteur à {city}. Réduction des pertes thermiques. Cordistes certifiés. Devis sous 48h.',
+    h1Template: 'Calorifugeage & Isolation de Tuyauteries en Hauteur à {city}',
+    introTemplate: 'Les tuyauteries industrielles mal isolées génèrent des pertes thermiques considérables. Nos techniciens cordistes à {city} réalisent le calorifugeage et la réfection d\'isolations sur tous types de réseaux en hauteur, sans interruption prolongée de la production.',
+    faqs: [
+      { question: "Qu'est-ce que le calorifugeage par cordiste à {city} ?", answer: "Le calorifugeage par cordiste à {city} consiste à poser ou remplacer les isolations thermiques (laine de roche, mousse PIR, coquilles) sur des tuyauteries en hauteur ou en zone confinée inaccessibles par des méthodes conventionnelles." },
+      { question: "Dans quels secteurs pratiquez-vous le calorifugeage à {city} ?", answer: "Pétrochimie, industrie agroalimentaire, pharmacie, énergie, papeterie. Nos techniciens à {city} interviennent sur tous types de réseaux : vapeur, eau chaude, air comprimé, fluides frigorigènes." },
+      { question: "Quel est le coût d'un calorifugeage par cordiste à {city} ?", answer: "Le prix dépend de la longueur de réseau, du type d'isolant et de la difficulté d'accès. Comptez entre 30€ et 120€ par mètre linéaire à {city}. Devis gratuit après relevé sur site." },
+    ],
   },
 
   // Génie Civil
@@ -124,7 +270,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Inspection de ponts et viaducs',
     cluster: 'genie_civil',
     description: 'Audits structurels, purges et maçonnerie sur les ouvrages d\'art.',
-    keywords: ['inspection pont', 'viaduc', 'ouvrage d\'art', 'purge béton', 'maçonnerie génie civil']
+    keywords: ['inspection pont', 'viaduc', 'ouvrage d\'art', 'purge béton', 'maçonnerie génie civil'],
+    faqs: [
+      { question: "Quelle réglementation s'applique à l'inspection de ponts à {city} ?", answer: "Les ouvrages d'art routiers à {city} sont soumis à la circulaire 82-40 et à l'IQOA (Image Qualité des Ouvrages d'Art). Nos techniciens réalisent les inspections détaillées périodiques (IDP) conformément à ces textes." },
+      { question: "Quels types de ponts vos cordistes inspectent-ils à {city} ?", answer: "Ponts en béton armé et précontraint, ponts métalliques, viaducs, passerelles piétonnes, ponts ferroviaires. Nos équipes à {city} interviennent sous circulation ou en fermeture selon les contraintes de sécurité." },
+      { question: "Un rapport d'inspection certifié est-il remis après l'intervention à {city} ?", answer: "Oui. Chaque inspection d'ouvrage à {city} donne lieu à un rapport IQOA détaillé avec photographies, cotation des désordres et préconisations de travaux, transmis au maître d'ouvrage sous 15 jours." },
+    ],
   },
   {
     id: 'confortement-falaises',
@@ -132,7 +283,29 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     name: 'Confortement de falaises',
     cluster: 'genie_civil',
     description: 'Dévégétalisation, purge rocheuse et pose de grillages de protection.',
-    keywords: ['purge falaise', 'grillage pendelé', 'protection chutes de pierres', 'confortement rocheux', 'dévégétalisation']
+    keywords: ['purge falaise', 'grillage pendelé', 'protection chutes de pierres', 'confortement rocheux', 'dévégétalisation'],
+    faqs: [
+      { question: "Quand faut-il conforter une falaise ou un talus à {city} ?", answer: "L'intervention est nécessaire dès qu'apparaissent des fissures actives, des blocs désolidarisés, une végétation envahissante en paroi ou après des épisodes de gel-dégel ou de fortes pluies dans les secteurs rocheux proches de {city}." },
+      { question: "Quelles techniques utilisez-vous pour le confortement de falaises à {city} ?", answer: "Nos géotechniciens-cordistes à {city} utilisent : purge manuelle des blocs instables, clouage par boulons de roche, pose de grillages plaqués ou pendus, gunitage de béton projeté et filets pare-blocs dynamiques." },
+      { question: "Quel est le coût d'un confortement de falaise à {city} ?", answer: "Le coût dépend de l'étendue de la falaise, de son accessibilité et des techniques requises. Un linéaire de 10m se situe généralement entre 3 000€ et 15 000€. Un diagnostic préalable gratuit est proposé à {city}." },
+    ],
+  },
+  {
+    id: 'travaux-barrages-hydrauliques',
+    slug: 'travaux-barrages-hydrauliques',
+    name: 'Travaux sur barrages et ouvrages hydrauliques',
+    cluster: 'genie_civil',
+    description: 'Inspection, réparation et maintenance des barrages, digues et ouvrages hydrauliques en accès difficile.',
+    keywords: ['barrage cordiste', 'inspection barrage', 'maintenance digue', 'ouvrage hydraulique', 'réparation béton barrage'],
+    metaTitle: 'Travaux sur Barrages & Ouvrages Hydrauliques à {city} — Cordiste',
+    metaDesc: 'Inspection et maintenance de barrages et ouvrages hydrauliques à {city} par cordistes spécialisés. Habilitations spécifiques. Devis sur demande.',
+    h1Template: 'Travaux sur Barrages & Ouvrages Hydrauliques à {city}',
+    introTemplate: 'Les barrages et ouvrages hydrauliques requièrent des inspections régulières imposées par la réglementation française. Nos cordistes spécialisés à {city} réalisent les contrôles périodiques et les travaux de réparation sur des structures soumises à des contraintes d\'accès extrêmes.',
+    faqs: [
+      { question: "Quelle réglementation s'applique à l'inspection de barrages à {city} ?", answer: "Les barrages de classe A, B et C sont soumis à des visites techniques approfondies (VTA) réglementaires selon le décret du 11 décembre 2007. Nos cordistes réalisent ces inspections pour les gestionnaires d'ouvrages proches de {city}." },
+      { question: "Vos cordistes interviennent-ils sous eau sur les barrages à {city} ?", answer: "Non, nous intervenons sur les parties aériennes inaccessibles des ouvrages. Pour les inspections subaquatiques, nous coordonnons nos interventions avec des équipes de plongeurs professionnels partenaires." },
+      { question: "Quels types de réparations réalisez-vous sur barrages à {city} ?", answer: "Injection de fissures en béton, reprise d'étanchéité des joints de dilatation, remplacement d'organes de vidange, nettoyage et peinture anticorrosion des structures métalliques, inspection et maintenance des vannes." },
+    ],
   },
 
   // Grand public
@@ -146,7 +319,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     metaTitle: 'Ravalement de Façade à {city} — Devis Gratuit Sous 48h',
     metaDesc: 'Ravalement de façade à {city} par des techniciens spécialisés. Intervention sans échafaudage, devis gratuit sous 48h. Certifiés et assurés.',
     h1Template: 'Ravalement de Façade à {city} : Intervention Sans Échafaudage',
-    introTemplate: 'Vous cherchez un professionnel pour le ravalement de votre façade à {city} ? Nos techniciens spécialisés en accès difficile interviennent sans nacelle ni échafaudage, ce qui réduit les coûts et les délais.'
+    introTemplate: 'Vous cherchez un professionnel pour le ravalement de votre façade à {city} ? Nos techniciens spécialisés en accès difficile interviennent sans nacelle ni échafaudage, ce qui réduit les coûts et les délais.',
+    faqs: [
+      { question: "Quel est le prix d'un ravalement de façade sans échafaudage à {city} ?", answer: "Le ravalement par cordiste à {city} coûte entre 20€ et 60€/m² selon l'état de la façade et les travaux requis (nettoyage, enduit, peinture). C'est en moyenne 30 à 40% moins cher qu'avec un échafaudage traditionnel." },
+      { question: "Un ravalement de façade sans échafaudage est-il aussi qualitatif à {city} ?", answer: "Oui. Nos cordistes à {city} utilisent les mêmes matériaux et procédés qu'un ravalement traditionnel. La technique sur cordes est d'ailleurs recommandée pour les façades classées ou les bâtiments difficiles d'accès." },
+      { question: "Le ravalement de façade est-il obligatoire à {city} ?", answer: "En France, le ravalement est obligatoire tous les 10 ans dans les communes de plus de 5 000 habitants. À {city}, un arrêté préfectoral peut imposer des délais d'exécution. Nos cordistes assurent la conformité réglementaire." },
+    ],
   },
   {
     id: 'nettoyage-toiture',
@@ -158,7 +336,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     metaTitle: 'Nettoyage Toiture à {city} — Démoussage & Traitement Hydrofuge',
     metaDesc: 'Nettoyage et démoussage de toiture à {city}. Intervention rapide sans échafaudage. Traitement hydrofuge inclus. Devis gratuit.',
     h1Template: 'Nettoyage & Démoussage de Toiture à {city}',
-    introTemplate: 'Votre toit est recouvert de mousse, de lichens ou de dépôts ? Nos spécialistes interviennent à {city} pour nettoyer, démoussage et traiter votre toiture, quelle que soit sa hauteur ou son accessibilité.'
+    introTemplate: 'Votre toit est recouvert de mousse, de lichens ou de dépôts ? Nos spécialistes interviennent à {city} pour nettoyer, démoussage et traiter votre toiture, quelle que soit sa hauteur ou son accessibilité.',
+    faqs: [
+      { question: "Quel est le prix du démoussage de toiture à {city} ?", answer: "Le nettoyage et démoussage d'une toiture à {city} coûte entre 2€ et 8€/m² selon l'état d'encrassement. Pour une maison individuelle de 100m² de toiture, comptez entre 200€ et 800€, traitement hydrofuge inclus." },
+      { question: "Le traitement hydrofuge est-il inclus dans le démoussage à {city} ?", answer: "Oui, nos cordistes à {city} appliquent systématiquement un traitement hydrofuge après le démoussage pour prévenir la repousse des mousses et lichens pendant 3 à 5 ans selon le produit utilisé." },
+      { question: "Mon toit est-il accessible par cordiste à {city} ?", answer: "Tous types de toitures sont accessibles : tuiles, ardoises, bac acier, fibrociment. Nos cordistes à {city} s'adaptent aux toitures à forte pente (> 45°) inaccessibles sans équipement spécialisé." },
+    ],
   },
   {
     id: 'couverture-reparation',
@@ -170,7 +353,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     metaTitle: 'Couverture & Réparation Toiture à {city} — Intervention Rapide',
     metaDesc: 'Couvreur à {city} pour réparation de fuites, remplacement de tuiles et ardoises. Intervention rapide sans échafaudage. Devis gratuit.',
     h1Template: 'Couverture & Réparation de Toiture à {city} : Intervention Sans Échafaudage',
-    introTemplate: 'Une fuite, des tuiles cassées ou une charpente fragilisée à {city} ? Nos couvreurs spécialisés interviennent en accès difficile pour réparer votre toiture rapidement, sans l\'installation coûteuse d\'un échafaudage.'
+    introTemplate: 'Une fuite, des tuiles cassées ou une charpente fragilisée à {city} ? Nos couvreurs spécialisés interviennent en accès difficile pour réparer votre toiture rapidement, sans l\'installation coûteuse d\'un échafaudage.',
+    faqs: [
+      { question: "Puis-je faire réparer quelques tuiles sans échafaudage à {city} ?", answer: "Oui, c'est l'avantage principal de l'intervention cordiste à {city} : réparer 2 ou 3 tuiles cassées sans monter un échafaudage complet. L'intervention ciblée démarre à partir de 150€ et se fait en quelques heures." },
+      { question: "Comment détecter une fuite de toiture avant d'appeler à {city} ?", answer: "Taches brunes sur les plafonds, odeur d'humidité, moisissures en combles, gonflement des lambris. Nos couvreurs-cordistes à {city} réalisent un diagnostic complet pour localiser la source exacte avant intervention." },
+      { question: "Intervenez-vous en urgence pour les fuites de toiture à {city} ?", answer: "Oui. Notre réseau de couvreurs-cordistes à {city} propose des interventions express sous 24-48h pour les fuites actives. Un bâchage provisoire peut être posé en attendant la réparation définitive." },
+    ],
   },
   {
     id: 'peinture-facade',
@@ -182,7 +370,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     metaTitle: 'Peinture de Façade à {city} — Peintre Spécialisé Hauteur',
     metaDesc: 'Peinture et ravalement de façade à {city} par des peintres spécialisés en hauteur. Rendu professionnel sans nacelle. Devis gratuit sous 48h.',
     h1Template: 'Peinture de Façade à {city} : Résultat Professionnel en Hauteur',
-    introTemplate: 'Pour la peinture de votre façade à {city}, nos peintres spécialisés en travaux en hauteur garantissent un rendu impeccable, même sur des surfaces difficiles d\'accès, sans nacelle ni échafaudage encombrant.'
+    introTemplate: 'Pour la peinture de votre façade à {city}, nos peintres spécialisés en travaux en hauteur garantissent un rendu impeccable, même sur des surfaces difficiles d\'accès, sans nacelle ni échafaudage encombrant.',
+    faqs: [
+      { question: "Quel est le prix de la peinture de façade par cordiste à {city} ?", answer: "La peinture de façade par cordiste à {city} coûte entre 15€ et 40€/m² selon la préparation requise (rebouchage, primaire) et le nombre de couches. C'est moins cher qu'avec un échafaudage grâce à l'absence de montage/démontage." },
+      { question: "Quelles peintures utilisez-vous pour les façades à {city} ?", answer: "Nos peintres-cordistes à {city} utilisent des peintures spécifiques façade : acryliques, minérales, siloxanes selon le substrat (béton, enduit, brique). Toutes sont certifiées pour la résistance aux UV et aux intempéries." },
+      { question: "La peinture de façade nécessite-t-elle une déclaration de travaux à {city} ?", answer: "Un changement de couleur de façade peut nécessiter une déclaration préalable à la mairie de {city}, notamment en secteur sauvegardé ou ABF. Nos équipes vous informent des démarches selon votre adresse." },
+    ],
   },
   {
     id: 'maconnerie-facade',
@@ -194,7 +387,12 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     metaTitle: 'Maçonnerie & Joints de Façade à {city} — Spécialiste Hauteur',
     metaDesc: 'Reprise de joints, fissures et maçonnerie de façade à {city}. Intervention en hauteur sans échafaudage. Devis gratuit.',
     h1Template: 'Maçonnerie & Rejointoiement de Façade à {city}',
-    introTemplate: 'Des joints dégradés ou des fissures sur votre façade à {city} ? Nos maçons spécialisés en travaux en hauteur interviennent pour reprendre les joints, traiter les fissures et consolider vos façades sans nécessiter de structure d\'échafaudage lourde.'
+    introTemplate: 'Des joints dégradés ou des fissures sur votre façade à {city} ? Nos maçons spécialisés en travaux en hauteur interviennent pour reprendre les joints, traiter les fissures et consolider vos façades sans nécessiter de structure d\'échafaudage lourde.',
+    faqs: [
+      { question: "Comment savoir si les joints de ma façade doivent être refaits à {city} ?", answer: "Les joints dégradés se reconnaissent à leur effritement, aux infiltrations d'eau qui en découlent ou aux mousses qui y prolifèrent. Nos maçons-cordistes à {city} réalisent un diagnostic visuel gratuit avant toute intervention." },
+      { question: "Quel est le prix d'un rejointoiement de façade par cordiste à {city} ?", answer: "Le rejointoiement par cordiste à {city} coûte entre 15€ et 35€/m² selon la profondeur des joints et le type de mortier requis. Pour une façade de 50m², comptez entre 750€ et 1 750€, pose et matériaux inclus." },
+      { question: "Les fissures de façade sont-elles dangereuses à {city} ?", answer: "Les microfissures sont généralement esthétiques. Les fissures actives (qui s'élargissent) ou traversantes indiquent un problème structurel. Nos maçons-cordistes à {city} évaluent la gravité et proposent le traitement adapté." },
+    ],
   },
   {
     id: 'isolation-exterieure',
@@ -206,9 +404,64 @@ export const SEO_SERVICES: SEOServiceCluster[] = [
     metaTitle: 'Isolation Extérieure (ITE) à {city} — Sans Échafaudage',
     metaDesc: 'Isolation thermique par l\'extérieur à {city}. Nos spécialistes posent votre ITE sans échafaudage, économisant jusqu\'à 40% sur le budget. Devis gratuit.',
     h1Template: 'Isolation Thermique par l\'Extérieur (ITE) à {city} Sans Échafaudage',
-    introTemplate: 'Réduisez vos factures d\'énergie avec une isolation thermique par l\'extérieur à {city}. Nos techniciens spécialisés posent votre ITE sans échafaudage traditionnel, ce qui peut réduire le coût global de votre projet jusqu\'à 40%.'
-  }
+    introTemplate: 'Réduisez vos factures d\'énergie avec une isolation thermique par l\'extérieur à {city}. Nos techniciens spécialisés posent votre ITE sans échafaudage traditionnel, ce qui peut réduire le coût global de votre projet jusqu\'à 40%.',
+    faqs: [
+      { question: "Peut-on poser une ITE sans échafaudage à {city} ?", answer: "Oui. Pour les bâtiments de 3 étages et plus à {city}, l'ITE par cordiste évite le montage d'un échafaudage coûteux. La technique sur cordes représente une économie de 30 à 40% sur le poste installation." },
+      { question: "L'ITE est-elle éligible aux aides MaPrimeRénov' à {city} ?", answer: "Oui, l'isolation thermique par l'extérieur est éligible à MaPrimeRénov' et aux CEE à {city}, sous conditions de ressources et de recours à un artisan RGE. Nos partenaires RGE à {city} vous accompagnent dans les démarches." },
+      { question: "Combien coûte une ITE par cordiste à {city} ?", answer: "Une ITE par cordiste à {city} revient entre 80€ et 200€/m² selon le système isolant (laine de roche, PSE, fibre de bois) et la finition choisie. Après aides MaPrimeRénov', le reste à charge peut être réduit de 25 à 75%." },
+    ],
+  },
+  {
+    id: 'nettoyage-gouttières',
+    slug: 'nettoyage-gouttieres',
+    name: 'Nettoyage de gouttières et chéneaux',
+    cluster: 'grand_public',
+    description: 'Débouchage, nettoyage et vérification de l\'étanchéité des gouttières et chéneaux sur maisons et immeubles.',
+    keywords: ['nettoyage gouttières', 'débouchage gouttière', 'chéneau bouché', 'entretien gouttière', 'gouttière inaccessible'],
+    metaTitle: 'Nettoyage de Gouttières à {city} — Débouchage Sans Échafaudage',
+    metaDesc: 'Nettoyage et débouchage de gouttières à {city} par cordiste. Intervention rapide sur maisons et immeubles. Devis gratuit sous 48h.',
+    h1Template: 'Nettoyage & Débouchage de Gouttières à {city}',
+    introTemplate: 'Des gouttières bouchées peuvent causer d\'importants dégâts des eaux. Nos cordistes à {city} nettoient et débouchent vos gouttières et chéneaux en toute sécurité, sans pose d\'échafaudage, même sur les façades les plus hautes.',
+    faqs: [
+      { question: "Quel est le prix du nettoyage de gouttières par cordiste à {city} ?", answer: "Le nettoyage de gouttières par cordiste à {city} démarre à partir de 80€ pour une maison individuelle. Pour un immeuble de plusieurs étages, comptez entre 200€ et 600€ selon la longueur et l'état des chéneaux." },
+      { question: "À quelle fréquence faire nettoyer ses gouttières à {city} ?", answer: "Un nettoyage annuel en automne est recommandé après la chute des feuilles. À {city}, si votre propriété est entourée d'arbres à proximité, un entretien biannuel (printemps et automne) est conseillé." },
+      { question: "Le cordiste peut-il réparer une gouttière percée à {city} ?", answer: "Oui. En plus du nettoyage, nos cordistes à {city} diagnostiquent les fuites, soudures défaillantes et fixations lâches. Les petites réparations de gouttières sont réalisées lors de la même intervention." },
+    ],
+  },
 ];
+
+// Contenu spécifique service×ville pour les 6 villes prioritaires
+// Évite le pattern doorway (même texte hub réutilisé sur la page service)
+export interface ServiceCityContext {
+  intro: string
+  useCases: string[]
+}
+
+export const SERVICE_CITY_CONTEXT: Record<string, Record<string, ServiceCityContext>> = {
+  'nettoyage-facade': {
+    'paris': { intro: "À Paris, les façades haussmanniennes en pierre de taille calcaire nécessitent des produits non-agressifs et une technique adaptée pour préserver le calcaire lutétien classé. Le nettoyage sans produits acides est impératif dans les secteurs ABF.", useCases: ["Immeuble haussmannien (5-7 étages) en pierre de taille", "Façade vitrée de la Défense (démoussage + sablage léger)", "Mur pignon en briques du Marais (traitement anti-graffitis)"] },
+    'marseille': { intro: "À Marseille, les façades sont agressées par les embruns salins et le mistral. Le nettoyage doit être suivi d'un traitement hydrofuge spécifique milieu maritime pour garantir la durabilité sur les bâtiments du Vieux-Port et du littoral.", useCases: ["Immeuble résidentiel face au Vieux-Port (embruns + sel)", "Entrepôt portuaire en béton (dépôts calcaires + pollution)", "Villa calanques (démoussage roches + traitement lichens)"] },
+    'lyon': { intro: "Lyon présente une grande variété de matériaux de façade : travertin de la Presqu'île, mâchefer de la Croix-Rousse, béton des tours de la Part-Dieu. Chaque type demande une technique et des produits adaptés que maîtrisent nos techniciens lyonnais.", useCases: ["Immeuble Presqu'île en travertin (nettoyage eau chaude)", "Façade tour tertiaire Part-Dieu (démoussage + polissage)", "Mur en mâchefer Croix-Rousse (nettoyage haute pression douce)"] },
+    'bordeaux': { intro: "Bordeaux est mondialement reconnue pour ses façades blondes en pierre de taille girondine. Le nettoyage de ces calcaires coquilliers est une intervention patrimoniale délicate qui requiert des produits biocides spécifiques et une pression eau maîtrisée.", useCases: ["Hôtel particulier en pierre blonde centre historique UNESCO", "Façade de chai viticole en pierre et métal", "Immeuble résidentiel Chartrons (nettoyage + rejointoiement)"] },
+    'toulouse': { intro: "La Ville Rose doit sa couleur aux briques foraines cuites localement. Leur nettoyage requiert des techniques douces (jet d'eau basse pression, savons pH neutre) pour ne pas abraser la surface et altérer la teinte caractéristique protégée aux abords des monuments.", useCases: ["Façade en briques foraines centre historique", "Bâtiment tertiaire en brique contemporain", "Mur mitoyen briques apparentes Capitole"] },
+    'monaco': { intro: "En Principauté, les façades des résidences de luxe et palaces exigent une discrétion absolue et des produits haut de gamme. L'intervention doit être réalisée en dehors des heures de visibilité touristique pour les bâtiments emblématiques du Rocher.", useCases: ["Résidence de standing façade en marbre ou pierre polie", "Façade hôtel de luxe bord de mer (embruns + pollution)", "Immeuble résidentiel standing face au Port Hercule"] },
+  },
+  'lavage-vitres': {
+    'paris': { intro: "Paris concentre les plus grandes façades vitrées d'Europe : tours La Défense, atriums des galeries Haussmann, verrières des gares. Nos laveurs de vitres-cordistes parisiens maîtrisent les systèmes d'accès de chaque bâtiment.", useCases: ["Tour de bureaux La Défense (façade rideau 30+ étages)", "Atrium centre commercial (verrière intérieure)", "Façade vitrée immeuble haussmannien réhabilité"] },
+    'marseille': { intro: "Les vitres marseillaises sont soumises aux dépôts salins des embruns méditerranéens et à la pollution portuaire. Un produit désincrustant spécifique est nécessaire avant le lavage standard pour éliminer les efflorescences salines.", useCases: ["Immeuble bord de mer Corniche Kennedy (dépôts salins)", "Bâtiment tertiaire Euroméditerranée (vitrages haute performance)", "Centre commercial Grand Littoral (verrière intérieure)"] },
+    'default': { intro: "Le lavage de vitres en hauteur par cordiste est la solution idéale pour les bâtiments de plus de 3 étages. Nos techniciens utilisent des perches télescopiques et des produits certifiés pour un résultat impeccable sans trace.", useCases: ["Immeuble de bureaux (façade vitrée standard)", "Centre commercial (verrière et atriums)", "Résidence de standing (baies vitrées toutes faces)"] },
+  },
+  'maintenance-eolienne': {
+    'paris': { intro: "L'Île-de-France développe des parcs éoliens en grande couronne et des éoliennes urbaines en toiture. Nos techniciens éoliens interviennent sur les turbines onshore de Seine-et-Marne, de l'Essonne et du Val-d'Oise.", useCases: ["Éolienne onshore parc Seine-et-Marne", "Turbine urbaine toiture bâtiment tertiaire", "Éolienne de démonstration site industriel"] },
+    'default': { intro: "La maintenance éolienne exige des techniciens certifiés GWO (Global Wind Organisation) en plus de leur certification cordiste. Nos équipes interviennent sur tous types d'éoliennes : onshore, offshore, turbines urbaines.", useCases: ["Inspection de pales composite (fissures, délaminage)", "Réparation naisselle et changement de composants", "Peinture anticorrosion de mât"] },
+  },
+}
+
+export function getServiceCityContext(serviceSlug: string, citySlug: string): ServiceCityContext | null {
+  return SERVICE_CITY_CONTEXT[serviceSlug]?.[citySlug]
+    ?? SERVICE_CITY_CONTEXT[serviceSlug]?.['default']
+    ?? null
+}
 
 // MVP Algoritmique : Génération aléatoire pseudo-stable pour les E-E-A-T stats
 // Basé sur le nom de la ville pour ne pas changer à chaque rechargement de page.

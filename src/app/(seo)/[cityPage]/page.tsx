@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PRIORITY_CITIES, SEO_SERVICES, getLocalReviews } from '@/constants/seoData'
 import { getEditorialContent } from '@/constants/seoUniqueContent'
+import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS } from '@/constants/seoConfig'
 import { TrustBadges } from '@/components/seo/TrustBadges'
 import { SEOInternalLinks } from '@/components/seo/SEOInternalLinks'
 import { SEOLocalReviews } from '@/components/seo/SEOLocalReviews'
@@ -60,27 +61,42 @@ export default async function CitySEOPage({ params }: Props) {
         '@graph': [
             {
                 '@type': 'LocalBusiness',
-                name: `LesCordistes.com - ${name}`,
-                image: 'https://lescordistes.com/lescordistes.com-3.webp',
-                url: `https://lescordistes.com/cordiste-${citySlug}`,
+                '@id': `${SEO_BASE_URL}/cordiste-${citySlug}`,
+                name: SEO_BRAND_NAME,
+                image: SEO_LOGO,
+                url: `${SEO_BASE_URL}/cordiste-${citySlug}`,
+                telephone: SEO_PHONE,
+                email: SEO_EMAIL,
                 priceRange: '$$',
-                aggregateRating: {
-                    '@type': 'AggregateRating',
-                    ratingValue: rating,
-                    reviewCount: count,
-                },
                 address: {
                     '@type': 'PostalAddress',
                     addressLocality: name,
                     addressRegion: region,
                     addressCountry: codeISO,
                 },
-                geo: { '@type': 'GeoCoordinates', latitude: lat, longitude: lng },
+                geo: {
+                    '@type': 'GeoCoordinates',
+                    latitude: lat.toFixed(5),
+                    longitude: lng.toFixed(5),
+                },
                 areaServed: {
                     '@type': 'GeoCircle',
-                    geoMidpoint: { '@type': 'GeoCoordinates', latitude: lat, longitude: lng },
+                    geoMidpoint: {
+                        '@type': 'GeoCoordinates',
+                        latitude: lat.toFixed(5),
+                        longitude: lng.toFixed(5),
+                    },
                     geoRadius: '30000',
                 },
+                openingHoursSpecification: SEO_OPENING_HOURS,
+                ...(SEO_SAME_AS.length > 0 && { sameAs: SEO_SAME_AS }),
+            },
+            {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                    { '@type': 'ListItem', position: 1, name: 'Accueil', item: SEO_BASE_URL },
+                    { '@type': 'ListItem', position: 2, name: `Cordiste ${name}`, item: `${SEO_BASE_URL}/cordiste-${citySlug}` },
+                ],
             },
             {
                 '@type': 'FAQPage',
@@ -88,12 +104,17 @@ export default async function CitySEOPage({ params }: Props) {
                     {
                         '@type': 'Question',
                         name: `Quel est le prix d'un cordiste à ${name} ?`,
-                        acceptedAnswer: { '@type': 'Answer', text: `Le tarif d'une intervention sur cordes à ${name} dépend de la complexité de l'accès et du type de travaux. En moyenne, comptez entre 350€ et 600€ HT par jour et par cordiste.` },
+                        acceptedAnswer: { '@type': 'Answer', text: `Le tarif d'une intervention sur cordes à ${name} dépend de la complexité de l'accès et du type de travaux. En moyenne, comptez entre 350€ et 600€ HT par jour et par cordiste. Devis gratuit sous 48h via notre plateforme.` },
                     },
                     {
                         '@type': 'Question',
                         name: `Vos cordistes intervenant à ${name} sont-ils certifiés ?`,
-                        acceptedAnswer: { '@type': 'Answer', text: 'Oui, tous les professionnels inscrits sur notre plateforme possèdent des certifications obligatoires (CQP, IRATA) garantissant une sécurité maximale.' },
+                        acceptedAnswer: { '@type': 'Answer', text: 'Oui, tous les professionnels inscrits sur notre plateforme possèdent des certifications obligatoires (CQP ou IRATA) et une assurance RC Pro vérifiée, garantissant une sécurité maximale.' },
+                    },
+                    {
+                        '@type': 'Question',
+                        name: `Combien de temps faut-il pour obtenir un cordiste à ${name} ?`,
+                        acceptedAnswer: { '@type': 'Answer', text: `Grâce à notre réseau de professionnels locaux à ${name}, vous recevez des devis sous 48h. Pour les urgences, une mise en relation express est possible sous 24h.` },
                     },
                 ],
             },
@@ -147,11 +168,12 @@ export default async function CitySEOPage({ params }: Props) {
                         style={{ border: 0 }}
                         loading="lazy"
                         allowFullScreen
-                        src={`https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.05}%2C${lat - 0.04}%2C${lng + 0.05}%2C${lat + 0.04}&layer=mapnik&marker=${lat}%2C${lng}`}
+                        referrerPolicy="no-referrer-when-downgrade"
+                        src={`https://maps.google.com/maps?q=${encodeURIComponent(`cordiste ${name} France`)}&output=embed&zoom=12`}
                     />
                     <div className="p-4 bg-white text-sm text-slate-600 border-t border-slate-200 flex justify-between items-center">
                         <span>Zone géographique d'intervention sur cordes autour de <strong>{name}</strong>, {department} ({region})</span>
-                        <a href={`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=13/${lat}/${lng}`} target="_blank" rel="noreferrer" className="text-brand-blue hover:underline font-medium">Agrandir la carte</a>
+                        <a href={`https://www.google.com/maps/search/cordiste+${encodeURIComponent(name)}+France`} target="_blank" rel="noreferrer" className="text-brand-blue hover:underline font-medium">Agrandir la carte</a>
                     </div>
                 </div>
 

@@ -39,7 +39,7 @@ export const SEOLocalReviews: React.FC<Props> = ({ cityName, serviceName }) => {
             <div className="mt-8 text-center">
                 <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-700 bg-slate-100 px-4 py-2 rounded-full">
                     <Star size={16} className="text-amber-500" fill="currentColor" strokeWidth={0} />
-                    Note moyenne de {rating}/5 basée sur {count} avis certifiés dans la région.
+                    Ils ont fait confiance à LesCordistes.com — rejoignez-les.
                 </div>
             </div>
         </div>
