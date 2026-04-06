@@ -103,6 +103,7 @@ export function RegisterPro() {
                 return;
             }
 
+            localStorage.setItem('lescordistes_pw_notice', '1');
             setMagicSent(true);
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');
@@ -210,7 +211,7 @@ export function RegisterPro() {
 
                                 {!formData.isAutoEntrepreneur && (
                                     <Input
-                                        label="Dénomination commerciale / Nom de l'entreprise *"
+                                        label="Dénomination commerciale *"
                                         type="text"
                                         name="companyName"
                                         value={formData.companyName}

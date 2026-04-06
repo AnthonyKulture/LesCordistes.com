@@ -102,6 +102,7 @@ export function RegisterClient() {
                 return;
             }
 
+            localStorage.setItem('lescordistes_pw_notice', '1');
             setMagicSent(true);
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');

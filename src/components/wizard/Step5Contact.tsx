@@ -114,6 +114,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                 throw error;
             }
 
+            localStorage.setItem('lescordistes_pw_notice', '1');
             setRegisteredEmail(data.contact_email!);
             setNeedsConfirmation(true);
         } catch (error: any) {
@@ -355,7 +356,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         </div>
                         {!data.is_auto_entrepreneur && (
                             <Input
-                                label="Dénomination commerciale / Nom de l'entreprise *"
+                                label="Dénomination commerciale *"
                                 type="text"
                                 placeholder="Ex: Cordistes Pro SAS"
                                 value={data.contact_company_name || ''}
@@ -524,7 +525,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         </div>
                         {!data.is_auto_entrepreneur && (
                             <Input
-                                label="Dénomination commerciale / Nom de l'entreprise *"
+                                label="Dénomination commerciale *"
                                 type="text"
                                 placeholder="Ex: Cordistes Pro SAS"
                                 value={data.contact_company_name || ''}
