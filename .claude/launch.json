@@ -3,10 +3,10 @@
   "configurations": [
     {
       "name": "lescordistes-next",
-      "runtimeExecutable": "/usr/local/bin/node",
-      "runtimeArgs": ["/Users/anthony/Documents/Anthony/Projet Web/lescordistes/.claude/worktrees/bold-ride/node_modules/.bin/next", "dev", "--port", "3000"],
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": ["-c", "export PATH=/Users/anthony/.nvm/versions/node/v22.14.0/bin:$PATH && node_modules/.bin/next dev"],
       "port": 3000,
-      "cwd": "/Users/anthony/Documents/Anthony/Projet Web/lescordistes/.claude/worktrees/bold-ride"
+      "cwd": "/Users/anthony/Documents/Anthony/Projet Web/lescordistes/.claude/worktrees/compassionate-germain"
     }
   ]
 }
