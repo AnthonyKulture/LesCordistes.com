@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState, useRef } from 'react';
-import { User, Award, Camera } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { User, Award, Camera, Trash2 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useAuth } from '../contexts/AuthContext';
@@ -52,14 +53,18 @@ interface ProfileFormData {
 }
 
 export const Profile: React.FC = () => {
-    const { profile, user, refreshProfile } = useAuth();
+    const { profile, user, signOut, refreshProfile } = useAuth();
     const toast = useToast();
     const queryClient = useQueryClient();
     const { balance } = useCredits();
+    const router = useRouter();
     const [activeTab, setActiveTab] = useState<'info' | 'pro' | 'portfolio'>('info');
     const [isEditing, setIsEditing] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+    const [isDeletingAccount, setIsDeletingAccount] = useState(false);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    const [deleteConfirmText, setDeleteConfirmText] = useState('');
     const photoInputRef = useRef<HTMLInputElement>(null);
 
     const [formData, setFormData] = useState<ProfileFormData>({
@@ -193,6 +198,23 @@ export const Profile: React.FC = () => {
             toast.error(error.message || 'Erreur lors de la mise à jour du mot de passe');
         } finally {
             setSavingPassword(false);
+        }
+    };
+
+    const handleDeleteAccount = async () => {
+        if (deleteConfirmText !== 'SUPPRIMER') return;
+        setIsDeletingAccount(true);
+        try {
+            const res = await fetch('/api/delete-account', { method: 'DELETE' });
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Erreur serveur');
+            }
+            await signOut();
+            router.replace('/');
+        } catch (error: any) {
+            toast.error(error.message || 'Erreur lors de la suppression du compte');
+            setIsDeletingAccount(false);
         }
     };
 
@@ -340,6 +362,49 @@ export const Profile: React.FC = () => {
                                         {savingPassword ? 'Enregistrement...' : 'Définir le mot de passe'}
                                     </Button>
                                 </form>
+                            </div>
+
+                            <div className="pt-6 border-t border-red-100">
+                                <h3 className="text-sm font-bold text-red-600 uppercase tracking-wider mb-2">Zone de danger</h3>
+                                <p className="text-xs text-slate-500 mb-4">
+                                    La suppression de votre compte est irréversible. Toutes vos données (missions, messages, crédits) seront définitivement effacées.
+                                </p>
+                                {!showDeleteConfirm ? (
+                                    <button
+                                        onClick={() => setShowDeleteConfirm(true)}
+                                        className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-red-600 border border-red-200 rounded-xl hover:bg-red-50 transition-colors"
+                                    >
+                                        <Trash2 size={16} />
+                                        Supprimer mon compte
+                                    </button>
+                                ) : (
+                                    <div className="bg-red-50 border border-red-200 rounded-xl p-4 space-y-3 max-w-sm">
+                                        <p className="text-sm font-bold text-red-700">
+                                            Tapez <span className="font-black">SUPPRIMER</span> pour confirmer
+                                        </p>
+                                        <Input
+                                            type="text"
+                                            placeholder="SUPPRIMER"
+                                            value={deleteConfirmText}
+                                            onChange={(e) => setDeleteConfirmText(e.target.value)}
+                                        />
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={handleDeleteAccount}
+                                                disabled={deleteConfirmText !== 'SUPPRIMER' || isDeletingAccount}
+                                                className="flex-1 py-2 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                                            >
+                                                {isDeletingAccount ? 'Suppression...' : 'Confirmer la suppression'}
+                                            </button>
+                                            <button
+                                                onClick={() => { setShowDeleteConfirm(false); setDeleteConfirmText(''); }}
+                                                className="px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+                                            >
+                                                Annuler
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     )}
