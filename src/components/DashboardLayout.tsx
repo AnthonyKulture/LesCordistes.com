@@ -178,7 +178,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </aside>
 
             {/* Main content */}
-            <main className="lg:ml-64 min-h-screen w-full overflow-x-hidden">
+            <main className="lg:ml-64 min-h-screen overflow-x-hidden">
                 <div className="p-4 lg:p-8 pt-16 lg:pt-8">
                     {children}
                 </div>
