@@ -292,8 +292,8 @@ export const Profile: React.FC = () => {
     const completionPct = Math.round((completedCount / completionFields.length) * 100);
 
     return (
-        <div className="min-h-screen bg-slate-50 py-10">
-            <div className="container max-w-4xl">
+        <div className="min-h-screen bg-slate-50 py-6 sm:py-10">
+            <div className="container max-w-4xl px-4 sm:px-6">
                 <ProfileHeader 
                     profile={profile as ProfileType}
                     balance={balance}
@@ -306,25 +306,25 @@ export const Profile: React.FC = () => {
 
                 {/* Tabs */}
                 {tabs.length > 1 && (
-                    <div className="flex border-b border-slate-200 mb-6 bg-white rounded-t-xl px-4">
+                    <div className="flex border-b border-slate-200 mb-4 sm:mb-6 bg-white rounded-t-xl px-2 sm:px-4">
                         {tabs.map(tab => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors -mb-px ${
+                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors -mb-px ${
                                     activeTab === tab.id
                                         ? 'border-brand-blue text-brand-blue'
                                         : 'border-transparent text-slate-500 hover:text-slate-700'
                                 }`}
                             >
-                                <tab.icon size={16} />
+                                <tab.icon size={15} />
                                 {tab.label}
                             </button>
                         ))}
                     </div>
                 )}
 
-                <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+                <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 sm:p-6">
                     {activeTab === 'info' && (
                         <div className="space-y-8">
                             <PersonalInfoForm
