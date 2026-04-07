@@ -90,16 +90,17 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     }, [profile?.role, mode, user?.id]);
 
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-slate-50 overflow-x-hidden">
             <ModeTransitionOverlay />
             
-            {/* Mobile menu button — positioned below the sticky Header */}
-            <div className="lg:hidden fixed top-20 left-4 z-40">
+            {/* Mobile menu button — positioned below the sticky Header (h-24 = 96px) */}
+            <div className="lg:hidden fixed top-[100px] left-4 z-40">
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="p-2 bg-white rounded-lg shadow-md border border-slate-200"
+                    className="p-2.5 bg-white rounded-xl shadow-lg border border-slate-200 flex items-center justify-center"
+                    aria-label="Menu navigation"
                 >
-                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>
             </div>
 
@@ -177,8 +178,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             </aside>
 
             {/* Main content */}
-            <main className="lg:ml-64 min-h-screen">
-                <div className="p-4 lg:p-8">
+            <main className="lg:ml-64 min-h-screen w-full overflow-x-hidden">
+                <div className="p-4 lg:p-8 pt-16 lg:pt-8">
                     {children}
                 </div>
             </main>

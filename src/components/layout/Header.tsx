@@ -301,65 +301,110 @@ export const Header: React.FC = () => {
                             className="md:hidden overflow-hidden border-t border-slate-100"
                         >
                             <nav className="flex flex-col py-6 gap-6">
-                                {(isPro || isAdmin) && (
-                                    <div className="flex bg-slate-100 rounded-2xl p-1 border border-slate-200">
+                                {!user ? (
+                                    <div className="grid grid-cols-1 gap-4">
                                         <button
-                                            onClick={() => mode !== 'worker' && toggleMode()}
-                                            disabled={isSwitching}
-                                            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-                                                mode === 'worker' 
-                                                ? 'bg-white text-brand-blue shadow-sm' 
-                                                : 'text-slate-500'
-                                            }`}
+                                            onClick={() => {
+                                                setIsMenuOpen(false);
+                                                if (pathname === '/') {
+                                                    document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                                                } else {
+                                                    router.push('/#how-it-works');
+                                                }
+                                            }}
+                                            className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold text-left"
                                         >
-                                            <HardHat size={16} />
-                                            Recherche missions
+                                            Comment ça marche ?
                                         </button>
-                                        <button
-                                            onClick={() => mode !== 'recruiter' && toggleMode()}
-                                            disabled={isSwitching}
-                                            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-                                                mode === 'recruiter' 
-                                                ? 'bg-white text-orange-600 shadow-sm' 
-                                                : 'text-slate-500'
-                                            }`}
-                                        >
-                                            <Briefcase size={16} />
-                                            Mode Recruteur
-                                        </button>
-                                    </div>
-                                )}
-
-                                <div className="grid grid-cols-1 gap-4">
-                                    {showHeaderCTA && (
-                                        <Link 
-                                            href={ctaUrl}
-                                            className={`flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm transition-all ${
-                                                ctaVariant === 'outline'
-                                                ? 'bg-orange-50 text-orange-700 border-2 border-orange-100'
-                                                : 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20'
-                                            }`}
-                                        >
-                                            {ctaIcon}
-                                            {ctaLabel}
+                                        <Link href="/jobs" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-orange-50 text-orange-700 border-2 border-orange-100">
+                                            <Briefcase size={18} />
+                                            Trouver des missions
                                         </Link>
-                                    )}
-                                    <Link href="/messages" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
-                                        <MessageCircle size={20} />
-                                        Messages
-                                    </Link>
-                                    <Link href="/dashboard" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
-                                        <LayoutDashboard size={20} />
-                                        Tableau de bord
-                                    </Link>
-                                    <button
-                                        onClick={handleSignOut}
-                                        className="flex items-center gap-3 p-4 bg-red-50 rounded-2xl text-red-600 font-bold"
-                                    >
-                                        <LogOut size={20} />
-                                        Déconnexion
-                                    </button>
-                                </div>
+                                        <Link href="/connexion" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-brand-blue text-white shadow-lg shadow-brand-blue/20">
+                                            <User size={18} />
+                                            Connexion
+                                        </Link>
+                                        <Link href="/post-job" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-white text-brand-blue border-2 border-brand-blue/20">
+                                            <Plus size={18} />
+                                            Publier un projet
+                                        </Link>
+                                    </div>
+                                ) : (
+                                    <>
+                                        {(isPro || isAdmin) && (
+                                            <div className="flex bg-slate-100 rounded-2xl p-1 border border-slate-200">
+                                                <button
+                                                    onClick={() => mode !== 'worker' && toggleMode()}
+                                                    disabled={isSwitching}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                                                        mode === 'worker'
+                                                        ? 'bg-white text-brand-blue shadow-sm'
+                                                        : 'text-slate-500'
+                                                    }`}
+                                                >
+                                                    <HardHat size={16} />
+                                                    Recherche missions
+                                                </button>
+                                                <button
+                                                    onClick={() => mode !== 'recruiter' && toggleMode()}
+                                                    disabled={isSwitching}
+                                                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                                                        mode === 'recruiter'
+                                                        ? 'bg-white text-orange-600 shadow-sm'
+                                                        : 'text-slate-500'
+                                                    }`}
+                                                >
+                                                    <Briefcase size={16} />
+                                                    Mode Recruteur
+                                                </button>
+                                            </div>
+                                        )}
+
+                                        <div className="grid grid-cols-1 gap-4">
+                                            <Link
+                                                href={ctaUrl}
+                                                className={`flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm transition-all ${
+                                                    ctaVariant === 'outline'
+                                                    ? 'bg-orange-50 text-orange-700 border-2 border-orange-100'
+                                                    : 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20'
+                                                }`}
+                                            >
+                                                {ctaIcon}
+                                                {ctaLabel}
+                                            </Link>
+                                            <Link href="/messages" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
+                                                <MessageCircle size={20} />
+                                                Messages
+                                                {globalUnreadCount > 0 && (
+                                                    <span className="ml-auto min-w-[20px] h-5 px-1 bg-red-500 text-[10px] text-white font-black flex items-center justify-center rounded-full">
+                                                        {globalUnreadCount > 99 ? '99+' : globalUnreadCount}
+                                                    </span>
+                                                )}
+                                            </Link>
+                                            <Link href="/dashboard" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
+                                                <LayoutDashboard size={20} />
+                                                Tableau de bord
+                                            </Link>
+                                            <Link href="/profile" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
+                                                <User size={20} />
+                                                Mon Profil
+                                            </Link>
+                                            {isAdmin && (
+                                                <Link href="/admin" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
+                                                    <Settings size={20} />
+                                                    Administration
+                                                </Link>
+                                            )}
+                                            <button
+                                                onClick={handleSignOut}
+                                                className="flex items-center gap-3 p-4 bg-red-50 rounded-2xl text-red-600 font-bold"
+                                            >
+                                                <LogOut size={20} />
+                                                Déconnexion
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
                             </nav>
                         </motion.div>
                     )}

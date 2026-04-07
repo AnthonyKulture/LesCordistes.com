@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../../lib/supabase';
@@ -273,7 +274,7 @@ export function ProDashboard() {
                              <ShieldCheck size={16} className="text-slate-400 shrink-0 mt-0.5" />
                              <p className="leading-relaxed">
                                  Chaque lead fait l'objet d'une <strong>pré-qualification téléphonique</strong> par nos experts. 
-                                 En cas d'impossibilité d'échanger avec le client, ou de données frauduleuses, vous pouvez demander le <span className="underline cursor-pointer hover:text-slate-700">remboursement manuel de vos crédits</span> auprès du support.
+                                 En cas d'impossibilité d'échanger avec le client, ou de données frauduleuses, vous pouvez demander le <Link href="/cgv" className="underline hover:text-slate-700 transition-colors">remboursement manuel de vos crédits</Link> auprès du support.
                              </p>
                         </div>
                     </div>

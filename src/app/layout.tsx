@@ -29,9 +29,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr">
-            <body className={inter.className} suppressHydrationWarning>
+            <body className={`${inter.className} overflow-x-hidden`} suppressHydrationWarning>
                 <Providers>
-                    <div className="flex flex-col min-h-screen">
+                    <div className="flex flex-col min-h-screen w-full">
                         <Header />
                         <main className="flex-grow">
                             {children}
