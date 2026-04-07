@@ -322,30 +322,30 @@ export const Header: React.FC = () => {
                                 ) : (
                                     <>
                                         {(isPro || isAdmin) && (
-                                            <div className="flex bg-slate-100 rounded-2xl p-1 border border-slate-200">
+                                            <div className="flex bg-slate-100 rounded-xl p-1 border border-slate-200/80">
                                                 <button
                                                     onClick={() => mode !== 'worker' && toggleMode()}
                                                     disabled={isSwitching}
-                                                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-black uppercase tracking-wide transition-all ${
                                                         mode === 'worker'
                                                         ? 'bg-white text-brand-blue shadow-sm'
-                                                        : 'text-slate-500'
+                                                        : 'text-slate-400'
                                                     }`}
                                                 >
-                                                    <HardHat size={16} />
-                                                    Recherche missions
+                                                    <HardHat size={13} />
+                                                    Missions
                                                 </button>
                                                 <button
                                                     onClick={() => mode !== 'recruiter' && toggleMode()}
                                                     disabled={isSwitching}
-                                                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-black uppercase tracking-wide transition-all ${
                                                         mode === 'recruiter'
                                                         ? 'bg-white text-orange-600 shadow-sm'
-                                                        : 'text-slate-500'
+                                                        : 'text-slate-400'
                                                     }`}
                                                 >
-                                                    <Briefcase size={16} />
-                                                    Mode Recruteur
+                                                    <Briefcase size={13} />
+                                                    Recruteur
                                                 </button>
                                             </div>
                                         )}
