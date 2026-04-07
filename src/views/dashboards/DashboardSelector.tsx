@@ -16,6 +16,9 @@ export function DashboardSelector() {
         if (!loading && !profile) {
             router.replace('/connexion');
         }
+        if (!loading && profile && !profile.role) {
+            router.replace('/choisir-role');
+        }
         if (!loading && profile?.role === 'admin') {
             router.replace('/admin');
         }
@@ -23,6 +26,7 @@ export function DashboardSelector() {
 
     if (loading) return null;
     if (!profile) return null;
+    if (!profile.role) return null;
     if (profile.role === 'admin') return null;
 
     if (profile.role === 'client') {
