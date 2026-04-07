@@ -43,7 +43,9 @@ END;
 $$;
 
 -- ------------------------------------------------------------
--- 🎨 TRIGGER 1 : Bienvenue - Nouveau Profil (Client ou Pro)
+-- 🎨 TRIGGER 1 : Nouveau Profil (Alerte Admin uniquement à l'INSERT)
+-- Le welcome email est envoyé sur UPDATE quand full_name est renseigné
+-- pour la première fois (voir TRIGGER 1b ci-dessous).
 -- ------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION private.trigger_on_new_profile()
@@ -52,26 +54,9 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
-    -- 1. Email de Bienvenue à l'utilisateur
-    IF NEW.role = 'client' THEN
-        PERFORM private.invoke_send_email(
-            NEW.email,
-            'Bienvenue sur LesCordistes.com !',
-            'welcome-client',
-            jsonb_build_object('name', COALESCE(NEW.full_name, ''))
-        );
-    ELSIF NEW.role = 'pro' THEN
-        PERFORM private.invoke_send_email(
-            NEW.email,
-            'Bienvenue sur LesCordistes.com !',
-            'welcome-pro',
-            jsonb_build_object('name', COALESCE(NEW.full_name, ''))
-        );
-    END IF;
-
-    -- 2. Alerte Admin
+    -- Alerte Admin uniquement (le rôle n'est pas encore définitif à l'INSERT)
     PERFORM private.invoke_send_email(
-        'admin@lescordistes.com', -- À remplacer par l'email admin réel
+        'admin@lescordistes.com',
         'Nouveau Profil : ' || NEW.role,
         'admin-alert',
         jsonb_build_object(
@@ -91,6 +76,66 @@ CREATE TRIGGER on_new_profile_created
     AFTER INSERT ON profiles
     FOR EACH ROW
     EXECUTE FUNCTION private.trigger_on_new_profile();
+
+-- ------------------------------------------------------------
+-- 🎨 TRIGGER 1b : Welcome Email — envoyé quand full_name est
+-- renseigné pour la première fois (après confirmation OTP ou OAuth).
+-- Garantit que l'email reflète le rôle définitif.
+-- ------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION private.trigger_on_profile_welcome()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+    -- Ne s'exécute que lors du premier renseignement de full_name
+    IF OLD.full_name IS NULL AND NEW.full_name IS NOT NULL THEN
+        IF NEW.role = 'client' THEN
+            PERFORM private.invoke_send_email(
+                NEW.email,
+                'Bienvenue sur LesCordistes.com !',
+                'welcome-client',
+                jsonb_build_object('name', NEW.full_name)
+            );
+        ELSIF NEW.role = 'pro' THEN
+            PERFORM private.invoke_send_email(
+                NEW.email,
+                'Bienvenue sur LesCordistes.com !',
+                'welcome-pro',
+                jsonb_build_object('name', NEW.full_name)
+            );
+        END IF;
+    END IF;
+
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS on_profile_welcome ON profiles;
+CREATE TRIGGER on_profile_welcome
+    AFTER UPDATE ON profiles
+    FOR EACH ROW
+    EXECUTE FUNCTION private.trigger_on_profile_welcome();
+
+-- ------------------------------------------------------------
+-- Patch handle_new_user : lire le rôle depuis les métadonnées
+-- (OTP signInWithOtp avec data.role, ex: Step5Contact)
+-- À exécuter une seule fois.
+-- ------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, email, role)
+  VALUES (
+    NEW.id,
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'role', 'pro')
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 
 -- ------------------------------------------------------------

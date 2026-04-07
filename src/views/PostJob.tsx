@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, Check } from 'lucide-react';
 import { Button } from '../components/ui/Button';
@@ -22,7 +22,7 @@ import type { JobFormData } from '../types';
 export const PostJob: React.FC = () => {
     const router = useRouter();
     const toast = useToast();
-    const { user: authUser, profile } = useAuth();
+    const { user: authUser, profile, refreshProfile } = useAuth();
     const [currentStep, setCurrentStep] = useState(1);
     const [direction, setDirection] = useState(0); // For slide animation
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -112,6 +112,27 @@ export const PostJob: React.FC = () => {
             updateFormData({ client_type: profile.client_type as any });
         }
     }, [profile, formData.client_type]);
+
+    // Nouveau user Google : assigner le bon rôle immédiatement (client pour mission standard, pro pour renfort)
+    const googleRoleApplied = useRef(false);
+    useEffect(() => {
+        if (googleRoleApplied.current || !authUser || !profile) return;
+        if (authUser.app_metadata?.provider !== 'google') return;
+        if (profile.full_name) return;
+
+        googleRoleApplied.current = true;
+        const expectedRole = (formData.type || 'standard') === 'renfort_pro' ? 'pro' : 'client';
+        const googleName = authUser.user_metadata?.full_name || authUser.user_metadata?.name || 'Utilisateur';
+
+        const supabase = createSupabaseBrowserClient();
+        supabase
+            .from('profiles')
+            .update({ role: expectedRole, full_name: googleName })
+            .eq('id', authUser.id)
+            .then(({ error }) => {
+                if (!error) refreshProfile();
+            });
+    }, [authUser, profile, formData.type, refreshProfile]);
 
     const updateFormData = (data: Partial<JobFormData>) => {
         setFormData((prev) => ({ ...prev, ...data }));
