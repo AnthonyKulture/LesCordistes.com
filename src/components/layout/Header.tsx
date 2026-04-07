@@ -303,30 +303,20 @@ export const Header: React.FC = () => {
                             <nav className="flex flex-col py-6 gap-6">
                                 {!user ? (
                                     <div className="grid grid-cols-1 gap-4">
-                                        <button
-                                            onClick={() => {
-                                                setIsMenuOpen(false);
-                                                if (pathname === '/') {
-                                                    document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
-                                                } else {
-                                                    router.push('/#how-it-works');
-                                                }
-                                            }}
-                                            className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold text-left"
-                                        >
-                                            Comment ça marche ?
-                                        </button>
-                                        <Link href="/jobs" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-orange-50 text-orange-700 border-2 border-orange-100">
-                                            <Briefcase size={18} />
-                                            Trouver des missions
-                                        </Link>
                                         <Link href="/connexion" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-brand-blue text-white shadow-lg shadow-brand-blue/20">
                                             <User size={18} />
                                             Connexion
                                         </Link>
-                                        <Link href="/post-job" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-white text-brand-blue border-2 border-brand-blue/20">
+                                        <Link href="/post-job" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-brand-blue/10 text-brand-blue border-2 border-brand-blue/20">
                                             <Plus size={18} />
                                             Publier un projet
+                                        </Link>
+                                        <Link href="/jobs" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-orange-50 text-orange-700 border-2 border-orange-100">
+                                            <Briefcase size={18} />
+                                            Trouver des missions
+                                        </Link>
+                                        <Link href="/#how-it-works" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-600 font-bold text-sm">
+                                            Comment ça marche ?
                                         </Link>
                                     </div>
                                 ) : (
