@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'next/navigation'
 import Link from 'next/link';
-import { PRIORITY_CITIES, SEO_SERVICES, getLocalReviews } from '../../constants/seoData';
+import { PRIORITY_CITIES, SEO_SERVICES } from '../../constants/seoData';
 import { getEditorialContent } from '../../constants/seoUniqueContent';
 import { TrustBadges } from '../../components/seo/TrustBadges';
 import { SEOInternalLinks } from '../../components/seo/SEOInternalLinks';
@@ -30,7 +30,6 @@ export const CityServiceSEOPage: React.FC<Props> = ({ citySlug: propCitySlug, se
 
     const { name, lat, lng, department, country } = cityData;
     const { name: serviceName, description, keywords } = serviceData;
-    const { rating, count } = useMemo(() => getLocalReviews(name, serviceName), [name, serviceName]);
     const editorial = useMemo(() => getEditorialContent(citySlug as string), [citySlug]);
 
     const codeISO = country || "FR";

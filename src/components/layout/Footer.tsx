@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Facebook, Twitter, Linkedin } from 'lucide-react';
+import { FooterContact, FooterMailIcon } from './FooterContact';
 
 export const Footer: React.FC = () => {
     return (
@@ -19,6 +20,7 @@ export const Footer: React.FC = () => {
                         <p className="text-slate-400 text-sm">
                             La plateforme qui connecte les professionnels du travail en hauteur avec leurs clients.
                         </p>
+                        <FooterContact />
                     </div>
 
                     {/* Links */}
@@ -71,9 +73,7 @@ export const Footer: React.FC = () => {
                             <a href="#" className="text-slate-400 hover:text-brand-blue transition-colors">
                                 <Linkedin size={20} />
                             </a>
-                            <a href="#" className="text-slate-400 hover:text-brand-blue transition-colors">
-                                <Mail size={20} />
-                            </a>
+                            <FooterMailIcon className="text-slate-400 hover:text-brand-blue transition-colors" />
                         </div>
                     </div>
                 </div>

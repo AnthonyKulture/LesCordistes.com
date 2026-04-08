@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import { useParams } from 'next/navigation'
 import Link from 'next/link';
-import { PRIORITY_CITIES, SEO_SERVICES, getLocalReviews } from '../../constants/seoData';
+import { PRIORITY_CITIES, SEO_SERVICES } from '../../constants/seoData';
 import { getEditorialContent } from '../../constants/seoUniqueContent';
 import { TrustBadges } from '../../components/seo/TrustBadges';
 import { SEOInternalLinks } from '../../components/seo/SEOInternalLinks';
@@ -26,7 +26,6 @@ export const CitySEOPage: React.FC<Props> = ({ citySlug: propCitySlug }) => {
     }
 
     const { name, lat, lng, region, department, country } = cityData;
-    const { rating, count } = useMemo(() => getLocalReviews(name), [name]);
     const editorial = useMemo(() => getEditorialContent(citySlug as string), [citySlug]);
 
     const codeISO = country || "FR";
@@ -41,11 +40,6 @@ export const CitySEOPage: React.FC<Props> = ({ citySlug: propCitySlug }) => {
                 "image": "https://lescordistes.com/images/default-hero.jpg",
                 "url": `https://lescordistes.com/cordiste-${citySlug}`,
                 "priceRange": "$$",
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": rating,
-                    "reviewCount": count
-                },
                 "address": {
                     "@type": "PostalAddress",
                     "addressLocality": name,
