@@ -19,11 +19,9 @@ import {
     Clock,
     CheckCircle,
     Plus,
-    ArrowRight,
     ChevronRight,
-    MessageCircle,
-    Users,
     Zap,
+    User,
     ShieldCheck,
 } from 'lucide-react';
 import type { Job } from '../../types';
@@ -39,6 +37,7 @@ export function ClientDashboard() {
     const [completingJob, setCompletingJob] = useState<Job | null>(null);
 
     const isProRecruiter = profile?.role === 'pro' && mode === 'recruiter';
+    const firstName = profile?.full_name?.split(' ')[0] || (isProRecruiter ? 'Pro' : 'Client');
 
     const { data: jobs, isLoading } = useQuery({
         queryKey: ['client-jobs', user?.id],
@@ -70,7 +69,7 @@ export function ClientDashboard() {
             toast.success('Mission annulée avec succès.');
         },
         onError: (err) => {
-            toast.error('Erreur lors de l\'annulation de la mission.');
+            toast.error('Erreur lors de l\u2019annulation de la mission.');
             console.error(err);
         }
     });
@@ -110,17 +109,16 @@ export function ClientDashboard() {
     });
 
     const stats = React.useMemo(() => {
-        if (!jobs) return { live: 0, pending: 0, completed: 0 };
+        if (!jobs) return { total: 0, live: 0, completed: 0 };
         return {
-            live: jobs.filter(j => j.status === 'live').length,
-            pending: jobs.filter(j => j.status === 'pending').length,
+            total: jobs.length,
+            live: jobs.filter(j => j.status === 'live' || j.status === 'pending').length,
             completed: jobs.filter(j => j.status === 'completed').length,
         };
     }, [jobs]);
 
-    const firstName = profile?.full_name?.split(' ')[0] || (isProRecruiter ? 'Pro' : 'Client');
-
     const postJobPath = isProRecruiter ? '/post-job?type=renfort_pro' : '/post-job';
+    const dashboardSubtitle = isProRecruiter ? 'Mode Recruteur — Gérez vos demandes de renfort' : 'Gérez vos missions postées';
 
     return (
         <DashboardLayout>
@@ -131,10 +129,16 @@ export function ClientDashboard() {
                         <h1 className="text-2xl font-bold text-slate-900">
                             Bonjour {firstName} 👋
                         </h1>
-                        <p className="text-slate-500 text-sm mt-0.5">
-                            {isProRecruiter ? 'Mode Recruteur — gérez vos demandes de renfort' : 'Tableau de bord — gérez vos missions'}
-                        </p>
+                        <p className="text-slate-500 text-sm mt-0.5">{dashboardSubtitle}</p>
                     </div>
+                    <Button
+                        variant="primary"
+                        onClick={() => router.push(postJobPath)}
+                        className="flex items-center gap-2 shrink-0"
+                    >
+                        <Plus size={18} />
+                        {isProRecruiter ? 'Demander du renfort' : 'Nouvelle mission'}
+                    </Button>
                 </div>
 
                 {/* CTA Banner */}
@@ -142,16 +146,16 @@ export function ClientDashboard() {
                     <div className="flex items-center justify-between gap-4 flex-wrap">
                         <div className="flex items-center gap-3">
                             <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                                <Users size={24} className="text-white" />
+                                <Zap size={24} className="text-white" />
                             </div>
                             <div>
                                 <p className="font-bold">
-                                    {isProRecruiter ? 'Besoin de renforts ?' : 'Trouvez vos cordistes !'}
+                                    {isProRecruiter ? 'Besoin de cordistes qualifiés ?' : 'Trouvez le bon professionnel'}
                                 </p>
                                 <p className="text-sm text-blue-100">
                                     {isProRecruiter
-                                        ? 'Publiez une demande de renfort et recevez des candidatures qualifiées.'
-                                        : 'Publiez votre mission et recevez des devis de cordistes certifiés.'}
+                                        ? 'Publiez une demande de renfort et recevez des offres de pros certifiés.'
+                                        : 'Publiez votre mission et recevez des offres de cordistes certifiés.'}
                                 </p>
                             </div>
                         </div>
@@ -160,9 +164,7 @@ export function ClientDashboard() {
                             onClick={() => router.push(postJobPath)}
                             className="bg-white text-brand-blue hover:bg-blue-50 shrink-0 font-black"
                         >
-                            <Plus size={16} />
-                            {isProRecruiter ? 'Demander du renfort' : 'Poster une mission'}
-                            <ArrowRight size={16} />
+                            {isProRecruiter ? 'Publier un projet' : 'Poster une mission'}
                         </Button>
                     </div>
                 </div>
@@ -170,43 +172,40 @@ export function ClientDashboard() {
                 {/* Stats */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <StatCard
-                        label="Publiées"
-                        value={stats.live}
-                        icon={CheckCircle}
-                        iconBg="bg-green-100"
-                        iconColor="text-green-600"
-                        onClick={() => {}}
+                        label="Total missions"
+                        value={stats.total}
+                        icon={Briefcase}
+                        iconBg="bg-brand-blue/10"
+                        iconColor="text-brand-blue"
                     />
                     <StatCard
-                        label="En attente"
-                        value={stats.pending}
+                        label="En cours"
+                        value={stats.live}
                         icon={Clock}
-                        iconBg="bg-yellow-100"
-                        iconColor="text-yellow-600"
-                        onClick={() => {}}
+                        iconBg="bg-green-100"
+                        iconColor="text-green-600"
                     />
                     <StatCard
                         label="Terminées"
                         value={stats.completed}
-                        icon={Briefcase}
-                        iconBg="bg-brand-blue/10"
-                        iconColor="text-brand-blue"
-                        onClick={() => {}}
+                        icon={CheckCircle}
+                        iconBg="bg-slate-100"
+                        iconColor="text-slate-600"
                     />
                 </div>
 
-                {/* Main grid */}
+                {/* Main layout */}
                 <div className="grid lg:grid-cols-3 gap-6">
-                    {/* Left column — missions list */}
+                    {/* Mission list */}
                     <div className="lg:col-span-2">
                         <div className="bg-white rounded-xl border border-slate-100 overflow-hidden shadow-sm">
                             <div className="flex items-center justify-between px-5 py-4 border-b border-slate-50">
                                 <h2 className="font-bold text-slate-900 flex items-center gap-2">
                                     <Briefcase size={18} className="text-brand-blue" />
-                                    {isProRecruiter ? 'Mes demandes de renfort' : 'Mes missions postées'}
+                                    {isProRecruiter ? 'Mes demandes de renfort' : 'Mes missions'}
                                 </h2>
                                 {jobs && jobs.length > 0 && (
-                                    <span className="text-xs font-bold px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">
+                                    <span className="text-xs font-bold px-2 py-0.5 bg-blue-100 text-brand-blue rounded-full">
                                         {jobs.length} mission{jobs.length > 1 ? 's' : ''}
                                     </span>
                                 )}
@@ -222,10 +221,7 @@ export function ClientDashboard() {
                                         <div key={job.id} className="p-1">
                                             <JobListItem
                                                 job={job as any}
-                                                onView={() => job.slug
-                                                    ? router.push(`/jobs/${job.slug}`)
-                                                    : toast.info('Cette mission est en cours de publication.')
-                                                }
+                                                onView={() => job.slug ? router.push(`/jobs/${job.slug}`) : toast.info('Cette mission est en cours de publication.')}
                                                 onDelete={() => setDeletingJobId(job.id)}
                                                 onComplete={() => setCompletingJob(job)}
                                                 showUnlockers={<JobUnlockers jobId={job.id} />}
@@ -243,25 +239,19 @@ export function ClientDashboard() {
                                     </p>
                                     <p className="text-slate-500 text-sm mb-6">
                                         {isProRecruiter
-                                            ? 'Publiez votre première demande pour trouver des renforts qualifiés.'
-                                            : 'Publiez votre première mission et recevez des devis rapidement.'}
+                                            ? 'Publiez un projet pour trouver des cordistes qualifiés.'
+                                            : 'Publiez votre première mission pour trouver un professionnel.'}
                                     </p>
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => router.push(postJobPath)}
-                                        className="shadow-lg shadow-brand-blue/20"
-                                    >
-                                        <Plus size={16} />
-                                        {isProRecruiter ? 'Demander du renfort' : 'Poster une mission'}
+                                    <Button variant="primary" onClick={() => router.push(postJobPath)} className="shadow-lg shadow-brand-blue/20">
+                                        {isProRecruiter ? 'Demander du renfort' : 'Poster ma première mission'}
                                     </Button>
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    {/* Right sidebar */}
+                    {/* Sidebar */}
                     <div className="space-y-6">
-                        {/* Quick actions */}
                         <div className="bg-white rounded-xl border border-slate-100 shadow-sm p-5">
                             <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
                                 <Zap size={18} className="text-brand-blue" />
@@ -270,20 +260,11 @@ export function ClientDashboard() {
                             <div className="space-y-2 text-sm">
                                 <button
                                     onClick={() => router.push(postJobPath)}
-                                    className="w-full flex items-center justify-between p-3 rounded-lg border border-brand-blue/10 bg-brand-blue/5 hover:bg-brand-blue/10 transition-colors"
-                                >
-                                    <span className="flex items-center gap-3 font-bold text-brand-blue">
-                                        <Plus size={16} className="text-brand-blue" />
-                                        {isProRecruiter ? 'Nouvelle demande de renfort' : 'Poster une mission'}
-                                    </span>
-                                    <ChevronRight size={14} className="text-brand-blue" />
-                                </button>
-                                <button
-                                    onClick={() => router.push('/messages')}
                                     className="w-full flex items-center justify-between p-3 rounded-lg border border-slate-50 bg-slate-50/50 hover:bg-slate-100 transition-colors"
                                 >
                                     <span className="flex items-center gap-3 font-medium text-slate-700">
-                                        <MessageCircle size={16} className="text-slate-400" /> Messagerie
+                                        <Plus size={16} className="text-slate-400" />
+                                        {isProRecruiter ? 'Nouvelle demande de renfort' : 'Publier une mission'}
                                     </span>
                                     <ChevronRight size={14} className="text-slate-300" />
                                 </button>
@@ -292,22 +273,31 @@ export function ClientDashboard() {
                                     className="w-full flex items-center justify-between p-3 rounded-lg border border-slate-50 bg-slate-50/50 hover:bg-slate-100 transition-colors"
                                 >
                                     <span className="flex items-center gap-3 font-medium text-slate-700">
-                                        <ShieldCheck size={16} className="text-slate-400" />
+                                        <User size={16} className="text-slate-400" />
                                         {isProRecruiter ? 'Mon profil pro' : 'Mon compte'}
                                     </span>
                                     <ChevronRight size={14} className="text-slate-300" />
                                 </button>
+                                <button
+                                    onClick={() => router.push('/jobs')}
+                                    className="w-full flex items-center justify-between p-3 rounded-lg border border-brand-blue/10 bg-brand-blue/5 hover:bg-brand-blue/10 transition-colors"
+                                >
+                                    <span className="flex items-center gap-3 font-bold text-brand-blue">
+                                        <Briefcase size={16} className="text-brand-blue" />
+                                        Voir toutes les missions
+                                    </span>
+                                    <ChevronRight size={14} className="text-brand-blue" />
+                                </button>
                             </div>
                         </div>
 
-                        {/* Info notice */}
+                        {/* Trust notice */}
                         <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs text-slate-500 flex items-start gap-3">
                             <ShieldCheck size={16} className="text-slate-400 shrink-0 mt-0.5" />
                             <p className="leading-relaxed">
-                                {isProRecruiter
-                                    ? <>Vos demandes de renfort sont <strong>visibles par des cordistes certifiés</strong>. Les candidats vous contactent directement après avoir débloqué vos coordonnées.</>
-                                    : <>Vos missions sont <strong>pré-qualifiées</strong> par notre équipe avant publication. Des cordistes certifiés pourront vous contacter pour établir un devis.</>
-                                }
+                                Chaque cordiste contactant votre mission a été{' '}
+                                <strong>pré-qualifié par nos experts</strong>.
+                                Pour toute anomalie ou donnée incorrecte, contactez notre support.
                             </p>
                         </div>
                     </div>
