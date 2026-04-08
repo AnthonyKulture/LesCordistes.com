@@ -1,21 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { Resend } from 'npm:resend@3.2.0';
-<<<<<<< HEAD
-import { render } from 'npm:@react-email/render@1.0.3';
-import * as React from 'npm:react@19.2.0';
-
-// Import templates
-import { WelcomeClientEmail } from '../_shared/templates/WelcomeClientEmail.tsx';
-import { WelcomeProEmail } from '../_shared/templates/WelcomeProEmail.tsx';
-import { AdminAlertEmail } from '../_shared/templates/AdminAlertEmail.tsx';
-import { JobStatusEmail } from '../_shared/templates/JobStatusEmail.tsx';
-import { PaymentReceiptEmail } from '../_shared/templates/PaymentReceiptEmail.tsx';
-import { VerifyEmail } from '../_shared/templates/VerifyEmail.tsx';
-import { MatchJobEmail } from '../_shared/templates/MatchJobEmail.tsx';
-import { PasswordResetEmail } from '../_shared/templates/PasswordResetEmail.tsx';
-import { NewMessageEmail } from '../_shared/templates/NewMessageEmail.tsx';
-=======
->>>>>>> claude/determined-diffie
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
@@ -264,6 +248,22 @@ function passwordReset(data: Record<string, string>): string {
   `);
 }
 
+function newMessage(data: Record<string, string>): string {
+  return base(`Nouveau message de ${data.senderName} — LesCordistes.com`, `
+    <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Vous avez reçu un message</h1>
+    <p style="font-size:15px;color:${S5};margin:0 0 24px;">Bonjour ${data.recipientName},</p>
+    <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 24px;">
+      <strong>${data.senderName}</strong> vous a envoyé un message${data.jobTitle ? ` concernant la mission <strong>${data.jobTitle}</strong>` : ''}.
+    </p>
+    ${data.messagePreview ? `<div style="background:${S1};border-left:3px solid ${BL};border-radius:0 8px 8px 0;padding:16px 20px;margin:0 0 28px;">
+      <p style="font-size:14px;color:${S7};margin:0;line-height:22px;font-style:italic;">"${data.messagePreview}"</p>
+    </div>` : ''}
+    ${btn(data.conversationUrl || 'https://lescordistes.com/messages', 'Répondre au message')}
+    <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
+    <p style="font-size:13px;color:${S5};margin:0;">Répondez directement depuis votre <a href="https://lescordistes.com/messages" style="color:${BL};text-decoration:none;">messagerie</a>.</p>
+  `);
+}
+
 // ─── Router ───────────────────────────────────────────────────────────────────
 
 serve(async (req) => {
@@ -277,70 +277,6 @@ serve(async (req) => {
     let html = '';
 
     switch (templateId) {
-<<<<<<< HEAD
-      case 'welcome-client':
-        emailComponent = React.createElement(WelcomeClientEmail, { name: data.name });
-        break;
-      case 'welcome-pro':
-        emailComponent = React.createElement(WelcomeProEmail, { name: data.name });
-        break;
-      case 'admin-alert':
-        emailComponent = React.createElement(AdminAlertEmail, { 
-          title: data.title, 
-          message: data.message, 
-          link: data.link, 
-          linkText: data.linkText 
-        });
-        break;
-      case 'job-status':
-        emailComponent = React.createElement(JobStatusEmail, {
-          name: data.name,
-          jobTitle: data.jobTitle,
-          status: data.status,
-          rejectionReason: data.rejectionReason
-        });
-        break;
-      case 'payment-receipt':
-        emailComponent = React.createElement(PaymentReceiptEmail, {
-          name: data.name,
-          packName: data.packName,
-          amount: data.amount,
-          creditsAdded: data.creditsAdded,
-          date: data.date,
-          transactionId: data.transactionId
-        });
-        break;
-      case 'verify-email':
-        emailComponent = React.createElement(VerifyEmail, {
-          name: data.name,
-          verificationUrl: data.verificationUrl
-        });
-        break;
-      case 'match-job':
-        emailComponent = React.createElement(MatchJobEmail, {
-          proName: data.proName,
-          jobTitle: data.jobTitle,
-          location: data.location,
-          jobId: data.jobId,
-          isRenfort: data.isRenfort
-        });
-        break;
-      case 'password-reset':
-        emailComponent = React.createElement(PasswordResetEmail, {
-          name: data.name,
-          resetUrl: data.resetUrl
-        });
-        break;
-      case 'new-message':
-        emailComponent = React.createElement(NewMessageEmail, {
-          recipientName: data.recipientName,
-          senderName: data.senderName,
-          messagePreview: data.messagePreview,
-          conversationUrl: data.conversationUrl,
-          jobTitle: data.jobTitle,
-        });
-        break;
-=======
       case 'welcome-client':   html = welcomeClient(data); break;
       case 'welcome-pro':      html = welcomePro(data); break;
       case 'admin-alert':      html = adminAlert(data); break;
@@ -349,7 +285,7 @@ serve(async (req) => {
       case 'payment-receipt':  html = paymentReceipt(data); break;
       case 'verify-email':     html = verifyEmail(data); break;
       case 'password-reset':   html = passwordReset(data); break;
->>>>>>> claude/determined-diffie
+      case 'new-message':      html = newMessage(data); break;
       default:
         throw new Error(`Template not found: ${templateId}`);
     }
