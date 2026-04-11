@@ -60,7 +60,7 @@ export const PasswordResetEmail = ({ name, resetUrl }: PasswordResetEmailProps) 
     <Section style={{ backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '6px', padding: '14px 18px', margin: '0' }}>
       <Text style={{ fontSize: '13px', color: '#991b1b', margin: '0', lineHeight: '20px' }}>
         <strong>Ce n'est pas vous ?</strong> Ignorez cet email. Votre mot de passe reste inchangé. Si vous recevez plusieurs demandes non sollicitées, contactez-nous à{' '}
-        <Link href="mailto:contact@lescordistes.com" style={{ color: '#991b1b' }}>contact@lescordistes.com</Link>.
+        <Link href="mailto:anthony@lescordistes.com" style={{ color: '#991b1b' }}>anthony@lescordistes.com</Link>.
       </Text>
     </Section>
 

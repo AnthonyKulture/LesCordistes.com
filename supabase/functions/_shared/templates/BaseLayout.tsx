@@ -72,7 +72,7 @@ export const BaseLayout = ({ previewText, children }: BaseLayoutProps) => (
             Mon espace
           </Link>
           {'  ·  '}
-          <Link href="mailto:contact@lescordistes.com" style={{ color: brandBlueLight, textDecoration: 'none' }}>
+          <Link href="mailto:anthony@lescordistes.com" style={{ color: brandBlueLight, textDecoration: 'none' }}>
             Nous contacter
           </Link>
         </Text>
