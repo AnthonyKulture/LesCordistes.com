@@ -111,7 +111,7 @@ export const JobStatusEmail = ({ name, jobTitle, status, rejectionReason }: JobS
 
       <Text style={{ fontSize: '13px', color: slate500, margin: '0', lineHeight: '20px' }}>
         Une question sur la modération ? Contactez-nous à{' '}
-        <span style={{ color: brandBlueLight }}>contact@lescordistes.com</span>
+        <span style={{ color: brandBlueLight }}>anthony@lescordistes.com</span>
       </Text>
 
     </BaseLayout>
