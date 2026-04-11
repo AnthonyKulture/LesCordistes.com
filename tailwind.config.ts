@@ -14,6 +14,15 @@ const config: Config = {
             fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
             },
+            keyframes: {
+                slideUp: {
+                    from: { transform: 'translateY(100%)' },
+                    to: { transform: 'translateY(0)' },
+                },
+            },
+            animation: {
+                'slide-up': 'slideUp 0.25s ease-out',
+            },
         },
     },
     plugins: [],

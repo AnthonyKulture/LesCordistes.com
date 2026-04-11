@@ -17,6 +17,18 @@ const nextConfig: NextConfig = {
             { protocol: 'https', hostname: 'www.transparenttextures.com' },
         ],
     },
+    async rewrites() {
+        return [
+            {
+                source: '/ingest/static/:path*',
+                destination: 'https://eu-assets.i.posthog.com/static/:path*',
+            },
+            {
+                source: '/ingest/:path*',
+                destination: 'https://eu.i.posthog.com/:path*',
+            },
+        ]
+    },
     async redirects() {
         return [
             // Redirections depuis l'ancien site WordPress

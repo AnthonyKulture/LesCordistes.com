@@ -1,7 +1,10 @@
+'use client'
+
 import React from 'react';
 import Link from 'next/link';
 import { Facebook, Twitter, Linkedin } from 'lucide-react';
 import { FooterContact, FooterMailIcon } from './FooterContact';
+import { ConsentManager } from '@/components/ConsentBanner';
 
 export const Footer: React.FC = () => {
     return (
@@ -85,6 +88,7 @@ export const Footer: React.FC = () => {
                         <Link href="/cgv" className="hover:text-brand-blue transition-colors">CGV</Link>
                         <Link href="/confidentialite" className="hover:text-brand-blue transition-colors">Confidentialité</Link>
                         <Link href="/mentions-legales" className="hover:text-brand-blue transition-colors">Mentions Légales</Link>
+                        <ConsentManager />
                     </p>
                 </div>
             </div>
