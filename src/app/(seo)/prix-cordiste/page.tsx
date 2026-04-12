@@ -202,25 +202,23 @@ export default function PrixCordisteePage() {
                         <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100 mb-6">
                             <h3 className="font-bold text-slate-900 mb-4">Exemple : nettoyage façade immeuble R+5 (300 m²)</h3>
                             <div className="space-y-3">
-                                <div className="flex justify-between items-center py-2 border-b border-blue-100">
-                                    <span className="text-slate-700">Échafaudage (location 3 sem.)</span>
-                                    <span className="font-bold text-slate-900">4 500 – 8 000 €</span>
+                                {[
+                                    { label: 'Échafaudage (location 3 sem.)', price: '4 500 – 8 000 €', cls: 'text-slate-900' },
+                                    { label: 'Main-d\'œuvre sur échafaudage', price: '2 500 – 4 000 €', cls: 'text-slate-900' },
+                                    { label: 'AOT (autorisation voirie)', price: '300 – 1 000 €', cls: 'text-slate-900' },
+                                ].map((row, i) => (
+                                    <div key={i} className="flex justify-between items-center gap-3 py-2 border-b border-blue-100">
+                                        <span className="text-slate-700 text-sm">{row.label}</span>
+                                        <span className={`font-bold whitespace-nowrap shrink-0 ${row.cls}`}>{row.price}</span>
+                                    </div>
+                                ))}
+                                <div className="flex justify-between items-center gap-3 py-2 font-bold text-red-600">
+                                    <span className="text-sm">Total échafaudage</span>
+                                    <span className="whitespace-nowrap shrink-0">7 300 – 13 000 €</span>
                                 </div>
-                                <div className="flex justify-between items-center py-2 border-b border-blue-100">
-                                    <span className="text-slate-700">Main-d'œuvre sur échafaudage</span>
-                                    <span className="font-bold text-slate-900">2 500 – 4 000 €</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 border-b border-blue-100">
-                                    <span className="text-slate-700">AOT (autorisation voirie)</span>
-                                    <span className="font-bold text-slate-900">300 – 1 000 €</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 font-bold text-red-600">
-                                    <span>Total échafaudage</span>
-                                    <span>7 300 – 13 000 €</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 font-bold text-green-700 bg-green-50 rounded-lg px-3">
-                                    <span>Total cordistes (3 jours, 2 techn.)</span>
-                                    <span>2 100 – 3 600 €</span>
+                                <div className="flex justify-between items-center gap-3 py-2 font-bold text-green-700 bg-green-50 rounded-lg px-3">
+                                    <span className="text-sm">Total cordistes (3 j., 2 tech.)</span>
+                                    <span className="whitespace-nowrap shrink-0">2 100 – 3 600 €</span>
                                 </div>
                             </div>
                             <p className="text-xs text-slate-500 mt-4">* Exemple indicatif. Les tarifs réels varient selon la ville et les spécificités du chantier.</p>
