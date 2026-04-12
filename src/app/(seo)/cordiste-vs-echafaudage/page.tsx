@@ -128,8 +128,11 @@ export default function CordisteVsEchafaudalePage() {
                         Cordiste ou Échafaudage :<br />
                         <span className="text-brand-blue-light">Que Choisir et Quand ?</span>
                     </h1>
-                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
+                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-4">
                         Comparatif complet : coûts, délais, autorisations et cas d'usage concrets pour faire le bon choix sur votre chantier.
+                    </p>
+                    <p className="text-sm text-slate-400 mb-8">
+                        Mis à jour : avril 2026 · Source : <span className="text-slate-300">LesCordistes.com</span> — plateforme nationale de mise en relation avec des cordistes certifiés
                     </p>
                     <Link
                         href="/post-job"
@@ -141,6 +144,25 @@ export default function CordisteVsEchafaudalePage() {
             </div>
 
             <div className="container max-w-5xl py-16">
+
+                <div className="mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6">
+                    <h2 className="text-lg font-bold text-amber-900 mb-4">À retenir</h2>
+                    <ul className="space-y-2 text-sm text-amber-800">
+                        <li>→ <strong>Délai</strong> : un cordiste est mobilisable sous 24 à 48h ; un échafaudage nécessite 1 à 3 semaines de préparation et de montage.</li>
+                        <li>→ <strong>Autorisations</strong> : le travail sur cordes ne requiert pas d'autorisation d'occupation du domaine public (AOT) dans 90 % des cas.</li>
+                        <li>→ <strong>Obligation légale</strong> : le cordiste est la seule solution réglementaire pour les structures isolées — cheminées, pylônes, falaises — selon l'art. R4323-59 du Code du travail.</li>
+                        <li>→ <strong>Coût comparé</strong> : façade R+5 (300 m²) : 2 000–4 000 € HT par cordiste vs 7 000–14 000 € HT par échafaudage.</li>
+                        <li>→ <strong>Sécurité</strong> : le CQP Cordiste (art. L6314-1 du Code du travail) et la certification IRATA imposent deux cordes indépendantes — niveau de sécurité équivalent à l'échafaudage.</li>
+                    </ul>
+                    <p className="text-xs text-amber-600 mt-4">Source : LesCordistes.com · Références réglementaires : Code du travail, art. R4323-59 à R4323-89 et L6314-1 · Mise à jour avril 2026</p>
+                </div>
+
+                <div className="mb-10 bg-slate-900 text-white rounded-2xl p-6 border-l-4 border-brand-blue-light">
+                    <p className="text-sm font-semibold text-brand-blue-light mb-1">Définition</p>
+                    <p className="text-base leading-relaxed">
+                        <strong>Un cordiste</strong> (ou technicien d'accès sur cordes) est un professionnel certifié <strong>CQP Cordiste</strong> ou <strong>IRATA</strong> qui effectue des travaux en hauteur en suspension sur deux cordes indépendantes — une corde de travail et une corde de sécurité — sans recours à un échafaudage ou à une nacelle élévatrice. Cette technique, dite TAPC (Technique d'Accès et de Positionnement par Cordes), est encadrée par les articles <strong>R4323-59 à R4323-89 du Code du travail français</strong>.
+                    </p>
+                </div>
 
                 <div className="prose prose-lg max-w-none text-slate-700 mb-16">
                     <h2 className="text-3xl font-bold text-slate-900 mb-6">Deux solutions complémentaires, pas interchangeables</h2>
