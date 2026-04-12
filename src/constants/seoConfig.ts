@@ -5,7 +5,7 @@ export const SEO_PHONE = '+33660501682'
 export const SEO_PHONE_DISPLAY = '+33 6 60 50 16 82'
 export const SEO_EMAIL = 'anthony@lescordistes.com'
 export const SEO_BRAND_NAME = 'LesCordistes.com'
-export const SEO_BASE_URL = 'https://lescordistes.com'
+export const SEO_BASE_URL = 'https://www.lescordistes.com'
 export const SEO_LOGO = 'https://lescordistes.com/lescordistes.com-3.webp'
 
 export const SEO_OPENING_HOURS = [
@@ -17,10 +17,10 @@ export const SEO_OPENING_HOURS = [
     },
 ]
 
-// À compléter après création de la fiche GBP
 export const SEO_SAME_AS: string[] = [
-    // 'https://www.google.com/maps/place/?q=place_id:ChIJXXXX',
-    // 'https://www.linkedin.com/company/lescordistes',
-    // 'https://fr.trustpilot.com/review/lescordistes.com',
+    'https://www.google.com/maps?cid=15872124307907753477',
+    'https://www.linkedin.com/company/lescordistes/',
+    'https://www.pagesjaunes.fr/pros/64869308',
+    'https://fr.trustpilot.com/review/lescordistes.com',
     // 'https://www.facebook.com/lescordistes',
 ]

@@ -2,15 +2,44 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { BookOpen } from 'lucide-react'
 import { SEO_GLOSSARY, GLOSSARY_CATEGORIES } from '@/constants/seoGlossary'
+import { SEO_BASE_URL, SEO_BRAND_NAME } from '@/constants/seoConfig'
 
 export const metadata: Metadata = {
     title: 'Le Lexique du Travail en Hauteur & Accès Difficile',
     description: 'Découvrez notre dictionnaire complet du travail sur cordes : CQP, IRATA, EPI, ancrages et réglementations. Le guide de référence des travaux en hauteur.',
-    alternates: { canonical: 'https://lescordistes.com/lexique' },
+    alternates: { canonical: `${SEO_BASE_URL}/lexique` },
+}
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+        {
+            '@type': 'DefinedTermSet',
+            '@id': `${SEO_BASE_URL}/lexique#termset`,
+            name: 'Dictionnaire du Travail sur Cordes — LesCordistes.com',
+            description: 'Glossaire des certifications, techniques, équipements et réglementations du travail sur cordes et accès difficile en France.',
+            url: `${SEO_BASE_URL}/lexique`,
+            inLanguage: 'fr',
+            publisher: {
+                '@type': 'Organization',
+                '@id': `${SEO_BASE_URL}/#organization`,
+                name: SEO_BRAND_NAME,
+            },
+        },
+        {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Accueil', item: SEO_BASE_URL },
+                { '@type': 'ListItem', position: 2, name: 'Dictionnaire', item: `${SEO_BASE_URL}/lexique` },
+            ],
+        },
+    ],
 }
 
 export default function GlossaryHub() {
     return (
+        <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <div className="min-h-screen bg-slate-50 pt-24 pb-16">
             <div className="container max-w-5xl">
                 <div className="text-center mb-16">
@@ -51,5 +80,6 @@ export default function GlossaryHub() {
                 </div>
             </div>
         </div>
+        </>
     )
 }

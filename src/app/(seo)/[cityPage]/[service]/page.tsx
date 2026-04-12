@@ -40,11 +40,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: titleTemplate || `${serviceData.name} à ${city.name} — Cordiste Certifié`,
         description: descTemplate || `Besoin de ${serviceData.name.toLowerCase()} à ${city.name} ? Nos cordistes certifiés interviennent en accès difficile. Devis rapide, sécurité garantie CQP/IRATA.`,
-        alternates: { canonical: `https://lescordistes.com/cordiste-${citySlug}/${serviceSlug}` },
+        alternates: { canonical: `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}` },
         openGraph: {
             title: titleTemplate || `${serviceData.name} à ${city.name} — Intervention Cordiste`,
             description: descTemplate || `Cordiste certifié pour ${serviceData.name.toLowerCase()} à ${city.name}. Devis sous 48h.`,
-            url: `https://lescordistes.com/cordiste-${citySlug}/${serviceSlug}`,
+            url: `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}`,
         },
         other: {
             'geo.region': `FR-${city.department}`,
@@ -81,14 +81,23 @@ export default async function CityServiceSEOPage({ params }: Props) {
                 '@type': 'Service',
                 '@id': `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}#service`,
                 name: `${serviceName} à ${name}`,
+                url: `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}`,
                 serviceType: serviceName,
                 description,
-                areaServed: { '@type': 'City', name },
+                areaServed: {
+                    '@type': 'City',
+                    name,
+                },
+                offers: {
+                    '@type': 'Offer',
+                    priceCurrency: 'EUR',
+                    priceRange: '350€–600€/jour',
+                    availability: 'https://schema.org/InStock',
+                },
                 provider: {
                     '@type': 'LocalBusiness',
-                    '@id': `${SEO_BASE_URL}/cordiste-${citySlug}`,
+                    '@id': `${SEO_BASE_URL}/#organization`,
                     name: SEO_BRAND_NAME,
-                    image: SEO_LOGO,
                     telephone: SEO_PHONE,
                     email: SEO_EMAIL,
                     openingHoursSpecification: SEO_OPENING_HOURS,

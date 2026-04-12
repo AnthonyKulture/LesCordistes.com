@@ -14,9 +14,12 @@ export default function robots(): MetadataRoute.Robots {
                     '/notifications/',
                     '/api/',
                     '/auth/',
+                    '/credits/',
+                    '/connexion/',
+                    '/pro/',
                 ],
             },
         ],
-        sitemap: 'https://lescordistes.com/sitemap.xml',
+        sitemap: 'https://www.lescordistes.com/sitemap.xml',
     }
 }
