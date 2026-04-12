@@ -11,11 +11,11 @@ import { CTA } from '@/components/landing/CTA'
 export const metadata: Metadata = {
     title: 'LesCordistes.com - Plateforme pour Professionnels du Travail sur Cordes',
     description: "Trouvez des chantiers ou recrutez des cordistes qualifiés. La marketplace n°1 pour les travaux d'accès difficile et les métiers de la corde.",
-    alternates: { canonical: 'https://lescordistes.com/' },
+    alternates: { canonical: `${SEO_BASE_URL}/` },
     openGraph: {
         title: 'LesCordistes.com - Plateforme pour Professionnels du Travail sur Cordes',
         description: "Trouvez des chantiers ou recrutez des cordistes qualifiés. La marketplace n°1 pour les travaux d'accès difficile et les métiers de la corde.",
-        url: 'https://lescordistes.com/',
+        url: `${SEO_BASE_URL}/`,
         images: [{ url: '/lescordistes.com-3.webp', width: 1200, height: 630 }],
     },
 }
@@ -28,18 +28,18 @@ const jsonLd = {
             '@id': `${SEO_BASE_URL}/#website`,
             name: SEO_BRAND_NAME,
             url: `${SEO_BASE_URL}/`,
-            potentialAction: {
-                '@type': 'SearchAction',
-                target: { '@type': 'EntryPoint', urlTemplate: `${SEO_BASE_URL}/post-job` },
-                'query-input': 'required name=search_term_string',
-            },
         },
         {
             '@type': ['Organization', 'ProfessionalService'],
             '@id': `${SEO_BASE_URL}/#organization`,
             name: SEO_BRAND_NAME,
             url: `${SEO_BASE_URL}/`,
-            logo: SEO_LOGO,
+            logo: {
+                '@type': 'ImageObject',
+                url: SEO_LOGO,
+                width: 1200,
+                height: 630,
+            },
             telephone: SEO_PHONE,
             email: SEO_EMAIL,
             description: "Marketplace française spécialisée dans les travaux en accès difficile. Mise en relation entre cordistes certifiés CQP/IRATA et clients professionnels ou particuliers dans toute la France.",
@@ -56,11 +56,28 @@ const jsonLd = {
         },
         {
             '@type': 'FAQPage',
+            mainEntityOfPage: `${SEO_BASE_URL}/`,
             mainEntity: [
-                { '@type': 'Question', name: "Est-ce gratuit de déposer une demande de travaux ?", acceptedAnswer: { '@type': 'Answer', text: "Oui, totalement. Le dépôt de mission est gratuit pour tous les porteurs de projet. Vous ne payez que la prestation directement au professionnel." } },
-                { '@type': 'Question', name: "Quels types de travaux puis-je confier via la plateforme ?", acceptedAnswer: { '@type': 'Answer', text: "Tout le spectre des accès difficiles : nettoyage de façades, lavage de vitres, toiture, zinguerie, ravalement, peinture industrielle, maintenance éolienne, pylônes télécom, CND, inspection d'ouvrages d'art, confortement de falaises et plus encore." } },
-                { '@type': 'Question', name: "Les professionnels sont-ils qualifiés ?", acceptedAnswer: { '@type': 'Answer', text: "Les pros doivent avoir un compte validé avec certifications CQP ou IRATA et assurances RC Pro vérifiées avant toute mise en relation." } },
-                { '@type': 'Question', name: "Pourquoi payer pour accéder à une mission ?", acceptedAnswer: { '@type': 'Answer', text: "Modèle au lead via crédits. Vous ne dépensez que pour les missions qui vous correspondent réellement." } },
+                {
+                    '@type': 'Question',
+                    name: "Est-ce gratuit de déposer une demande de travaux ?",
+                    acceptedAnswer: { '@type': 'Answer', text: "Oui, totalement gratuit. Le dépôt de mission ne coûte rien au porteur de projet, particulier ou professionnel. Vous décrivez vos besoins en 3 minutes, recevez des devis sous 48h, puis contractez directement avec le cordiste choisi. Aucune commission n'est prélevée sur la transaction finale." },
+                },
+                {
+                    '@type': 'Question',
+                    name: "Quels types de travaux puis-je confier via la plateforme ?",
+                    acceptedAnswer: { '@type': 'Answer', text: "Tout le spectre des accès difficiles : nettoyage de façades, lavage de vitres en hauteur, ravalement, peinture industrielle et anticorrosion, toiture et zinguerie, isolation thermique extérieure (ITE), maintenance éolienne, pylônes télécom, contrôles non destructifs (CND), inspection de ponts et viaducs, confortement de falaises et dépigeonnage. Si l'accès nécessite une corde, nos pros le font." },
+                },
+                {
+                    '@type': 'Question',
+                    name: "Les professionnels sont-ils qualifiés et assurés ?",
+                    acceptedAnswer: { '@type': 'Answer', text: "Oui. Chaque professionnel doit soumettre ses certifications CQP Cordiste (obligatoire en France) ou IRATA (norme internationale) ainsi que son attestation RC Pro avant validation de son compte. Notre équipe vérifie l'authenticité de ces documents. Aucun cordiste non certifié n'est mis en relation avec un client." },
+                },
+                {
+                    '@type': 'Question',
+                    name: "Pourquoi les pros paient-ils pour accéder aux missions ?",
+                    acceptedAnswer: { '@type': 'Answer', text: "La plateforme fonctionne au lead par crédits, sans commission sur le chantier. Un cordiste débourse 1 crédit (~8–10 € HT) uniquement pour les missions qui correspondent à son profil et sa zone. Ce modèle filtre les leads non pertinents et garantit au client de recevoir des devis de professionnels réellement intéressés — pas de démarchage automatique." },
+                },
             ],
         },
     ],

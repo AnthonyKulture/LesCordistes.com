@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /profile/
+Disallow: /messages/
+Disallow: /notifications/
+Disallow: /api/
+Disallow: /credits/
+Disallow: /connexion/
+Disallow: /pro/
+
+Sitemap: https://lescordistes.com/sitemap.xml

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { SEO_GLOSSARY, GLOSSARY_CATEGORIES } from '@/constants/seoGlossary'
+import { SEO_BASE_URL } from '@/constants/seoConfig'
 
 interface Props {
     params: Promise<{ slug: string }>
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: `${term.title} - Définition Travaux en Hauteur`,
         description: `Définition de ${term.title} : ${term.definition}. Comprendre les standards industriels du travail sur cordes.`,
-        alternates: { canonical: `https://lescordistes.com/lexique/${term.slug}` },
+        alternates: { canonical: `${SEO_BASE_URL}/lexique/${term.slug}` },
     }
 }
 
@@ -30,10 +31,29 @@ export default async function GlossaryArticle({ params }: Props) {
 
     const jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'DefinedTerm',
-        name: term.title,
-        description: term.definition,
-        inDefinedTermSet: 'https://lescordistes.com/lexique',
+        '@graph': [
+            {
+                '@type': 'DefinedTerm',
+                '@id': `${SEO_BASE_URL}/lexique/${term.slug}#term`,
+                name: term.title,
+                url: `${SEO_BASE_URL}/lexique/${term.slug}`,
+                description: term.definition,
+                inDefinedTermSet: {
+                    '@type': 'DefinedTermSet',
+                    '@id': `${SEO_BASE_URL}/lexique#termset`,
+                    name: 'Dictionnaire du Travail sur Cordes — LesCordistes.com',
+                    url: `${SEO_BASE_URL}/lexique`,
+                },
+            },
+            {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                    { '@type': 'ListItem', position: 1, name: 'Accueil', item: SEO_BASE_URL },
+                    { '@type': 'ListItem', position: 2, name: 'Dictionnaire', item: `${SEO_BASE_URL}/lexique` },
+                    { '@type': 'ListItem', position: 3, name: term.title, item: `${SEO_BASE_URL}/lexique/${term.slug}` },
+                ],
+            },
+        ],
     }
 
     return (

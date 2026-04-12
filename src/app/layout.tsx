@@ -11,10 +11,10 @@ import '../index.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://lescordistes.com'),
+    metadataBase: new URL('https://www.lescordistes.com'),
     title: {
         default: 'LesCordistes.com - Plateforme pour Professionnels du Travail sur Cordes',
-        template: '%s | LesCordistes',
+        template: '%s | LesCordistes.com',
     },
     description: "Trouvez des chantiers ou recrutez des cordistes qualifiés. La marketplace n°1 pour les travaux d'accès difficile et les métiers de la corde.",
     keywords: ['cordiste', 'travail en hauteur', 'accès difficile', 'IRATA', 'CQP', 'missions cordiste'],
