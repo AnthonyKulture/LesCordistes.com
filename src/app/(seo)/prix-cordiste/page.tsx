@@ -111,8 +111,11 @@ export default function PrixCordisteePage() {
                         Prix d'un Cordiste en 2025 :<br />
                         <span className="text-brand-blue-light">Tarifs, Devis et Facteurs</span>
                     </h1>
-                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
+                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-4">
                         De 350 à 800 €/jour selon la prestation et la région. Tout ce qu'il faut savoir pour budgétiser vos travaux en hauteur sans mauvaise surprise.
+                    </p>
+                    <p className="text-sm text-slate-400 mb-8">
+                        Mis à jour : avril 2026 · Source : <span className="text-slate-300">LesCordistes.com</span> — analyse de devis sur réseau national de cordistes certifiés
                     </p>
                     <Link
                         href="/post-job"
@@ -124,6 +127,18 @@ export default function PrixCordisteePage() {
             </div>
 
             <div className="container max-w-5xl py-16">
+
+                <div className="mb-12 bg-amber-50 border border-amber-200 rounded-2xl p-6">
+                    <h2 className="text-lg font-bold text-amber-900 mb-4">À retenir</h2>
+                    <ul className="space-y-2 text-sm text-amber-800">
+                        <li>→ <strong>Tarif journalier moyen</strong> : 350 à 600 €/jour HT en province, jusqu'à 800 €/jour HT à Paris et sur la Côte d'Azur.</li>
+                        <li>→ <strong>Nettoyage de façade</strong> : 8 à 25 €/m² HT selon le support, la hauteur et la méthode employée.</li>
+                        <li>→ <strong>Économie vs échafaudage</strong> : le cordiste coûte 2 à 4× moins cher sur les interventions ponctuelles (façade R+5 : 2 000–4 000 € vs 7 000–14 000 €).</li>
+                        <li>→ <strong>Surcoût habilitations</strong> : sites SEVESO, nucléaires ou monuments historiques majorent le tarif de 20 à 45 %.</li>
+                        <li>→ <strong>Minimum 2 techniciens</strong> obligatoires par chantier (opérateur + équipier sécurité) selon la réglementation.</li>
+                    </ul>
+                    <p className="text-xs text-amber-600 mt-4">Source : analyse de devis collectés via LesCordistes.com sur le réseau national de cordistes certifiés CQP/IRATA · Données 2025-2026</p>
+                </div>
 
                 <div className="prose prose-lg max-w-none text-slate-700 mb-16">
                     <h2 className="text-3xl font-bold text-slate-900 mb-6">Combien coûte un cordiste ?</h2>
@@ -161,7 +176,7 @@ export default function PrixCordisteePage() {
                             </tbody>
                         </table>
                     </div>
-                    <p className="text-xs text-slate-400 mt-3">* Tarifs indicatifs HT, hors TVA (20 %), hors déplacement et hors matériaux. Mis à jour en 2025.</p>
+                    <p className="text-xs text-slate-400 mt-3">* Tarifs indicatifs HT, hors TVA (20 %), hors déplacement et hors matériaux. Source : LesCordistes.com, analyse du réseau national de cordistes certifiés CQP/IRATA, mise à jour avril 2026.</p>
                 </div>
 
                 <div className="mb-16 grid md:grid-cols-2 gap-8">
