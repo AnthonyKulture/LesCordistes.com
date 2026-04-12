@@ -176,25 +176,26 @@ export default function CordisteVsEchafaudalePage() {
 
                 <div className="mb-16">
                     <h2 className="text-3xl font-bold text-slate-900 mb-8">Tableau comparatif : cordiste vs échafaudage</h2>
-                    <div className="overflow-x-auto rounded-2xl border border-slate-200">
-                        <table className="w-full text-sm">
-                            <thead>
-                                <tr className="bg-slate-900 text-white">
-                                    <th className="text-left p-4 font-semibold">Critère</th>
-                                    <th className="text-center p-4 font-semibold text-brand-blue-light">Cordiste</th>
-                                    <th className="text-center p-4 font-semibold">Échafaudage</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {COMPARATIF.map((row, i) => (
-                                    <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                                        <td className="p-4 font-medium text-slate-900">{row.critere}</td>
-                                        <td className="p-4 text-center text-brand-blue font-semibold">{row.cordiste}</td>
-                                        <td className="p-4 text-center text-slate-600">{row.echafaudage}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                    <div className="rounded-2xl border border-slate-200 overflow-hidden">
+                        {/* Header — masqué sur mobile */}
+                        <div className="hidden md:grid md:grid-cols-3 bg-slate-900 text-white text-sm font-semibold">
+                            <div className="p-4">Critère</div>
+                            <div className="p-4 text-center text-brand-blue-light">Cordiste</div>
+                            <div className="p-4 text-center">Échafaudage</div>
+                        </div>
+                        {COMPARATIF.map((row, i) => (
+                            <div key={i} className={`grid grid-cols-1 md:grid-cols-3 text-sm border-t border-slate-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}`}>
+                                <div className="p-3 md:p-4 font-semibold text-slate-900 md:font-medium">{row.critere}</div>
+                                <div className="px-3 pb-1 md:p-4 md:text-center font-semibold text-brand-blue">
+                                    <span className="md:hidden text-xs text-slate-400 font-normal mr-1">Cordiste :</span>
+                                    {row.cordiste}
+                                </div>
+                                <div className="px-3 pb-3 md:p-4 md:text-center text-slate-600">
+                                    <span className="md:hidden text-xs text-slate-400 mr-1">Échafaudage :</span>
+                                    {row.echafaudage}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

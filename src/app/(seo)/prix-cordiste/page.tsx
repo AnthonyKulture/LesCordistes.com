@@ -156,20 +156,20 @@ export default function PrixCordisteePage() {
                         <table className="w-full text-sm">
                             <thead>
                                 <tr className="bg-slate-900 text-white">
-                                    <th className="text-left p-4 font-semibold">Prestation</th>
-                                    <th className="text-center p-4 font-semibold">Unité</th>
-                                    <th className="text-center p-4 font-semibold">Prix min HT</th>
-                                    <th className="text-center p-4 font-semibold">Prix max HT</th>
+                                    <th className="text-left p-2 sm:p-4 font-semibold">Prestation</th>
+                                    <th className="text-center p-2 sm:p-4 font-semibold hidden sm:table-cell">Unité</th>
+                                    <th className="text-center p-2 sm:p-4 font-semibold whitespace-nowrap">Min HT</th>
+                                    <th className="text-center p-2 sm:p-4 font-semibold whitespace-nowrap">Max HT</th>
                                     <th className="text-left p-4 font-semibold hidden md:table-cell">Remarque</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {TARIFS.map((t, i) => (
                                     <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
-                                        <td className="p-4 font-medium text-slate-900">{t.prestation}</td>
-                                        <td className="p-4 text-center text-slate-600">{t.unite}</td>
-                                        <td className="p-4 text-center font-bold text-brand-blue">{t.min} €</td>
-                                        <td className="p-4 text-center font-bold text-brand-blue">{t.max} €</td>
+                                        <td className="p-2 sm:p-4 font-medium text-slate-900">{t.prestation}</td>
+                                        <td className="p-2 sm:p-4 text-center text-slate-600 hidden sm:table-cell">{t.unite}</td>
+                                        <td className="p-2 sm:p-4 text-center font-bold text-brand-blue whitespace-nowrap">{t.min}€</td>
+                                        <td className="p-2 sm:p-4 text-center font-bold text-brand-blue whitespace-nowrap">{t.max}€</td>
                                         <td className="p-4 text-slate-500 hidden md:table-cell text-xs">{t.note}</td>
                                     </tr>
                                 ))}
