@@ -43,9 +43,20 @@ export function RegisterPro() {
                         full_name: [data.firstName, data.lastName].filter(Boolean).join(' ') || null,
                         company_name: (!data.isAutoEntrepreneur && data.companyName) ? data.companyName : null,
                         role: 'pro',
-                    }).eq('id', user.id).then(() => {
+                    }).eq('id', user.id).then(async () => {
                         localStorage.removeItem(STORAGE_KEY);
-                        router.push('/dashboard');
+                        const email = data.email || user.email;
+                        if (email) {
+                            client.functions.invoke('send-email', {
+                                body: {
+                                    to: email,
+                                    subject: 'Votre profil pro est actif — LesCordistes.com',
+                                    templateId: 'welcome-pro',
+                                    data: { name: data.firstName || '' },
+                                },
+                            }).catch(() => {});
+                        }
+                        router.push('/dashboard/pro?welcome=pro');
                     });
                 } catch {
                     localStorage.removeItem(STORAGE_KEY);
