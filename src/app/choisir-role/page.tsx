@@ -26,9 +26,19 @@ export default function ChoisirRolePage() {
         setSelecting(true)
         try {
             const supabase = createSupabaseBrowserClient()
-            await supabase.from('profiles').update({ role }).eq('id', user.id)
+            await (supabase.from('profiles') as any).update({ role }).eq('id', user.id)
             await refreshProfile()
-            router.replace('/dashboard')
+            supabase.functions.invoke('send-email', {
+                body: {
+                    to: user.email,
+                    subject: role === 'pro'
+                        ? 'Votre profil pro est actif — LesCordistes.com'
+                        : 'Bienvenue sur LesCordistes.com',
+                    templateId: role === 'pro' ? 'welcome-pro' : 'welcome-client',
+                    data: { name: profile?.first_name || '' },
+                },
+            }).catch(() => {})
+            router.replace(role === 'pro' ? '/dashboard/pro?welcome=pro' : '/dashboard/client?welcome=client')
         } finally {
             setSelecting(false)
         }
