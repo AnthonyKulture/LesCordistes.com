@@ -10,4 +10,4 @@ Disallow: /credits/
 Disallow: /connexion/
 Disallow: /pro/
 
-Sitemap: https://lescordistes.com/sitemap.xml
+Sitemap: https://www.lescordistes.com/sitemap.xml
