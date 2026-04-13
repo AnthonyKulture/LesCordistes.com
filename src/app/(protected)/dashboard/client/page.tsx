@@ -1,7 +1,12 @@
 'use client'
 
+import { Suspense } from 'react'
 import { DashboardSelector } from '@/views/dashboards/DashboardSelector'
 
 export default function ClientDashboardPage() {
-    return <DashboardSelector />
+    return (
+        <Suspense>
+            <DashboardSelector />
+        </Suspense>
+    )
 }

@@ -43,9 +43,20 @@ export function RegisterClient() {
                         full_name: [data.firstName, data.lastName].filter(Boolean).join(' ') || null,
                         role: 'client',
                         client_type: data.client_type || null,
-                    }).eq('id', user.id).then(() => {
+                    }).eq('id', user.id).then(async () => {
                         localStorage.removeItem(STORAGE_KEY);
-                        router.push('/dashboard');
+                        const email = data.email || user.email;
+                        if (email) {
+                            client.functions.invoke('send-email', {
+                                body: {
+                                    to: email,
+                                    subject: 'Bienvenue sur LesCordistes.com',
+                                    templateId: 'welcome-client',
+                                    data: { name: data.firstName || '' },
+                                },
+                            }).catch(() => {});
+                        }
+                        router.push('/dashboard/client?welcome=client');
                     });
                 } catch {
                     localStorage.removeItem(STORAGE_KEY);

@@ -14,6 +14,7 @@ import { JobListItem } from '../../components/dashboard/JobListItem';
 import { CompleteJobModal } from '../../components/dashboard/CompleteJobModal';
 import { ConfirmDeleteModal } from '../../components/dashboard/ConfirmDeleteModal';
 import { JobUnlockers } from '../../components/dashboard/JobUnlockers';
+import { useSearchParams } from 'next/navigation';
 import {
     Briefcase,
     Clock,
@@ -23,13 +24,17 @@ import {
     Zap,
     User,
     ShieldCheck,
+    PartyPopper,
+    X,
 } from 'lucide-react';
 import type { Job } from '../../types';
 
 export function ClientDashboard() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { mode } = useDashboardMode();
     const { user, profile } = useAuth();
+    const [showWelcomeBanner, setShowWelcomeBanner] = React.useState(() => searchParams.get('welcome') === 'client');
     const toast = useToast();
     const supabase = createSupabaseBrowserClient();
     const queryClient = useQueryClient();
@@ -122,6 +127,29 @@ export function ClientDashboard() {
 
     return (
         <DashboardLayout>
+            {showWelcomeBanner && (
+                <div className="fixed top-0 left-0 right-0 z-50 bg-brand-blue text-white px-4 py-3 flex items-center justify-between gap-3 shadow-lg">
+                    <div className="flex items-center gap-3 min-w-0">
+                        <PartyPopper size={18} className="shrink-0 text-blue-200" />
+                        <div className="min-w-0">
+                            <p className="font-semibold text-sm leading-tight">Compte activé !</p>
+                            <p className="text-xs text-blue-200 leading-tight truncate">Publie ton premier projet et reçois des devis.</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                        <button
+                            onClick={() => { router.push('/post-job'); setShowWelcomeBanner(false); }}
+                            className="text-xs font-bold bg-white text-brand-blue rounded-md px-3 py-1.5 whitespace-nowrap"
+                        >
+                            Publier →
+                        </button>
+                        <button onClick={() => setShowWelcomeBanner(false)} className="text-blue-300 hover:text-white p-1">
+                            <X size={16} />
+                        </button>
+                    </div>
+                </div>
+            )}
+            <div className={showWelcomeBanner ? 'pt-14' : ''}>
             <div className="space-y-6">
                 {/* Header */}
                 <div className="flex items-center justify-between flex-wrap gap-4">
@@ -302,6 +330,7 @@ export function ClientDashboard() {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
             {deletingJobId && (

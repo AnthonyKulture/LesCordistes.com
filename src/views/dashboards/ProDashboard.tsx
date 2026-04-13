@@ -13,25 +13,30 @@ import { CreditWidget } from '../../components/credits/CreditWidget';
 import { Button } from '../../components/ui/Button';
 import { StatCard } from '../../components/dashboard/StatCard';
 import { JobListItem } from '../../components/dashboard/JobListItem';
-import { 
-    Briefcase, 
+import { useSearchParams } from 'next/navigation';
+import {
+    Briefcase,
     TrendingUp,
-    ArrowRight, 
-    User, 
-    ChevronRight, 
-    Zap, 
-    Phone, 
-    Mail, 
+    ArrowRight,
+    User,
+    ChevronRight,
+    Zap,
+    Phone,
+    Mail,
     ShieldCheck,
-    Coins
+    Coins,
+    X,
+    PartyPopper
 } from 'lucide-react';
 import type { Job } from '../../types';
 
 export function ProDashboard() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { user, profile } = useAuth();
     const { balance, unlockedLeads: unlockedJobIds } = useCredits();
     const { setMode } = useDashboardMode();
+    const [showWelcomeBanner, setShowWelcomeBanner] = React.useState(() => searchParams.get('welcome') === 'pro');
 
     // Total active missions count
     const { data: totalJobsCount } = useQuery({
@@ -90,6 +95,29 @@ export function ProDashboard() {
 
     return (
         <DashboardLayout>
+            {showWelcomeBanner && (
+                <div className="fixed top-0 left-0 right-0 z-50 bg-brand-blue text-white px-4 py-3 flex items-center justify-between gap-3 shadow-lg">
+                    <div className="flex items-center gap-3 min-w-0">
+                        <PartyPopper size={18} className="shrink-0 text-blue-200" />
+                        <div className="min-w-0">
+                            <p className="font-semibold text-sm leading-tight">Compte activé !</p>
+                            <p className="text-xs text-blue-200 leading-tight truncate">Complète ton profil pour recevoir des missions.</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                        <button
+                            onClick={() => { router.push('/profile'); setShowWelcomeBanner(false); }}
+                            className="text-xs font-bold bg-white text-brand-blue rounded-md px-3 py-1.5 whitespace-nowrap"
+                        >
+                            Compléter →
+                        </button>
+                        <button onClick={() => setShowWelcomeBanner(false)} className="text-blue-300 hover:text-white p-1">
+                            <X size={16} />
+                        </button>
+                    </div>
+                </div>
+            )}
+            <div className={showWelcomeBanner ? 'pt-14' : ''}>
             <div className="space-y-6">
                 <div className="flex items-center justify-between flex-wrap gap-4">
                     <div>
@@ -279,6 +307,7 @@ export function ProDashboard() {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </DashboardLayout>
     );
