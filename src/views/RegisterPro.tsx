@@ -28,46 +28,8 @@ export function RegisterPro() {
     const [magicSent, setMagicSent] = React.useState(false);
     const [error, setError] = React.useState('');
 
-    // Handle return from magic link confirmation
     React.useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('confirmed') === 'true' && user) {
-            const pending = localStorage.getItem(STORAGE_KEY);
-            if (pending) {
-                try {
-                    const data = JSON.parse(pending);
-                    const client = createSupabaseBrowserClient();
-                    (client.from('profiles') as any).update({
-                        first_name: data.firstName || null,
-                        last_name: data.lastName || null,
-                        full_name: [data.firstName, data.lastName].filter(Boolean).join(' ') || null,
-                        company_name: (!data.isAutoEntrepreneur && data.companyName) ? data.companyName : null,
-                        role: 'pro',
-                    }).eq('id', user.id).then(async () => {
-                        localStorage.removeItem(STORAGE_KEY);
-                        const email = data.email || user.email;
-                        if (email) {
-                            client.functions.invoke('send-email', {
-                                body: {
-                                    to: email,
-                                    subject: 'Votre profil pro est actif — LesCordistes.com',
-                                    templateId: 'welcome-pro',
-                                    data: { name: data.firstName || '' },
-                                },
-                            }).catch(() => {});
-                        }
-                        router.push('/dashboard/pro?welcome=pro');
-                    });
-                } catch {
-                    localStorage.removeItem(STORAGE_KEY);
-                    router.push('/dashboard');
-                }
-            } else {
-                router.push('/dashboard');
-            }
-            return;
-        }
-        if (!authLoading && user && !params.get('confirmed')) {
+        if (!authLoading && user) {
             router.push('/dashboard');
         }
     }, [user, authLoading, router]);
@@ -101,7 +63,7 @@ export function RegisterPro() {
             const { error: otpError } = await supabase.auth.signInWithOtp({
                 email: formData.email,
                 options: {
-                    emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/inscription-cordiste?confirmed=true')}`,
+                    emailRedirectTo: `${window.location.origin}/auth/callback`,
                 },
             });
 
