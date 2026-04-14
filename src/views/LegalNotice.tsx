@@ -24,12 +24,11 @@ export const LegalNotice: React.FC = () => {
                 <div className="space-y-2">
                     <p>Le site LesCordistes.com est édité par :</p>
                     <ul className="space-y-1 text-slate-600">
-                        <li><strong>Dénomination sociale :</strong> [À compléter : Nom de votre structure, ex: SAS LesCordistes]</li>
-                        <li><strong>Siège social :</strong> [À compléter : Adresse complète du siège]</li>
-                        <li><strong>SIREN/SIRET :</strong> [À compléter]</li>
-                        <li><strong>TVA Intracommunautaire :</strong> [À compléter]</li>
-                        <li><strong>Directeur de la publication :</strong> [À compléter : Votre Nom et Prénom]</li>
-                        <li><strong>Contact :</strong> [À compléter : Adresse email de support dédiée]</li>
+                        <li><strong>Dénomination sociale :</strong> Anthony PROFIT — Micro-entrepreneur</li>
+                        <li><strong>Siège social :</strong> 2 rue Pierre Pietri, 06000 Nice</li>
+                        <li><strong>SIRET :</strong> 850 723 552 00020</li>
+                        <li><strong>Directeur de la publication :</strong> Anthony PROFIT</li>
+                        <li><strong>Contact :</strong> anthony@lescordistes.com</li>
                     </ul>
                 </div>
             )
@@ -41,9 +40,9 @@ export const LegalNotice: React.FC = () => {
                 <div className="space-y-2">
                     <p>Le site est hébergé par :</p>
                     <ul className="space-y-1 text-slate-600">
-                        <li><strong>Nom de l'hébergeur :</strong> [À compléter : ex. AWS, OVH, Hostinger]</li>
-                        <li><strong>Adresse :</strong> [À compléter]</li>
-                        <li><strong>Contact :</strong> [À compléter : Numéro de téléphone ou email]</li>
+                        <li><strong>Hébergeur :</strong> O2SWITCH</li>
+                        <li><strong>Adresse :</strong> 222-224 Boulevard Gustave Flaubert, 63000 Clermont-Ferrand</li>
+                        <li><strong>Site :</strong> <a href="https://www.o2switch.fr" className="text-brand-blue hover:underline">www.o2switch.fr</a></li>
                     </ul>
                 </div>
             )

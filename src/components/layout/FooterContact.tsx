@@ -7,7 +7,7 @@ import { Mail, Phone } from 'lucide-react'
 // Values are assembled client-side only — not present in the static HTML source.
 const PHONE_PARTS = ['\u002B33', '6', '60', '50', '16', '82']
 const PHONE_DISPLAY_PARTS = ['\u002B33\u00A0', '6\u00A0', '60\u00A0', '50\u00A0', '16\u00A0', '82']
-const EMAIL_PARTS = ['contact', '\u0040', 'lescordistes', '\u002E', 'com']
+const EMAIL_PARTS = ['anthony', '\u0040', 'lescordistes', '\u002E', 'com']
 
 export function FooterContact() {
     const [phone, setPhone] = useState('')
