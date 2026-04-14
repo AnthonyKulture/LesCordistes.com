@@ -26,7 +26,11 @@ import {
     ShieldCheck,
     Coins,
     X,
-    PartyPopper
+    PartyPopper,
+    Check,
+    MapPin,
+    Award,
+    FileText,
 } from 'lucide-react';
 import type { Job } from '../../types';
 
@@ -93,36 +97,109 @@ export function ProDashboard() {
         return Math.round((completed / fields.length) * 100);
     }, [profile]);
 
+    const isFieldComplete = (field: string) => {
+        if (!profile) return false;
+        const v = profile[field as keyof typeof profile];
+        return v != null && (Array.isArray(v) ? v.length > 0 : String(v).trim().length > 0);
+    };
+
+    const firstName = profile?.full_name?.split(' ')[0] || 'Cordiste';
+
+    const checklistItems = [
+        { field: 'full_name',           icon: User,     label: 'Nom complet',                sublabel: 'Obligatoire pour être contacté' },
+        { field: 'phone',               icon: Phone,    label: 'Numéro de téléphone',         sublabel: 'Les clients te contactent directement' },
+        { field: 'intervention_zones',  icon: MapPin,   label: 'Zones d\'intervention',       sublabel: 'Pour matcher avec les bonnes missions' },
+        { field: 'certifications',      icon: Award,    label: 'Certifications (IRATA, CQP)', sublabel: 'Rassure les clients sur ton niveau' },
+        { field: 'bio',                 icon: FileText, label: 'Présentation',                sublabel: 'Quelques lignes sur ton expérience' },
+    ];
+
+    // Onboarding mode : profil insuffisant pour être visible
+    if (profile && profileCompletion < 60) {
+        const progressColor = profileCompletion < 30 ? '#ef4444' : profileCompletion < 50 ? '#f97316' : '#3b82f6';
+        const completedCount = checklistItems.filter(i => isFieldComplete(i.field)).length;
+
+        return (
+            <DashboardLayout>
+                <div className="max-w-md mx-auto">
+                    <div className="mb-6">
+                        <h1 className="text-2xl font-bold text-slate-900">
+                            Bienvenue {firstName} 👋
+                        </h1>
+                        <p className="text-slate-500 text-sm mt-1">
+                            Configure ton profil pour commencer à recevoir des missions.
+                        </p>
+                    </div>
+
+                    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-3">
+                        {/* Progress header */}
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm font-bold text-slate-700">Profil complété</span>
+                            <span className="text-sm font-black" style={{ color: progressColor }}>{profileCompletion}%</span>
+                        </div>
+                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden mb-1">
+                            <div
+                                className="h-full rounded-full transition-all duration-700"
+                                style={{ width: `${profileCompletion}%`, background: progressColor }}
+                            />
+                        </div>
+                        <p className="text-xs text-slate-400 mb-5">{completedCount}/{checklistItems.length} étapes complétées</p>
+
+                        {/* Checklist */}
+                        <div className="space-y-2 mb-6">
+                            {checklistItems.map(item => {
+                                const done = isFieldComplete(item.field);
+                                const Icon = item.icon;
+                                return (
+                                    <div
+                                        key={item.field}
+                                        className={`flex items-center gap-3 p-3 rounded-xl ${done ? 'bg-green-50' : 'bg-slate-50'}`}
+                                    >
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${done ? 'bg-green-500' : 'bg-white border border-slate-200'}`}>
+                                            {done
+                                                ? <Check size={15} className="text-white" />
+                                                : <Icon size={15} className="text-slate-400" />
+                                            }
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className={`text-sm font-bold leading-tight ${done ? 'text-slate-400 line-through decoration-slate-300' : 'text-slate-800'}`}>
+                                                {item.label}
+                                            </p>
+                                            {!done && <p className="text-xs text-slate-400 mt-0.5">{item.sublabel}</p>}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <button
+                            onClick={() => router.push('/profile')}
+                            className="w-full flex items-center justify-center gap-2 bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-blue/20 transition-all text-sm"
+                        >
+                            Compléter mon profil
+                            <ArrowRight size={17} />
+                        </button>
+                    </div>
+
+                    <button
+                        onClick={() => router.push('/jobs')}
+                        className="w-full flex items-center justify-center gap-2 py-3 text-sm text-slate-400 hover:text-slate-600 transition-colors"
+                    >
+                        <Briefcase size={15} />
+                        Voir les missions disponibles
+                    </button>
+                </div>
+            </DashboardLayout>
+        );
+    }
+
     return (
         <DashboardLayout>
-            {showWelcomeBanner && (
-                <div className="-mx-4 -mt-4 lg:-mx-8 lg:-mt-8 mb-4 bg-brand-blue text-white px-4 py-3 flex items-center justify-between gap-3 shadow-lg">
-                    <div className="flex items-center gap-3 min-w-0">
-                        <PartyPopper size={18} className="shrink-0 text-blue-200" />
-                        <div className="min-w-0">
-                            <p className="font-semibold text-sm leading-tight">Compte activé !</p>
-                            <p className="text-xs text-blue-200 leading-tight truncate">Complète ton profil pour recevoir des missions.</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                        <button
-                            onClick={() => { router.push('/profile'); setShowWelcomeBanner(false); }}
-                            className="text-xs font-bold bg-white text-brand-blue rounded-md px-3 py-1.5 whitespace-nowrap"
-                        >
-                            Compléter →
-                        </button>
-                        <button onClick={() => setShowWelcomeBanner(false)} className="text-blue-300 hover:text-white p-1">
-                            <X size={16} />
-                        </button>
-                    </div>
-                </div>
-            )}
             <div>
             <div className="space-y-6">
                 <div className="flex items-center justify-between flex-wrap gap-4">
                     <div>
                         <h1 className="text-2xl font-bold text-slate-900">
-                            Bonjour {profile?.full_name?.split(' ')[0] || 'Cordiste'} 👋
+                            Bonjour {firstName} 👋
                         </h1>
                         <p className="text-slate-500 text-sm mt-0.5">Tableau de bord Professionnel</p>
                     </div>
@@ -312,3 +389,4 @@ export function ProDashboard() {
         </DashboardLayout>
     );
 }
+
