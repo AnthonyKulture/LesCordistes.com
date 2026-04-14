@@ -31,6 +31,7 @@ import {
     MapPin,
     Award,
     FileText,
+    KeyRound,
 } from 'lucide-react';
 import type { Job } from '../../types';
 
@@ -41,6 +42,13 @@ export function ProDashboard() {
     const { balance, unlockedLeads: unlockedJobIds } = useCredits();
     const { setMode } = useDashboardMode();
     const [showWelcomeBanner, setShowWelcomeBanner] = React.useState(() => searchParams.get('welcome') === 'pro');
+    const [isPasswordPending, setIsPasswordPending] = React.useState(false);
+
+    React.useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setIsPasswordPending(localStorage.getItem('lescordistes_pw_notice') === '1');
+        }
+    }, []);
 
     // Total active missions count
     const { data: totalJobsCount } = useQuery({
@@ -98,6 +106,7 @@ export function ProDashboard() {
     }, [profile]);
 
     const isFieldComplete = (field: string) => {
+        if (field === '__password__') return !isPasswordPending;
         if (!profile) return false;
         const v = profile[field as keyof typeof profile];
         return v != null && (Array.isArray(v) ? v.length > 0 : String(v).trim().length > 0);
@@ -111,6 +120,7 @@ export function ProDashboard() {
         { field: 'intervention_zones',  icon: MapPin,   label: 'Zones d\'intervention',       sublabel: 'Pour matcher avec les bonnes missions' },
         { field: 'certifications',      icon: Award,    label: 'Certifications (IRATA, CQP)', sublabel: 'Rassure les clients sur ton niveau' },
         { field: 'bio',                 icon: FileText, label: 'Présentation',                sublabel: 'Quelques lignes sur ton expérience' },
+        ...(isPasswordPending ? [{ field: '__password__', icon: KeyRound, label: 'Définir un mot de passe', sublabel: 'Pour te reconnecter sans lien magique' }] : []),
     ];
 
     // Onboarding mode : profil insuffisant pour être visible
