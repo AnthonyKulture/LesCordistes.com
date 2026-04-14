@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link';
 import { CheckCircle, ArrowRight } from 'lucide-react';
@@ -8,6 +8,16 @@ import { Button } from '../components/ui/Button';
 
 export const JobSuccess: React.FC = () => {
     const searchParams = useSearchParams();
+
+    useEffect(() => {
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+            window.gtag('config', 'G-VLFLKSE38N')
+            window.gtag('event', 'generate_lead', {
+                event_category: 'conversion',
+                event_label: 'depot_mission_confirme'
+            })
+        }
+    }, []);
     const isNewUser = searchParams.get('new') === '1';
 
     return (
