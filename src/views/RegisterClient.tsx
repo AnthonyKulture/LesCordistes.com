@@ -11,6 +11,7 @@ import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthLayout } from '../components/layout/AuthLayout';
+import posthog from 'posthog-js';
 
 const STORAGE_KEY = 'lescordistes_client_reg';
 
@@ -76,6 +77,8 @@ export function RegisterClient() {
             }
 
             localStorage.setItem('lescordistes_pw_notice', '1');
+            posthog.identify(formData.email, { email: formData.email, role: 'client', client_type: formData.client_type });
+            posthog.capture('user_signed_up', { role: 'client', client_type: formData.client_type });
             setMagicSent(true);
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');

@@ -168,8 +168,12 @@ export default function PrixCordisteePage() {
                                     <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                                         <td className="p-2 sm:p-4 font-medium text-slate-900">{t.prestation}</td>
                                         <td className="p-2 sm:p-4 text-center text-slate-600 hidden sm:table-cell">{t.unite}</td>
-                                        <td className="p-2 sm:p-4 text-center font-bold text-brand-blue whitespace-nowrap">{t.min}€</td>
-                                        <td className="p-2 sm:p-4 text-center font-bold text-brand-blue whitespace-nowrap">{t.max}€</td>
+                                        <td className="p-2 sm:p-4 text-center font-bold text-brand-blue whitespace-nowrap">
+                                            {t.min}€<span className="sm:hidden text-xs font-normal text-slate-500">/{t.unite}</span>
+                                        </td>
+                                        <td className="p-2 sm:p-4 text-center font-bold text-brand-blue whitespace-nowrap">
+                                            {t.max}€<span className="sm:hidden text-xs font-normal text-slate-500">/{t.unite}</span>
+                                        </td>
                                         <td className="p-4 text-slate-500 hidden md:table-cell text-xs">{t.note}</td>
                                     </tr>
                                 ))}

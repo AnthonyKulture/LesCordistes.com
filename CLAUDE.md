@@ -35,29 +35,7 @@
 - Do not run `npm install` without explicit approval.
 - Do not stage, commit, or push anything without explicit user instruction.
 - Never `git add .` — always stage explicit file paths.
-- Never stage or commit files whose absolute path starts with the main repo root when cwd is a worktree.
-
----
-
-## Session Start — Run This First
-```bash
-bash scripts/session-init.sh   # prune stale worktrees + stale locks
-bash scripts/setup-worktree.sh # symlink node_modules + .env.local + launch.json
-```
-
-Both scripts must run before any dev server or file edit.
-
----
-
-## Worktrees (Critical)
-
-- `Primary working directory` = the current worktree. All Read/Edit/Write use THIS path.
-- ✅ `/Users/anthony/Documents/Anthony/Projet Web/lescordistes/.claude/worktrees/<name>/src/...`
-- ❌ `/Users/anthony/Documents/Anthony/Projet Web/lescordistes/src/...`
-- If a preview server is running from another worktree → `preview_stop`, then restart.
-- Always `next dev` — never `next dev --turbopack` (Turbopack rejects cross-worktree symlinks).
-- Real `node_modules` lives in `bold-ride/node_modules`.
-- `index.lock` error at session start = stale lock. Run `scripts/session-init.sh`. Never `rm` it manually.
+- Never stage or commit without explicit user instruction.
 
 ---
 
@@ -70,56 +48,11 @@ Both scripts must run before any dev server or file edit.
 | Backend | Supabase — PostgreSQL · Auth · Storage · Edge Functions (Deno) |
 | Auth SSR | `@supabase/ssr` — `createBrowserClient` (client) · `createServerClient` per request (server) |
 | State | TanStack Query v5 |
-| Icons | Lucide React |
 | Payments | Stripe Checkout + Webhooks |
 | Email | Resend via Edge Function `send-email` |
 | Deploy | Vercel |
 
----
-
-## Code Structure
-src/
-├── app/
-│   ├── layout.tsx                  # Root layout — Providers, Header, Footer
-│   ├── page.tsx                    # Landing SSR + JSON-LD
-│   ├── (seo)/                      # 258 SSG pages (generateStaticParams)
-│   │   ├── [cityPage]/             # 23 cities
-│   │   │   └── [service]/          # 230 city×service
-│   │   └── lexique/                # 5 glossary articles
-│   ├── (protected)/                # Client-side auth guard
-│   │   ├── dashboard/
-│   │   ├── credits/
-│   │   ├── messages/
-│   │   ├── profile/
-│   │   └── pro/widget/
-│   ├── api/
-│   │   ├── create-checkout/route.ts
-│   │   └── webhook/route.ts        # Stripe — raw body via req.text()
-│   ├── jobs/[slug]/
-│   ├── pros/[id]/
-│   ├── connexion/
-│   ├── inscription/
-│   └── post-job/                   # 5-step mission wizard
-├── components/
-│   ├── ui/                         # Button, Input, Toast, Card…
-│   ├── layout/                     # Header, Footer, ModeSwitcher, ModeTransitionOverlay
-│   ├── wizard/                     # Steps 1–5
-│   ├── dashboard/                  # StatCard, JobListItem, JobUnlockers, CompleteJobModal
-│   ├── credits/                    # CreditWidget, UnlockLeadButton
-│   ├── DashboardLayout.tsx
-│   └── Providers.tsx               # QueryClient + Auth + Toast + Dashboard contexts
-├── contexts/
-│   ├── AuthContext.tsx             # createBrowserClient, user + profile
-│   └── DashboardContext.tsx        # worker/recruiter mode — localStorage SSR-safe
-├── hooks/                          # useCredits, useNotifications, useMessaging, useReviews
-├── lib/
-│   ├── supabase-browser.ts         # createSupabaseBrowserClient() — client only
-│   ├── supabase-server.ts          # createSupabaseServerClient() — server, new per request
-│   └── supabase.ts                 # Legacy singleton (storage SSR-safe)
-├── views/
-│   └── dashboards/                 # ProDashboard, ClientDashboard, DashboardSelector
-├── constants/                      # seoData.ts, seoGlossary.ts
-└── types/                          # TypeScript interfaces + database.types.ts
+**Structure** : Pour la structure des fichiers, consulter Graphify (`graphify-out/GRAPH_REPORT.md` ou `graphify query "<question>"`).
 
 ---
 
@@ -183,10 +116,8 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ## SEO (258 SSG pages)
 
-- `/cordiste-[ville]` — 23 cities
-- `/cordiste-[ville]/[service]` — 230 city×service
-- `/lexique/[slug]` — 5 glossary articles
-- JSON-LD schemas: LocalBusiness, FAQPage, Service, DefinedTerm, Organization, WebSite
+- `/cordiste-[ville]` — 23 cities · `/cordiste-[ville]/[service]` — 230 city×service · `/lexique/[slug]` — 5 articles
+- JSON-LD: LocalBusiness, FAQPage, Service, DefinedTerm, Organization, WebSite
 - WordPress → Next.js 301 redirects in `next.config.ts`
 
 ---
@@ -199,3 +130,38 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 | Admin email | `anthony@lescordistes.com` |
 | Node/npm | `/Users/anthony/.nvm/versions/node/v22.14.0/bin/` |
 | Mode switcher spec | `bmad-transition-switcher.md` |
+
+---
+
+## Graphify — cartographie structurelle
+
+Graphe de 344 nœuds/224 arêtes dans `graphify-out/`. Hook actif : rappel automatique avant Glob/Grep.
+
+- Avant toute question d'architecture ou de dépendances : `graphify-out/GRAPH_REPORT.md`
+- Requête ciblée : `source .venv-tools/bin/activate && graphify query "<question>"`
+- Après modifications de fichiers src/ : `source .venv-tools/bin/activate && python3 -c "from graphify.watch import _rebuild_code; from pathlib import Path; _rebuild_code(Path('.'))"`
+
+---
+
+## Mulch — mémoire opérationnelle
+
+Mémoire structurée dans `.mulch/` (domaines : `nextjs`, `supabase`, `seo`). Wrapper : `bash scripts/ml <cmd>`. Prérequis : Bun (`curl -fsSL https://bun.sh/install | bash`).
+
+**Graphify vs Mulch** : Graphify = structure statique du code. Mulch = décisions, patterns, bugs connus (mémoire persistante inter-sessions).
+
+**Charger** (si la tâche touche un domaine connu) :
+```bash
+bash scripts/ml prime --domain nextjs   # ou supabase · seo
+```
+
+**Interroger** avant d'improviser sur un pattern connu :
+```bash
+bash scripts/ml query supabase "client"
+```
+
+**Enregistrer** uniquement après une découverte réelle non déjà dans CLAUDE.md :
+```bash
+bash scripts/ml record <domaine> --type <convention|pattern|failure|decision> --description "..."
+```
+
+Ne pas enregistrer : ce qui est déjà ici, des hypothèses, des états temporaires.

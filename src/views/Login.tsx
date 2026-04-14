@@ -10,6 +10,7 @@ import { GoogleSignInButton } from '../components/GoogleSignInButton';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthLayout } from '../components/layout/AuthLayout';
 import { Mail, Lock } from 'lucide-react';
+import posthog from 'posthog-js';
 
 type LoginTab = 'password' | 'magic';
 
@@ -38,6 +39,8 @@ export function Login() {
         try {
             const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
             if (signInError) throw signInError;
+            posthog.identify(email, { email });
+            posthog.capture('user_logged_in', { method: 'password' });
         } catch (err: any) {
             setError(err.message || 'Email ou mot de passe incorrect');
         } finally {
@@ -58,6 +61,7 @@ export function Login() {
                 },
             });
             if (error) throw error;
+            posthog.capture('user_logged_in', { method: 'magic_link', email: magicEmail });
             setMagicSent(true);
         } catch (err: any) {
             setError(err.message || 'Erreur lors de l\'envoi du lien');

@@ -8,6 +8,7 @@ import { useCredits } from '../hooks/useCredits';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '../components/ui/Toast';
 import { CREDIT_PACKS } from '../constants/creditPacks';
+import posthog from 'posthog-js';
 
 export const Credits: React.FC = () => {
     const { user } = useAuth();
@@ -46,6 +47,7 @@ export const Credits: React.FC = () => {
             }
 
             if (data.url) {
+                posthog.capture('checkout_initiated', { pack_id: packId, credits_amount: amount, stripe_price_id: stripePriceId });
                 // Redirect user to Stripe checkout
                 window.location.assign(data.url);
             } else {

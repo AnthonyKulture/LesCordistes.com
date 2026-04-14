@@ -1,0 +1,13 @@
+version: '1'
+domains:
+  - nextjs
+  - supabase
+  - seo
+governance:
+  max_entries: 50
+  warn_entries: 80
+  hard_limit: 100
+classification_defaults:
+  shelf_life:
+    tactical: 14
+    observational: 30

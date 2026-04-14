@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Wrapper Mulch pour LesCordistes.
+# Usage : bash scripts/ml <commande> [args]
+# Exemples : bash scripts/ml prime
+#            bash scripts/ml record nextjs --type failure --description "..."
+#            bash scripts/ml query nextjs "supabase"
+
+set -e
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MULCH_CLI="$REPO_ROOT/mulch/src/cli.ts"
+
+if ! command -v bun &>/dev/null; then
+  echo "Erreur : bun est requis pour Mulch." >&2
+  echo "Installation : curl -fsSL https://bun.sh/install | bash" >&2
+  exit 1
+fi
+
+cd "$REPO_ROOT"
+exec bun run "$MULCH_CLI" "$@"
