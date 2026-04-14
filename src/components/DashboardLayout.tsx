@@ -93,17 +93,6 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="min-h-screen bg-slate-50 overflow-x-hidden">
             <ModeTransitionOverlay />
             
-            {/* Mobile menu button — positioned below the sticky Header (h-24 = 96px) */}
-            <div className="lg:hidden fixed top-[100px] left-4 z-40">
-                <button
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    className="p-2.5 bg-white rounded-xl shadow-lg border border-slate-200 flex items-center justify-center"
-                    aria-label="Menu navigation"
-                >
-                    {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                </button>
-            </div>
-
             {/* Sidebar — full height, above header */}
             <aside
                 className={`
@@ -179,7 +168,21 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
             {/* Main content */}
             <main className="lg:ml-64 min-h-screen overflow-x-hidden">
-                <div className="p-4 lg:p-8 pt-16 lg:pt-8">
+                <div className="p-4 lg:p-8 pt-14 lg:pt-8">
+                    {/* Mobile nav trigger — inline, below any fixed welcome banner (banner ends at ~152px, main starts at 96px, pt-14=56px → 152px) */}
+                    <div className="lg:hidden flex items-center gap-3 mb-5 pb-4 border-b border-slate-100">
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="flex items-center gap-2 px-3 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-slate-600"
+                            aria-label="Menu navigation"
+                        >
+                            <Menu size={18} />
+                            <span className="text-xs font-bold uppercase tracking-wide">Menu</span>
+                        </button>
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                            {profile?.full_name?.split(' ')[0] || ''}
+                        </span>
+                    </div>
                     {children}
                 </div>
             </main>
