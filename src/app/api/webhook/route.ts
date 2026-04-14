@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createClient } from '@supabase/supabase-js'
+import { getPostHogClient } from '@/lib/posthog-server'
 
 export const dynamic = 'force-dynamic'
 
@@ -85,6 +86,9 @@ export async function POST(req: NextRequest) {
                     })
 
                     if (txErr) console.error('❌ Erreur insertion transaction:', txErr)
+
+                    const phClient = getPostHogClient()
+                    await phClient.captureImmediate({ distinctId: userId, event: 'credits_purchased', properties: { credits_amount: amount, stripe_session_id: session.id } })
 
                     console.log(`✅ ${amount} crédits ajoutés à l'utilisateur ${userId}`)
                 } else {

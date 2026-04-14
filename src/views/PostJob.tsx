@@ -18,6 +18,7 @@ import { useToast } from '../components/ui/Toast';
 import { saveJobDraft, loadJobDraft, clearJobDraft } from '../lib/storage';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { JobFormData } from '../types';
+import posthog from 'posthog-js';
 
 export const PostJob: React.FC = () => {
     const router = useRouter();
@@ -274,6 +275,8 @@ export const PostJob: React.FC = () => {
                 }
                 throw new Error(insertError.message || 'Erreur lors de l’insertion de la mission');
             }
+
+            posthog.capture('job_posted', { job_type: formData.type || 'standard', category: formData.category || 'other', location_city: formData.location_city });
 
             // Clear draft after success
             clearJobDraft();

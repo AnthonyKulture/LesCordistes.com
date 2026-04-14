@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext'
 import { DashboardProvider } from '../contexts/DashboardContext'
 import { ToastProvider } from './ui/Toast'
 import { RoleSelectionModal } from './RoleSelectionModal'
+import { initPostHog } from '@/lib/posthog-client'
 
 function GoogleRoleGuard({ children }: { children: React.ReactNode }) {
     const { user, profile, loading } = useAuth()
@@ -35,6 +36,23 @@ function GoogleRoleGuard({ children }: { children: React.ReactNode }) {
     )
 }
 
+function PostHogInit() {
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem('lc_consent')
+            if (raw) {
+                const parsed = JSON.parse(raw)
+                const expired = new Date(parsed.expires) < new Date()
+                if (!expired && parsed.analytics === false) return
+            }
+            initPostHog()
+        } catch {
+            initPostHog()
+        }
+    }, [])
+    return null
+}
+
 export function Providers({ children }: { children: React.ReactNode }) {
     const [queryClient] = useState(
         () =>
@@ -51,6 +69,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
     return (
         <QueryClientProvider client={queryClient}>
+            <PostHogInit />
             <ToastProvider>
                 <AuthProvider>
                     <DashboardProvider>

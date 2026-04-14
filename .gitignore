@@ -33,3 +33,8 @@ _bmad-output/
 .next/
 out/
 .claude/worktrees/
+
+# Graphify
+.venv-tools/
+graphify-out/cache/
+.env.local

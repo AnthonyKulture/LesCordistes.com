@@ -10,6 +10,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthLayout } from '../components/layout/AuthLayout';
+import posthog from 'posthog-js';
 
 const STORAGE_KEY = 'lescordistes_pro_reg';
 
@@ -77,6 +78,8 @@ export function RegisterPro() {
             }
 
             localStorage.setItem('lescordistes_pw_notice', '1');
+            posthog.identify(formData.email, { email: formData.email, role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
+            posthog.capture('user_signed_up', { role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
             setMagicSent(true);
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');

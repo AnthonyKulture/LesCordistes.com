@@ -5,6 +5,7 @@ import { Lock, Coins, Check, Loader } from 'lucide-react';
 import { useCredits } from '../../hooks/useCredits';
 import { CreditPurchaseModal } from '../credits/CreditWidget';
 import type { Job } from '../../types';
+import posthog from 'posthog-js';
 
 interface UnlockLeadButtonProps {
     job: Job;
@@ -45,6 +46,7 @@ export const UnlockLeadButton: React.FC<UnlockLeadButtonProps> = ({ job, onUnloc
         }
         try {
             await unlockLead.mutateAsync(job.id);
+            posthog.capture('lead_unlocked', { job_id: job.id, credit_cost: job.credit_cost || 1, job_category: job.category, job_type: job.type });
             handleSuccess();
         } catch (e: any) {
             setError(e.message || 'Erreur lors du déblocage');
