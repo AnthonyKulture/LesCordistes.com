@@ -96,7 +96,7 @@ export function ProDashboard() {
     return (
         <DashboardLayout>
             {showWelcomeBanner && (
-                <div className="fixed top-24 left-0 right-0 z-40 bg-brand-blue text-white px-4 py-3 flex items-center justify-between gap-3 shadow-lg">
+                <div className="-mx-4 -mt-4 lg:-mx-8 lg:-mt-8 mb-4 bg-brand-blue text-white px-4 py-3 flex items-center justify-between gap-3 shadow-lg">
                     <div className="flex items-center gap-3 min-w-0">
                         <PartyPopper size={18} className="shrink-0 text-blue-200" />
                         <div className="min-w-0">
