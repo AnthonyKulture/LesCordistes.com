@@ -11,7 +11,6 @@ export const JobSuccess: React.FC = () => {
 
     useEffect(() => {
         if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-            window.gtag('config', 'G-VLFLKSE38N')
             window.gtag('event', 'generate_lead', {
                 event_category: 'conversion',
                 event_label: 'depot_mission_confirme'
