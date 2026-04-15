@@ -64,7 +64,7 @@ export function RegisterPro() {
             const { error: otpError } = await supabase.auth.signInWithOtp({
                 email: formData.email,
                 options: {
-                    emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    emailRedirectTo: `${window.location.origin}/auth/callback?next=/profile/setup`,
                 },
             });
 

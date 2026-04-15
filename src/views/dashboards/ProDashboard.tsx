@@ -182,7 +182,7 @@ export function ProDashboard() {
                         </div>
 
                         <button
-                            onClick={() => router.push('/profile')}
+                            onClick={() => router.push('/profile/setup')}
                             className="w-full flex items-center justify-center gap-2 bg-brand-blue hover:bg-brand-blue/90 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-blue/20 transition-all text-sm"
                         >
                             Compléter mon profil
