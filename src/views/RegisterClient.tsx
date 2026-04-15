@@ -30,10 +30,6 @@ export function RegisterClient() {
     const [error, setError] = React.useState('');
 
     React.useEffect(() => {
-        if (magicSent) window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [magicSent]);
-
-    React.useEffect(() => {
         if (!authLoading && user) {
             router.push('/dashboard');
         }
