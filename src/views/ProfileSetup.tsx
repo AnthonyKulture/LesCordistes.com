@@ -98,6 +98,7 @@ export function ProfileSetup() {
     const [direction, setDirection] = useState(1)
     const [isSaving, setIsSaving] = useState(false)
     const guardChecked = useRef(false)
+    const formInitialized = useRef(false)
 
     const [form, setForm] = useState<FormData>({
         first_name: '',
@@ -130,8 +131,14 @@ export function ProfileSetup() {
         }
     }, [profile, router])
 
-    // Pre-fill : DB > user_metadata (Supabase Auth) > localStorage > vide
+    // Pre-fill : une seule fois dès que profile est disponible
+    // On n'écoute pas les re-renders de profile pour ne pas écraser la saisie en cours
     useEffect(() => {
+        if (formInitialized.current) return
+        if (!user && !profile) return
+
+        formInitialized.current = true
+
         const stored = typeof window !== 'undefined'
             ? (() => { try { return JSON.parse(localStorage.getItem('lescordistes_pro_reg') || '{}') } catch { return {} } })()
             : {}
@@ -140,18 +147,18 @@ export function ProfileSetup() {
         if (profile) {
             const parts = (profile.full_name || '').trim().split(' ')
             setForm({
-                first_name:        profile.first_name        || parts[0]                  || meta.first_name   || stored.firstName   || '',
-                last_name:         profile.last_name         || parts.slice(1).join(' ')  || meta.last_name    || stored.lastName    || '',
-                phone:             profile.phone             || meta.phone                || stored.phone      || '',
-                company_name:      profile.company_name      || meta.company_name         || stored.companyName || '',
+                first_name:         profile.first_name         || parts[0]                 || meta.first_name    || stored.firstName   || '',
+                last_name:          profile.last_name          || parts.slice(1).join(' ') || meta.last_name     || stored.lastName    || '',
+                phone:              profile.phone              || meta.phone               || stored.phone       || '',
+                company_name:       profile.company_name       || meta.company_name        || stored.companyName || '',
                 intervention_zones: profile.intervention_zones || [],
-                certifications:    profile.certifications    || [],
-                skills:            profile.skills            || [],
-                bio:               profile.bio               || '',
-                siret:             profile.siret             || '',
-                insurance_info:    profile.insurance_info    || '',
+                certifications:     profile.certifications     || [],
+                skills:             profile.skills             || [],
+                bio:                profile.bio                || '',
+                siret:              profile.siret              || '',
+                insurance_info:     profile.insurance_info     || '',
             })
-        } else if (meta.first_name || stored.firstName) {
+        } else {
             setForm(prev => ({
                 ...prev,
                 first_name:   meta.first_name   || stored.firstName   || '',
