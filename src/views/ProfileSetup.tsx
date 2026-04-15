@@ -99,6 +99,19 @@ export function ProfileSetup() {
     const [isSaving, setIsSaving] = useState(false)
     const [newEquipment] = useState('')
 
+    // Guard : pro uniquement, et profil déjà complété → dashboard
+    useEffect(() => {
+        if (!profile) return
+        if (profile.role !== 'pro') {
+            router.replace('/dashboard')
+            return
+        }
+        const isComplete = !!(profile.first_name && (profile.intervention_zones ?? []).length > 0)
+        if (isComplete) {
+            router.replace('/dashboard')
+        }
+    }, [profile, router])
+
     const [form, setForm] = useState<FormData>({
         first_name: '',
         last_name: '',
@@ -113,22 +126,38 @@ export function ProfileSetup() {
     })
 
     useEffect(() => {
+        const stored = typeof window !== 'undefined'
+            ? (() => { try { return JSON.parse(localStorage.getItem('lescordistes_pro_reg') || '{}') } catch { return {} } })()
+            : {}
+
         if (profile) {
             const parts = (profile.full_name || '').trim().split(' ')
             setForm({
-                first_name: profile.first_name || parts[0] || '',
-                last_name: profile.last_name || parts.slice(1).join(' ') || '',
-                phone: profile.phone || '',
+                first_name: profile.first_name || parts[0] || stored.firstName || '',
+                last_name: profile.last_name || parts.slice(1).join(' ') || stored.lastName || '',
+                phone: profile.phone || stored.phone || '',
                 intervention_zones: profile.intervention_zones || [],
                 certifications: profile.certifications || [],
                 skills: profile.skills || [],
                 bio: profile.bio || '',
-                company_name: profile.company_name || '',
+                company_name: profile.company_name || stored.companyName || '',
                 siret: profile.siret || '',
                 insurance_info: profile.insurance_info || '',
             })
+        } else if (stored.firstName) {
+            setForm(prev => ({
+                ...prev,
+                first_name: stored.firstName || '',
+                last_name: stored.lastName || '',
+                phone: stored.phone || '',
+                company_name: stored.companyName || '',
+            }))
         }
     }, [profile])
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }, [step])
 
     const toggle = (field: 'intervention_zones' | 'certifications' | 'skills', value: string) => {
         setForm(prev => ({
@@ -225,7 +254,7 @@ export function ProfileSetup() {
             </div>
 
             {/* Step content */}
-            <div className="flex-1 flex flex-col justify-between max-w-lg mx-auto w-full px-4 py-8">
+            <div className="max-w-lg mx-auto w-full px-4 py-8">
                 <AnimatePresence mode="wait" custom={direction}>
                     <motion.div
                         key={step}
@@ -235,7 +264,6 @@ export function ProfileSetup() {
                         animate="center"
                         exit="exit"
                         transition={{ duration: 0.22, ease: 'easeInOut' }}
-                        className="flex-1"
                     >
                         {/* Header */}
                         <div className="mb-8">
@@ -251,7 +279,7 @@ export function ProfileSetup() {
                         {/* Step-specific inputs */}
                         {current.id === 'identity' && (
                             <div className="space-y-4">
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label className="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5">Prénom</label>
                                         <input
@@ -421,6 +449,13 @@ export function ProfileSetup() {
                             </>
                         )}
                     </button>
+
+                    {current.required && !canContinue() && (
+                        <p className="text-center text-xs text-slate-400">
+                            {current.id === 'identity' && 'Prénom et téléphone requis pour continuer'}
+                            {current.id === 'zones' && 'Sélectionne au moins un département'}
+                        </p>
+                    )}
 
                     {current.optional && (
                         <button
