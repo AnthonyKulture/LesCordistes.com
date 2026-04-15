@@ -23,6 +23,7 @@ export function RegisterPro() {
         lastName: '',
         companyName: '',
         isAutoEntrepreneur: false,
+        phone: '',
         email: '',
     });
     const [loading, setLoading] = React.useState(false);
@@ -52,6 +53,10 @@ export function RegisterPro() {
             setError('La dénomination commerciale est requise');
             return;
         }
+        if (!formData.phone.trim()) {
+            setError('Le numéro de téléphone est requis');
+            return;
+        }
         if (!formData.email.trim()) {
             setError("L'email est requis");
             return;
@@ -65,6 +70,15 @@ export function RegisterPro() {
                 email: formData.email,
                 options: {
                     emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    data: {
+                        role: 'pro',
+                        first_name: formData.firstName,
+                        last_name: formData.lastName,
+                        full_name: `${formData.firstName} ${formData.lastName}`,
+                        phone: formData.phone,
+                        company_name: formData.isAutoEntrepreneur ? '' : formData.companyName,
+                        is_auto_entrepreneur: formData.isAutoEntrepreneur,
+                    },
                 },
             });
 
@@ -81,6 +95,7 @@ export function RegisterPro() {
             posthog.identify(formData.email, { email: formData.email, role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
             posthog.capture('user_signed_up', { role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
             setMagicSent(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');
         } finally {
@@ -199,6 +214,16 @@ export function RegisterPro() {
                             </div>
 
                             <Input
+                                label="Téléphone *"
+                                type="tel"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="06 12 34 56 78"
+                                required
+                            />
+
+                            <Input
                                 label="Email professionnel *"
                                 type="email"
                                 name="email"
@@ -213,7 +238,7 @@ export function RegisterPro() {
                                 variant="primary"
                                 className="w-full py-2.5 text-base font-semibold shadow-sm hover:shadow-md transition-shadow mt-2"
                                 isLoading={loading}
-                                disabled={loading || !formData.email || !formData.firstName || !formData.lastName}
+                                disabled={loading || !formData.email || !formData.firstName || !formData.lastName || !formData.phone}
                             >
                                 {loading ? 'Envoi en cours...' : (
                                     <span className="flex items-center justify-center gap-2">
