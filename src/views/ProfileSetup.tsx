@@ -130,30 +130,33 @@ export function ProfileSetup() {
             ? (() => { try { return JSON.parse(localStorage.getItem('lescordistes_pro_reg') || '{}') } catch { return {} } })()
             : {}
 
+        // Priorité : DB > user_metadata (Supabase Auth) > localStorage > vide
+        const meta = user?.user_metadata ?? {}
+
         if (profile) {
             const parts = (profile.full_name || '').trim().split(' ')
             setForm({
-                first_name: profile.first_name || parts[0] || stored.firstName || '',
-                last_name: profile.last_name || parts.slice(1).join(' ') || stored.lastName || '',
-                phone: profile.phone || stored.phone || '',
+                first_name: profile.first_name || parts[0] || meta.first_name || stored.firstName || '',
+                last_name:  profile.last_name  || parts.slice(1).join(' ') || meta.last_name  || stored.lastName  || '',
+                phone:       profile.phone       || meta.phone        || stored.phone       || '',
                 intervention_zones: profile.intervention_zones || [],
-                certifications: profile.certifications || [],
-                skills: profile.skills || [],
-                bio: profile.bio || '',
-                company_name: profile.company_name || stored.companyName || '',
-                siret: profile.siret || '',
+                certifications:     profile.certifications     || [],
+                skills:             profile.skills             || [],
+                bio:          profile.bio          || '',
+                company_name: profile.company_name || meta.company_name || stored.companyName || '',
+                siret:        profile.siret        || '',
                 insurance_info: profile.insurance_info || '',
             })
-        } else if (stored.firstName) {
+        } else if (stored.firstName || meta.first_name) {
             setForm(prev => ({
                 ...prev,
-                first_name: stored.firstName || '',
-                last_name: stored.lastName || '',
-                phone: stored.phone || '',
-                company_name: stored.companyName || '',
+                first_name:   meta.first_name   || stored.firstName   || '',
+                last_name:    meta.last_name    || stored.lastName    || '',
+                phone:        meta.phone        || stored.phone       || '',
+                company_name: meta.company_name || stored.companyName || '',
             }))
         }
-    }, [profile])
+    }, [profile, user])
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -194,7 +197,11 @@ export function ProfileSetup() {
     }
 
     const next = async () => {
-        await saveStep()
+        try {
+            await saveStep()
+        } catch (err) {
+            console.error('ProfileSetup saveStep error:', err)
+        }
         if (step < STEPS.length - 1) {
             setDirection(1)
             setStep(s => s + 1)
