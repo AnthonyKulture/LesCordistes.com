@@ -24,10 +24,15 @@ export function RegisterPro() {
         companyName: '',
         isAutoEntrepreneur: false,
         email: '',
+        phone: '',
     });
     const [loading, setLoading] = React.useState(false);
     const [magicSent, setMagicSent] = React.useState(false);
     const [error, setError] = React.useState('');
+
+    React.useEffect(() => {
+        if (magicSent) window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [magicSent]);
 
     React.useEffect(() => {
         if (!authLoading && user) {
@@ -56,15 +61,29 @@ export function RegisterPro() {
             setError("L'email est requis");
             return;
         }
+        if (!formData.phone.trim()) {
+            setError('Le téléphone est requis');
+            return;
+        }
 
         setLoading(true);
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 
+            const fullName = `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim()
+
             const { error: otpError } = await supabase.auth.signInWithOtp({
                 email: formData.email,
                 options: {
                     emailRedirectTo: `${window.location.origin}/auth/callback?next=/profile/setup`,
+                    data: {
+                        role: 'pro',
+                        full_name: fullName,
+                        first_name: formData.firstName.trim(),
+                        last_name: formData.lastName.trim(),
+                        phone: formData.phone.trim(),
+                        company_name: !formData.isAutoEntrepreneur ? formData.companyName.trim() : '',
+                    },
                 },
             });
 
@@ -78,7 +97,7 @@ export function RegisterPro() {
             }
 
             localStorage.setItem('lescordistes_pw_notice', '1');
-            posthog.identify(formData.email, { email: formData.email, role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
+            posthog.identify(formData.email, { email: formData.email, role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur, phone: formData.phone });
             posthog.capture('user_signed_up', { role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
             setMagicSent(true);
         } catch (err: any) {
@@ -151,7 +170,7 @@ export function RegisterPro() {
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <Input
                                     label="Prénom *"
                                     type="text"
@@ -198,22 +217,33 @@ export function RegisterPro() {
                                 )}
                             </div>
 
-                            <Input
-                                label="Email professionnel *"
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="votre@email.com"
-                                required
-                            />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <Input
+                                    label="Email professionnel *"
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder="votre@email.com"
+                                    required
+                                />
+                                <Input
+                                    label="Téléphone *"
+                                    type="tel"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    placeholder="+33 6 00 00 00 00"
+                                    required
+                                />
+                            </div>
 
                             <Button
                                 type="submit"
                                 variant="primary"
                                 className="w-full py-2.5 text-base font-semibold shadow-sm hover:shadow-md transition-shadow mt-2"
                                 isLoading={loading}
-                                disabled={loading || !formData.email || !formData.firstName || !formData.lastName}
+                                disabled={loading || !formData.email || !formData.firstName || !formData.lastName || !formData.phone}
                             >
                                 {loading ? 'Envoi en cours...' : (
                                     <span className="flex items-center justify-center gap-2">
