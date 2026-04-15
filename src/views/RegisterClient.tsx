@@ -80,6 +80,7 @@ export function RegisterClient() {
             posthog.identify(formData.email, { email: formData.email, role: 'client', client_type: formData.client_type });
             posthog.capture('user_signed_up', { role: 'client', client_type: formData.client_type });
             setMagicSent(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');
         } finally {
