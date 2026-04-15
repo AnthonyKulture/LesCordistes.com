@@ -266,14 +266,28 @@ export const PostJob: React.FC = () => {
                 security_plan_confirmed: formData.security_plan_confirmed,
             };
 
-            const { error: insertError } = await (supabase as any).from('jobs').insert(jobData);
+            const draftId = localStorage.getItem('lescordistes_postjob_draft_id');
 
-            if (insertError) {
-                console.error('Supabase Insert Error:', insertError);
-                if (insertError.message?.includes('row-level security')) {
-                    throw new Error("Erreur de sécurité : Si vous venez de vous inscrire, vous devez d'abord confirmer votre email (cliquez sur le lien reçu par mail) pour publier cette mission. Ou désactivez 'Confirm Email' dans Supabase pour vos tests.");
+            if (draftId) {
+                const res = await fetch('/api/job-draft', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ draftId, jobData }),
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || 'Erreur lors de la publication du brouillon');
                 }
-                throw new Error(insertError.message || 'Erreur lors de l’insertion de la mission');
+                localStorage.removeItem('lescordistes_postjob_draft_id');
+            } else {
+                const { error: insertError } = await (supabase as any).from('jobs').insert(jobData);
+                if (insertError) {
+                    console.error('Supabase Insert Error:', insertError);
+                    if (insertError.message?.includes('row-level security')) {
+                        throw new Error("Erreur de sécurité : Si vous venez de vous inscrire, vous devez d'abord confirmer votre email (cliquez sur le lien reçu par mail) pour publier cette mission.");
+                    }
+                    throw new Error(insertError.message || 'Erreur lors de l\'insertion de la mission');
+                }
             }
 
             posthog.capture('job_posted', { job_type: formData.type || 'standard', category: formData.category || 'other', location_city: formData.location_city });

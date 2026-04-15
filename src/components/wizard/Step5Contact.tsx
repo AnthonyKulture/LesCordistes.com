@@ -41,6 +41,13 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         }
     }, [user, needsConfirmation]);
 
+    // Scroll to top when confirmation screen appears
+    useEffect(() => {
+        if (needsConfirmation) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [needsConfirmation]);
+
     // Auto-fill contact info from profile when logged in
     useEffect(() => {
         if (user && profile) {
@@ -117,6 +124,22 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
             localStorage.setItem('lescordistes_pw_notice', '1');
             setRegisteredEmail(data.contact_email!);
             setNeedsConfirmation(true);
+
+            // Save draft to DB so the lead isn't lost if user delays confirmation
+            try {
+                const { photos: _photos, ...serializableData } = data;
+                const res = await fetch('/api/job-draft', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ formData: serializableData }),
+                });
+                const result = await res.json();
+                if (result.id) {
+                    localStorage.setItem('lescordistes_postjob_draft_id', result.id);
+                }
+            } catch {
+                // Non-critical — draft save failure doesn't block the UX
+            }
         } catch (error: any) {
             console.error('Auth error:', error);
             toast.error(error.message || 'Erreur lors de l\'envoi du lien.');
@@ -400,7 +423,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         <Button
                             variant="outline"
                             onClick={onBack}
-                            className="h-16 px-8 text-lg font-bold flex items-center gap-2"
+                            className="h-14 px-6 text-base font-bold flex items-center gap-2"
                         >
                             <ChevronLeft size={20} /> Précédent
                         </Button>
@@ -409,7 +432,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         variant="primary"
                         onClick={handleLoggedInSubmit}
                         isLoading={isSubmitting}
-                        className="flex-grow h-16 text-xl font-bold shadow-xl shadow-brand-blue/30 group"
+                        className="flex-grow h-14 text-lg font-bold shadow-xl shadow-brand-blue/30 group"
                     >
                         {isSubmitting ? 'Publication...' : (
                             <span className="flex items-center justify-center gap-2">
@@ -564,7 +587,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                             variant="outline"
                             type="button"
                             onClick={onBack}
-                            className="h-16 px-8 text-lg font-bold flex items-center gap-2"
+                            className="h-14 px-6 text-base font-bold flex items-center gap-2"
                         >
                             <ChevronLeft size={20} /> Précédent
                         </Button>
@@ -574,7 +597,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         type="submit"
                         isLoading={authLoading}
                         disabled={authLoading || !data.consent_sharing}
-                        className={`flex-grow h-16 text-xl font-bold transition-all ${
+                        className={`flex-grow h-14 text-lg font-bold transition-all ${
                             !data.consent_sharing ? 'opacity-50 grayscale cursor-not-allowed' : 'shadow-xl shadow-brand-blue/30 group'
                         }`}
                     >
