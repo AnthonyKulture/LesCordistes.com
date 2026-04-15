@@ -70,15 +70,6 @@ export function RegisterPro() {
                 email: formData.email,
                 options: {
                     emailRedirectTo: `${window.location.origin}/auth/callback`,
-                    data: {
-                        role: 'pro',
-                        first_name: formData.firstName,
-                        last_name: formData.lastName,
-                        full_name: `${formData.firstName} ${formData.lastName}`,
-                        phone: formData.phone,
-                        company_name: formData.isAutoEntrepreneur ? '' : formData.companyName,
-                        is_auto_entrepreneur: formData.isAutoEntrepreneur,
-                    },
                 },
             });
 
