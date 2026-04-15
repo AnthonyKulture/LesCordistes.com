@@ -189,7 +189,8 @@ export function ProfileSetup() {
         try {
             const client = createSupabaseBrowserClient()
             const full_name = `${form.first_name.trim()} ${form.last_name.trim()}`.trim()
-            const { error } = await (client.from('profiles') as any).update({
+            const { error } = await (client.from('profiles') as any).upsert({
+                id:                user.id,
                 first_name:        form.first_name || null,
                 last_name:         form.last_name  || null,
                 full_name:         full_name       || null,
@@ -201,7 +202,7 @@ export function ProfileSetup() {
                 company_name:      form.company_name     || null,
                 siret:             form.siret            || null,
                 insurance_info:    form.insurance_info   || null,
-            }).eq('id', user.id)
+            }, { onConflict: 'id' })
             if (error) console.error('ProfileSetup update error:', error)
             // refreshProfile best-effort — n'interrompt pas la navigation
             refreshProfile().catch(err => console.error('refreshProfile error:', err))

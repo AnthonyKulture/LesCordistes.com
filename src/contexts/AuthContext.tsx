@@ -21,9 +21,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [profile, setProfile] = useState<Profile | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const loadProfile = async (userId: string) => {
+    const loadProfile = async (userId: string, silent = false) => {
         const supabase = createSupabaseBrowserClient();
-        setLoading(true);
+        if (!silent) setLoading(true);
         try {
             const { data, error } = await supabase
                 .from('profiles')
@@ -36,13 +36,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } catch (error) {
             console.error('Error loading profile:', error);
         } finally {
-            setLoading(false);
+            if (!silent) setLoading(false);
         }
     };
 
     const refreshProfile = async () => {
         if (user) {
-            await loadProfile(user.id);
+            await loadProfile(user.id, true);
         }
     };
 
