@@ -11,7 +11,9 @@ export async function GET(request: Request) {
     const code = searchParams.get('code')
     const token_hash = searchParams.get('token_hash')
     const type = searchParams.get('type')
-    const next = searchParams.get('next') ?? '/dashboard'
+    const rawNext = searchParams.get('next') ?? '/dashboard'
+    const ALLOWED_NEXT = ['/dashboard', '/post-job', '/reset-password', '/profile']
+    const next = ALLOWED_NEXT.some(p => rawNext.startsWith(p)) ? rawNext : '/dashboard'
 
     const cookieStore = await cookies()
     const supabase = createServerClient(
