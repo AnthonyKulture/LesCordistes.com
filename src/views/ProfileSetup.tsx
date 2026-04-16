@@ -191,6 +191,8 @@ export function ProfileSetup() {
             const full_name = `${form.first_name.trim()} ${form.last_name.trim()}`.trim()
             const { error } = await (client.from('profiles') as any).upsert({
                 id:                user.id,
+                email:             user.email,
+                role:              'pro',
                 first_name:        form.first_name || null,
                 last_name:         form.last_name  || null,
                 full_name:         full_name       || null,
@@ -203,7 +205,7 @@ export function ProfileSetup() {
                 siret:             form.siret            || null,
                 insurance_info:    form.insurance_info   || null,
             }, { onConflict: 'id' })
-            if (error) console.error('ProfileSetup update error:', error)
+            if (error) console.error('ProfileSetup upsert error:', error)
             // refreshProfile best-effort — n'interrompt pas la navigation
             refreshProfile().catch(err => console.error('refreshProfile error:', err))
         } finally {
