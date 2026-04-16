@@ -274,7 +274,7 @@ serve(async (req) => {
     }
 
     const { data: resendData, error } = await resend.emails.send({
-      from: 'LesCordistes <no-reply@lescordistes.com>',
+      from: 'LesCordistes <contact@lescordistes.com>',
       to: Array.isArray(to) ? to : [to],
       subject,
       html,

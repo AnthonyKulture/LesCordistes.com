@@ -170,7 +170,7 @@ serve(async (req) => {
     }
 
     const { error } = await resend.emails.send({
-      from: 'LesCordistes <no-reply@lescordistes.com>',
+      from: 'LesCordistes <contact@lescordistes.com>',
       to: [user.email],
       subject,
       html,
