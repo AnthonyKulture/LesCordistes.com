@@ -118,6 +118,8 @@ function magicLinkHtml(loginUrl: string): string {
 
 // ─── Hook handler ─────────────────────────────────────────────────────────────
 
+const JSON_HEADERS = { 'Content-Type': 'application/json' };
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', {
@@ -140,7 +142,7 @@ serve(async (req) => {
 
     if (!user.email || !email_data.token_hash) {
       console.error('Missing fields:', JSON.stringify({ user, email_data }));
-      return new Response(JSON.stringify({}), { status: 200 });
+      return new Response(JSON.stringify({}), { status: 200, headers: JSON_HEADERS });
     }
 
     const { token_hash, email_action_type, redirect_to } = email_data;
@@ -178,11 +180,11 @@ serve(async (req) => {
       console.error('Resend error:', JSON.stringify(error));
     }
 
-    return new Response(JSON.stringify({}), { status: 200 });
+    return new Response(JSON.stringify({}), { status: 200, headers: JSON_HEADERS });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     console.error('Hook error:', message);
     // Toujours 200 pour ne pas bloquer le flow auth
-    return new Response(JSON.stringify({}), { status: 200 });
+    return new Response(JSON.stringify({}), { status: 200, headers: JSON_HEADERS });
   }
 });

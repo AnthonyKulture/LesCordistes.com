@@ -23,26 +23,15 @@ DECLARE
     v_anon_key TEXT;
 BEGIN
     v_url := 'https://esvnvxkbnhvxpnlhyjsw.supabase.co/functions/v1/send-email';
-<<<<<<< HEAD
-    
-    -- Appel asynchrone via pg_net
-    -- Clé anon publique hardcodée : current_setting('request.headers') n'est pas disponible
-    -- dans le contexte d'un trigger SQL (hors requête PostgREST)
-=======
     -- Clé anon publique (déjà exposée dans le bundle frontend — pas sensible)
     v_anon_key := 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzdm52eGtibmh2eHBubGh5anN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMDQ3MjEsImV4cCI6MjA4ODg4MDcyMX0.8P53xQ3pnGud3-TuZQ-5Pnpv-29PW_pfkAvJuCfDOKs';
 
->>>>>>> claude/determined-diffie
     PERFORM net.http_post(
         url := v_url,
         headers := jsonb_build_object(
             'Content-Type', 'application/json',
-<<<<<<< HEAD
-            'Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzdm52eGtibmh2eHBubGh5anN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMDQ3MjEsImV4cCI6MjA4ODg4MDcyMX0.8P53xQ3pnGud3-TuZQ-5Pnpv-29PW_pfkAvJuCfDOKs'
-=======
             'Authorization', 'Bearer ' || v_anon_key,
             'apikey', v_anon_key
->>>>>>> claude/determined-diffie
         ),
         body := jsonb_build_object(
             'to', p_to,
@@ -68,11 +57,7 @@ AS $$
 BEGIN
     -- Alerte Admin uniquement (le rôle n'est pas encore définitif à l'INSERT)
     PERFORM private.invoke_send_email(
-<<<<<<< HEAD
-        'admin@lescordistes.com',
-=======
-        'anthony@lescordistes.com', -- À remplacer par l'email admin réel
->>>>>>> claude/determined-diffie
+        'anthony@lescordistes.com',
         'Nouveau Profil : ' || NEW.role,
         'admin-alert',
         jsonb_build_object(
