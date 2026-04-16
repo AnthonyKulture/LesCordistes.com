@@ -16,10 +16,8 @@ export function DashboardSelector() {
     const { profile, user, loading, refreshProfile } = useAuth();
     const router = useRouter();
     const applied = useRef(false);
-    // true tant qu'un upsert de registration est en cours — bloque le redirect /connexion
     const [applying, setApplying] = useState(false);
 
-    // Applique les données d'inscription depuis localStorage (posées avant le magic link)
     useEffect(() => {
         if (loading || !user || applied.current) return;
 
@@ -40,77 +38,69 @@ export function DashboardSelector() {
         };
 
         if (proRaw) {
-            try {
-                const data = JSON.parse(proRaw);
-                localStorage.removeItem(PRO_KEY);
-                const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ') || null;
-                (supabase.from('profiles') as any).upsert({
-                    id:           user.id,
-                    email:        user.email,
-                    role:         'pro',
-                    first_name:   data.firstName || null,
-                    last_name:    data.lastName  || null,
-                    full_name:    fullName,
-                    phone:        data.phone     || null,
-                    company_name: (!data.isAutoEntrepreneur && data.companyName) ? data.companyName : null,
-                }, { onConflict: 'id' }).then(() => {
+            let data: Record<string, string> | null = null;
+            try { data = JSON.parse(proRaw); } catch { localStorage.removeItem(PRO_KEY); setApplying(false); return; }
+
+            const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ') || null;
+            ;(supabase.from('profiles') as any).upsert({
+                id:           user.id,
+                email:        user.email,
+                role:         'pro',
+                first_name:   data.firstName || null,
+                last_name:    data.lastName  || null,
+                full_name:    fullName,
+                phone:        data.phone     || null,
+                company_name: (!data.isAutoEntrepreneur && data.companyName) ? data.companyName : null,
+            }, { onConflict: 'id' }).then(({ error }: { error: unknown }) => {
+                if (!error) {
+                    localStorage.removeItem(PRO_KEY);
                     supabase.functions.invoke('send-email', {
                         body: {
-                            to: data.email || user.email,
+                            to: data!.email || user.email,
                             subject: 'Votre profil pro est actif — LesCordistes.com',
                             templateId: 'welcome-pro',
-                            data: { name: data.firstName || '' },
+                            data: { name: data!.firstName || '' },
                         },
                     }).catch(() => {});
-                    finish('/dashboard/pro?welcome=pro');
-                }).catch(() => finish('/dashboard/pro'));
-            } catch {
-                localStorage.removeItem(PRO_KEY);
-                setApplying(false);
-            }
+                }
+                finish('/dashboard/pro?welcome=pro');
+            }).catch(() => finish('/dashboard/pro'));
+
         } else if (clientRaw) {
-            try {
-                const data = JSON.parse(clientRaw);
-                localStorage.removeItem(CLIENT_KEY);
-                const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ') || null;
-                (supabase.from('profiles') as any).upsert({
-                    id:          user.id,
-                    email:       user.email,
-                    role:        'client',
-                    first_name:  data.firstName  || null,
-                    last_name:   data.lastName   || null,
-                    full_name:   fullName,
-                    client_type: data.client_type || null,
-                }, { onConflict: 'id' }).then(() => {
+            let data: Record<string, string> | null = null;
+            try { data = JSON.parse(clientRaw); } catch { localStorage.removeItem(CLIENT_KEY); setApplying(false); return; }
+
+            const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ') || null;
+            ;(supabase.from('profiles') as any).upsert({
+                id:          user.id,
+                email:       user.email,
+                role:        'client',
+                first_name:  data.firstName  || null,
+                last_name:   data.lastName   || null,
+                full_name:   fullName,
+                client_type: data.client_type || null,
+            }, { onConflict: 'id' }).then(({ error }: { error: unknown }) => {
+                if (!error) {
+                    localStorage.removeItem(CLIENT_KEY);
                     supabase.functions.invoke('send-email', {
                         body: {
-                            to: data.email || user.email,
+                            to: data!.email || user.email,
                             subject: 'Bienvenue sur LesCordistes.com',
                             templateId: 'welcome-client',
-                            data: { name: data.firstName || '' },
+                            data: { name: data!.firstName || '' },
                         },
                     }).catch(() => {});
-                    finish('/dashboard/client?welcome=client');
-                }).catch(() => finish('/dashboard/client'));
-            } catch {
-                localStorage.removeItem(CLIENT_KEY);
-                setApplying(false);
-            }
+                }
+                finish('/dashboard/client?welcome=client');
+            }).catch(() => finish('/dashboard/client'));
         }
     }, [loading, user, router, refreshProfile]);
 
-    // Redirections — bloquées si un upsert de registration est en cours
     useEffect(() => {
         if (applying) return;
-        if (!loading && !profile) {
-            router.replace('/connexion');
-        }
-        if (!loading && profile && !profile.role) {
-            router.replace('/choisir-role');
-        }
-        if (!loading && profile?.role === 'admin') {
-            router.replace('/admin');
-        }
+        if (!loading && !profile) { router.replace('/connexion'); return; }
+        if (!loading && profile && !profile.role) { router.replace('/choisir-role'); return; }
+        if (!loading && profile?.role === 'admin') { router.replace('/admin'); return; }
     }, [loading, profile, applying, router]);
 
     if (loading || applying) return null;
@@ -118,9 +108,7 @@ export function DashboardSelector() {
     if (!profile.role) return null;
     if (profile.role === 'admin') return null;
 
-    if (profile.role === 'client') {
-        return <ClientDashboard key="client-dash" />;
-    }
+    if (profile.role === 'client') return <ClientDashboard key="client-dash" />;
 
     return mode === 'worker'
         ? <ProDashboard key="pro-worker-dash" />
