@@ -113,8 +113,14 @@ export function ProDashboard() {
         { field: 'bio',                 icon: FileText, label: 'Présentation',                sublabel: 'Quelques lignes sur ton expérience' },
     ];
 
-    // Onboarding mode : profil insuffisant pour être visible
-    if (profile && profileCompletion < 60) {
+    // Onboarding mode : les champs obligatoires ne sont pas encore remplis
+    // Condition alignée avec le wizard : first_name + intervention_zones requis
+    const needsOnboarding = profile && (
+        !profile.first_name?.trim() ||
+        !(profile.intervention_zones ?? []).length
+    );
+
+    if (needsOnboarding) {
         const progressColor = profileCompletion < 30 ? '#ef4444' : profileCompletion < 50 ? '#f97316' : '#3b82f6';
         const completedCount = checklistItems.filter(i => isFieldComplete(i.field)).length;
 
@@ -205,7 +211,7 @@ export function ProDashboard() {
                     </div>
                 </div>
 
-                {profileCompletion < 70 && (
+                {profileCompletion < 70 && !needsOnboarding && (
                     <div className="bg-orange-50 border border-orange-100 rounded-xl p-4 flex items-center justify-between gap-4 shadow-sm animate-in fade-in slide-in-from-top-4 duration-500">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center shrink-0">
