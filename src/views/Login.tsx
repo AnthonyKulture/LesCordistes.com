@@ -9,22 +9,15 @@ import { Input } from '../components/ui/Input';
 import { GoogleSignInButton } from '../components/GoogleSignInButton';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthLayout } from '../components/layout/AuthLayout';
-import { Mail, Lock } from 'lucide-react';
 import posthog from 'posthog-js';
-
-type LoginTab = 'password' | 'magic';
 
 export function Login() {
     const { user, loading: authLoading } = useAuth();
     const router = useRouter();
-    const [tab, setTab] = React.useState<LoginTab>('password');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
-    const [magicEmail, setMagicEmail] = React.useState('');
-    const [magicSent, setMagicSent] = React.useState(false);
-    const [magicLoading, setMagicLoading] = React.useState(false);
 
     React.useEffect(() => {
         if (!authLoading && user) {
@@ -46,34 +39,6 @@ export function Login() {
         } finally {
             setLoading(false);
         }
-    };
-
-    const handleMagicLink = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!magicEmail) return;
-        setError('');
-        setMagicLoading(true);
-        try {
-            const { error } = await supabase.auth.signInWithOtp({
-                email: magicEmail,
-                options: {
-                    emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent('/dashboard')}`,
-                },
-            });
-            if (error) throw error;
-            posthog.capture('user_logged_in', { method: 'magic_link', email: magicEmail });
-            setMagicSent(true);
-        } catch (err: any) {
-            setError(err.message || 'Erreur lors de l\'envoi du lien');
-        } finally {
-            setMagicLoading(false);
-        }
-    };
-
-    const handleTabChange = (t: LoginTab) => {
-        setTab(t);
-        setError('');
-        setMagicSent(false);
     };
 
     const isRegistered = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('registered') === '1';
@@ -112,11 +77,11 @@ export function Login() {
                         )}
                         {isRegistered && (
                             <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-4 flex items-start" role="status">
-                                <span className="text-xl shrink-0 mr-3">📧</span>
+                                <span className="text-xl shrink-0 mr-3">✅</span>
                                 <div>
-                                    <p className="font-semibold text-sm">Inscription réussie !</p>
+                                    <p className="font-semibold text-sm">Compte créé !</p>
                                     <p className="text-xs mt-1 leading-relaxed">
-                                        Veuillez vérifier votre boîte mail (<strong>et vos spams</strong>) pour valider votre compte.
+                                        Connectez-vous avec votre email et mot de passe.
                                     </p>
                                 </div>
                             </div>
@@ -136,123 +101,48 @@ export function Login() {
                         </div>
                     </div>
 
-                    {/* Onglets */}
-                    <div className="flex rounded-xl border border-slate-200 p-1 bg-slate-50 gap-1">
-                        <button
-                            type="button"
-                            onClick={() => handleTabChange('password')}
-                            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-sm font-semibold transition-all ${
-                                tab === 'password'
-                                    ? 'bg-white shadow-sm text-slate-900'
-                                    : 'text-slate-500 hover:text-slate-700'
-                            }`}
-                        >
-                            <Lock size={15} />
-                            Mot de passe
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => handleTabChange('magic')}
-                            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-sm font-semibold transition-all ${
-                                tab === 'magic'
-                                    ? 'bg-white shadow-sm text-slate-900'
-                                    : 'text-slate-500 hover:text-slate-700'
-                            }`}
-                        >
-                            <Mail size={15} />
-                            Lien magique
-                        </button>
-                    </div>
-
-                    {tab === 'password' && (
-                        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                        <Input
+                            label="Email"
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="votre@email.com"
+                            required
+                            aria-label="Adresse email"
+                            aria-invalid={!!error ? "true" : "false"}
+                            aria-describedby={error ? "login-error" : undefined}
+                        />
+                        <div>
                             <Input
-                                label="Email"
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="votre@email.com"
+                                label="Mot de passe"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
                                 required
-                                aria-label="Adresse email"
+                                aria-label="Mot de passe"
                                 aria-invalid={!!error ? "true" : "false"}
                                 aria-describedby={error ? "login-error" : undefined}
                             />
-                            <div>
-                                <Input
-                                    label="Mot de passe"
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="••••••••"
-                                    required
-                                    aria-label="Mot de passe"
-                                    aria-invalid={!!error ? "true" : "false"}
-                                    aria-describedby={error ? "login-error" : undefined}
-                                />
-                                <div className="flex justify-end mt-1.5">
-                                    <Link
-                                        href="/forgot-password"
-                                        className="text-xs text-brand-blue hover:text-brand-blue-dark font-medium underline-offset-4 hover:underline transition-all"
-                                    >
-                                        Mot de passe oublié ?
-                                    </Link>
-                                </div>
+                            <div className="flex justify-end mt-1.5">
+                                <Link
+                                    href="/forgot-password"
+                                    className="text-xs text-brand-blue hover:text-brand-blue-dark font-medium underline-offset-4 hover:underline transition-all"
+                                >
+                                    Mot de passe oublié ?
+                                </Link>
                             </div>
-                            <Button
-                                type="submit"
-                                variant="primary"
-                                className="w-full py-2.5 text-base font-semibold shadow-sm hover:shadow-md transition-shadow"
-                                disabled={loading || !email || !password}
-                            >
-                                {loading ? 'Connexion en cours...' : 'Se connecter'}
-                            </Button>
-                        </form>
-                    )}
-
-                    {tab === 'magic' && (
-                        <div>
-                            {magicSent ? (
-                                <div className="text-center py-6 space-y-3">
-                                    <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto">
-                                        <Mail size={32} className="text-brand-blue animate-bounce" />
-                                    </div>
-                                    <p className="font-semibold text-slate-900">Lien envoyé !</p>
-                                    <p className="text-sm text-slate-500">
-                                        Vérifiez votre boîte mail à <strong>{magicEmail}</strong> et cliquez sur le lien pour vous connecter.
-                                    </p>
-                                    <button
-                                        type="button"
-                                        onClick={() => setMagicSent(false)}
-                                        className="text-xs text-slate-400 hover:text-brand-blue underline underline-offset-2 transition-colors"
-                                    >
-                                        Renvoyer un lien
-                                    </button>
-                                </div>
-                            ) : (
-                                <form onSubmit={handleMagicLink} className="space-y-5">
-                                    <p className="text-sm text-slate-500">
-                                        Entrez votre email et recevez un lien de connexion instantané — sans mot de passe.
-                                    </p>
-                                    <Input
-                                        label="Email"
-                                        type="email"
-                                        value={magicEmail}
-                                        onChange={(e) => setMagicEmail(e.target.value)}
-                                        placeholder="votre@email.com"
-                                        required
-                                    />
-                                    <Button
-                                        type="submit"
-                                        variant="primary"
-                                        className="w-full py-2.5 text-base font-semibold"
-                                        disabled={magicLoading || !magicEmail}
-                                    >
-                                        {magicLoading ? 'Envoi...' : 'Recevoir mon lien de connexion'}
-                                    </Button>
-                                </form>
-                            )}
                         </div>
-                    )}
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            className="w-full py-2.5 text-base font-semibold shadow-sm hover:shadow-md transition-shadow"
+                            disabled={loading || !email || !password}
+                        >
+                            {loading ? 'Connexion en cours...' : 'Se connecter'}
+                        </Button>
+                    </form>
                 </div>
             </div>
         </AuthLayout>
