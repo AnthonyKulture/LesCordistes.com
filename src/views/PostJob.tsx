@@ -284,13 +284,25 @@ export const PostJob: React.FC = () => {
                 if (insertError) {
                     console.error('Supabase Insert Error:', insertError);
                     if (insertError.message?.includes('row-level security')) {
-                        throw new Error("Erreur de sécurité : Si vous venez de vous inscrire, vous devez d'abord confirmer votre email (cliquez sur le lien reçu par mail) pour publier cette mission.");
+                        throw new Error("Erreur de sécurité : Votre session n'est pas reconnue. Reconnectez-vous et réessayez.");
                     }
                     throw new Error(insertError.message || 'Erreur lors de l\'insertion de la mission');
                 }
             }
 
             posthog.capture('job_posted', { job_type: formData.type || 'standard', category: formData.category || 'other', location_city: formData.location_city });
+
+            if (isNewUser && formData.contact_email) {
+                const isProRole = formData.type === 'renfort_pro';
+                supabase.functions.invoke('send-email', {
+                    body: {
+                        to: formData.contact_email,
+                        subject: isProRole ? 'Votre profil pro est actif — LesCordistes.com' : 'Bienvenue sur LesCordistes.com',
+                        templateId: isProRole ? 'welcome-pro' : 'welcome-client',
+                        data: { name: formData.contact_first_name || '' },
+                    },
+                }).catch(() => {});
+            }
 
             // Clear draft after success
             clearJobDraft();
