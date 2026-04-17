@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation'
 import Link from 'next/link';
-import { ShieldCheck, Building2, ArrowLeft, Mail } from 'lucide-react';
+import { ShieldCheck, Building2, ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { createSupabaseBrowserClient } from '../lib/supabase-browser';
 import { Button } from '../components/ui/Button';
@@ -24,9 +24,9 @@ export function RegisterClient() {
         lastName: '',
         client_type: '',
         email: '',
+        password: '',
     });
     const [loading, setLoading] = React.useState(false);
-    const [magicSent, setMagicSent] = React.useState(false);
     const [error, setError] = React.useState('');
 
     React.useEffect(() => {
@@ -56,31 +56,41 @@ export function RegisterClient() {
             return;
         }
 
+        if (formData.password.length < 6) {
+            setError('Le mot de passe doit contenir au moins 6 caractères');
+            return;
+        }
+
         setLoading(true);
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 
-            const { error: otpError } = await supabase.auth.signInWithOtp({
+            const { error: signUpError } = await supabase.auth.signUp({
                 email: formData.email,
+                password: formData.password,
                 options: {
-                    emailRedirectTo: `${window.location.origin}/auth/callback`,
+                    data: {
+                        role: 'client',
+                        first_name: formData.firstName,
+                        last_name: formData.lastName,
+                        full_name: `${formData.firstName} ${formData.lastName}`.trim(),
+                        client_type: formData.client_type,
+                    },
                 },
             });
 
-            if (otpError) {
-                if (otpError.message.includes('rate limit')) {
-                    setError('Trop de tentatives. Veuillez patienter quelques minutes.');
+            if (signUpError) {
+                if (signUpError.message.toLowerCase().includes('already registered')) {
+                    setError('Un compte existe déjà avec cet email. Connectez-vous.');
                 } else {
-                    throw otpError;
+                    throw signUpError;
                 }
                 return;
             }
 
-            localStorage.setItem('lescordistes_pw_notice', '1');
             posthog.identify(formData.email, { email: formData.email, role: 'client', client_type: formData.client_type });
             posthog.capture('user_signed_up', { role: 'client', client_type: formData.client_type });
-            setMagicSent(true);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            router.push('/dashboard');
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');
         } finally {
@@ -115,26 +125,6 @@ export function RegisterClient() {
                     <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight text-center">Espace Client</h1>
                 </div>
 
-                {magicSent ? (
-                    <div className="text-center py-6 space-y-4">
-                        <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto">
-                            <Mail size={32} className="text-brand-blue animate-bounce" />
-                        </div>
-                        <h2 className="font-bold text-slate-900 text-lg">Vérifiez votre boîte mail !</h2>
-                        <p className="text-sm text-slate-500">
-                            Un lien magique a été envoyé à <strong>{formData.email}</strong>.<br />
-                            Cliquez dessus pour activer votre compte.
-                        </p>
-                        <p className="text-xs text-slate-400">Vérifiez aussi vos spams.</p>
-                        <button
-                            type="button"
-                            onClick={() => setMagicSent(false)}
-                            className="text-xs text-slate-400 hover:text-brand-blue underline underline-offset-2 transition-colors"
-                        >
-                            Renvoyer un lien
-                        </button>
-                    </div>
-                ) : (
                     <div className="space-y-6">
                         {error && (
                             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start" role="alert">
@@ -203,22 +193,27 @@ export function RegisterClient() {
                                 required
                             />
 
+                            <Input
+                                label="Mot de passe *"
+                                type="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                placeholder="Au moins 6 caractères"
+                                required
+                            />
+
                             <Button
                                 type="submit"
                                 variant="primary"
                                 className="w-full py-2.5 text-base font-semibold shadow-sm hover:shadow-md transition-shadow mt-2"
                                 isLoading={loading}
-                                disabled={loading || !formData.email || !formData.firstName || !formData.lastName || !formData.client_type}
+                                disabled={loading || !formData.email || !formData.firstName || !formData.lastName || !formData.client_type || !formData.password}
                             >
-                                {loading ? 'Envoi en cours...' : (
-                                    <span className="flex items-center justify-center gap-2">
-                                        <Mail size={16} /> Recevoir mon lien d'activation
-                                    </span>
-                                )}
+                                {loading ? 'Création en cours...' : 'Créer mon compte'}
                             </Button>
                         </form>
                     </div>
-                )}
             </div>
         </AuthLayout>
     );
