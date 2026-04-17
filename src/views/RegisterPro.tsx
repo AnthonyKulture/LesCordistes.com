@@ -98,6 +98,14 @@ export function RegisterPro() {
 
             posthog.identify(formData.email, { email: formData.email, role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
             posthog.capture('user_signed_up', { role: 'pro', is_auto_entrepreneur: formData.isAutoEntrepreneur });
+            supabase.functions.invoke('send-email', {
+                body: {
+                    to: formData.email,
+                    subject: 'Votre profil pro est actif — LesCordistes.com',
+                    templateId: 'welcome-pro',
+                    data: { name: formData.firstName || '' },
+                },
+            }).catch(() => {});
             router.push('/dashboard');
         } catch (err: any) {
             setError(err.message || 'Une erreur est survenue');
