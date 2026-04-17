@@ -147,11 +147,15 @@ serve(async (req) => {
 
     const { token_hash, email_action_type, redirect_to } = email_data;
 
-    // Build verification URL on lescordistes.com (proxy route)
-    const verifyUrl = new URL(`${SITE_URL}/auth/verify`);
-    verifyUrl.searchParams.set('token', token_hash);
+    const verifyUrl = new URL(`${SITE_URL}/auth/callback`);
+    verifyUrl.searchParams.set('token_hash', token_hash);
     verifyUrl.searchParams.set('type', email_action_type);
-    if (redirect_to) verifyUrl.searchParams.set('redirect_to', redirect_to);
+    if (redirect_to) {
+      try {
+        const next = new URL(redirect_to).searchParams.get('next');
+        if (next) verifyUrl.searchParams.set('next', next);
+      } catch { /* ignore */ }
+    }
     const urlStr = verifyUrl.toString();
 
     let subject: string;
