@@ -54,14 +54,6 @@ export function DashboardSelector() {
             }, { onConflict: 'id' }).then(({ error }: { error: unknown }) => {
                 if (!error) {
                     localStorage.removeItem(PRO_KEY);
-                    supabase.functions.invoke('send-email', {
-                        body: {
-                            to: data!.email || user.email,
-                            subject: 'Votre profil pro est actif — LesCordistes.com',
-                            templateId: 'welcome-pro',
-                            data: { name: data!.firstName || '' },
-                        },
-                    }).catch(() => {});
                 }
                 finish('/dashboard/pro?welcome=pro');
             }).catch(() => finish('/dashboard/pro'));
@@ -82,14 +74,6 @@ export function DashboardSelector() {
             }, { onConflict: 'id' }).then(({ error }: { error: unknown }) => {
                 if (!error) {
                     localStorage.removeItem(CLIENT_KEY);
-                    supabase.functions.invoke('send-email', {
-                        body: {
-                            to: data!.email || user.email,
-                            subject: 'Bienvenue sur LesCordistes.com',
-                            templateId: 'welcome-client',
-                            data: { name: data!.firstName || '' },
-                        },
-                    }).catch(() => {});
                 }
                 finish('/dashboard/client?welcome=client');
             }).catch(() => finish('/dashboard/client'));

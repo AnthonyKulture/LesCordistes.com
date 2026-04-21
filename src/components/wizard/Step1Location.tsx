@@ -28,38 +28,33 @@ export const Step1Location: React.FC<Step1Props> = ({ data, updateData, onNext }
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const token = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 
-    // Debounced search for addresses using Mapbox Geocoding API (v5) for robust France & Monaco support
+    // Debounced search using the French government address API (no API key needed)
     useEffect(() => {
         const timer = setTimeout(async () => {
-            if (inputValue.length < 3 || !showSuggestions || !token || token === 'pk.your_mapbox_token_here') {
+            if (inputValue.length < 3 || !showSuggestions) {
                 setSuggestions([]);
                 return;
             }
 
             setIsLoading(true);
             try {
-                // Using Mapbox Geocoding API (v5) - no session token required, faster, coordinates directly in results
                 const response = await fetch(
-                    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(inputValue)}.json?access_token=${token}&country=fr,mc&language=fr&limit=5&types=address,postcode,place`
+                    `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(inputValue)}&limit=5`
                 );
                 const results = await response.json();
-                
-                // Mapbox v5 format: features[]
+
                 const formatted: AddressSuggestion[] = (results.features || []).map((f: any) => {
-                    const postcode = f.context?.find((c: any) => c.id.startsWith('postcode'))?.text || '';
-                    const city = f.context?.find((c: any) => c.id.startsWith('place'))?.text || f.text || '';
-                    
+                    const props = f.properties;
                     return {
-                        label: f.place_name,
-                        city,
-                        postcode,
-                        context: f.place_name,
-                        coordinates: f.geometry.coordinates // [lng, lat] are present directly here!
+                        label: props.label,
+                        city: props.city || '',
+                        postcode: props.postcode || '',
+                        context: props.context || '',
+                        coordinates: f.geometry.coordinates,
                     };
                 });
-                
+
                 setSuggestions(formatted);
             } catch (error) {
                 console.error('Error fetching addresses:', error);
@@ -69,7 +64,7 @@ export const Step1Location: React.FC<Step1Props> = ({ data, updateData, onNext }
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [inputValue, showSuggestions, token]);
+    }, [inputValue, showSuggestions]);
 
     // Handle click outside to close dropdown
     useEffect(() => {
@@ -86,15 +81,13 @@ export const Step1Location: React.FC<Step1Props> = ({ data, updateData, onNext }
         const postcode = suggestion.postcode || '';
         const coords = suggestion.coordinates;
 
-        let deptCode = '';
-        if (postcode) {
-            if (postcode.startsWith('98000') || suggestion.label.toLowerCase().includes('monaco')) {
-                deptCode = '98'; // Monaco
-            } else {
-                deptCode = postcode.substring(0, 2);
-            }
-        } else if (suggestion.label.toLowerCase().includes('monaco')) {
-            deptCode = '98';
+        // context format from api-adresse.data.gouv.fr: "69, Métropole de Lyon, Auvergne-Rhône-Alpes"
+        // First segment is always the department number (handles 2A, 2B, 971-976 correctly)
+        let deptCode = suggestion.context.split(', ')[0] || '';
+        if (!deptCode && postcode) {
+            deptCode = postcode.startsWith('97') || postcode.startsWith('98')
+                ? postcode.substring(0, 3)
+                : postcode.substring(0, 2);
         }
 
         updateData({
