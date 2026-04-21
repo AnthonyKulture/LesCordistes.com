@@ -44,9 +44,10 @@ END;
 $$;
 
 -- ------------------------------------------------------------
--- 🎨 TRIGGER 1 : Nouveau Profil (Alerte Admin uniquement à l'INSERT)
--- Le welcome email est envoyé sur UPDATE quand full_name est renseigné
--- pour la première fois (voir TRIGGER 1b ci-dessous).
+-- 🎨 TRIGGER 1 : Nouveau Profil
+-- Alerte Admin + Welcome email si full_name déjà renseigné à l'INSERT
+-- (flow password : handle_new_user insère full_name directement)
+-- Pour les flux OTP/Google, le welcome email est envoyé sur UPDATE (TRIGGER 1b).
 -- ------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION private.trigger_on_new_profile()
@@ -55,7 +56,7 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
-    -- Alerte Admin uniquement (le rôle n'est pas encore définitif à l'INSERT)
+    -- Alerte Admin
     PERFORM private.invoke_send_email(
         'anthony@lescordistes.com',
         'Nouveau Profil : ' || NEW.role,
@@ -67,6 +68,25 @@ BEGIN
             'linkText', 'Gérer les utilisateurs'
         )
     );
+
+    -- Welcome email si full_name déjà présent (inscription email+password)
+    IF NEW.full_name IS NOT NULL AND NEW.full_name != '' THEN
+        IF NEW.role = 'client' THEN
+            PERFORM private.invoke_send_email(
+                NEW.email,
+                'Bienvenue sur LesCordistes.com !',
+                'welcome-client',
+                jsonb_build_object('name', split_part(NEW.full_name, ' ', 1))
+            );
+        ELSIF NEW.role = 'pro' THEN
+            PERFORM private.invoke_send_email(
+                NEW.email,
+                'Votre profil pro est actif — LesCordistes.com',
+                'welcome-pro',
+                jsonb_build_object('name', split_part(NEW.full_name, ' ', 1))
+            );
+        END IF;
+    END IF;
 
     RETURN NEW;
 END;
@@ -91,7 +111,8 @@ SECURITY DEFINER
 AS $$
 BEGIN
     -- Ne s'exécute que lors du premier renseignement de full_name
-    IF OLD.full_name IS NULL AND NEW.full_name IS NOT NULL THEN
+    -- Gère NULL (Google OAuth) et '' (handle_new_user sans metadata name)
+    IF (OLD.full_name IS NULL OR OLD.full_name = '') AND NEW.full_name IS NOT NULL AND NEW.full_name != '' THEN
         IF NEW.role = 'client' THEN
             PERFORM private.invoke_send_email(
                 NEW.email,
