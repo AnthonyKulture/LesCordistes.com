@@ -497,6 +497,109 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Trouver un cordiste à Paris', href: '/blog/trouver-cordiste-paris' },
         ],
     },
+    {
+        slug: 'trouver-cordiste-lyon',
+        title: 'Trouver un cordiste à Lyon : tarifs, zones et guide 2026',
+        shortTitle: 'Trouver un cordiste à Lyon',
+        description:
+            'Trouvez un cordiste certifié à Lyon pour vos travaux en hauteur. Tarifs 2026, zones couvertes, Vieux-Lyon, Croix-Rousse et Presqu\'île — le guide pratique.',
+        category: 'Guide achat',
+        readTime: 8,
+        datePublished: '2026-04-21',
+        dateModified: '2026-04-21',
+        intro:
+            'Lyon concentre, après Paris, l\'une des demandes les plus fortes de France en travaux en hauteur. Sa géographie singulière — la Presqu\'île enserrée entre Rhône et Saône, les Pentes de la Croix-Rousse aux rues pavées et traboules, le Vieux-Lyon classé au Patrimoine mondial de l\'UNESCO, les zones industrielles de l\'est — crée des configurations que seul un cordiste à Lyon habitué de ces terrains sait aborder avec rigueur. Trouver le bon prestataire ne se résume pas à obtenir le devis le moins cher : c\'est identifier un technicien qui connaît les contraintes patrimoniales locales, les exigences des Architectes des Bâtiments de France et les matériaux spécifiques des façades lyonnaises. Ce guide vous donne les clés pour faire le bon choix en 2026.',
+        sections: [
+            {
+                heading: 'Lyon : pourquoi les travaux cordistes y sont-ils spécifiques ?',
+                body: 'La deuxième agglomération de France réunit une diversité architecturale sans équivalent hors de Paris. Les immeubles haussmanniens de la Presqu\'île (R+5 à R+7) côtoient les bâtiments canuts des Pentes de la Croix-Rousse — des constructions du XIXe siècle aux grandes fenêtres caractéristiques et aux coursives intérieures qui compliquent l\'installation d\'un échafaudage traditionnel. Le Vieux-Lyon, inscrit au Patrimoine mondial de l\'UNESCO depuis 1998, rassemble plus de 300 édifices Renaissance dont les façades en tuffeau et les toitures en tuiles canal exigent des interventions millimétrées.\n\nÀ l\'est, les zones industrielles de Vénissieux, Vaulx-en-Velin et Saint-Fons génèrent une demande continue en inspection et maintenance sur des installations pétrochimiques, des silos et des structures métalliques. Sur ces chantiers, la certification IRATA est souvent exigée contractuellement, et les techniciens doivent disposer d\'EPI (équipements de protection individuelle) adaptés : harnais anti-chute certifiés, cordes de travail et de sécurité homologuées, bloqueurs et descendeurs à jour de vérification périodique.\n\nCette double réalité — patrimoine historique d\'un côté, industrie lourde de l\'autre — fait de Lyon un marché à part pour les techniques d\'accès sur cordes (TAC). Les cordistes les plus actifs sur la métropole maîtrisent les deux contextes et connaissent les spécificités réglementaires locales. C\'est ce qui distingue les prestataires sérieux des généralistes itinérants.',
+            },
+            {
+                heading: 'Quels travaux un cordiste peut-il réaliser à Lyon ?',
+                body: 'Les missions cordiste à Lyon couvrent un spectre large, des bâtiments résidentiels aux équipements industriels en passant par le patrimoine historique. La plupart des interventions en hauteur sans échafaudage ni nacelle sont réalisables par accès sur cordes dès lors que des points d\'ancrage fiables existent ou peuvent être installés en toiture. La productivité en suspension est comparable à celle sur échafaudage pour des chantiers ponctuels, et le démarrage est possible sous 48 à 72 heures contre 1 à 2 semaines pour un montage d\'échafaudage.',
+                listIntro: 'Les missions les plus fréquentes à Lyon et dans la métropole :',
+                list: [
+                    'Nettoyage de façades en tuffeau, calcaire ou enduit (Vieux-Lyon, Presqu\'île) — haute pression adaptée ou produit homologué ABF',
+                    'Réfection et réparation de toitures en tuiles canal (Vieux-Lyon, Croix-Rousse, colline de Fourvière)',
+                    'Lavage de vitres en hauteur : Tour Part-Dieu, Tour Incity, Tour Oxygène, immeubles tertiaires du quartier Confluence',
+                    'Ravalement et application d\'enduit sur immeubles canuts des Pentes, sans échafaudage sur rue étroite',
+                    'Traitement anti-pigeons (filets, pics) sur corniches, balcons et ornements de façade',
+                    'Inspection et diagnostic de façade après inondations (crue du Rhône ou de la Saône)',
+                    'Réparation de fissures et traitement d\'infiltrations ponctuelles sur bâtiment en hauteur',
+                    'Travaux industriels (inspection de cheminées, réservoirs, pylônes) dans les zones d\'activité de l\'est lyonnais',
+                ],
+                cta: {
+                    text: 'Décrire mes travaux en 2 minutes',
+                    href: '/post-job',
+                    description: 'Façade Renaissance, immeuble canut ou installation industrielle — publiez votre besoin gratuitement.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Vieux-Lyon et secteur ABF : les contraintes à connaître avant de signer',
+                body: 'Le Vieux-Lyon constitue l\'un des secteurs sauvegardés les plus stricts de France. Depuis son inscription au Patrimoine mondial de l\'UNESCO en 1998, toute intervention sur une façade — même un simple nettoyage — est soumise à l\'avis des Architectes des Bâtiments de France (ABF) dès lors qu\'elle modifie l\'aspect extérieur du bâtiment.\n\n**Produits et techniques** : les produits de nettoyage chimique puissants sont souvent prohibés sur la pierre de tuffeau ou les façades Renaissance. Seuls les produits homologués par les ABF peuvent être appliqués — le cordiste doit les mentionner explicitement dans son devis et son plan de prévention.\n\n**Points d\'ancrage non destructifs** : percer une façade classée pour installer un ancrage permanent est soumis à autorisation préalable. Pour les interventions ponctuelles, des systèmes d\'ancrage temporaires (lestés, posés sur le faîtage ou fixés sur des huisseries existantes) sont privilégiés. Un cordiste expérimenté sur le patrimoine lyonnais connaît ces systèmes et les met en œuvre sans démarche supplémentaire.\n\n**Délais administratifs** : en dehors du secteur UNESCO, la Presqu\'île et une grande partie des arrondissements centraux (1er, 2e, 4e, 5e et 6e) sont couverts par un périmètre de protection des monuments historiques. Une demande d\'autorisation peut prendre 15 à 30 jours ouvrés — intégrez ce délai dans votre planning.\n\nHors secteur protégé, dans les arrondissements périphériques (7e, 8e, 9e) et les communes de la Métropole, les contraintes ABF ne s\'appliquent généralement pas. Le plan de prévention et la RC Pro suffisent pour démarrer.',
+            },
+            {
+                heading: 'Tarifs d\'un cordiste à Lyon en 2026',
+                body: 'Le marché lyonnais se situe dans une fourchette intermédiaire entre Paris et les grandes villes de province. Les tarifs sont en moyenne 15 à 20 % inférieurs à ceux pratiqués en Île-de-France, grâce à des coûts de déplacement plus faibles et une moindre tension sur la main-d\'œuvre qualifiée. Ils restent toutefois supérieurs à des villes comme Grenoble ou Clermont-Ferrand, du fait de la densité de la demande et des compétences spécifiques exigées pour les chantiers patrimoniaux.',
+                listIntro: 'Fourchette indicative à Lyon (HT) :',
+                list: [
+                    'Journée cordiste (8h, 1 technicien) : 380 € à 650 € selon spécialité et type de chantier',
+                    'Nettoyage de façade au m² : 7 € à 16 € selon le matériau et le niveau d\'encrassement',
+                    'Lavage de vitres en hauteur : 3 € à 6 € par m²',
+                    'Inspection technique avec rapport écrit : 500 € à 1 000 € la demi-journée',
+                    'Chantier industriel (IRATA niveau 2 ou 3 exigé) : 600 € à 900 € HT/j par technicien',
+                    'Réfection de toiture en tuiles canal : tarif à la surface et à l\'état — devis indispensable',
+                ],
+                cta: {
+                    text: 'Comparer des devis sans engagement',
+                    href: '/post-job',
+                    description: 'Obtenez plusieurs offres de cordistes certifiés sur Lyon pour votre budget réel.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Bien choisir son cordiste à Lyon : 5 critères qui font la différence',
+                body: 'Lyon dispose d\'un vivier de cordistes qualifiés, mais la qualité varie fortement d\'un prestataire à l\'autre. Voici les 5 points de vigilance spécifiques au marché lyonnais.\n\n**1. La certification adaptée au chantier** — Pour un bâtiment résidentiel ou du patrimoine, le CQP TPS (niveau 2 minimum pour encadrer une équipe) est la référence française. Pour les chantiers industriels de Vénissieux ou de Saint-Fons, un IRATA niveau 2 ou 3 est souvent exigé contractuellement. Demandez la copie des certificats avec date d\'expiration : le CQP et l\'IRATA sont valables 3 ans.\n\n**2. La connaissance du patrimoine lyonnais** — Un cordiste habitué au Vieux-Lyon ou à la Presqu\'île saura immédiatement si votre adresse est en secteur ABF, quels ancrages non destructifs utiliser et quels produits sont homologués pour la pierre de tuffeau. Cette expertise locale évite des erreurs coûteuses et des délais supplémentaires.\n\n**3. La RC Pro couvrant les travaux en hauteur et le patrimoine** — Vérifiez que l\'attestation mentionne explicitement les techniques d\'accès sur cordes (TAC) et les interventions sur bâtiments classés ou en secteur protégé. Certaines assurances excluent le patrimoine historique.\n\n**4. Le plan de prévention systématique** — Tout chantier cordiste impose un plan de prévention écrit (les travaux en hauteur figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993). Un prestataire sérieux — qu\'il soit membre de la SFETH ou non — le propose spontanément après une inspection commune du site.\n\n**5. Les références sur des chantiers lyonnais comparables** — Une intervention sur les quais de Saône n\'a rien à voir avec une inspection de cheminée à Saint-Fons. Demandez des références vérifiables : adresses, photos ou noms d\'entreprises clientes.',
+                cta: {
+                    text: 'Trouver mon cordiste à Lyon',
+                    href: '/post-job',
+                    description: 'Des cordistes habitués à Lyon reçoivent votre demande et répondent sous 48h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Zones couvertes : Lyon intra-muros et Métropole',
+                body: 'Les cordistes basés dans la métropole lyonnaise couvrent généralement l\'ensemble des 9 arrondissements de Lyon, ainsi que les principales communes de la Métropole de Lyon : Villeurbanne, Vénissieux, Caluire-et-Cuire, Bron, Saint-Fons, Décines-Charpieu, Rillieux-la-Pape, Tassin-la-Demi-Lune et Oullins-Pierre-Bénite. La grande majorité des prestataires interviennent dans ce périmètre sans facturer de frais kilométriques supplémentaires.\n\nAu-delà de la métropole, les cordistes lyonnais acceptent fréquemment des missions dans les départements limitrophes : Ain (Bourg-en-Bresse, Ambérieu-en-Bugey), Isère (Grenoble, Bourgoin-Jallieu, Vienne), Loire (Saint-Étienne, Roanne) et Savoie. Des frais kilométriques s\'appliquent généralement à partir de 40 à 60 km du centre de Lyon — comptez entre 0,40 € et 0,70 € HT par kilomètre au-delà du périmètre couvert.\n\nLa région Auvergne-Rhône-Alpes est l\'une des plus actives de France en techniques d\'accès difficile (TAC), portée par le secteur industriel, les chantiers sur ouvrages d\'art et une forte demande en montagne. Lyon en est la principale base opérationnelle, ce qui garantit un vivier de prestataires qualifiés disponibles dans des délais raisonnables.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste à Lyon ?',
+                a: 'Comptez entre 380 € et 650 € HT par journée à Lyon, selon la spécialité et le type de chantier. C\'est environ 20 % moins cher qu\'à Paris. Le nettoyage de façade oscille entre 7 € et 16 € HT au m² selon le matériau.',
+            },
+            {
+                q: 'Les travaux sur le Vieux-Lyon nécessitent-ils une autorisation des ABF ?',
+                a: 'Oui, dans la quasi-totalité des cas. Le secteur Saint-Jean / Saint-Paul / Saint-Georges est classé UNESCO et toute intervention modifiant l\'aspect extérieur d\'un bâtiment requiert l\'avis des Architectes des Bâtiments de France. Un cordiste expérimenté sur ce secteur intégrera le délai administratif (15 à 30 jours ouvrés) dans son planning et proposera les produits et techniques homologués.',
+            },
+            {
+                q: 'Quel délai pour trouver un cordiste disponible à Lyon ?',
+                a: 'En dehors de la haute saison, comptez 1 à 3 semaines entre la prise de contact et le démarrage. Au printemps et en été (mars à octobre), les cordistes lyonnais sont souvent complets 3 à 5 semaines à l\'avance pour les travaux de façade. Pour une urgence après sinistre, certains prestataires proposent une intervention sous 24 à 72h avec une majoration tarifaire.',
+            },
+            {
+                q: 'Un cordiste lyonnais peut-il intervenir dans tout le département du Rhône ?',
+                a: 'Oui. La Métropole de Lyon est couverte intégralement, généralement sans surcoût. Pour le reste du département (Beaujolais, Tarare, Givors), des frais kilométriques s\'appliquent. Les cordistes basés à Lyon acceptent aussi fréquemment des missions dans l\'Ain, l\'Isère et la Loire, avec des frais de déplacement proportionnels à la distance.',
+            },
+        ],
+        ctaText: 'Trouver mon cordiste à Lyon',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Cordistes certifiés à Lyon', href: '/cordiste-lyon' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
+            { label: 'Trouver un cordiste à Paris', href: '/blog/trouver-cordiste-paris' },
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
