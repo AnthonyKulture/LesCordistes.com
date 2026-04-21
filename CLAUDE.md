@@ -104,13 +104,39 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ---
 
+## Auth
+
+- **Flow** : email+password (`signUp`) uniquement — pas de magic link ni `signInWithOtp`
+- **Confirm email** : doit être **désactivé** dans Supabase Dashboard → Auth → Providers → Email
+  (sinon `signUp` retourne `session: null` et l'utilisateur ne peut pas se connecter)
+- **Google OAuth** : actif, rôle choisi via `RoleSelectionModal` au premier login
+- `handle_new_user` trigger (PostgreSQL) crée le profil immédiatement avec tous les metadata
+- Fichier de référence : `supabase/migrations/supabase-fix-handle-new-user.sql`
+
+---
+
 ## Emails (Edge Function)
 
 - Entry: `supabase/functions/send-email/index.ts`
-- Native HTML templates — no react-email (incompatible with Deno)
+- Native HTML templates — no react-email (incompatible avec Deno)
 - Templates: `welcome-client` · `welcome-pro` · `admin-alert` · `job-status` · `match-job` · `payment-receipt` · `verify-email` · `password-reset`
 - SQL triggers: `supabase-email-triggers.sql` — re-run in SQL Editor after any change
 - Deploy: `npx supabase functions deploy send-email --project-ref esvnvxkbnhvxpnlhyjsw`
+
+**Architecture welcome email** (source unique = SQL trigger, pas client-side) :
+- Flow email+password → `handle_new_user` INSERT avec `full_name` → TRIGGER 1 (INSERT) → email
+- Flow Google OAuth → INSERT avec `full_name = ''` → RoleSelectionModal UPDATE → TRIGGER 1b (UPDATE) → email
+- Condition UPDATE : `(OLD.full_name IS NULL OR OLD.full_name = '') AND NEW.full_name != ''`
+- Ne pas ajouter de `functions.invoke('send-email')` côté client pour les welcome emails — le trigger SQL suffit
+
+---
+
+## Geocoding
+
+- **API** : `api-adresse.data.gouv.fr/search/?q=<query>&limit=5` — gouvernementale FR, gratuite, sans clé
+- Retourne `properties.postcode`, `properties.city`, `properties.context` pour tous les types (ville, adresse, CP)
+- Numéro de département : `properties.context.split(', ')[0]` → gère `2A`, `2B`, `971`–`976` nativement
+- Composant : `src/components/wizard/Step1Location.tsx`
 
 ---
 
@@ -135,7 +161,7 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ## Graphify — cartographie structurelle
 
-Graphe de 344 nœuds/224 arêtes dans `graphify-out/`. Hook actif : rappel automatique avant Glob/Grep.
+Graphe de 1068 nœuds/1145 arêtes dans `graphify-out/`. Hook actif : rappel automatique avant Glob/Grep.
 
 - Avant toute question d'architecture ou de dépendances : `graphify-out/GRAPH_REPORT.md`
 - Requête ciblée : `source .venv-tools/bin/activate && graphify query "<question>"`
