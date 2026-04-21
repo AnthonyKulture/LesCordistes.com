@@ -1,10 +1,18 @@
 import { SEO_BASE_URL } from './seoConfig'
 
+export interface BlogSectionCta {
+    text: string
+    href: string
+    description?: string
+    variant?: 'blue' | 'light' | 'outline'
+}
+
 export interface BlogSection {
     heading: string
     body: string
     list?: string[]
     listIntro?: string
+    cta?: BlogSectionCta
 }
 
 export interface BlogFaq {
@@ -291,6 +299,202 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Cordiste vs échafaudage — comparatif complet', href: '/cordiste-vs-echafaudage' },
             { label: 'Prix d\'un cordiste en 2025', href: '/prix-cordiste' },
             { label: 'Habilitations cordiste : CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+        ],
+    },
+    {
+        slug: 'trouver-cordiste-paris',
+        title: 'Trouver un cordiste à Paris : guide complet 2026',
+        shortTitle: 'Trouver un cordiste à Paris',
+        description:
+            'Comment trouver un cordiste qualifié à Paris ? Réglementation ABF, tarifs 2026, types de travaux en hauteur, zones couvertes — le guide pratique pour vos chantiers parisiens.',
+        category: 'Guide achat',
+        readTime: 8,
+        datePublished: '2026-04-21',
+        dateModified: '2026-04-21',
+        intro:
+            'Paris concentre l\'une des plus fortes densités de demande en travaux en hauteur de France. Bâtiments haussmanniens, verrières de La Défense, toitures en zinc du Marais, façades classées en centre historique : chaque chantier parisien présente des contraintes que l\'on ne retrouve nulle part ailleurs. Trouver le bon cordiste à Paris ne se résume donc pas à comparer des prix — c\'est identifier un professionnel qui connaît les règles locales, les contraintes ABF et les spécificités techniques des immeubles parisiens. Ce guide vous donne les clés pour faire le bon choix.',
+        sections: [
+            {
+                heading: 'Paris, un terrain de jeu à part pour les cordistes',
+                body: 'La capitale française réunit toutes les configurations qui rendent les travaux en hauteur complexes : hauteur des immeubles haussmanniens (R+6 à R+8 standard), emprise au sol réduite rendant l\'installation d\'un échafaudage difficile ou coûteuse sur voie publique, et une concentration de monuments historiques sans équivalent en France.\n\nPlus de 180 000 bâtiments parisiens se trouvent à moins de 500 mètres d\'un monument classé, ce qui soumet la quasi-totalité des chantiers de façade intra-muros à l\'avis préalable des Architectes des Bâtiments de France. S\'y ajoutent les contraintes liées à la densité urbaine : périmètres de sécurité stricts, plages horaires encadrées, coordination avec la voirie parisienne.\n\nCes spécificités font de Paris un marché où les cordistes les plus expérimentés — ceux qui connaissent les règles, les matériaux, les points d\'ancrage sur pierre de taille — se distinguent nettement des généralistes.',
+            },
+            {
+                heading: 'Les travaux en hauteur les plus demandés à Paris',
+                body: 'Les missions cordiste à Paris couvrent un large spectre, des interventions de quelques heures aux chantiers plurisemaines :',
+                list: [
+                    'Nettoyage de façades haussmanniennes (pierre calcaire, haute pression ou chimique homologué ABF)',
+                    'Lavage de vitres en hauteur : immeubles de bureaux, verrières, façades vitrées de La Défense',
+                    'Réfection de toitures en zinc : Marais, Île Saint-Louis, 9e, 16e et 17e arrondissements',
+                    'Ravalement de façade sans échafaudage sur voie publique étroite (évite l\'AOT)',
+                    'Inspection et diagnostic de façade — avant ou après sinistre, ou dans le cadre d\'un ravalement obligatoire',
+                    'Traitement anti-pigeons : pose de filets ou de pics sur corniches, gouttières et ornements',
+                    'Réparation de fissures ou joints de façade après mouvements de terrain ou vieillissement',
+                    'Nettoyage de verrières et toitures végétalisées sur immeubles tertiaires (La Défense, CBD Paris)',
+                ],
+                cta: {
+                    text: 'Décrire mes travaux en 2 minutes',
+                    href: '/post-job',
+                    description: 'Façade haussmannienne, verrière de bureau ou toiture zinc — publiez votre besoin gratuitement.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Réglementation parisienne : ABF, AOT et contraintes de chantier',
+                body: 'Intervenir sur une façade à Paris implique de naviguer dans un cadre réglementaire plus dense qu\'ailleurs.\n\n**L\'avis des Architectes des Bâtiments de France (ABF)** est requis pour toute intervention modifiant l\'aspect extérieur d\'un bâtiment en secteur sauvegardé ou à proximité d\'un monument classé — soit la quasi-totalité du Paris historique. Un cordiste habitué à Paris saura adapter ses méthodes : points d\'ancrage non destructifs, produits de traitement homologués pour la pierre calcaire, respect des teintes et finitions prescrites.\n\n**L\'autorisation d\'occupation temporaire du domaine public (AOT)** est nécessaire si le périmètre de sécurité empiète sur trottoir ou chaussée. La demande se fait auprès de la Mairie de Paris avec un délai de 10 à 21 jours ouvrés. Sur les façades accessibles par cour intérieure ou toiture sans impact sur l\'espace public, le cordiste permet souvent de s\'en affranchir totalement — c\'est l\'un de ses avantages décisifs en zone dense.\n\n**Les horaires d\'intervention** sont encadrés par la Préfecture de Police : en général 7h–20h en semaine, avec des restrictions supplémentaires dans certains arrondissements. Votre prestataire doit en tenir compte dans son planning.',
+            },
+            {
+                heading: 'Tarifs d\'un cordiste à Paris en 2026',
+                body: 'Le marché parisien affiche des tarifs sensiblement au-dessus de la moyenne nationale, pour trois raisons : coûts de déplacement et de stationnement en zone dense, surcoût des assurances sur patrimoine classé, et tension sur la main-d\'œuvre qualifiée en Île-de-France.\n\n**Fourchette indicative à Paris (HT) :**',
+                list: [
+                    'Journée cordiste (8h, 1 technicien) : 450 € à 800 € selon spécialité et type de chantier',
+                    'Nettoyage de façade au m² : 8 € à 18 € selon le matériau et le niveau d\'encrassement',
+                    'Lavage de vitres en hauteur : 3 € à 7 € par m²',
+                    'Inspection avec rapport technique écrit : 600 € à 1 200 € la demi-journée',
+                    'Toiture zinc (réfection partielle) : tarif à la surface et à l\'état — devis indispensable',
+                ],
+                cta: {
+                    text: 'Comparer des devis sans engagement',
+                    href: '/post-job',
+                    description: 'Obtenez plusieurs offres de cordistes certifiés sur Paris pour votre budget réel.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Bien choisir son cordiste à Paris : 5 points de vigilance',
+                body: 'Le marché parisien attire aussi des prestataires peu rigoureux. Avant de signer, vérifiez systématiquement :\n\n**1. Certification CQP TPS ou IRATA valide** — exigez la copie du certificat avec date d\'expiration. Pour un chantier de façade classée, préférez un technicien ayant déjà travaillé sur du patrimoine parisien.\n\n**2. RC Pro couvrant explicitement les travaux en hauteur sur patrimoine** — certaines assurances excluent les interventions sur monuments historiques ou bâtiments classés. Lisez l\'attestation ligne par ligne.\n\n**3. Connaissance des contraintes ABF** — un prestataire habitué à Paris saura immédiatement si votre adresse est en secteur protégé et quelles restrictions s\'appliquent.\n\n**4. Gestion de l\'AOT si nécessaire** — certaines entreprises intègrent la demande d\'autorisation dans leur prestation, d\'autres la laissent à votre charge. Clarifiez ce point dès le premier échange.\n\n**5. Références sur des chantiers parisiens similaires** — une intervention sur un hôtel particulier du 7e n\'a rien à voir avec un collectif des années 70. Demandez des adresses ou des photos vérifiables.',
+                cta: {
+                    text: 'Publier ma mission maintenant',
+                    href: '/post-job',
+                    description: 'Des cordistes habitués à Paris reçoivent votre demande et répondent sous 48h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Paris et Île-de-France : zones les plus couvertes',
+                body: 'Les cordistes basés en Île-de-France couvrent généralement l\'ensemble des 20 arrondissements intra-muros, ainsi que la première couronne (Hauts-de-Seine, Seine-Saint-Denis, Val-de-Marne). Les arrondissements les plus demandés sont les 1er, 4e, 7e, 8e, 16e et 17e, en raison de la concentration de bâtiments haussmanniens et patrimoniaux. La Défense (92) génère une forte demande en nettoyage de vitrages en hauteur. Neuilly-sur-Seine, Boulogne-Billancourt, Vincennes et Saint-Cloud sont également des zones très actives.\n\nPour la grande couronne (Yvelines, Essonne, Seine-et-Marne, Val-d\'Oise), des cordistes parisiens se déplacent mais des frais kilométriques s\'appliquent généralement au-delà de 50 à 60 km de Paris. Précisez votre commune dès la demande de devis pour obtenir une estimation complète.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste à Paris ?',
+                a: 'Comptez entre 450 € et 800 € HT par journée (8h, 1 technicien) selon la spécialité et la complexité du chantier. Paris est 25 à 35 % plus cher que la moyenne nationale en raison des coûts de déplacement en zone dense, des contraintes patrimoniales et de la pression sur la main-d\'œuvre qualifiée. Pour du nettoyage de façade, le tarif au m² oscille entre 8 € et 18 € HT.',
+            },
+            {
+                q: 'Faut-il une autorisation spéciale pour des travaux en hauteur à Paris ?',
+                a: 'Cela dépend de la configuration du chantier. Si l\'intervention nécessite un périmètre de sécurité sur trottoir ou voie publique, une AOT (autorisation d\'occupation temporaire du domaine public) est obligatoire — délai 10 à 21 jours ouvrés à la Mairie de Paris. Si l\'accès se fait par cour intérieure ou toiture sans impact sur l\'espace public, aucune AOT n\'est requise. Un cordiste expérimenté à Paris évaluera cette question dès la visite technique.',
+            },
+            {
+                q: 'Quel délai pour trouver un cordiste disponible à Paris ?',
+                a: 'Pour des travaux courants (nettoyage, inspection), comptez 1 à 3 semaines entre la prise de contact et le démarrage. En haute saison (mars à octobre), les cordistes parisiens sont souvent complets 3 à 4 semaines à l\'avance. Pour une urgence (post-sinistre, sécurisation), certains prestataires proposent une intervention sous 24 à 72h avec une majoration tarifaire.',
+            },
+            {
+                q: 'Les cordistes parisiens interviennent-ils en banlieue et grande couronne ?',
+                a: 'Oui. La petite couronne (92, 93, 94) est généralement couverte sans surcoût notable. Pour la grande couronne (60–100 km de Paris), des frais kilométriques s\'appliquent, en général de 0,50 € à 0,80 € HT/km au-delà d\'un rayon défini. Précisez votre commune dès la demande de devis pour éviter les surprises.',
+            },
+        ],
+        ctaText: 'Trouver mon cordiste à Paris',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Cordistes certifiés à Paris', href: '/cordiste-paris' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+        ],
+    },
+    {
+        slug: 'responsabilite-maitre-ouvrage-chantier-cordiste',
+        title: 'Responsabilité du maître d\'ouvrage sur un chantier cordiste : ce que la loi impose',
+        shortTitle: 'Responsabilité maître d\'ouvrage : chantier cordiste',
+        description:
+            'Plan de prévention, PPSPS, responsabilité pénale, documents obligatoires : ce que la loi impose réellement au donneur d\'ordre avant, pendant et après un chantier de travaux en hauteur sur cordes.',
+        category: 'Réglementation',
+        readTime: 10,
+        datePublished: '2026-04-21',
+        dateModified: '2026-04-21',
+        intro:
+            'Confier des travaux en hauteur à un prestataire cordiste ne vous dégage pas de toute responsabilité. Le Code du travail (articles R. 4511-1 et suivants) impose au donneur d\'ordre — qu\'il soit syndic, gestionnaire de patrimoine, directeur technique ou particulier — des obligations précises avant toute intervention d\'une entreprise extérieure. Les ignorer expose à des sanctions pénales, à l\'invalidation de votre assurance, voire à une mise en cause personnelle en cas d\'accident. Ce guide détaille ce que la loi impose vraiment, sans surestimer ni minimiser votre exposition.',
+        sections: [
+            {
+                heading: 'Maître d\'ouvrage : votre responsabilité est engagée dès la commande',
+                body: 'La relation entre un donneur d\'ordre et un prestataire cordiste n\'est pas une simple relation commerciale. Dès qu\'une entreprise extérieure intervient sur votre site ou votre bâtiment, vous devenez **entreprise utilisatrice** au sens du Code du travail — avec les obligations qui s\'y attachent.\n\nCette qualification s\'applique à :\n- Un syndic qui mandate un cordiste pour nettoyer la façade d\'un immeuble\n- Un propriétaire qui commande une inspection de toiture\n- Un directeur technique qui fait intervenir une équipe sur ses installations industrielles\n- Une collectivité qui confie des travaux de zinguerie à un prestataire extérieur\n\nLe principe fondateur est simple : **la sécurité du chantier est une responsabilité partagée** entre l\'entreprise intervenante (le cordiste) et l\'entreprise utilisatrice (vous). Cette co-responsabilité s\'exerce avant l\'intervention, pendant et après. En cas d\'accident du travail d\'un salarié du prestataire — ou de dommage causé à un tiers — votre rôle sera examiné par les autorités, quand bien même vous n\'étiez pas présent sur le chantier.',
+            },
+            {
+                heading: 'Le plan de prévention : dans quels cas est-il obligatoire ?',
+                body: 'Le plan de prévention est le document central de la co-activité entre votre site et une entreprise extérieure. Il est régi par les articles R. 4512-1 à R. 4512-16 du Code du travail.\n\nIl est obligatoirement écrit si les travaux dépassent 400 heures sur 12 mois avec le même prestataire, **ou** s\'ils figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993 — ce qui est le cas des travaux en hauteur par accès sur cordes.\n\nEn pratique, **tout chantier cordiste relève de cette seconde condition**, même un nettoyage de vitres d\'une demi-journée. Le plan de prévention écrit est donc systématiquement requis. Ce que vous devez fournir au prestataire avant le démarrage :',
+                list: [
+                    'Une inspection commune préalable du site (obligatoire pour rédiger le plan)',
+                    'Les plans ou schémas des installations utiles à l\'analyse des risques (réseaux, points d\'ancrage existants, accès)',
+                    'Les consignes de sécurité applicables sur votre site',
+                    'Les informations sur les risques propres à l\'environnement (réseaux électriques, contraintes d\'accès, présence d\'occupants)',
+                    'La délimitation des zones de travail et des périmètres de sécurité',
+                ],
+                cta: {
+                    text: 'Publier ma mission avec toutes les infos',
+                    href: '/post-job',
+                    description: 'Notre formulaire vous guide pour fournir aux cordistes toutes les informations nécessaires à l\'analyse des risques.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Le PPSPS : quand s\'applique-t-il à vos travaux ?',
+                body: 'Le Plan Particulier de Sécurité et de Protection de la Santé (PPSPS) est distinct du plan de prévention. Il concerne les opérations de bâtiment ou de génie civil soumises à **coordination SPS** (Sécurité et Protection de la Santé), régies par les articles R. 4532-1 et suivants du Code du travail.\n\nLa coordination SPS est obligatoire dès que **deux entreprises au moins interviennent simultanément ou successivement sur un même chantier**. Si vous faites intervenir un cordiste pour le nettoyage de façade pendant qu\'un électricien travaille dans les parties communes ou qu\'une entreprise de ravalement opère en pied d\'immeuble, la coordination SPS peut s\'appliquer.\n\nEn cas de coordination SPS obligatoire, vous devez :\n\n**1. Désigner un coordonnateur SPS** agréé avant l\'ouverture du chantier\n\n**2. Établir le Plan Général de Coordination (PGC)** qui encadre tous les intervenants\n\n**3. Demander à chaque entreprise son PPSPS**, document que le cordiste rédige pour décrire les mesures de prévention spécifiques à sa propre intervention\n\nPour un chantier simple mono-prestataire (un seul cordiste, aucune autre entreprise simultanée), le PPSPS n\'est généralement pas requis — seul le plan de prévention s\'applique.',
+            },
+            {
+                heading: 'Votre responsabilité pénale : les 3 situations à risque',
+                body: 'La responsabilité du donneur d\'ordre peut être engagée pénalement dans trois situations distinctes :\n\n**1. Absence de plan de prévention en cas d\'accident**\nSi un accident survient et qu\'aucun plan de prévention n\'a été établi (ou qu\'il est lacunaire), vous pouvez être mis en cause pour mise en danger d\'autrui (article 223-1 du Code pénal) ou pour faute caractérisée. Les sanctions vont de l\'amende à la peine d\'emprisonnement selon la gravité des conséquences.\n\n**2. Chute d\'objet causant des dommages à un tiers**\nSi du matériel ou un débris tombe depuis le chantier et blesse un passant ou endommage un véhicule, la responsabilité civile du donneur d\'ordre peut être engagée conjointement à celle du prestataire — notamment si les mesures de balisage et de protection du périmètre n\'avaient pas été définies dans le plan de prévention.\n\n**3. Non-vérification des habilitations du prestataire**\nLe donneur d\'ordre a une obligation de vérification (article R. 8254-1 du Code du travail) : vérifier que l\'entreprise est à jour de ses obligations légales (Kbis, attestations fiscales et sociales, assurances). Si vous faites intervenir un prestataire non qualifié ou non assuré pour des travaux en hauteur, vous pouvez être tenu co-responsable des dommages.',
+                cta: {
+                    text: 'Trouver des cordistes qui gèrent la conformité',
+                    href: '/post-job',
+                    description: 'Sur LesCordistes.com, les prestataires sont vérifiés : certifications, assurances, documents à jour.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Les 5 documents à exiger avant le premier jour de chantier',
+                body: 'Avant toute intervention, constituez un dossier de chantier avec ces pièces. Leur absence au moment d\'un contrôle ou d\'un accident serait retenue contre vous :',
+                list: [
+                    'Le plan de prévention signé par les deux parties — rédigé après l\'inspection commune préalable du site',
+                    'L\'attestation d\'assurance RC Pro mentionnant explicitement les travaux en hauteur par techniques d\'accès sur cordes (vérifiez la date de validité)',
+                    'Les certificats CQP TPS ou IRATA de chaque technicien intervenant, avec date d\'expiration',
+                    'L\'attestation de vigilance URSSAF (ou équivalent) de l\'entreprise prestataire — téléchargeable sur urssaf.fr',
+                    'Le Kbis ou extrait d\'immatriculation de l\'entreprise, datant de moins de 3 mois',
+                ],
+                cta: {
+                    text: 'Déposer ma mission maintenant',
+                    href: '/post-job',
+                    description: 'Décrivez vos travaux en 5 minutes et recevez des offres de cordistes certifiés sous 48h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Ce que la loi ne vous impose pas (idées reçues)',
+                body: 'La réglementation est souvent perçue comme plus lourde qu\'elle ne l\'est réellement. Quelques précisions utiles :\n\n**Vous n\'avez pas à former le cordiste.** La formation et l\'habilitation du technicien relèvent entièrement de l\'entreprise prestataire. Votre rôle se limite à vérifier que les certifications existent et sont valides — pas à en assurer le contenu.\n\n**Vous n\'êtes pas responsable du matériel du prestataire.** L\'entretien des EPI (harnais, cordes, bloqueurs) est sous la seule responsabilité de l\'entreprise intervenante. En revanche, si vous mettez à disposition du matériel (points d\'ancrage, garde-corps), vous devez garantir leur conformité.\n\n**L\'inspection du travail ne vous contrôle pas systématiquement.** Un chantier cordiste n\'entraîne pas automatiquement une visite de l\'inspection du travail. Ce contrôle est déclenché soit par un accident, soit par un signalement, soit dans le cadre d\'une campagne sectorielle. La probabilité de contrôle reste faible pour un chantier de façade courant — mais les sanctions en cas d\'irrégularité constatée sont réelles.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'En tant que syndic, suis-je personnellement responsable en cas d\'accident ?',
+                a: 'La responsabilité pénale peut être personnelle si vous êtes le signataire des actes de gestion (mandat de syndic). En pratique, c\'est la société de syndic qui est visée en premier — mais le gérant peut être mis en cause en cas de faute grave caractérisée, notamment l\'absence totale de plan de prévention ou la non-vérification des assurances. La mise en place d\'un dossier de chantier rigoureux est la meilleure protection.',
+            },
+            {
+                q: 'Un accident engage-t-il ma responsabilité même si le cordiste est auto-entrepreneur ?',
+                a: 'Oui. Le statut juridique du prestataire (salarié, auto-entrepreneur, SARL) ne modifie pas vos obligations en tant qu\'entreprise utilisatrice. Les règles sur le plan de prévention et la vérification des qualifications s\'appliquent de la même façon. Avec un auto-entrepreneur, soyez d\'autant plus vigilant sur l\'assurance RC Pro — plus difficile à obtenir sous ce statut pour les travaux en hauteur.',
+            },
+            {
+                q: 'Le plan de prévention est-il obligatoire pour un simple nettoyage de façade ?',
+                a: 'Oui, dès lors que le prestataire utilise des techniques d\'accès sur cordes. Les travaux en hauteur par cordes figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993, ce qui rend le plan de prévention écrit obligatoire indépendamment de la durée ou du volume horaire du chantier. Un nettoyage de vitres d\'une demi-journée est donc soumis à cette obligation.',
+            },
+            {
+                q: 'Que risque-t-on concrètement en l\'absence de plan de prévention ?',
+                a: 'En cas de contrôle de l\'inspection du travail : une mise en demeure puis une amende de 4e classe (jusqu\'à 750 € par salarié concerné). En cas d\'accident du travail sans plan de prévention : une mise en cause pour manquement aux obligations de sécurité, pouvant conduire à une sanction pénale (jusqu\'à 1 an d\'emprisonnement et 15 000 € d\'amende selon l\'article L. 4741-1 du Code du travail). L\'assurance du donneur d\'ordre peut également se retourner contre lui.',
+            },
+        ],
+        ctaText: 'Trouver des cordistes certifiés et assurés',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Habilitations cordiste : CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+            { label: 'Trouver un cordiste à Paris', href: '/blog/trouver-cordiste-paris' },
         ],
     },
 ]

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import { SEO_BLOG, SEO_BLOG_BASE, getBlogArticle } from '@/constants/seoBlog'
+import { SEO_BLOG, SEO_BLOG_BASE, getBlogArticle, type BlogSectionCta } from '@/constants/seoBlog'
 import { SEO_BASE_URL, SEO_BRAND_NAME } from '@/constants/seoConfig'
 
 interface Props {
@@ -84,6 +84,33 @@ export default async function BlogArticlePage({ params }: Props) {
         ],
     }
 
+    function SectionCta({ cta }: { cta: BlogSectionCta }) {
+        const isBlue = cta.variant === 'blue'
+        const isOutline = cta.variant === 'outline'
+        return (
+            <div className={`mt-6 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 ${
+                isBlue ? 'bg-brand-blue' :
+                isOutline ? 'bg-white border-2 border-brand-blue' :
+                'bg-slate-50 border border-slate-200'
+            }`}>
+                {cta.description && (
+                    <p className={`text-sm ${isBlue ? 'text-blue-100' : isOutline ? 'text-brand-blue font-medium' : 'text-slate-600'}`}>
+                        {cta.description}
+                    </p>
+                )}
+                <Link
+                    href={cta.href}
+                    className={`shrink-0 px-6 py-3 rounded-xl font-bold transition-colors whitespace-nowrap ${
+                        isBlue ? 'bg-white text-brand-blue hover:bg-slate-100' :
+                        'bg-brand-blue text-white hover:bg-brand-blue-light'
+                    }`}
+                >
+                    {cta.text}
+                </Link>
+            </div>
+        )
+    }
+
     return (
         <div className="min-h-screen bg-slate-50 pt-24 pb-16">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -152,6 +179,7 @@ export default async function BlogArticlePage({ params }: Props) {
                                         </ul>
                                     </>
                                 )}
+                                {section.cta && <SectionCta cta={section.cta} />}
                             </section>
                         ))}
                     </div>
