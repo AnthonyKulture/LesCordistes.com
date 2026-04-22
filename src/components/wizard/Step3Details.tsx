@@ -120,11 +120,11 @@ export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext })
                             className={`sm:hidden w-full flex items-center justify-center gap-3 px-5 py-4 rounded-2xl text-sm font-black transition-all border-2 ${
                                 isListening
                                     ? 'bg-red-50 border-red-300 text-red-600 shadow-lg shadow-red-100 animate-pulse'
-                                    : 'bg-white border-brand-blue text-brand-blue shadow-lg shadow-brand-blue/15'
+                                    : 'bg-white border-green-200 text-green-700 shadow-lg shadow-green-100'
                             }`}
                         >
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                isListening ? 'bg-red-100' : 'bg-brand-blue/10'
+                                isListening ? 'bg-red-100' : 'bg-green-50'
                             }`}>
                                 {isListening ? <MicOff size={18} /> : <Mic size={18} />}
                             </div>
