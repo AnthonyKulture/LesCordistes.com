@@ -35,11 +35,6 @@ export const Footer: React.FC = () => {
                                     Publier un projet
                                 </Link>
                             </li>
-                            <li>
-                                <Link href="/jobs" className="hover:text-brand-blue transition-colors">
-                                    Découvrir les cordistes
-                                </Link>
-                            </li>
                         </ul>
                     </div>
 
@@ -53,7 +48,7 @@ export const Footer: React.FC = () => {
                             </li>
                             <li>
                                 <Link href="/credits" className="hover:text-brand-blue transition-colors">
-                                    Acheter des crédits
+                                    Tarifs
                                 </Link>
                             </li>
                             <li>
