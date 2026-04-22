@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Check } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Step1Location } from '../components/wizard/Step1Location';
 import { Step2Category } from '../components/wizard/Step2Category';
@@ -12,6 +12,7 @@ import { Step5Contact } from '../components/wizard/Step5Contact';
 import { StepReinfortTechnical } from '../components/wizard/StepReinfortTechnical';
 import { StepReinfortTrades } from '../components/wizard/StepReinfortTrades';
 import { StepReinfortConditions } from '../components/wizard/StepReinfortConditions';
+import { ExitIntentModal } from '../components/wizard/ExitIntentModal';
 import { createSupabaseBrowserClient, uploadJobPhoto } from '../lib/supabase-browser';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ui/Toast';
@@ -28,6 +29,9 @@ export const PostJob: React.FC = () => {
     const [direction, setDirection] = useState(0); // For slide animation
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState<Partial<JobFormData>>({});
+    const [showExitIntent, setShowExitIntent] = useState(false);
+    const exitFired = useRef(false);
+    const formDataRef = useRef(formData);
 
     const isRenfort = formData.type === 'renfort_pro';
     const totalSteps = isRenfort ? 7 : 5;
@@ -44,11 +48,38 @@ export const PostJob: React.FC = () => {
         ]
         : [
             { number: 1, title: 'Catégorie' },
-            { number: 2, title: 'Localisation' },
-            { number: 3, title: 'Détails' },
-            { number: 4, title: 'Photos' },
+            { number: 2, title: 'Détails' },
+            { number: 3, title: 'Photos' },
+            { number: 4, title: 'Localisation' },
             { number: 5, title: 'Contact' },
         ];
+
+    // Keep formDataRef in sync for use inside stable closures
+    formDataRef.current = formData;
+
+    // Exit-intent: fire once if email not yet captured
+    useEffect(() => {
+        const handleMouseLeave = (e: MouseEvent) => {
+            if (e.clientY > 10) return;
+            if (exitFired.current) return;
+            if (formDataRef.current.contact_email) return;
+            exitFired.current = true;
+            setShowExitIntent(true);
+        };
+
+        const idleTimer = setTimeout(() => {
+            if (exitFired.current) return;
+            if (formDataRef.current.contact_email) return;
+            exitFired.current = true;
+            setShowExitIntent(true);
+        }, 60_000);
+
+        document.addEventListener('mouseleave', handleMouseLeave);
+        return () => {
+            document.removeEventListener('mouseleave', handleMouseLeave);
+            clearTimeout(idleTimer);
+        };
+    }, []);
 
     // Load draft on mount
     useEffect(() => {
@@ -160,8 +191,15 @@ export const PostJob: React.FC = () => {
             // Create job ID for photo uploads
             const jobId = crypto.randomUUID();
 
+            const categoryLabels: Record<string, string> = {
+                cleaning: 'Nettoyage', construction: 'Construction', masonry: 'Maçonnerie',
+                painting: 'Peinture', industry: 'Industrie', event: 'Événementiel', other: 'Mission',
+            };
+            const autoTitle = [categoryLabels[formData.category || 'other'] || 'Mission', formData.location_city]
+                .filter(Boolean).join(' - ');
+
             // Generate SEO-friendly slug
-            const slugBase = `${formData.title || 'mission'}-${formData.location_city || ''}`
+            const slugBase = `${formData.title || autoTitle || 'mission'}-${formData.location_city || ''}`
                 .toLowerCase()
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')  // remove accents
@@ -223,7 +261,7 @@ export const PostJob: React.FC = () => {
             const jobData = {
                 id: jobId,
                 slug,
-                title: formData.title || '',
+                title: formData.title || autoTitle,
                 description: formData.description || '',
                 category: formData.category || 'other',
                 type: formData.type || 'standard',
@@ -300,6 +338,21 @@ export const PostJob: React.FC = () => {
                         subject: isProRole ? 'Votre profil pro est actif — LesCordistes.com' : 'Bienvenue sur LesCordistes.com',
                         templateId: isProRole ? 'welcome-pro' : 'welcome-client',
                         data: { name: formData.contact_first_name || '' },
+                    },
+                }).catch(() => {});
+            }
+
+            if (!finalUserId && formData.contact_email) {
+                supabase.functions.invoke('send-email', {
+                    body: {
+                        to: formData.contact_email,
+                        subject: 'Votre demande a bien été reçue — LesCordistes.com',
+                        templateId: 'guest-job-created',
+                        data: {
+                            name: formData.contact_first_name || 'Client',
+                            title: formData.title || 'votre mission',
+                            city: formData.location_city || '',
+                        },
                     },
                 }).catch(() => {});
             }
@@ -395,26 +448,26 @@ export const PostJob: React.FC = () => {
                 );
             case 2:
                 return (
-                    <Step1Location 
-                        data={formData} 
-                        updateData={updateFormData} 
-                        onNext={nextStep} 
+                    <Step3Details
+                        data={formData}
+                        updateData={updateFormData}
+                        onNext={nextStep}
                     />
                 );
             case 3:
                 return (
-                    <Step3Details 
-                        data={formData} 
-                        updateData={updateFormData} 
-                        onNext={nextStep} 
+                    <Step4Photos
+                        data={formData}
+                        updateData={updateFormData}
+                        onNext={nextStep}
                     />
                 );
             case 4:
                 return (
-                    <Step4Photos 
-                        data={formData} 
-                        updateData={updateFormData} 
-                        onNext={nextStep} 
+                    <Step1Location
+                        data={formData}
+                        updateData={updateFormData}
+                        onNext={nextStep}
                     />
                 );
             case 5:
@@ -454,57 +507,27 @@ export const PostJob: React.FC = () => {
             
             <div className="container max-w-3xl">
                 {/* Progress Bar */}
-                <div className="mb-8">
-                    <div className="relative flex items-center justify-between">
-                        {/* Background Track */}
-                        <div className="absolute left-0 top-5 w-full h-1.5 bg-slate-200 rounded-full" />
-                        
-                        {/* Progress Track */}
-                        <motion.div 
-                            className="absolute left-0 top-5 h-1.5 bg-gradient-to-r from-brand-blue to-blue-400 rounded-full origin-left"
-                            initial={{ scaleX: 0 }}
-                            animate={{ scaleX: (currentStep - 1) / (totalSteps - 1) }}
-                            transition={{ type: "spring", stiffness: 50, damping: 15 }}
-                            style={{ width: '100%' }}
+                <div className="mb-8 space-y-2.5">
+                    <div className="flex items-center justify-between">
+                        <motion.span
+                            key={currentStep}
+                            initial={{ opacity: 0, y: -6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-sm font-bold text-slate-700"
+                        >
+                            {steps[currentStep - 1]?.title}
+                        </motion.span>
+                        <span className="text-xs text-slate-400 tabular-nums">
+                            {currentStep} / {totalSteps}
+                        </span>
+                    </div>
+                    <div className="relative h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                        <motion.div
+                            className="absolute inset-y-0 left-0 bg-gradient-to-r from-brand-blue to-blue-400 rounded-full"
+                            initial={false}
+                            animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
+                            transition={{ type: 'spring', stiffness: 60, damping: 18 }}
                         />
-
-                        {steps.map((step) => {
-                            const isCompleted = step.number < currentStep;
-                            const isActive = step.number === currentStep;
-                            
-                            return (
-                                <div key={step.number} className="relative z-10 flex flex-col items-center">
-                                    <motion.div
-                                        initial={false}
-                                        animate={{
-                                            backgroundColor: isCompleted ? '#22c55e' : isActive ? '#0055ff' : '#e2e8f0',
-                                            scale: isActive ? 1.2 : 1,
-                                            boxShadow: isActive ? '0 0 20px rgba(0, 85, 255, 0.3)' : 'none'
-                                        }}
-                                        className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all shadow-sm ${
-                                            isCompleted || isActive ? 'text-white' : 'text-slate-400'
-                                        }`}
-                                    >
-                                        {isCompleted ? (
-                                            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                                                <Check size={20} strokeWidth={3} />
-                                            </motion.div>
-                                        ) : (
-                                            <span>{step.number}</span>
-                                        )}
-                                    </motion.div>
-                                    <motion.span 
-                                        animate={{ 
-                                            color: isActive ? '#0f172a' : '#94a3b8',
-                                            fontWeight: isActive ? 700 : 500
-                                        }}
-                                        className="text-[10px] mt-3 uppercase tracking-wider hidden sm:block"
-                                    >
-                                        {step.title}
-                                    </motion.span>
-                                </div>
-                            );
-                        })}
                     </div>
                 </div>
 
@@ -544,6 +567,19 @@ export const PostJob: React.FC = () => {
                     </div>
                 )}
             </div>
+
+            <ExitIntentModal
+                isOpen={showExitIntent}
+                onClose={() => setShowExitIntent(false)}
+                onCapture={(email) => {
+                    updateFormData({ contact_email: email });
+                    fetch('/api/leads', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, step_reached: currentStep, source: 'exit_intent' }),
+                    }).catch(() => {});
+                }}
+            />
         </div>
     );
 };

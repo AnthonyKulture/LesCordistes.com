@@ -76,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                             <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-2 p-2">
                                 <div className="row-span-2 overflow-hidden rounded-[1.5rem]">
                                     <img
-                                        src="/lescordistes.com-3.webp"
+                                        src="/lescordistes.com-new-03.webp"
                                         alt="Cordiste professionnel en pleine intervention"
                                         fetchPriority="high"
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -84,7 +84,7 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                                 </div>
                                 <div className="overflow-hidden rounded-[1.5rem]">
                                     <img
-                                        src="/lescordistes.com - nettoyage.webp"
+                                        src="/lescordistes.com-new-04.webp"
                                         alt="Intervention de cordiste pour nettoyage de façade"
                                         fetchPriority="high"
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -92,7 +92,7 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                                 </div>
                                 <div className="overflow-hidden rounded-[1.5rem]">
                                     <img
-                                        src="/travaux-sur-corde-prevention-risques-naturels-confortement-falaises.webp"
+                                        src="/lescordistes.com-new-10.webp"
                                         alt="Cordiste en travaux de confortement de falaise"
                                         fetchPriority="high"
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"

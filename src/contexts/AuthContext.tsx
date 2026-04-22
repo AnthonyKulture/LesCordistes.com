@@ -31,10 +31,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 .eq('id', userId)
                 .single();
 
-            if (error) throw error;
+            if (error) {
+                if ((error as { code?: string }).code === 'PGRST116') return;
+                throw error;
+            }
             setProfile(data);
         } catch (error) {
-            console.error('Error loading profile:', error);
+            const msg = (error as { message?: string })?.message ?? JSON.stringify(error);
+            console.error('Error loading profile:', msg);
         } finally {
             if (!silent) setLoading(false);
         }

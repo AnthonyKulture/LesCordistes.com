@@ -9,7 +9,7 @@ export const SEOContent: React.FC = () => {
                     <div className="order-2 md:order-1 relative">
                         <div className="absolute -inset-4 bg-brand-blue/10 rounded-3xl transform rotate-3 z-0"></div>
                         <img
-                            src="/cordiste-ravallement-lescordistes.com.jpeg"
+                            src="/lescordistes.com-new-00.webp"
                             alt="Cordiste professionnel réalisant un ravalement de façade"
                             className="relative z-10 w-full h-[500px] object-cover rounded-2xl shadow-xl"
                         />

@@ -74,7 +74,7 @@ export const HowItWorks: React.FC = () => {
 
                                 <div className="relative group rounded-3xl bg-blue-50/30 border border-blue-100/50 overflow-hidden hover:bg-blue-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/lescordistes.com - nettoyage.webp" alt="Candidatures d'experts" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img src="/lescordistes.com-visuel-travaux-en-hauteur8.webp" alt="Candidatures d'experts" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-brand-blue shadow-sm font-black text-lg border border-blue-50">2</div>
                                     </div>
                                     <div className="p-8">
@@ -87,7 +87,7 @@ export const HowItWorks: React.FC = () => {
 
                                 <div className="relative group rounded-3xl bg-blue-50/30 border border-blue-100/50 overflow-hidden hover:bg-blue-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/cordiste-peinture-lescordistes.com.webp" alt="Sélection de l'expert" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <img src="/lescordistes.com-new-07.webp" alt="Sélection de l'expert" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-brand-blue shadow-sm font-black text-lg border border-blue-50">3</div>
                                     </div>
                                     <div className="p-8">

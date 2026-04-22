@@ -115,9 +115,6 @@ export const Step1Location: React.FC<Step1Props> = ({ data, updateData, onNext }
         if (data.type === 'renfort_pro' && !data.structure_type) {
             newErrors.structure_type = 'Le type de structure est requis';
         }
-        if (!data.client_type) {
-            newErrors.client_type = 'La typologie de client est requise';
-        }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -140,54 +137,19 @@ export const Step1Location: React.FC<Step1Props> = ({ data, updateData, onNext }
                 <p className="text-slate-600">Saisissez votre adresse pour une localisation précise sur la carte.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {data.type === 'renfort_pro' && (
                 <div className="space-y-1.5">
                     <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">
-                        Vous êtes : *
+                        Référence interne (Opt.)
                     </label>
-                    <select
-                        value={data.client_type || ''}
-                        onChange={(e) => updateData({ client_type: e.target.value as any })}
-                        className={`w-full h-12 px-3 border-2 rounded-xl focus:border-brand-blue outline-none transition-all font-medium bg-white ${
-                            errors.client_type ? 'border-red-500' : 'border-slate-100'
-                        }`}
-                    >
-                        <option value="">Choisir votre profil</option>
-                        {data.type === 'renfort_pro' ? (
-                            <>
-                                <option value="entreprise_travaux_hauteur">🏗️ Société de travaux en hauteur</option>
-                                <option value="entreprise_btp">👷 Entreprise du BTP / Génie Civil</option>
-                                <option value="agence_interim">🏢 Agence d'intérim spécialisée</option>
-                                <option value="autre_pro">🤝 Autre professionnel</option>
-                            </>
-                        ) : (
-                            <>
-                                <option value="particulier">🏡 Particulier</option>
-                                <option value="copropriete_syndic">🏢 Copropriété & Syndic</option>
-                                <option value="entreprise_tertiaire">💼 Entreprise & Tertiaire</option>
-                                <option value="industrie_energie">⚙️ Industrie & Énergie</option>
-                                <option value="collectivite_public">🏛️ Collectivité & Public</option>
-                                <option value="association_evenementiel">🎪 Association & Événementiel</option>
-                            </>
-                        )}
-                    </select>
-                    {errors.client_type && <p className="text-red-500 text-xs font-medium">{errors.client_type}</p>}
+                    <Input
+                        placeholder="Ex: Chantier Façade Sud"
+                        value={data.internal_reference || ''}
+                        onChange={(e) => updateData({ internal_reference: e.target.value })}
+                        className="h-12"
+                    />
                 </div>
-
-                {data.type === 'renfort_pro' && (
-                    <div className="space-y-1.5">
-                        <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">
-                            Référence interne (Opt.)
-                        </label>
-                        <Input
-                            placeholder="Ex: Chantier Façade Sud"
-                            value={data.internal_reference || ''}
-                            onChange={(e) => updateData({ internal_reference: e.target.value })}
-                            className="h-12"
-                        />
-                    </div>
-                )}
-            </div>
+            )}
 
             {data.type === 'renfort_pro' && (
                 <motion.div
