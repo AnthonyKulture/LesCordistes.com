@@ -117,37 +117,40 @@ export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext })
                         <button
                             type="button"
                             onClick={toggleDictation}
-                            className={`sm:hidden w-full flex items-center justify-center gap-3 px-5 py-4 rounded-2xl text-sm font-black transition-all ${
+                            className={`sm:hidden w-full flex items-center justify-center gap-3 px-5 py-4 rounded-2xl text-sm font-black transition-all border-2 ${
                                 isListening
-                                    ? 'bg-red-500 text-white shadow-lg shadow-red-200 animate-pulse'
-                                    : 'bg-brand-blue text-white shadow-lg shadow-brand-blue/30 animate-color-pulse'
+                                    ? 'bg-red-50 border-red-300 text-red-600 shadow-lg shadow-red-100 animate-pulse'
+                                    : 'bg-white border-brand-blue text-brand-blue shadow-lg shadow-brand-blue/15'
                             }`}
                         >
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                isListening ? 'bg-white/20' : 'bg-white/20'
+                                isListening ? 'bg-red-100' : 'bg-brand-blue/10'
                             }`}>
                                 {isListening ? <MicOff size={18} /> : <Mic size={18} />}
                             </div>
-                            {isListening ? '⏹ Arrêter la dictée' : '🎙 Dicter ma description'}
+                            {isListening ? 'Arrêter la dictée' : 'Dicter ma description'}
                         </button>
                     )}
                 </motion.div>
 
-                <motion.div variants={itemVariants}>
-                    <Input
-                        label="Hauteur approximative (mètres)"
-                        type="number"
-                        placeholder="Ex: 15"
-                        value={data.height_meters || ''}
-                        onChange={(e) => updateData({ height_meters: parseInt(e.target.value) || undefined })}
-                        className="h-12"
-                    />
-                </motion.div>
-
                 <motion.div variants={itemVariants} className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-4">
-                    <div className="flex items-center gap-2 text-brand-blue">
-                        <TrendingUp size={18} />
-                        <h3 className="font-bold">Budget & Délai</h3>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-brand-blue">
+                            <TrendingUp size={18} />
+                            <h3 className="font-bold">Hauteur, Budget & Délai</h3>
+                        </div>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Facultatif</span>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-2">Hauteur approximative (mètres)</label>
+                        <input
+                            type="number"
+                            placeholder="Ex: 15"
+                            value={data.height_meters || ''}
+                            onChange={(e) => updateData({ height_meters: parseInt(e.target.value) || undefined })}
+                            className="w-full h-11 px-3 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-blue/20 outline-none bg-white"
+                        />
                     </div>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
