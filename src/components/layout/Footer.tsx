@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { FooterContact, FooterMailIcon } from './FooterContact';
 import { ConsentManager } from '@/components/ConsentBanner';
 
@@ -67,13 +67,7 @@ export const Footer: React.FC = () => {
                     <div>
                         <h3 className="font-semibold mb-4">Suivez-nous</h3>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-slate-400 hover:text-brand-blue transition-colors">
-                                <Facebook size={20} />
-                            </a>
-                            <a href="#" className="text-slate-400 hover:text-brand-blue transition-colors">
-                                <Twitter size={20} />
-                            </a>
-                            <a href="#" className="text-slate-400 hover:text-brand-blue transition-colors">
+                            <a href="https://www.linkedin.com/company/lescordistes/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-brand-blue transition-colors">
                                 <Linkedin size={20} />
                             </a>
                             <FooterMailIcon className="text-slate-400 hover:text-brand-blue transition-colors" />
