@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react';
-import { FileText, TrendingUp, AlertCircle } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { TrendingUp, AlertCircle, Mic, MicOff } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { TextArea } from '../ui/TextArea';
 import { Button } from '../ui/Button';
@@ -16,6 +16,36 @@ interface Step3Props {
 
 export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext }) => {
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [isListening, setIsListening] = useState(false);
+    const recognitionRef = useRef<any>(null);
+
+    const hasSpeechRecognition = typeof window !== 'undefined' &&
+        ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window);
+
+    const toggleDictation = () => {
+        if (isListening) {
+            recognitionRef.current?.stop();
+            return;
+        }
+        const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        const recognition = new SR();
+        recognition.lang = 'fr-FR';
+        recognition.continuous = true;
+        recognition.interimResults = false;
+        recognition.onresult = (e: any) => {
+            const transcript = Array.from(e.results)
+                .map((r: any) => r[0].transcript)
+                .join(' ');
+            updateData({ description: ((data.description || '') + ' ' + transcript).trimStart() });
+        };
+        recognition.onend = () => setIsListening(false);
+        recognition.onerror = () => setIsListening(false);
+        recognitionRef.current = recognition;
+        recognition.start();
+        setIsListening(true);
+    };
+
+    useEffect(() => () => recognitionRef.current?.stop(), []);
 
 
     const today = new Date().toISOString().split('T')[0];
@@ -83,6 +113,20 @@ export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext })
                         rows={5}
                         className="text-base"
                     />
+                    {hasSpeechRecognition && (
+                        <button
+                            type="button"
+                            onClick={toggleDictation}
+                            className={`sm:hidden flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                                isListening
+                                    ? 'bg-red-50 border border-red-200 text-red-600 animate-pulse'
+                                    : 'bg-slate-50 border border-slate-200 text-slate-600 hover:border-brand-blue hover:text-brand-blue'
+                            }`}
+                        >
+                            {isListening ? <MicOff size={16} /> : <Mic size={16} />}
+                            {isListening ? 'Arrêter la dictée' : 'Dicter ma description'}
+                        </button>
+                    )}
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
