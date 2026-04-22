@@ -119,6 +119,38 @@ body {
   }
 }
 
+@keyframes introIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes colorPulse {
+  0%, 100% { color: #243355; }
+  50% { color: #5B8DDB; }
+}
+
+.animate-intro-in {
+  animation: introIn 0.45s ease-out forwards;
+}
+
+.animate-intro-in-delay {
+  animation: introIn 0.45s ease-out 0.15s forwards;
+}
+
+.animate-intro-in-delay2 {
+  animation: introIn 0.45s ease-out 0.28s forwards;
+}
+
+.animate-color-pulse {
+  animation: colorPulse 3s ease-in-out infinite;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;

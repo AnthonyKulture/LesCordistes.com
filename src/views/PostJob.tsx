@@ -504,8 +504,29 @@ export const PostJob: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-slate-50 py-6 sm:py-12">
-            
+
             <div className="container max-w-3xl">
+
+                {/* Intro — step 1 only */}
+                {currentStep === 1 && (
+                    <div className="text-center mb-8 animate-intro-in">
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-xs font-bold mb-4 border border-green-100">
+                            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                            100% gratuit · Sans engagement
+                        </div>
+                        <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 mb-3 leading-tight animate-intro-in-delay">
+                            Votre projet, posté en{' '}
+                            <span className="text-brand-blue-light">2 minutes</span>.
+                        </h1>
+                        <p className="text-slate-500 text-sm sm:text-base max-w-md mx-auto leading-relaxed animate-intro-in-delay2">
+                            Les cordistes certifiés de votre région reçoivent votre mission et vous répondent sous 24h.<br />
+                            <span className="font-bold animate-color-pulse">
+                                Directement, sans intermédiaire.
+                            </span>
+                        </p>
+                    </div>
+                )}
+
                 {/* Progress Bar */}
                 <div className="mb-8 space-y-2.5">
                     <div className="flex items-center justify-between">

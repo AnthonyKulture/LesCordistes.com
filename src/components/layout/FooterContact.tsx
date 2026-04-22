@@ -24,10 +24,10 @@ export function FooterContact() {
         <div className="mt-4 space-y-2">
             <a
                 href={`tel:${phone}`}
-                className="flex items-center gap-2 text-slate-300 hover:text-brand-blue-light text-sm transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-brand-blue text-white text-sm font-bold rounded-xl hover:bg-brand-blue/90 transition-colors"
             >
                 <Phone size={15} />
-                <span>{PHONE_DISPLAY_PARTS.join('')}</span>
+                Nous appeler
             </a>
             <a
                 href={`mailto:${email}`}

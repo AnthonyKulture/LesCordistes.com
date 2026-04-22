@@ -62,9 +62,6 @@ export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext })
         <div className="space-y-8">
             <div className="text-center sm:text-left">
                 <div className="flex items-center justify-center sm:justify-start gap-3 mb-2">
-                    <div className="p-2 bg-brand-blue/10 rounded-lg">
-                        <FileText className="text-brand-blue" size={24} />
-                    </div>
                     <h2 className="text-2xl font-bold text-slate-900">Détails de la mission</h2>
                 </div>
                 <p className="text-slate-600">Plus votre description est précise, plus vous recevrez des offres pertinentes.</p>
