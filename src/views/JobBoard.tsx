@@ -3,14 +3,10 @@
 import React, { useState, Suspense, lazy } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { Search, Filter, Map, LayoutGrid, Plus } from 'lucide-react';
+import { Map, LayoutGrid, Plus } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { JobCard } from '../components/JobCard';
-import { Input } from '../components/ui/Input';
-import { Select } from '../components/ui/Select';
 import { Button } from '../components/ui/Button';
-import { FRENCH_DEPARTMENTS } from '../constants/departments';
-import { CATEGORY_LABELS } from '../constants/categories';
 import type { Job } from '../types';
 
 const JobMap = lazy(() => import('../components/map/JobMap').then(m => ({ default: m.JobMap })));
@@ -18,9 +14,6 @@ const JobMap = lazy(() => import('../components/map/JobMap').then(m => ({ defaul
 const PAGE_SIZE = 50;
 
 export const JobBoard: React.FC = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [categoryFilter, setCategoryFilter] = useState('all');
-    const [departmentFilter, setDepartmentFilter] = useState('all');
     const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
     const [limit, setLimit] = useState(PAGE_SIZE);
 
@@ -39,43 +32,7 @@ export const JobBoard: React.FC = () => {
         },
     });
 
-    const filteredJobs = jobs?.filter((job) => {
-        const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            job.location_city.toLowerCase().includes(searchTerm.toLowerCase());
-
-        const matchesCategory = categoryFilter === 'all' || job.category === categoryFilter;
-        const matchesDepartment = departmentFilter === 'all' || job.location_department === departmentFilter;
-
-        return matchesSearch && matchesCategory && matchesDepartment;
-    }) || [];
-
-    const categoryOptions = [
-        { value: 'all', label: 'Toutes les catégories' },
-        ...Object.entries(CATEGORY_LABELS).map(([value, label]) => ({
-            value,
-            label: `${getCategoryEmoji(value)} ${label}`
-        }))
-    ];
-
-    function getCategoryEmoji(category: string): string {
-        const emojis: Record<string, string> = {
-            cleaning: '🧹',
-            construction: '🏗️',
-            masonry: '🧱',
-            painting: '🎨',
-            industry: '⚙️',
-            event: '🎪',
-            other: '❓'
-        };
-        return emojis[category] || '';
-    }
-
-
-    const departmentOptions = [
-        { value: 'all', label: 'Tous les départements' },
-        ...FRENCH_DEPARTMENTS.map(d => ({ value: d.code, label: d.label }))
-    ];
+    const filteredJobs = jobs || [];
 
     return (
         <>
@@ -118,61 +75,20 @@ export const JobBoard: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Reinforcement CTA (Discreet top block) */}
-                <div className="bg-orange-50/50 border border-orange-100 rounded-3xl p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 -mt-8 -mr-8 w-48 h-48 bg-orange-100/30 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
-                    <div className="relative z-10 flex items-center gap-5">
-                        <div className="hidden sm:flex h-12 w-12 bg-white rounded-2xl shadow-sm border border-orange-100 items-center justify-center flex-shrink-0 group-hover:rotate-12 transition-transform">
-                            <Plus size={20} className="text-orange-600 animate-pulse" />
+                {/* Reinforcement CTA */}
+                <div className="flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-xl px-5 py-3.5 mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">
+                            <Plus size={16} className="text-orange-500" />
                         </div>
-                        <div>
-                            <h3 className="text-lg font-black text-orange-900 tracking-tight leading-tight">
-                                Besoin d'un renfort sur un chantier ?
-                            </h3>
-                            <p className="text-xs text-orange-700/80 mt-0.5 font-bold">
-                                Publiez une annonce de renfort pour trouver des équipiers qualifiés immédiatement.
-                            </p>
-                        </div>
+                        <p className="text-sm font-semibold text-slate-700">Besoin d'un renfort sur chantier ?</p>
                     </div>
-                    <Link href="/post-job?type=renfort_pro" className="relative z-10 w-full md:w-auto">
-                        <Button 
-                            variant="primary" 
-                            size="sm"
-                            className="w-full bg-orange-600 hover:bg-orange-500 font-bold uppercase tracking-widest text-[10px] px-8 py-5 rounded-2xl shadow-xl shadow-orange-200 hover:shadow-orange-300 transition-all active:scale-95"
-                        >
-                            Publier du renfort
-                        </Button>
+                    <Link
+                        href="/post-job?type=renfort_pro"
+                        className="flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 bg-orange-50 border border-orange-200 rounded-lg text-xs font-bold text-orange-700 hover:bg-orange-100 transition-colors"
+                    >
+                        Publier
                     </Link>
-                </div>
-
-                {/* Filters */}
-                <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Filter className="text-brand-blue" size={18} />
-                        <h2 className="font-semibold text-slate-900">Filtres</h2>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-                            <Input
-                                type="text"
-                                placeholder="Rechercher une mission…"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-10"
-                            />
-                        </div>
-                        <Select
-                            value={categoryFilter}
-                            onChange={(e) => setCategoryFilter(e.target.value)}
-                            options={categoryOptions}
-                        />
-                        <Select
-                            value={departmentFilter}
-                            onChange={(e) => setDepartmentFilter(e.target.value)}
-                            options={departmentOptions}
-                        />
-                    </div>
                 </div>
 
                 {/* Content */}
@@ -202,8 +118,8 @@ export const JobBoard: React.FC = () => {
                     </div>
                 ) : (
                     <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-12 text-center">
-                        <p className="text-slate-600 text-lg">Aucune mission ne correspond à vos critères.</p>
-                        <p className="text-slate-400 mt-2 text-sm">Essayez de modifier les filtres.</p>
+                        <p className="text-slate-600 text-lg">Aucune mission disponible pour le moment.</p>
+                        <p className="text-slate-400 mt-2 text-sm">Revenez bientôt, de nouvelles missions arrivent chaque jour.</p>
                     </div>
                 )}
 

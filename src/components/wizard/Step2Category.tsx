@@ -74,9 +74,6 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
         <div className="space-y-4">
             <div className="text-center sm:text-left">
                 <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                    <div className="p-1.5 bg-brand-blue/10 rounded-lg">
-                        <Tag className="text-brand-blue" size={20} />
-                    </div>
                     <h2 className="text-xl font-bold text-slate-900">Quel(s) type(s) de travaux ?</h2>
                 </div>
                 <p className="text-sm text-slate-500">

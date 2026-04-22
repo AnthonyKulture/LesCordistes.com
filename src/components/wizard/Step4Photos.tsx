@@ -50,9 +50,6 @@ export const Step4Photos: React.FC<Step4Props> = ({ data, updateData, onNext }) 
         <div className="space-y-8">
             <div className="text-center sm:text-left">
                 <div className="flex items-center justify-center sm:justify-start gap-3 mb-2">
-                    <div className="p-2 bg-brand-blue/10 rounded-lg">
-                        <ImageIcon className="text-brand-blue" size={24} />
-                    </div>
                     <h2 className="text-2xl font-bold text-slate-900">Avez-vous des photos ?</h2>
                 </div>
                 <p className="text-slate-600">Des visuels du chantier aident à obtenir des devis plus précis.</p>

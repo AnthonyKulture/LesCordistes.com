@@ -3,18 +3,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { 
-    Menu, 
-    X, 
-    LogOut, 
-    MessageCircle, 
-    Briefcase, 
-    HardHat, 
-    User, 
-    LayoutDashboard, 
+import {
+    Menu,
+    X,
+    LogOut,
+    MessageCircle,
+    Briefcase,
+    HardHat,
+    User,
+    LayoutDashboard,
     Settings,
     ChevronDown,
-    Plus
+    Plus,
+    Mail,
+    Phone,
+    ArrowRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
@@ -26,6 +29,17 @@ import { NotificationBell } from '../notifications/NotificationBell';
 export const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [contactInfo, setContactInfo] = useState({ email: '', phone: '', emailHref: '', phoneHref: '' });
+
+    useEffect(() => {
+        const e = ['anthony', String.fromCharCode(64), 'lescordistes.com'].join('');
+        setContactInfo({
+            email: e,
+            phone: '+33 6 60 50 16 82',
+            emailHref: 'mailto:' + e,
+            phoneHref: 'tel:+33660501682',
+        });
+    }, []);
     const profileRef = useRef<HTMLDivElement>(null);
     const { user, profile, signOut } = useAuth();
     const { mode, toggleMode, isSwitching } = useDashboardMode();
@@ -49,6 +63,16 @@ export const Header: React.FC = () => {
         setIsMenuOpen(false);
         setIsProfileOpen(false);
     }, [pathname]);
+
+    // Body scroll lock when mobile menu is open
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isMenuOpen]);
 
     const handleSignOut = async () => {
         await signOut();
@@ -85,6 +109,7 @@ export const Header: React.FC = () => {
     }
 
     return (
+        <>
         <header className="bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-24">
@@ -291,116 +316,156 @@ export const Header: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Mobile Navigation */}
-                <AnimatePresence>
-                    {isMenuOpen && (
-                        <motion.div 
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="md:hidden overflow-hidden border-t border-slate-100"
-                        >
-                            <nav className="flex flex-col py-6 gap-6">
-                                {!user ? (
-                                    <div className="grid grid-cols-1 gap-4">
-                                        <Link href="/connexion" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-brand-blue text-white shadow-lg shadow-brand-blue/20">
-                                            <User size={18} />
-                                            Connexion
-                                        </Link>
-                                        <Link href="/post-job" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-brand-blue/10 text-brand-blue border-2 border-brand-blue/20">
-                                            <Plus size={18} />
-                                            Publier un projet
-                                        </Link>
-                                        <Link href="/jobs" className="flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm bg-orange-50 text-orange-700 border-2 border-orange-100">
-                                            <Briefcase size={18} />
-                                            Trouver des missions
-                                        </Link>
-                                        <Link href="/#how-it-works" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-600 font-bold text-sm">
-                                            Comment ça marche ?
-                                        </Link>
-                                    </div>
-                                ) : (
-                                    <>
-                                        {(isPro || isAdmin) && (
-                                            <div className="flex bg-slate-100 rounded-xl p-1 border border-slate-200/80">
-                                                <button
-                                                    onClick={() => mode !== 'worker' && toggleMode()}
-                                                    disabled={isSwitching}
-                                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-black uppercase tracking-wide transition-all ${
-                                                        mode === 'worker'
-                                                        ? 'bg-white text-brand-blue shadow-sm'
-                                                        : 'text-slate-400'
-                                                    }`}
-                                                >
-                                                    <HardHat size={13} />
-                                                    Missions
-                                                </button>
-                                                <button
-                                                    onClick={() => mode !== 'recruiter' && toggleMode()}
-                                                    disabled={isSwitching}
-                                                    className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[11px] font-black uppercase tracking-wide transition-all ${
-                                                        mode === 'recruiter'
-                                                        ? 'bg-white text-orange-600 shadow-sm'
-                                                        : 'text-slate-400'
-                                                    }`}
-                                                >
-                                                    <Briefcase size={13} />
-                                                    Recruteur
-                                                </button>
-                                            </div>
-                                        )}
-
-                                        <div className="grid grid-cols-1 gap-4">
-                                            <Link
-                                                href={ctaUrl}
-                                                className={`flex items-center justify-center gap-2 h-14 rounded-2xl font-black text-sm transition-all ${
-                                                    ctaVariant === 'outline'
-                                                    ? 'bg-orange-50 text-orange-700 border-2 border-orange-100'
-                                                    : 'bg-brand-blue text-white shadow-lg shadow-brand-blue/20'
-                                                }`}
-                                            >
-                                                {ctaIcon}
-                                                {ctaLabel}
-                                            </Link>
-                                            <Link href="/messages" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
-                                                <MessageCircle size={20} />
-                                                Messages
-                                                {globalUnreadCount > 0 && (
-                                                    <span className="ml-auto min-w-[20px] h-5 px-1 bg-red-500 text-[10px] text-white font-black flex items-center justify-center rounded-full">
-                                                        {globalUnreadCount > 99 ? '99+' : globalUnreadCount}
-                                                    </span>
-                                                )}
-                                            </Link>
-                                            <Link href="/dashboard" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
-                                                <LayoutDashboard size={20} />
-                                                Tableau de bord
-                                            </Link>
-                                            <Link href="/profile" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
-                                                <User size={20} />
-                                                Mon Profil
-                                            </Link>
-                                            {isAdmin && (
-                                                <Link href="/admin" className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl text-slate-700 font-bold">
-                                                    <Settings size={20} />
-                                                    Administration
-                                                </Link>
-                                            )}
-                                            <button
-                                                onClick={handleSignOut}
-                                                className="flex items-center gap-3 p-4 bg-red-50 rounded-2xl text-red-600 font-bold"
-                                            >
-                                                <LogOut size={20} />
-                                                Déconnexion
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
-                            </nav>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </div>
         </header>
+
+        {/* Mobile Fullscreen Menu */}
+        <AnimatePresence>
+            {isMenuOpen && (
+                <motion.div
+                    initial={{ x: '100%' }}
+                    animate={{ x: 0 }}
+                    exit={{ x: '100%' }}
+                    transition={{ type: 'tween', duration: 0.28, ease: 'easeInOut' }}
+                    className="fixed inset-0 z-[60] bg-white flex flex-col md:hidden"
+                >
+                    {/* Top bar */}
+                    <div className="flex items-center justify-between px-5 h-24 border-b border-slate-100 flex-shrink-0">
+                        <Link href="/" onClick={() => setIsMenuOpen(false)}>
+                            <img src="/lescordistes.comFichier 10.png" alt="LesCordistes" className="h-12 w-auto object-contain" />
+                        </Link>
+                        <button
+                            onClick={() => setIsMenuOpen(false)}
+                            className="p-2 rounded-xl text-slate-500 hover:bg-slate-50 transition-colors"
+                        >
+                            <X size={24} />
+                        </button>
+                    </div>
+
+                    {/* Nav links */}
+                    <div className="flex-1 overflow-y-auto px-5 py-6">
+                        {!user ? (
+                            <nav className="flex flex-col">
+                                <Link
+                                    href="/post-job"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center justify-between py-5 border-b border-slate-100 text-slate-900 font-bold text-lg group"
+                                >
+                                    Publier un projet
+                                    <ArrowRight size={18} className="text-slate-300 group-hover:text-brand-blue transition-colors" />
+                                </Link>
+                                <Link
+                                    href="/jobs"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center justify-between py-5 border-b border-slate-100 text-orange-600 font-bold text-lg group"
+                                >
+                                    Trouver des missions
+                                    <ArrowRight size={18} className="text-orange-200 group-hover:text-orange-500 transition-colors" />
+                                </Link>
+                                <Link
+                                    href="/#how-it-works"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center justify-between py-5 border-b border-slate-100 text-slate-600 font-semibold text-base group"
+                                >
+                                    Comment ça marche ?
+                                    <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+                                </Link>
+                                <Link
+                                    href="/connexion"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center justify-between py-5 text-slate-500 font-semibold text-base group"
+                                >
+                                    Connexion
+                                    <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+                                </Link>
+                            </nav>
+                        ) : (
+                            <nav className="flex flex-col">
+                                {(isPro || isAdmin) && (
+                                    <div className="flex bg-slate-100 rounded-xl p-1 border border-slate-200/80 mb-6">
+                                        <button
+                                            onClick={() => mode !== 'worker' && toggleMode()}
+                                            disabled={isSwitching}
+                                            className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-black uppercase tracking-wide transition-all ${
+                                                mode === 'worker' ? 'bg-white text-brand-blue shadow-sm' : 'text-slate-400'
+                                            }`}
+                                        >
+                                            <HardHat size={13} />
+                                            Missions
+                                        </button>
+                                        <button
+                                            onClick={() => mode !== 'recruiter' && toggleMode()}
+                                            disabled={isSwitching}
+                                            className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-black uppercase tracking-wide transition-all ${
+                                                mode === 'recruiter' ? 'bg-white text-orange-600 shadow-sm' : 'text-slate-400'
+                                            }`}
+                                        >
+                                            <Briefcase size={13} />
+                                            Recruteur
+                                        </button>
+                                    </div>
+                                )}
+                                <Link href={ctaUrl} onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between py-5 border-b border-slate-100 text-brand-blue font-bold text-lg group">
+                                    {ctaLabel}
+                                    <ArrowRight size={18} className="text-slate-300 group-hover:text-brand-blue transition-colors" />
+                                </Link>
+                                <Link href="/messages" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between py-5 border-b border-slate-100 text-slate-800 font-semibold text-base group">
+                                    <span className="flex items-center gap-3">
+                                        Messages
+                                        {globalUnreadCount > 0 && (
+                                            <span className="min-w-[20px] h-5 px-1.5 bg-red-500 text-[10px] text-white font-black flex items-center justify-center rounded-full">
+                                                {globalUnreadCount > 99 ? '99+' : globalUnreadCount}
+                                            </span>
+                                        )}
+                                    </span>
+                                    <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+                                </Link>
+                                <Link href="/dashboard" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between py-5 border-b border-slate-100 text-slate-800 font-semibold text-base group">
+                                    Tableau de bord
+                                    <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+                                </Link>
+                                <Link href="/profile" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between py-5 border-b border-slate-100 text-slate-800 font-semibold text-base group">
+                                    Mon Profil
+                                    <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+                                </Link>
+                                {isAdmin && (
+                                    <Link href="/admin" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-between py-5 border-b border-slate-100 text-slate-800 font-semibold text-base group">
+                                        Administration
+                                        <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+                                    </Link>
+                                )}
+                                <button
+                                    onClick={handleSignOut}
+                                    className="flex items-center justify-between py-5 text-red-500 font-semibold text-base w-full group"
+                                >
+                                    Déconnexion
+                                    <LogOut size={18} className="text-red-200 group-hover:text-red-400 transition-colors" />
+                                </button>
+                            </nav>
+                        )}
+                    </div>
+
+                    {/* Contact footer */}
+                    <div className="border-t border-slate-100 px-5 py-6 flex-shrink-0">
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] mb-4">Contact</p>
+                        <a
+                            href={contactInfo.emailHref || '#'}
+                            className="flex items-center gap-3 text-slate-700 font-semibold text-sm mb-3 hover:text-brand-blue transition-colors"
+                        >
+                            <Mail size={16} className="text-brand-blue flex-shrink-0" />
+                            {contactInfo.email || '···'}
+                        </a>
+                        <a
+                            href={contactInfo.phoneHref || '#'}
+                            className="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-blue text-white text-sm font-bold rounded-xl hover:bg-brand-blue/90 transition-colors"
+                        >
+                            <Phone size={15} className="flex-shrink-0" />
+                            Nous appeler
+                        </a>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
-;
