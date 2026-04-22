@@ -11,7 +11,7 @@ export const ProfessionalsNetwork: React.FC = () => {
                     <div className="order-2 md:order-1 relative">
                         <div className="absolute -inset-4 bg-blue-50/50 rounded-3xl transform -rotate-3 z-0"></div>
                         <img
-                            src="/lescordistes.com-visuel-travaux-en-hauteur7.jpg"
+                            src="/lescordistes.com-new-01.webp"
                             alt="Cordiste professionnel en pleine intervention"
                             className="relative z-10 w-full h-[600px] object-cover rounded-2xl shadow-2xl"
                         />

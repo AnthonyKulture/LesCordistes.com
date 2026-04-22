@@ -248,6 +248,28 @@ function passwordReset(data: Record<string, string>): string {
   `);
 }
 
+function guestJobCreated(data: Record<string, string>): string {
+  const name = data.name || 'Client';
+  const title = data.title || 'votre mission';
+  const city = data.city ? ` à ${data.city}` : '';
+  return base(`Votre demande a bien été reçue — LesCordistes.com`, `
+    <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Votre demande a bien été reçue</h1>
+    <p style="font-size:15px;color:${S5};margin:0 0 24px;">Bonjour ${name},</p>
+    <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 28px;">
+      Nous avons bien reçu votre demande pour <strong>${title}${city}</strong>. Elle est en cours d'examen et sera visible par les cordistes de votre région sous 24h.
+    </p>
+    <div style="background:${S1};border-radius:8px;padding:24px;margin:0 0 28px;">
+      <p style="font-size:13px;font-weight:600;color:${B};margin:0 0 16px;text-transform:uppercase;letter-spacing:0.05em;">Et maintenant ?</p>
+      <p style="font-size:14px;color:${S7};margin:0 0 10px;line-height:20px;"><span style="color:${BL};font-weight:700;">1.</span> Votre annonce est examinée par notre équipe</p>
+      <p style="font-size:14px;color:${S7};margin:0 0 10px;line-height:20px;"><span style="color:${BL};font-weight:700;">2.</span> Les cordistes qualifiés de votre secteur peuvent vous contacter</p>
+      <p style="font-size:14px;color:${S7};margin:0;line-height:20px;"><span style="color:${BL};font-weight:700;">3.</span> Vous recevrez les devis directement par email et téléphone</p>
+    </div>
+    ${btn('https://www.lescordistes.com/post-job', 'Suivre ma demande')}
+    <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
+    <p style="font-size:13px;color:${S5};margin:0;line-height:20px;">Une question ? Répondez directement à cet email, notre équipe vous répond sous 24h.</p>
+  `);
+}
+
 // ─── Router ───────────────────────────────────────────────────────────────────
 
 serve(async (req) => {
@@ -269,6 +291,7 @@ serve(async (req) => {
       case 'payment-receipt':  html = paymentReceipt(data); break;
       case 'verify-email':     html = verifyEmail(data); break;
       case 'password-reset':   html = passwordReset(data); break;
+      case 'guest-job-created': html = guestJobCreated(data); break;
       default:
         throw new Error(`Template not found: ${templateId}`);
     }

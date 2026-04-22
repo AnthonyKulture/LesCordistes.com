@@ -28,6 +28,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
     const [manualPassword, setManualPassword] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [guestMode, setGuestMode] = useState(false);
 
     const isRenfort = data.type === 'renfort_pro';
 
@@ -131,6 +132,27 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
         } finally {
             setAuthLoading(false);
         }
+    };
+
+    const handleGuestSubmit = () => {
+        const newErrors: Record<string, string> = {};
+        if (!data.contact_email?.trim()) {
+            newErrors.contact_email = "L'email est requis";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.contact_email)) {
+            newErrors.contact_email = 'Email invalide';
+        }
+        if (!data.contact_phone?.trim()) {
+            newErrors.contact_phone = 'Le téléphone est requis';
+        } else if (!/^[\d\s+()-]{10,}$/.test(data.contact_phone)) {
+            newErrors.contact_phone = 'Numéro invalide';
+        }
+        setErrors(newErrors);
+        if (Object.keys(newErrors).length > 0) return;
+        if (!data.consent_sharing) {
+            toast.error('Veuillez accepter la transmission de vos coordonnées');
+            return;
+        }
+        onSubmit(false, undefined);
     };
 
     const handleManualLogin = async (e?: React.FormEvent | React.MouseEvent) => {
@@ -329,7 +351,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         </div>
                         <p className="text-xs text-green-900 leading-relaxed font-bold text-left">
                             J'accepte que mes coordonnées soient transmises aux professionnels sélectionnés pour répondre à ma demande *
-                            <Link href="/confidentialite" className="text-green-700 underline ml-2 font-normal">En savoir plus</Link>
+                            <br /><Link href="/confidentialite" target="_blank" rel="noopener noreferrer" className="text-green-700 underline font-normal">En savoir plus</Link>
                         </p>
                     </div>
                 </div>
@@ -349,6 +371,89 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         onClick={handleLoggedInSubmit}
                         isLoading={isSubmitting}
                         className="flex-grow h-14 text-lg font-bold shadow-xl shadow-brand-blue/30 group"
+                    >
+                        {isSubmitting ? 'Publication...' : (
+                            <span className="flex items-center justify-center gap-2">
+                                Publier ma mission <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+                            </span>
+                        )}
+                    </Button>
+                </div>
+            </motion.div>
+        );
+    }
+
+    // ─── Mode invité minimal ───
+    if (guestMode) {
+        return (
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="space-y-6"
+            >
+                <div className="text-center sm:text-left">
+                    <div className="flex items-center justify-center sm:justify-start gap-3 mb-2">
+                        <div className="p-3 bg-brand-blue/10 rounded-xl">
+                            <Mail className="text-brand-blue" size={28} />
+                        </div>
+                        <div>
+                            <h2 className="text-2xl font-bold text-slate-900">Envoi rapide</h2>
+                            <p className="text-slate-600">Email + téléphone — c'est tout.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <Input
+                        label="Votre email *"
+                        type="email"
+                        placeholder="nom@exemple.fr"
+                        value={data.contact_email || ''}
+                        onChange={(e) => updateData({ contact_email: e.target.value })}
+                        error={errors.contact_email}
+                        className="h-12"
+                    />
+                    <Input
+                        label="Téléphone *"
+                        type="tel"
+                        placeholder="+33 6 12 34 56 78"
+                        value={data.contact_phone || ''}
+                        onChange={(e) => updateData({ contact_phone: e.target.value })}
+                        error={errors.contact_phone}
+                        className="h-12"
+                    />
+                </div>
+
+                <div className="flex items-start gap-3 p-4 bg-green-50 rounded-xl border border-green-100 cursor-pointer group"
+                     onClick={() => updateData({ consent_sharing: !data.consent_sharing })}>
+                    <div className={`mt-0.5 shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${
+                        data.consent_sharing ? 'bg-green-600 border-green-600 text-white' : 'border-green-300 bg-white group-hover:border-green-400'
+                    }`}>
+                        {data.consent_sharing && <Check size={14} strokeWidth={3} />}
+                    </div>
+                    <p className="text-xs text-green-900 leading-relaxed font-bold">
+                        J'accepte que mes coordonnées soient transmises aux professionnels sélectionnés *
+                        <br /><Link href="/confidentialite" target="_blank" rel="noopener noreferrer" className="text-green-700 underline font-normal">En savoir plus</Link>
+                    </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    <button
+                        type="button"
+                        onClick={() => setGuestMode(false)}
+                        className="h-14 px-6 text-base font-bold border border-slate-200 rounded-xl text-slate-600 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
+                    >
+                        <ChevronLeft size={20} /> Retour
+                    </button>
+                    <Button
+                        variant="primary"
+                        onClick={handleGuestSubmit}
+                        isLoading={isSubmitting}
+                        disabled={isSubmitting || !data.consent_sharing}
+                        className={`flex-grow h-14 text-lg font-bold transition-all ${
+                            !data.consent_sharing ? 'opacity-50 grayscale cursor-not-allowed' : 'shadow-xl shadow-brand-blue/30 group'
+                        }`}
                     >
                         {isSubmitting ? 'Publication...' : (
                             <span className="flex items-center justify-center gap-2">
@@ -381,32 +486,6 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                 </div>
             </div>
 
-            <div className="bg-green-50/40 border border-green-100 rounded-2xl p-5 space-y-4 mb-2">
-                <div className="flex gap-4">
-                    <div className="shrink-0 p-2 bg-green-100 rounded-full h-fit">
-                        <ShieldCheck className="text-green-600" size={18} />
-                    </div>
-                    <div className="space-y-1">
-                        <p className="text-xs text-green-800 leading-relaxed font-semibold">
-                            RGPD First : Vos données sont sécurisées. Elles ne seront <strong>jamais revendues</strong> ni divulguées à des tiers non vérifiés.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="flex items-start gap-3 p-3 bg-white/50 rounded-xl border border-green-100 cursor-pointer group"
-                     onClick={() => updateData({ consent_sharing: !data.consent_sharing })}>
-                    <div className={`mt-0.5 shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${
-                        data.consent_sharing ? 'bg-green-600 border-green-600 text-white' : 'border-green-300 bg-white group-hover:border-green-400'
-                    }`}>
-                        {data.consent_sharing && <Check size={14} strokeWidth={3} />}
-                    </div>
-                    <p className="text-[11px] text-green-900 leading-relaxed font-bold">
-                        J'accepte que mes coordonnées soient transmises aux professionnels sélectionnés *
-                        <Link href="/confidentialite" className="text-green-700 underline ml-2 font-normal">Détails</Link>
-                    </p>
-                </div>
-            </div>
-
             <form onSubmit={handleSignUp} className="space-y-6">
                 <div className="mb-2">
                     <GoogleSignInButton
@@ -421,6 +500,15 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         }}
                     />
                 </div>
+
+                <button
+                    type="button"
+                    onClick={() => setGuestMode(true)}
+                    disabled={isSubmitting}
+                    className="w-full text-sm text-slate-500 hover:text-brand-blue transition-colors py-2 underline underline-offset-2 disabled:opacity-50"
+                >
+                    Continuer sans créer de compte
+                </button>
 
                 <div className="flex items-center gap-4 my-6">
                     <div className="flex-1 h-px bg-slate-200"></div>
@@ -447,6 +535,36 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         error={errors.contact_last_name}
                         className="h-12"
                     />
+                </div>
+
+                <div className="space-y-1.5">
+                    <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">
+                        Vous êtes *
+                    </label>
+                    <select
+                        value={data.client_type || ''}
+                        onChange={(e) => updateData({ client_type: e.target.value as any })}
+                        className="w-full h-12 px-3 border-2 border-slate-100 rounded-xl focus:border-brand-blue outline-none transition-all font-medium bg-white"
+                    >
+                        <option value="">Choisir votre profil</option>
+                        {isRenfort ? (
+                            <>
+                                <option value="entreprise_travaux_hauteur">🏗️ Société de travaux en hauteur</option>
+                                <option value="entreprise_btp">👷 Entreprise du BTP / Génie Civil</option>
+                                <option value="agence_interim">🏢 Agence d'intérim spécialisée</option>
+                                <option value="autre_pro">🤝 Autre professionnel</option>
+                            </>
+                        ) : (
+                            <>
+                                <option value="particulier">🏡 Particulier</option>
+                                <option value="copropriete_syndic">🏢 Copropriété & Syndic</option>
+                                <option value="entreprise_tertiaire">💼 Entreprise & Tertiaire</option>
+                                <option value="industrie_energie">⚙️ Industrie & Énergie</option>
+                                <option value="collectivite_public">🏛️ Collectivité & Public</option>
+                                <option value="association_evenementiel">🎪 Association & Événementiel</option>
+                            </>
+                        )}
+                    </select>
                 </div>
 
                 {isRenfort && (
@@ -536,6 +654,32 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                     )}
                 </AnimatePresence>
 
+                <div className="bg-green-50/40 border border-green-100 rounded-2xl p-5 space-y-4">
+                    <div className="flex gap-4">
+                        <div className="shrink-0 p-2 bg-green-100 rounded-full h-fit">
+                            <ShieldCheck className="text-green-600" size={18} />
+                        </div>
+                        <div className="space-y-1">
+                            <p className="text-xs text-green-800 leading-relaxed font-semibold">
+                                RGPD First : Vos données sont sécurisées. Elles ne seront <strong>jamais revendues</strong> ni divulguées à des tiers non vérifiés.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 p-3 bg-white/50 rounded-xl border border-green-100 cursor-pointer group"
+                         onClick={() => updateData({ consent_sharing: !data.consent_sharing })}>
+                        <div className={`mt-0.5 shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-colors ${
+                            data.consent_sharing ? 'bg-green-600 border-green-600 text-white' : 'border-green-300 bg-white group-hover:border-green-400'
+                        }`}>
+                            {data.consent_sharing && <Check size={14} strokeWidth={3} />}
+                        </div>
+                        <p className="text-[11px] text-green-900 leading-relaxed font-bold">
+                            J'accepte que mes coordonnées soient transmises aux professionnels sélectionnés *
+                            <br /><Link href="/confidentialite" target="_blank" rel="noopener noreferrer" className="text-green-700 underline font-normal">Détails</Link>
+                        </p>
+                    </div>
+                </div>
+
                 <div className="pt-4 flex flex-col sm:flex-row gap-3">
                     {onBack && (
                         <Button
@@ -564,6 +708,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         )}
                     </Button>
                 </div>
+
             </form>
         </motion.div>
     );

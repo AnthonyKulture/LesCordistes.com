@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useMemo } from 'react';
-import { FileText, Sparkles, TrendingUp, AlertCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { FileText, TrendingUp, AlertCircle } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { TextArea } from '../ui/TextArea';
 import { Button } from '../ui/Button';
@@ -18,33 +18,10 @@ export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext })
     const [errors, setErrors] = useState<Record<string, string>>({});
 
 
-    const suggestions = useMemo(() => {
-        const base = ['Urgent', 'Accès difficile', 'Sécurisation'];
-        switch (data.category) {
-            case 'cleaning': return [...base, 'Vitres', 'Façades', 'Haute pression'];
-            case 'painting': return [...base, 'Ravalement', 'Anti-corrosion', 'Pylône'];
-            case 'construction': return [...base, 'Maçonnerie', 'Soudure', 'Structure'];
-            case 'masonry': return [...base, 'Jointoiement', 'Pierres', 'Mortier'];
-            case 'industry': return [...base, 'Maintenance', 'Inspection', 'Silo'];
-            case 'event': return [...base, 'Banderole', 'Éclairage', 'Scénographie'];
-            default: return base;
-        }
-    }, [data.category]);
-
-    const addSuggestion = (s: string) => {
-        const currentDesc = data.description || '';
-        const newDesc = currentDesc ? `${currentDesc.trim()} ${s}` : s;
-        updateData({ description: newDesc });
-    };
-
     const today = new Date().toISOString().split('T')[0];
 
     const validate = () => {
         const newErrors: Record<string, string> = {};
-
-        if (!data.title?.trim()) {
-            newErrors.title = 'Le titre est requis';
-        }
 
         if (!data.description?.trim()) {
             newErrors.description = 'La description est requise';
@@ -99,42 +76,16 @@ export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext })
                 animate="visible"
                 className="space-y-6"
             >
-                <motion.div variants={itemVariants}>
-                    <Input
-                        label="Titre de la mission *"
-                        type="text"
-                        placeholder="Ex: Nettoyage de façade immeuble 5 étages"
-                        value={data.title || ''}
-                        onChange={(e) => updateData({ title: e.target.value })}
-                        error={errors.title}
-                        className="h-12 text-lg font-medium"
-                    />
-                </motion.div>
-
                 <motion.div variants={itemVariants} className="space-y-3">
                     <TextArea
-                        label="Description détaillée *"
-                        placeholder="Décrivez le travail à effectuer, les contraintes, le matériel nécessaire, les accès disponibles..."
+                        label="Décrivez votre besoin *"
+                        placeholder="Ex : Nettoyage de façade sur un immeuble de 5 étages, accès par l'arrière, date souhaitée avant fin juin..."
                         value={data.description || ''}
                         onChange={(e) => updateData({ description: e.target.value })}
                         error={errors.description}
                         rows={5}
                         className="text-base"
                     />
-                    <div className="flex flex-wrap gap-2 items-center">
-                        <span className="text-xs font-medium text-slate-400 flex items-center gap-1">
-                            <Sparkles size={12} /> Suggestions :
-                        </span>
-                        {suggestions.map((s) => (
-                            <button
-                                key={s}
-                                onClick={() => addSuggestion(s)}
-                                className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs hover:bg-brand-blue hover:text-white transition-colors border border-slate-200"
-                            >
-                                + {s}
-                            </button>
-                        ))}
-                    </div>
                 </motion.div>
 
                 <motion.div variants={itemVariants}>

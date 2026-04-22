@@ -10,7 +10,8 @@ import {
   Factory,
   Tent,
   ClipboardList,
-  CheckCircle2
+  CheckCircle2,
+  Mail,
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { motion } from 'framer-motion';
@@ -29,6 +30,7 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
         : [];
 
     const [selected, setSelected] = useState<JobCategory[]>(initialSelected);
+    const [emailValue, setEmailValue] = useState(data.contact_email || '');
 
     const categories = [
         { value: 'cleaning' as JobCategory, label: 'Nettoyage', icon: Eraser, color: 'text-blue-500', bg: 'bg-blue-50', description: 'Nettoyage de façades, vitres' },
@@ -56,7 +58,16 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
     };
 
     const handleNext = () => {
-        if (selected.length > 0) onNext();
+        if (selected.length === 0) return;
+        updateData({ contact_email: emailValue });
+        if (emailValue && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+            fetch('/api/leads', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: emailValue, category: selected[0], step_reached: 1, source: 'wizard_step1' }),
+            }).catch(() => {});
+        }
+        onNext();
     };
 
     return (
@@ -133,6 +144,31 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
                     );
                 })}
             </div>
+
+            {selected.length > 0 && (
+                <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    className="overflow-hidden"
+                >
+                    <div className="flex flex-col gap-1.5 p-4 bg-brand-blue/5 border border-brand-blue/15 rounded-2xl">
+                        <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+                            <Mail size={15} className="text-brand-blue" />
+                            Votre email pour recevoir les devis
+                        </label>
+                        <input
+                            type="email"
+                            value={emailValue}
+                            onChange={(e) => setEmailValue(e.target.value)}
+                            placeholder="votre@email.fr"
+                            className="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all"
+                        />
+                        <p className="text-xs text-slate-400">Facultatif — vous pourrez le renseigner à l'étape suivante.</p>
+                    </div>
+                </motion.div>
+            )}
 
             <div className="pt-2">
                 <Button
