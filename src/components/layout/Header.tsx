@@ -183,24 +183,18 @@ export const Header: React.FC = () => {
                     {/* RIGHT: Actions */}
                     <div className="hidden md:flex items-center gap-4 lg:gap-6 flex-shrink-0">
                         {!user ? (
-                            <div className="flex items-center gap-4 border-r border-slate-100 pr-4 mr-2">
-                                <Link 
-                                    href="/connexion" 
-                                    className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-brand-blue transition-all px-3 py-2 rounded-xl hover:bg-slate-50 border-1 border-transparent hover:border-slate-100"
-                                >
-                                    <User size={18} className="text-slate-400 group-hover:text-brand-blue" />
-                                    Connexion
-                                </Link>
+                            <>
                                 <Link href="/jobs">
-                                    <Button 
-                                        variant="outline" 
-                                        size="sm" 
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
                                         className="border-2 border-orange-500 text-orange-600 hover:bg-orange-50 font-black shadow-sm hover:shadow-md transition-all whitespace-nowrap"
                                     >
                                         Trouver des missions
                                     </Button>
                                 </Link>
-                            </div>
+                                <div className="h-5 w-px bg-slate-200" />
+                            </>
                         ) : (
                             <div className="flex items-center gap-4 lg:gap-6 border-r border-slate-100 pr-4 mr-2">
                                 <Link 
@@ -288,19 +282,30 @@ export const Header: React.FC = () => {
 
                         {/* Far Right Primary CTA */}
                         {showHeaderCTA && (
-                            <Button 
+                            <Button
                                 variant={ctaVariant}
                                 size="sm"
                                 onClick={() => router.push(ctaUrl)}
                                 className={`flex items-center gap-2 font-bold px-6 shadow-lg shadow-brand-blue/10 ${
-                                    ctaVariant === 'outline' 
-                                    ? 'border-orange-200 text-orange-700 bg-orange-50/50 hover:bg-orange-50' 
+                                    ctaVariant === 'outline'
+                                    ? 'border-orange-200 text-orange-700 bg-orange-50/50 hover:bg-orange-50'
                                     : 'bg-brand-blue hover:bg-brand-blue/90'
                                 }`}
                             >
                                 {ctaIcon}
                                 {ctaLabel}
                             </Button>
+                        )}
+
+                        {/* Connexion — extrême droite, non connecté seulement */}
+                        {!user && (
+                            <Link
+                                href="/connexion"
+                                className="flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-brand-blue transition-all px-3 py-2 rounded-xl hover:bg-slate-50 whitespace-nowrap"
+                            >
+                                <User size={15} className="text-slate-400" />
+                                S'inscrire / Se connecter
+                            </Link>
                         )}
                     </div>
 
@@ -375,7 +380,7 @@ export const Header: React.FC = () => {
                                     onClick={() => setIsMenuOpen(false)}
                                     className="flex items-center justify-between py-5 text-slate-500 font-semibold text-base group"
                                 >
-                                    Connexion
+                                    S'inscrire / Se connecter
                                     <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
                                 </Link>
                             </nav>
