@@ -117,14 +117,18 @@ export const Step3Details: React.FC<Step3Props> = ({ data, updateData, onNext })
                         <button
                             type="button"
                             onClick={toggleDictation}
-                            className={`sm:hidden flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                            className={`sm:hidden w-full flex items-center justify-center gap-3 px-5 py-4 rounded-2xl text-sm font-black transition-all ${
                                 isListening
-                                    ? 'bg-red-50 border border-red-200 text-red-600 animate-pulse'
-                                    : 'bg-slate-50 border border-slate-200 text-slate-600 hover:border-brand-blue hover:text-brand-blue'
+                                    ? 'bg-red-500 text-white shadow-lg shadow-red-200 animate-pulse'
+                                    : 'bg-brand-blue text-white shadow-lg shadow-brand-blue/30 animate-color-pulse'
                             }`}
                         >
-                            {isListening ? <MicOff size={16} /> : <Mic size={16} />}
-                            {isListening ? 'Arrêter la dictée' : 'Dicter ma description'}
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+                                isListening ? 'bg-white/20' : 'bg-white/20'
+                            }`}>
+                                {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                            </div>
+                            {isListening ? '⏹ Arrêter la dictée' : '🎙 Dicter ma description'}
                         </button>
                     )}
                 </motion.div>
