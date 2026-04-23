@@ -329,7 +329,7 @@ BEGIN
                     'proName', COALESCE(v_pro.full_name, 'Pro'),
                     'jobTitle', NEW.title,
                     'location', NEW.location_city,
-                    'jobId', NEW.id,
+                    'jobSlug', COALESCE(NEW.slug, NEW.id::text),
                     'isRenfort', (NEW.type = 'renfort_pro')
                 )
             );
