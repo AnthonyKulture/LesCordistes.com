@@ -307,7 +307,19 @@ export const PostJob: React.FC = () => {
 
             const draftId = localStorage.getItem('lescordistes_postjob_draft_id');
 
-            if (draftId) {
+            if (!finalUserId) {
+                // Guest: no session, must go through admin API
+                const res = await fetch('/api/submit-job', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ jobData }),
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || 'Erreur lors de la publication');
+                }
+                localStorage.removeItem('lescordistes_postjob_draft_id');
+            } else if (draftId) {
                 const res = await fetch('/api/job-draft', {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
