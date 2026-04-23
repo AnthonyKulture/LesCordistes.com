@@ -7,7 +7,12 @@ export type Json =
     | Json[]
 
 export interface Database {
+    __InternalSupabase: {
+        PostgrestVersion: '12'
+    }
     public: {
+        Views: Record<string, never>
+        Functions: Record<string, never>
         Tables: {
             profiles: {
                 Row: {
@@ -111,6 +116,11 @@ export interface Database {
                     contract_type: 'subcontracting' | 'freelance' | null
                     daily_rate: number | null
                     security_plan_confirmed: boolean | null
+                    moderated_at: string | null
+                    moderated_by: string | null
+                    credit_cost: number
+                    latitude: number | null
+                    longitude: number | null
                     created_at: string
                     updated_at: string
                 }
@@ -148,6 +158,11 @@ export interface Database {
                     contract_type?: 'subcontracting' | 'freelance' | null
                     daily_rate?: number | null
                     security_plan_confirmed?: boolean | null
+                    moderated_at?: string | null
+                    moderated_by?: string | null
+                    credit_cost?: number
+                    latitude?: number | null
+                    longitude?: number | null
                     created_at?: string
                     updated_at?: string
                 }
@@ -184,6 +199,11 @@ export interface Database {
                     contract_type?: 'subcontracting' | 'freelance' | null
                     daily_rate?: number | null
                     security_plan_confirmed?: boolean | null
+                    moderated_at?: string | null
+                    moderated_by?: string | null
+                    credit_cost?: number
+                    latitude?: number | null
+                    longitude?: number | null
                     created_at?: string
                     updated_at?: string
                 }
@@ -316,6 +336,70 @@ export interface Database {
                     link?: string | null
                     read?: boolean
                     created_at?: string
+                }
+            }
+            admin_actions: {
+                Row: {
+                    id: string
+                    action: string
+                    target_table: string
+                    target_id: string | null
+                    payload: Json
+                    performed_by: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    action: string
+                    target_table: string
+                    target_id?: string | null
+                    payload?: Json
+                    performed_by?: string | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    action?: string
+                    target_table?: string
+                    target_id?: string | null
+                    payload?: Json
+                    performed_by?: string | null
+                    created_at?: string
+                }
+            }
+            leads: {
+                Row: {
+                    id: string
+                    email: string
+                    phone: string | null
+                    category: string | null
+                    city: string | null
+                    step_reached: number
+                    source: string | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    email: string
+                    phone?: string | null
+                    category?: string | null
+                    city?: string | null
+                    step_reached?: number
+                    source?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    email?: string
+                    phone?: string | null
+                    category?: string | null
+                    city?: string | null
+                    step_reached?: number
+                    source?: string | null
+                    created_at?: string
+                    updated_at?: string
                 }
             }
         }
