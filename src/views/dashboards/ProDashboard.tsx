@@ -222,7 +222,7 @@ export function ProDashboard() {
                                 <p className="text-xs text-slate-500">Un profil complet augmente vos chances d'être contacté.</p>
                             </div>
                         </div>
-                        <Button variant="outline" onClick={() => router.push('/profile/setup')} className="shrink-0 text-xs border-orange-200 text-orange-700 hover:bg-orange-100">
+                        <Button variant="outline" onClick={() => router.push('/profile')} className="shrink-0 text-xs border-orange-200 text-orange-700 hover:bg-orange-100">
                             Compléter <ArrowRight size={13} className="ml-1" />
                         </Button>
                     </div>
