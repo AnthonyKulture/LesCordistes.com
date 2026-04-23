@@ -31,7 +31,7 @@ export const CREDIT_PACKS = [
         description: 'Agence / Volume',
         pricePerLead: '14€',
         discount: '-30%',
-        stripePriceId: 'price_1THiqbIQAyGYRDp7Wwqsj60E',
+        stripePriceId: 'price_1THioeIQAyGYRDp7tpT4WhBb',
     },
 ] as const;
 
