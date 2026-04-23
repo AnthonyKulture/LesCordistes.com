@@ -179,7 +179,7 @@ function matchJob(data: Record<string, string | boolean>): string {
       <p style="font-size:18px;font-weight:700;color:${B};margin:0 0 10px;line-height:26px;">${data.jobTitle}</p>
       <p style="font-size:14px;color:${S5};margin:0;"><span style="color:${S7};font-weight:600;">Lieu :</span> ${data.location}</p>
     </div>
-    ${btn(`https://lescordistes.com/jobs/${data.jobSlug}`, 'Voir les détails de la mission')}
+    ${btn(`https://lescordistes.com/jobs/${data.jobSlug || data.jobId}`, 'Voir les détails de la mission')}
     <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
     <p style="font-size:13px;color:${S5};margin:0;line-height:20px;">Les meilleures missions sont souvent débloquées rapidement. Agissez vite !</p>
   `);
