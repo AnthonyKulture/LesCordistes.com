@@ -208,9 +208,20 @@ DECLARE
 BEGIN
     -- On ne déclenche que si le statut change vers 'live' ou 'rejected'
     IF (OLD.status = 'pending') AND (NEW.status IN ('live', 'rejected')) THEN
-        -- Récupérer les infos du client
-        SELECT email, full_name INTO v_client_email, v_client_name
-        FROM profiles WHERE id = NEW.created_by;
+        -- Récupérer les infos du client (compte existant)
+        IF NEW.created_by IS NOT NULL THEN
+            SELECT email, full_name INTO v_client_email, v_client_name
+            FROM profiles WHERE id = NEW.created_by;
+        END IF;
+
+        -- Fallback invité : email stocké dans client_contact_info
+        IF v_client_email IS NULL THEN
+            v_client_email := NEW.client_contact_info->>'email';
+            v_client_name := COALESCE(
+                NEW.client_contact_info->>'name',
+                NEW.client_contact_info->>'first_name'
+            );
+        END IF;
 
         IF v_client_email IS NOT NULL THEN
             PERFORM private.invoke_send_email(
