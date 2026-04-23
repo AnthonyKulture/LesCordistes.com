@@ -270,6 +270,40 @@ function guestJobCreated(data: Record<string, string>): string {
   `);
 }
 
+function escHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function adminCustom(data: Record<string, string>): string {
+  const name = escHtml(data.name || '');
+  const subject = escHtml(data.subject || 'Message de LesCordistes.com');
+  const rawBody = data.body || '';
+  // Corps en texte brut — échappé puis reconverti en paragraphes.
+  const escaped = escHtml(rawBody);
+  const paragraphs = escaped
+    .split(/\n{2,}/)
+    .map(p => p.replace(/\n/g, '<br/>').trim())
+    .filter(Boolean)
+    .map(p => `<p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 18px;">${p}</p>`)
+    .join('');
+  // CTA : href limité à http(s), textes échappés. Si le link n'est pas valide → pas de CTA.
+  const rawLink = (data.link || '').trim();
+  const safeLink = /^https?:\/\/[^\s"'<>]+$/i.test(rawLink) ? rawLink : '';
+  const cta = safeLink && data.linkText ? btn(escHtml(safeLink), escHtml(data.linkText)) : '';
+  return base(subject, `
+    ${name ? `<p style="font-size:15px;color:${S5};margin:0 0 18px;">Bonjour ${name},</p>` : ''}
+    ${paragraphs || `<p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 18px;">(message vide)</p>`}
+    ${cta}
+    <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
+    <p style="font-size:13px;color:${S5};margin:0;">Une question ? Répondez directement à cet email.</p>
+  `);
+}
+
 // ─── Router ───────────────────────────────────────────────────────────────────
 
 serve(async (req) => {
@@ -292,6 +326,7 @@ serve(async (req) => {
       case 'verify-email':     html = verifyEmail(data); break;
       case 'password-reset':   html = passwordReset(data); break;
       case 'guest-job-created': html = guestJobCreated(data); break;
+      case 'admin-custom':     html = adminCustom(data); break;
       default:
         throw new Error(`Template not found: ${templateId}`);
     }
