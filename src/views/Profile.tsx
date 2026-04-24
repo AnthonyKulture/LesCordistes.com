@@ -1,418 +1,336 @@
 'use client'
 
-import React, { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { User, Award, Camera, Trash2 } from 'lucide-react';
-import { Button } from '../components/ui/Button';
-import { Input } from '../components/ui/Input';
-import { useAuth } from '../contexts/AuthContext';
-import { uploadJobPhoto } from '../lib/supabase';
-import { createSupabaseBrowserClient } from '../lib/supabase-browser';
-import { useToast } from '../components/ui/Toast';
-import { useQueryClient } from '@tanstack/react-query';
-import { FRENCH_DEPARTMENTS } from '../constants/departments';
-import { useCredits } from '../hooks/useCredits';
-import type { Profile as ProfileType } from '../types';
+import React, { useState, useRef, useCallback } from 'react'
+import { User, Award, Camera, Lock, MapPin } from 'lucide-react'
+import { uploadJobPhoto } from '../lib/supabase'
+import { createSupabaseBrowserClient } from '../lib/supabase-browser'
+import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../components/ui/Toast'
+import { useQueryClient } from '@tanstack/react-query'
+import { FRENCH_DEPARTMENTS } from '../constants/departments'
+import { useCredits } from '../hooks/useCredits'
+import type { Profile as ProfileType } from '../types'
 
-// Extracted Components
-import { ProfileHeader } from '../components/profile/ProfileHeader';
-import { PersonalInfoForm } from '../components/profile/PersonalInfoForm';
-import { ProfessionalInfoForm } from '../components/profile/ProfessionalInfoForm';
-import { ZoneManagement } from '../components/profile/ZoneManagement';
-import { PortfolioManager } from '../components/profile/PortfolioManager';
+import { ProfileHeader } from '../components/profile/ProfileHeader'
+import { ProfileTabs, type ProfileTab, type ProfileTabId } from '../components/profile/ProfileTabs'
+import { SectionCard } from '../components/profile/SectionCard'
+import { PersonalInfoForm } from '../components/profile/PersonalInfoForm'
+import { ProfessionalInfoForm } from '../components/profile/ProfessionalInfoForm'
+import { ZoneManagement } from '../components/profile/ZoneManagement'
+import { PortfolioManager } from '../components/profile/PortfolioManager'
+import { AccountSection } from '../components/profile/AccountSection'
 
 const CERTIFICATIONS_LIST = [
     'CQP Cordiste N1', 'CQP Cordiste N2', 'IRATA Level 1', 'IRATA Level 2', 'IRATA Level 3',
     'SPRAT Level 1', 'SPRAT Level 2', 'SPRAT Level 3',
     'Travaux en hauteur', 'Habilitation électrique B0', 'CACES Nacelle',
     'Premiers secours (SST)', 'Chef de chantier',
-];
+]
 
 const SKILLS_LIST = [
     'Nettoyage façade', 'Inspection visuelle', 'Peinture en hauteur', 'Étanchéité',
     'Ravalement', 'Soudure', 'Câblage', 'Maintenance industrielle',
     'Désamiantage', 'Photographie aérienne', 'Installation panneaux solaires',
     'Élagage', 'Travaux forestiers', 'Événementiel', 'Cinéma / Audiovisuel',
-];
+]
+
+type EditableSection = 'personal' | 'professional' | 'zones'
 
 interface ProfileFormData {
-    first_name: string;
-    last_name: string;
-    full_name: string;
-    phone: string;
-    bio: string;
-    company_name: string;
-    siret: string;
-    certifications: string[];
-    skills: string[];
-    equipment: string[];
-    insurance_info: string;
-    intervention_zones: string[];
-    portfolio_photos: string[];
-    client_type: string;
+    first_name: string
+    last_name: string
+    full_name: string
+    phone: string
+    bio: string
+    company_name: string
+    siret: string
+    certifications: string[]
+    skills: string[]
+    equipment: string[]
+    insurance_info: string
+    intervention_zones: string[]
+    portfolio_photos: string[]
+    client_type: string
+}
+
+function emptyDraft(): ProfileFormData {
+    return {
+        first_name: '', last_name: '', full_name: '', phone: '', bio: '',
+        company_name: '', siret: '', certifications: [], skills: [],
+        equipment: [], insurance_info: '', intervention_zones: [],
+        portfolio_photos: [], client_type: '',
+    }
+}
+
+function fromProfile(p: any): ProfileFormData {
+    return {
+        first_name: p.first_name || '',
+        last_name: p.last_name || '',
+        full_name: p.full_name || '',
+        phone: p.phone || '',
+        bio: p.bio || '',
+        company_name: p.company_name || '',
+        siret: p.siret || '',
+        certifications: p.certifications || [],
+        skills: p.skills || [],
+        equipment: p.equipment || [],
+        insurance_info: p.insurance_info || '',
+        intervention_zones: p.intervention_zones || [],
+        portfolio_photos: p.portfolio_photos || [],
+        client_type: p.client_type || '',
+    }
 }
 
 export const Profile: React.FC = () => {
-    const { profile, user, signOut, refreshProfile } = useAuth();
-    const toast = useToast();
-    const queryClient = useQueryClient();
-    const { balance } = useCredits();
-    const router = useRouter();
-    const [activeTab, setActiveTab] = useState<'info' | 'pro' | 'portfolio'>('info');
-    const [isEditing, setIsEditing] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
-    const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-    const [isDeletingAccount, setIsDeletingAccount] = useState(false);
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [deleteConfirmText, setDeleteConfirmText] = useState('');
-    const photoInputRef = useRef<HTMLInputElement>(null);
+    const { profile, user, refreshProfile } = useAuth()
+    const toast = useToast()
+    const queryClient = useQueryClient()
+    const { balance } = useCredits()
 
-    const [formData, setFormData] = useState<ProfileFormData>({
-        first_name: '',
-        last_name: '',
-        full_name: '',
-        phone: '',
-        bio: '',
-        company_name: '',
-        siret: '',
-        certifications: [],
-        skills: [],
-        equipment: [],
-        insurance_info: '',
-        intervention_zones: [],
-        portfolio_photos: [],
-        client_type: '',
-    });
+    const [activeTab, setActiveTab] = useState<ProfileTabId>('info')
+    const [editingSection, setEditingSection] = useState<EditableSection | null>(null)
+    const [savingSection, setSavingSection] = useState<EditableSection | null>(null)
+    const [isUploadingPhoto, setIsUploadingPhoto] = useState(false)
+    const photoInputRef = useRef<HTMLInputElement>(null)
 
-    // Sync formData with profile when it loads
+    const [formData, setFormData] = useState<ProfileFormData>(emptyDraft())
+    const [newEquipment, setNewEquipment] = useState('')
+
+    // Sync form draft with profile when it loads/refreshes
     React.useEffect(() => {
-        if (profile) {
-            setFormData({
-                first_name: profile.first_name || '',
-                last_name: profile.last_name || '',
-                full_name: profile.full_name || '',
-                phone: profile.phone || '',
-                bio: profile.bio || '',
-                company_name: profile.company_name || '',
-                siret: profile.siret || '',
-                certifications: profile.certifications || [],
-                skills: profile.skills || [],
-                equipment: profile.equipment || [],
-                insurance_info: profile.insurance_info || '',
-                intervention_zones: profile.intervention_zones || [],
-                portfolio_photos: profile.portfolio_photos || [],
-                client_type: (profile as any).client_type || '',
-            });
+        if (profile) setFormData(fromProfile(profile))
+    }, [profile])
+
+    const toggleArrayItem = useCallback(
+        (field: 'certifications' | 'skills' | 'intervention_zones', value: string) => {
+            setFormData(prev => ({
+                ...prev,
+                [field]: prev[field].includes(value)
+                    ? prev[field].filter(v => v !== value)
+                    : [...prev[field], value],
+            }))
+        },
+        []
+    )
+
+    // ---------- Section save helpers ----------
+
+    // Après save / cancel : smooth scroll vers le haut de la page.
+    // Cible toujours atteignable (0), aucun problème de clamp possible.
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    async function patchProfile(
+        section: EditableSection,
+        payload: Record<string, any>,
+        successMsg = 'Profil mis à jour !'
+    ) {
+        if (!user) return
+        setSavingSection(section)
+        try {
+            const client = createSupabaseBrowserClient()
+            const { error } = await (client.from('profiles') as any).update(payload).eq('id', user.id)
+            if (error) {
+                console.error('Supabase update error:', error)
+                toast.error(`Erreur : ${error.message}`)
+                return
+            }
+            toast.success(successMsg)
+            queryClient.invalidateQueries({ queryKey: ['profile'] })
+            queryClient.invalidateQueries({ queryKey: ['profile', user.id] })
+            await refreshProfile()
+
+            scrollToTop()
+            setEditingSection(null)
+        } catch (err: any) {
+            toast.error(err?.message || 'Erreur lors de la mise à jour')
+        } finally {
+            setSavingSection(null)
         }
-    }, [profile]);
+    }
 
-    const [newEquipment, setNewEquipment] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
-    const [savingPassword, setSavingPassword] = useState(false);
+    async function savePersonal() {
+        await patchProfile(
+            'personal',
+            {
+                first_name: formData.first_name || null,
+                last_name: formData.last_name || null,
+                full_name: formData.full_name || null,
+                phone: formData.phone || null,
+                client_type: formData.client_type || null,
+                company_name: isPro ? formData.company_name || null : undefined,
+                siret: isPro ? formData.siret || null : undefined,
+                bio: isPro ? formData.bio || null : undefined,
+            },
+            'Informations mises à jour !'
+        )
+    }
 
-    const toggleArrayItem = (field: 'certifications' | 'skills' | 'intervention_zones', value: string) => {
-        setFormData(prev => ({
-            ...prev,
-            [field]: prev[field].includes(value)
-                ? prev[field].filter(v => v !== value)
-                : [...prev[field], value],
-        }));
-    };
+    async function saveProfessional() {
+        await patchProfile(
+            'professional',
+            {
+                certifications: formData.certifications,
+                skills: formData.skills,
+                equipment: formData.equipment,
+                insurance_info: formData.insurance_info || null,
+            },
+            'Profil pro mis à jour !'
+        )
+    }
+
+    async function saveZones() {
+        await patchProfile(
+            'zones',
+            { intervention_zones: formData.intervention_zones },
+            'Zones d\'intervention mises à jour !'
+        )
+    }
+
+    function cancelSection() {
+        if (profile) setFormData(fromProfile(profile))
+        scrollToTop()
+        setEditingSection(null)
+    }
+
+    // ---------- Portfolio (auto-save, pas de mode édition) ----------
 
     const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = Array.from(e.target.files || []);
-        if (!files.length || !user) return;
+        const files = Array.from(e.target.files || [])
+        if (!files.length || !user) return
 
-        setIsUploadingPhoto(true);
+        setIsUploadingPhoto(true)
         try {
-            const urls: string[] = [];
+            const urls: string[] = []
             for (const file of files.slice(0, 6)) {
-                const url = await uploadJobPhoto(file, `portfolio-${user.id}`);
-                if (url) urls.push(url);
+                const url = await uploadJobPhoto(file, `portfolio-${user.id}`)
+                if (url) urls.push(url)
             }
 
-            setFormData(prev => {
-                const updated = [...prev.portfolio_photos, ...urls].slice(0, 12);
+            const current = (profile as any)?.portfolio_photos || []
+            const updated = [...current, ...urls].slice(0, 12)
 
-                // Sauvegarde auto en base immédiatement après l'upload
-                const client = createSupabaseBrowserClient();
-                (client.from('profiles') as any)
-                    .update({ portfolio_photos: updated })
-                    .eq('id', user.id)
-                    .then(({ error }: { error: any }) => {
-                        if (error) {
-                            toast.error('Erreur lors de la sauvegarde des photos');
-                        } else {
-                            toast.success('Photos sauvegardées !');
-                            refreshProfile();
-                        }
-                    });
-
-                return { ...prev, portfolio_photos: updated };
-            });
-        } finally {
-            setIsUploadingPhoto(false);
-            // Reset input pour permettre de re-sélectionner les mêmes fichiers
-            e.target.value = '';
-        }
-    };
-
-    const removePhoto = (url: string) => {
-        if (!user) return;
-        setFormData(prev => {
-            const updated = prev.portfolio_photos.filter(u => u !== url);
-
-            // Sauvegarde auto
-            const client = createSupabaseBrowserClient();
-            (client.from('profiles') as any)
+            const client = createSupabaseBrowserClient()
+            const { error } = await (client.from('profiles') as any)
                 .update({ portfolio_photos: updated })
                 .eq('id', user.id)
-                .then(({ error }: { error: any }) => {
-                    if (!error) refreshProfile();
-                });
-
-            return { ...prev, portfolio_photos: updated };
-        });
-    };
-
-    const handlePasswordSave = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (newPassword.length < 6) {
-            toast.error('Le mot de passe doit faire au moins 6 caractères');
-            return;
-        }
-        if (newPassword !== newPasswordConfirm) {
-            toast.error('Les mots de passe ne correspondent pas');
-            return;
-        }
-        setSavingPassword(true);
-        try {
-            const client = createSupabaseBrowserClient();
-            const { error } = await client.auth.updateUser({ password: newPassword });
-            if (error) throw error;
-            toast.success('Mot de passe défini avec succès !');
-            setNewPassword('');
-            setNewPasswordConfirm('');
-        } catch (error: any) {
-            toast.error(error.message || 'Erreur lors de la mise à jour du mot de passe');
-        } finally {
-            setSavingPassword(false);
-        }
-    };
-
-    const handleDeleteAccount = async () => {
-        if (deleteConfirmText !== 'SUPPRIMER') return;
-        setIsDeletingAccount(true);
-        try {
-            const res = await fetch('/api/delete-account', { method: 'DELETE' });
-            if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data.error || 'Erreur serveur');
-            }
-            await signOut();
-            router.replace('/');
-        } catch (error: any) {
-            toast.error(error.message || 'Erreur lors de la suppression du compte');
-            setIsDeletingAccount(false);
-        }
-    };
-
-    const handleSave = async () => {
-        if (!user) return;
-        setIsSaving(true);
-        try {
-            // createSupabaseBrowserClient() par appel — garantit la session auth courante
-            const client = createSupabaseBrowserClient();
-            const { error } = await (client
-                .from('profiles') as any)
-                .update({
-                    first_name: formData.first_name || null,
-                    last_name: formData.last_name || null,
-                    full_name: formData.full_name || null,
-                    phone: formData.phone || null,
-                    bio: formData.bio || null,
-                    company_name: formData.company_name || null,
-                    siret: formData.siret || null,
-                    certifications: formData.certifications,
-                    skills: formData.skills,
-                    equipment: formData.equipment,
-                    insurance_info: formData.insurance_info || null,
-                    intervention_zones: formData.intervention_zones,
-                    portfolio_photos: formData.portfolio_photos,
-                    client_type: formData.client_type || null,
-                })
-                .eq('id', user.id);
 
             if (error) {
-                console.error('Supabase update error:', error);
-                toast.error(`Erreur Supabase: ${error.message}`);
-                return;
+                toast.error('Erreur lors de la sauvegarde des photos')
+            } else {
+                toast.success('Photos ajoutées !')
+                await refreshProfile()
             }
-
-            toast.success('Profil mis à jour avec succès !');
-            queryClient.invalidateQueries({ queryKey: ['profile'] });
-            queryClient.invalidateQueries({ queryKey: ['profile', user.id] });
-            await refreshProfile(); // Refresh the global profile in AuthContext
-            setIsEditing(false);
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            toast.error('Erreur lors de la mise à jour du profil');
         } finally {
-            setIsSaving(false);
+            setIsUploadingPhoto(false)
+            e.target.value = ''
         }
-    };
+    }
+
+    const removePhoto = async (url: string) => {
+        if (!user || !confirm('Supprimer cette photo ?')) return
+        const current = (profile as any)?.portfolio_photos || []
+        const updated = current.filter((u: string) => u !== url)
+
+        const client = createSupabaseBrowserClient()
+        const { error } = await (client.from('profiles') as any)
+            .update({ portfolio_photos: updated })
+            .eq('id', user.id)
+
+        if (error) {
+            toast.error('Erreur lors de la suppression')
+        } else {
+            toast.success('Photo supprimée')
+            await refreshProfile()
+        }
+    }
+
+    // ---------- Render ----------
 
     if (!profile) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-blue" />
             </div>
-        );
+        )
     }
 
-    const isPro = profile.role === 'pro';
+    const isPro = profile.role === 'pro'
 
-    const tabs = [
-        { id: 'info' as const, label: 'Informations', icon: User },
-        ...(isPro ? [
-            { id: 'pro' as const, label: 'Profil Pro', icon: Award },
-            { id: 'portfolio' as const, label: 'Portfolio', icon: Camera },
-        ] : []),
-    ];
+    const tabs: ProfileTab[] = [
+        { id: 'info', label: 'Informations', shortLabel: 'Infos', icon: User },
+        ...(isPro
+            ? ([
+                  { id: 'pro', label: 'Profil Pro', shortLabel: 'Pro', icon: Award },
+                  { id: 'portfolio', label: 'Portfolio', shortLabel: 'Photos', icon: Camera },
+              ] as ProfileTab[])
+            : []),
+        { id: 'account', label: 'Compte', shortLabel: 'Compte', icon: Lock },
+    ]
 
-    // Completion score
     const completionFields = isPro
         ? ['full_name', 'phone', 'bio', 'company_name', 'certifications', 'skills', 'equipment', 'insurance_info', 'intervention_zones', 'portfolio_photos']
-        : ['full_name', 'phone'];
+        : ['full_name', 'phone']
     const completedCount = completionFields.filter(f => {
-        const val = (profile as any)[f];
-        return val && (Array.isArray(val) ? val.length > 0 : val !== '');
-    }).length;
-    const completionPct = Math.round((completedCount / completionFields.length) * 100);
+        const val = (profile as any)[f]
+        return val && (Array.isArray(val) ? val.length > 0 : val !== '')
+    }).length
+    const completionPct = Math.round((completedCount / completionFields.length) * 100)
+
+    const canEdit = (section: EditableSection) => !editingSection || editingSection === section
 
     return (
-        <div className="min-h-screen bg-slate-50 py-6 sm:py-10">
+        <div className="min-h-screen bg-slate-50 py-4 sm:py-10 pb-24 sm:pb-10">
             <div className="container max-w-4xl px-4 sm:px-6">
-                <ProfileHeader 
+                <ProfileHeader
                     profile={profile as ProfileType}
                     balance={balance}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
                     completionPct={completionPct}
                     completionFields={completionFields}
                     completedCount={completedCount}
                 />
 
-                {/* Tabs */}
-                {tabs.length > 1 && (
-                    <div className="flex border-b border-slate-200 mb-4 sm:mb-6 bg-white rounded-t-xl px-2 sm:px-4">
-                        {tabs.map(tab => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-1.5 px-3 sm:px-4 py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors -mb-px ${
-                                    activeTab === tab.id
-                                        ? 'border-brand-blue text-brand-blue'
-                                        : 'border-transparent text-slate-500 hover:text-slate-700'
-                                }`}
-                            >
-                                <tab.icon size={15} />
-                                {tab.label}
-                            </button>
-                        ))}
-                    </div>
+                <ProfileTabs tabs={tabs} active={activeTab} onChange={setActiveTab} />
+
+                {activeTab === 'info' && (
+                    <SectionCard
+                        icon={User}
+                        title="Informations personnelles"
+                        sectionId="section-personal"
+                        isEditing={editingSection === 'personal'}
+                        isSaving={savingSection === 'personal'}
+                        canEdit={canEdit('personal')}
+                        onEdit={() => setEditingSection('personal')}
+                        onCancel={cancelSection}
+                        onSave={savePersonal}
+                    >
+                        <PersonalInfoForm
+                            isEditing={editingSection === 'personal'}
+                            formData={formData}
+                            setFormData={setFormData}
+                            profile={profile as ProfileType}
+                            isPro={isPro}
+                        />
+                    </SectionCard>
                 )}
 
-                <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 sm:p-6">
-                    {activeTab === 'info' && (
-                        <div className="space-y-8">
-                            <PersonalInfoForm
-                                isEditing={isEditing}
-                                formData={formData}
-                                setFormData={setFormData}
-                                profile={profile as ProfileType}
-                                isPro={isPro}
-                            />
-
-                            <div className="pt-6 border-t border-slate-100">
-                                <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Sécurité</h3>
-                                <form onSubmit={handlePasswordSave} className="space-y-3 max-w-sm">
-                                    <Input
-                                        label="Nouveau mot de passe"
-                                        type="password"
-                                        placeholder="Minimum 6 caractères"
-                                        value={newPassword}
-                                        onChange={(e) => setNewPassword(e.target.value)}
-                                    />
-                                    <Input
-                                        label="Confirmer le mot de passe"
-                                        type="password"
-                                        placeholder="Répétez le mot de passe"
-                                        value={newPasswordConfirm}
-                                        onChange={(e) => setNewPasswordConfirm(e.target.value)}
-                                    />
-                                    <Button
-                                        type="submit"
-                                        variant="outline"
-                                        isLoading={savingPassword}
-                                        disabled={!newPassword || !newPasswordConfirm}
-                                        className="w-full"
-                                    >
-                                        {savingPassword ? 'Enregistrement...' : 'Définir le mot de passe'}
-                                    </Button>
-                                </form>
-                            </div>
-
-                            <div className="pt-6 border-t border-red-100">
-                                <h3 className="text-sm font-bold text-red-600 uppercase tracking-wider mb-2">Zone de danger</h3>
-                                <p className="text-xs text-slate-500 mb-4">
-                                    La suppression de votre compte est irréversible. Toutes vos données (missions, messages, crédits) seront définitivement effacées.
-                                </p>
-                                {!showDeleteConfirm ? (
-                                    <button
-                                        onClick={() => setShowDeleteConfirm(true)}
-                                        className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-red-600 border border-red-200 rounded-xl hover:bg-red-50 transition-colors"
-                                    >
-                                        <Trash2 size={16} />
-                                        Supprimer mon compte
-                                    </button>
-                                ) : (
-                                    <div className="bg-red-50 border border-red-200 rounded-xl p-4 space-y-3 max-w-sm">
-                                        <p className="text-sm font-bold text-red-700">
-                                            Tapez <span className="font-black">SUPPRIMER</span> pour confirmer
-                                        </p>
-                                        <Input
-                                            type="text"
-                                            placeholder="SUPPRIMER"
-                                            value={deleteConfirmText}
-                                            onChange={(e) => setDeleteConfirmText(e.target.value)}
-                                        />
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={handleDeleteAccount}
-                                                disabled={deleteConfirmText !== 'SUPPRIMER' || isDeletingAccount}
-                                                className="flex-1 py-2 text-sm font-bold text-white bg-red-600 rounded-xl hover:bg-red-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-                                            >
-                                                {isDeletingAccount ? 'Suppression...' : 'Confirmer la suppression'}
-                                            </button>
-                                            <button
-                                                onClick={() => { setShowDeleteConfirm(false); setDeleteConfirmText(''); }}
-                                                className="px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
-                                            >
-                                                Annuler
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    {activeTab === 'pro' && isPro && (
-                        <div className="space-y-7">
-                            <ProfessionalInfoForm 
-                                isEditing={isEditing}
+                {activeTab === 'pro' && isPro && (
+                    <div className="space-y-4 sm:space-y-6">
+                        <SectionCard
+                            icon={Award}
+                            title="Profil professionnel"
+                            subtitle="Certifications, compétences, matériel, assurance"
+                            sectionId="section-professional"
+                            isEditing={editingSection === 'professional'}
+                            isSaving={savingSection === 'professional'}
+                            canEdit={canEdit('professional')}
+                            onEdit={() => setEditingSection('professional')}
+                            onCancel={cancelSection}
+                            onSave={saveProfessional}
+                        >
+                            <ProfessionalInfoForm
+                                isEditing={editingSection === 'professional'}
                                 formData={formData}
                                 setFormData={setFormData}
                                 profile={profile as ProfileType}
@@ -422,61 +340,43 @@ export const Profile: React.FC = () => {
                                 newEquipment={newEquipment}
                                 setNewEquipment={setNewEquipment}
                             />
-                            
-                            <ZoneManagement 
-                                isEditing={isEditing}
+                        </SectionCard>
+
+                        <SectionCard
+                            icon={MapPin}
+                            title="Zones d'intervention"
+                            subtitle="Départements où vous intervenez"
+                            sectionId="section-zones"
+                            isEditing={editingSection === 'zones'}
+                            isSaving={savingSection === 'zones'}
+                            canEdit={canEdit('zones')}
+                            onEdit={() => setEditingSection('zones')}
+                            onCancel={cancelSection}
+                            onSave={saveZones}
+                        >
+                            <ZoneManagement
+                                isEditing={editingSection === 'zones'}
                                 formData={formData}
                                 toggleArrayItem={toggleArrayItem}
                                 profile={profile}
                                 FRENCH_DEPARTMENTS={FRENCH_DEPARTMENTS}
                             />
-                        </div>
-                    )}
+                        </SectionCard>
+                    </div>
+                )}
 
-                    {activeTab === 'portfolio' && isPro && (
-                        <PortfolioManager 
-                            isEditing={isEditing}
-                            formData={formData}
-                            profile={profile}
-                            isUploadingPhoto={isUploadingPhoto}
-                            handlePhotoUpload={handlePhotoUpload}
-                            removePhoto={removePhoto}
-                            photoInputRef={photoInputRef}
-                        />
-                    )}
+                {activeTab === 'portfolio' && isPro && (
+                    <PortfolioManager
+                        profile={profile}
+                        isUploadingPhoto={isUploadingPhoto}
+                        handlePhotoUpload={handlePhotoUpload}
+                        removePhoto={removePhoto}
+                        photoInputRef={photoInputRef}
+                    />
+                )}
 
-                    {/* Save / Cancel */}
-                    {isEditing && (
-                        <div className="flex gap-3 mt-8 pt-6 border-t border-slate-100">
-                            <Button variant="primary" onClick={handleSave} isLoading={isSaving} className="flex-1">
-                                Enregistrer
-                            </Button>
-                            <Button variant="outline" onClick={() => {
-                                setIsEditing(false);
-                                // Sync back
-                                setFormData({
-                                    first_name: profile.first_name || '',
-                                    last_name: profile.last_name || '',
-                                    full_name: profile.full_name || '',
-                                    phone: profile.phone || '',
-                                    bio: profile.bio || '',
-                                    company_name: profile.company_name || '',
-                                    siret: profile.siret || '',
-                                    certifications: profile.certifications || [],
-                                    skills: profile.skills || [],
-                                    equipment: profile.equipment || [],
-                                    insurance_info: profile.insurance_info || '',
-                                    intervention_zones: profile.intervention_zones || [],
-                                    portfolio_photos: profile.portfolio_photos || [],
-                                    client_type: (profile as any).client_type || '',
-                                });
-                            }} className="flex-1">
-                                Annuler
-                            </Button>
-                        </div>
-                    )}
-                </div>
+                {activeTab === 'account' && <AccountSection />}
             </div>
         </div>
-    );
-};
+    )
+}
