@@ -88,7 +88,7 @@ export const PromoCodeInput: React.FC = () => {
                     type="text"
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
-                    placeholder="Ex : BIENVENUE1"
+                    placeholder="Votre code"
                     autoComplete="off"
                     spellCheck={false}
                     className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-mono tracking-wider uppercase placeholder:font-sans placeholder:tracking-normal placeholder:normal-case placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-transparent"
