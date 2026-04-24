@@ -7,6 +7,7 @@ import { Map, LayoutGrid, Plus } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { JobCard } from '../components/JobCard';
 import { Button } from '../components/ui/Button';
+import { PromoActivation } from '../components/promo/PromoActivation';
 import type { Job } from '../types';
 
 const JobMap = lazy(() => import('../components/map/JobMap').then(m => ({ default: m.JobMap })));
@@ -36,7 +37,8 @@ export const JobBoard: React.FC = () => {
 
     return (
         <>
-        
+        <PromoActivation />
+
         <div className="min-h-screen bg-slate-50 py-10">
             <div className="container max-w-7xl">
                 {/* Header */}

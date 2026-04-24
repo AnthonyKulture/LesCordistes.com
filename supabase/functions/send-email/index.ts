@@ -270,6 +270,166 @@ function guestJobCreated(data: Record<string, string>): string {
   `);
 }
 
+function proCreditOffer(data: Record<string, string>): string {
+  const prenom = (data.prenom || data.name || '').toString().trim();
+  const unsubscribeUrl = (data.unsubscribeUrl || data.unsubscribe_url || 'https://www.lescordistes.com/optout').toString();
+  return `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Votre crédit offert — LesCordistes</title>
+<style>
+  body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+  img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+  body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+  @media screen and (max-width: 600px) {
+    .container { width: 100% !important; }
+    .px-mobile { padding-left: 24px !important; padding-right: 24px !important; }
+    .h1-mobile { font-size: 28px !important; line-height: 34px !important; }
+    .credit-badge { font-size: 44px !important; }
+    .cta-mobile { width: 100% !important; display: block !important; }
+  }
+</style>
+</head>
+<body style="margin:0; padding:0; background-color:#F4F6FB; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <div style="display:none; font-size:1px; color:#F4F6FB; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+    Découvrez gratuitement la qualité des missions LesCordistes. Offre réservée aux pros inscrits, valable 14 jours.
+  </div>
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#F4F6FB;">
+    <tr><td align="center" style="padding:24px 12px;">
+      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="container" style="max-width:600px; background-color:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 2px 12px rgba(30,43,79,0.08);">
+        <tr><td style="background-color:#1E2B4F; padding:28px 40px;" class="px-mobile">
+          <img src="https://www.lescordistes.com/lescordistes.com-white-logo.png" alt="LesCordistes" width="180" style="display:block; max-width:180px; height:auto;">
+        </td></tr>
+        <tr><td style="padding:48px 40px 24px 40px;" class="px-mobile">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-bottom:20px;">
+            <tr><td style="background-color:#EEF3FC; border-radius:20px; padding:8px 16px;">
+              <p style="margin:0; font-size:13px; font-weight:600; color:#1E2B4F;">
+                <span style="color:#6B9EEB;">●</span>&nbsp;&nbsp;Offre réservée aux pros inscrits
+              </p>
+            </td></tr>
+          </table>
+          <h1 class="h1-mobile" style="margin:0 0 20px 0; font-size:34px; line-height:42px; font-weight:800; color:#1E2B4F; letter-spacing:-0.5px;">
+            Votre crédit offert<br><span style="color:#6B9EEB;">vous attend.</span>
+          </h1>
+          <p style="margin:0; font-size:16px; line-height:26px; color:#4A5578;">
+            Bonjour ${prenom || 'cordiste'},<br><br>
+            Vous avez créé votre compte pro sur LesCordistes, mais vous n'avez pas encore débloqué votre première mission. On vous offre <strong style="color:#1E2B4F;">1 crédit</strong> pour tester la plateforme — sans engagement.
+          </p>
+        </td></tr>
+        <tr><td style="padding:16px 40px 8px 40px;" class="px-mobile">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#1E2B4F; border-radius:12px;">
+            <tr><td align="center" style="padding:36px 24px;">
+              <p style="margin:0 0 10px 0; font-size:12px; color:#6B9EEB; letter-spacing:2px; text-transform:uppercase; font-weight:700;">Votre crédit offert</p>
+              <p class="credit-badge" style="margin:0 0 10px 0; font-size:56px; line-height:60px; font-weight:800; color:#ffffff; letter-spacing:-2px;">+1 crédit</p>
+              <p style="margin:0; font-size:14px; color:#F59E0B; font-weight:700;">Valeur : 20 € — Offert</p>
+            </td></tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:24px 40px 8px 40px;" class="px-mobile">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border:2px dashed #F59E0B; border-radius:8px; background-color:#FFF9EC;">
+            <tr><td align="center" style="padding:20px 16px;">
+              <p style="margin:0 0 6px 0; font-size:12px; color:#4A5578; text-transform:uppercase; letter-spacing:1.5px; font-weight:600;">Code à activer</p>
+              <p style="margin:0; font-size:26px; color:#1E2B4F; font-weight:800; letter-spacing:3px; font-family: 'Courier New', monospace;">BIENVENUE1</p>
+            </td></tr>
+          </table>
+        </td></tr>
+        <tr><td align="center" style="padding:32px 40px 16px 40px;" class="px-mobile">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+            <tr><td align="center" style="background-color:#1E2B4F; border-radius:30px;">
+              <a href="https://www.lescordistes.com/jobs?promo=BIENVENUE1" target="_blank" class="cta-mobile" style="display:inline-block; padding:18px 44px; font-size:16px; font-weight:700; color:#ffffff; text-decoration:none; letter-spacing:0.3px;">
+                Activer mon crédit et voir les missions →
+              </a>
+            </td></tr>
+          </table>
+          <p style="margin:16px 0 0 0; font-size:13px; color:#8892B0;">Offre valable 14 jours. Sans engagement.</p>
+        </td></tr>
+        <tr><td style="padding:16px 40px;" class="px-mobile"><hr style="border:none; border-top:1px solid #EEF3FC; margin:0;"></td></tr>
+        <tr><td style="padding:8px 40px 32px 40px;" class="px-mobile">
+          <h2 style="margin:0 0 24px 0; font-size:22px; font-weight:800; color:#1E2B4F; letter-spacing:-0.3px;">Pourquoi débloquer une mission&nbsp;?</h2>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:20px;">
+            <tr>
+              <td width="44" valign="top" style="padding-top:2px;">
+                <div style="width:32px; height:32px; background-color:#EEF3FC; border-radius:50%; text-align:center; line-height:32px; color:#1E2B4F; font-size:16px; font-weight:800;">✓</div>
+              </td>
+              <td valign="top">
+                <p style="margin:0 0 4px 0; font-size:15px; font-weight:700; color:#1E2B4F;">Missions vérifiées manuellement</p>
+                <p style="margin:0; font-size:14px; line-height:22px; color:#4A5578;">Chaque projet est relu et validé par notre équipe avant publication. Pas de faux leads.</p>
+              </td>
+            </tr>
+          </table>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:20px;">
+            <tr>
+              <td width="44" valign="top" style="padding-top:2px;">
+                <div style="width:32px; height:32px; background-color:#EEF3FC; border-radius:50%; text-align:center; line-height:32px; color:#1E2B4F; font-size:16px; font-weight:800;">✓</div>
+              </td>
+              <td valign="top">
+                <p style="margin:0 0 4px 0; font-size:15px; font-weight:700; color:#1E2B4F;">Contact direct avec le client</p>
+                <p style="margin:0; font-size:14px; line-height:22px; color:#4A5578;">Téléphone, email et adresse du chantier. Aucun intermédiaire, aucune commission sur la prestation.</p>
+              </td>
+            </tr>
+          </table>
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td width="44" valign="top" style="padding-top:2px;">
+                <div style="width:32px; height:32px; background-color:#EEF3FC; border-radius:50%; text-align:center; line-height:32px; color:#1E2B4F; font-size:16px; font-weight:800;">✓</div>
+              </td>
+              <td valign="top">
+                <p style="margin:0 0 4px 0; font-size:15px; font-weight:700; color:#1E2B4F;">Sans abonnement, sans engagement</p>
+                <p style="margin:0; font-size:14px; line-height:22px; color:#4A5578;">Vous ne payez que les missions qui vous intéressent. Les crédits n'expirent pas.</p>
+              </td>
+            </tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:0 40px 32px 40px;" class="px-mobile">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color:#F4F6FB; border-radius:8px; border-left:4px solid #6B9EEB;">
+            <tr><td style="padding:22px 24px;">
+              <p style="margin:0 0 10px 0; font-size:15px; line-height:24px; color:#1E2B4F; font-style:italic;">
+                « J'ai débloqué deux missions syndic dans mon département la première semaine. Le ROI a été immédiat. »
+              </p>
+              <p style="margin:0; font-size:12px; color:#8892B0; font-weight:600;">— Cordiste CQP N2, Lyon</p>
+            </td></tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:0 40px 40px 40px;" class="px-mobile">
+          <p style="margin:0 0 12px 0; font-size:15px; line-height:24px; color:#4A5578;">
+            Une question&nbsp;? Répondez simplement à cet email, je lis tous les messages personnellement.
+          </p>
+          <p style="margin:0; font-size:15px; line-height:22px; color:#1E2B4F; font-weight:700;">
+            Anthony<br>
+            <span style="font-weight:400; color:#8892B0; font-size:13px;">Fondateur, LesCordistes.com</span>
+          </p>
+        </td></tr>
+        <tr><td style="background-color:#1E2B4F; padding:32px 40px;" class="px-mobile">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr><td align="center">
+              <img src="https://www.lescordistes.com/lescordistes.com-white-logo.png" alt="LesCordistes" width="140" style="display:block; margin:0 auto 16px auto; max-width:140px; height:auto;">
+              <p style="margin:0 0 16px 0; font-size:13px; line-height:20px; color:#A8B2D1;">
+                La plateforme qui connecte les professionnels du travail en hauteur avec leurs clients.
+              </p>
+              <p style="margin:0 0 8px 0; font-size:12px; color:#A8B2D1;">
+                <a href="https://www.lescordistes.com/jobs" style="color:#6B9EEB; text-decoration:none; margin:0 8px; font-weight:600;">Missions</a>
+                <span style="color:#4A5578;">·</span>
+                <a href="https://www.lescordistes.com/credits" style="color:#6B9EEB; text-decoration:none; margin:0 8px; font-weight:600;">Tarifs</a>
+                <span style="color:#4A5578;">·</span>
+                <a href="https://www.lescordistes.com/connexion" style="color:#6B9EEB; text-decoration:none; margin:0 8px; font-weight:600;">Mon compte</a>
+              </p>
+              <p style="margin:16px 0 0 0; font-size:11px; color:#8892B0; line-height:18px;">
+                © 2026 LesCordistes.com · <a href="${unsubscribeUrl}" style="color:#A8B2D1; text-decoration:underline;">Se désinscrire</a>
+              </p>
+            </td></tr>
+          </table>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
 function escHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -326,6 +486,7 @@ serve(async (req) => {
       case 'verify-email':     html = verifyEmail(data); break;
       case 'password-reset':   html = passwordReset(data); break;
       case 'guest-job-created': html = guestJobCreated(data); break;
+      case 'pro-credit-offer': html = proCreditOffer(data); break;
       case 'admin-custom':     html = adminCustom(data); break;
       default:
         throw new Error(`Template not found: ${templateId}`);
