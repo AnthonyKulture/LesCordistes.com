@@ -14,6 +14,7 @@ import type { Job } from '../types';
 
 // Extracted Components
 import { JobHeader } from '../components/job-detail/JobHeader';
+import { JobSummary } from '../components/job-detail/JobSummary';
 import { JobDescription } from '../components/job-detail/JobDescription';
 import { JobPhotos } from '../components/job-detail/JobPhotos';
 import { TechnicalSpecs } from '../components/job-detail/TechnicalSpecs';
@@ -227,24 +228,27 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
                                 job={job}
                                 categories={allCategories}
                                 clientType={clientType}
+                                proInterventionZones={profile?.role === 'pro' ? profile?.intervention_zones : null}
+                            />
+                            <JobSummary
+                                job={job}
+                                contractTypeLabels={contractTypeLabels}
+                                levelLabels={levelLabels}
+                                structureTypeLabels={structureTypeLabels}
                             />
                             <JobDescription description={job.description} />
                             <JobPhotos photos={job.photos_url || []} isLocked={!canViewContact} />
-                            <TechnicalSpecs 
-                                job={job} 
-                                levelLabels={levelLabels} 
-                                habilitationLabels={habilitationLabels} 
-                                tradeLabels={tradeLabels} 
+                            <TechnicalSpecs
+                                job={job}
+                                levelLabels={levelLabels}
+                                habilitationLabels={habilitationLabels}
+                                tradeLabels={tradeLabels}
                             />
                         </div>
 
                         {/* RIGHT — Sidebar */}
                         <JobSidebar
                             job={job}
-                            categories={allCategories}
-                            contractTypeLabels={contractTypeLabels}
-                            levelLabels={levelLabels}
-                            structureTypeLabels={structureTypeLabels}
                             user={user}
                             profile={profile}
                             isOwner={!!isOwner}
