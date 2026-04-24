@@ -8,6 +8,7 @@ import { useCredits } from '../hooks/useCredits';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '../components/ui/Toast';
 import { CREDIT_PACKS } from '../constants/creditPacks';
+import { PromoCodeInput } from '../components/promo/PromoCodeInput';
 import Link from 'next/link';
 import posthog from 'posthog-js';
 
@@ -110,6 +111,9 @@ export const Credits: React.FC = () => {
                         ))}
                     </div>
                 </div>
+
+                {/* Promo code input — saisie manuelle (fallback si l'utilisateur ne clique pas le CTA email) */}
+                <PromoCodeInput />
 
                 {/* Pricing */}
                 <h2 className="text-lg font-bold text-slate-900 mb-4">Packs de crédits</h2>
