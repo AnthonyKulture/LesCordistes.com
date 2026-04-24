@@ -376,6 +376,14 @@ export const Header: React.FC = () => {
                                     <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
                                 </Link>
                                 <Link
+                                    href="/credits"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex items-center justify-between py-5 border-b border-slate-100 text-slate-600 font-semibold text-base group"
+                                >
+                                    Tarifs
+                                    <ArrowRight size={18} className="text-slate-200 group-hover:text-slate-400 transition-colors" />
+                                </Link>
+                                <Link
                                     href="/connexion"
                                     onClick={() => setIsMenuOpen(false)}
                                     className="flex items-center justify-between py-5 text-slate-500 font-semibold text-base group"

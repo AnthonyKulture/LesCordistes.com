@@ -1,33 +1,36 @@
-import React from 'react';
-import { Award, Briefcase, Wrench, X, Plus, Shield } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { Input } from '../ui/Input';
-import type { Profile } from '../../types';
+import React from 'react'
+import { Award, Briefcase, Wrench, X, Plus, Shield } from 'lucide-react'
+import { Button } from '../ui/Button'
+import { Input } from '../ui/Input'
+import type { Profile } from '../../types'
 
 interface ProfessionalInfoFormProps {
-    isEditing: boolean;
-    formData: any;
-    setFormData: (data: any) => void;
-    profile: Profile;
-    toggleArrayItem: (field: any, value: string) => void;
-    CERTIFICATIONS_LIST: string[];
-    SKILLS_LIST: string[];
-    newEquipment: string;
-    setNewEquipment: (val: string) => void;
+    isEditing: boolean
+    formData: any
+    setFormData: (data: any) => void
+    profile: Profile
+    toggleArrayItem: (field: any, value: string) => void
+    CERTIFICATIONS_LIST: string[]
+    SKILLS_LIST: string[]
+    newEquipment: string
+    setNewEquipment: (val: string) => void
 }
 
 export const ProfessionalInfoForm: React.FC<ProfessionalInfoFormProps> = ({
-    isEditing, formData, setFormData, profile, toggleArrayItem,
-    CERTIFICATIONS_LIST, SKILLS_LIST, newEquipment, setNewEquipment
+    isEditing,
+    formData,
+    setFormData,
+    profile,
+    toggleArrayItem,
+    CERTIFICATIONS_LIST,
+    SKILLS_LIST,
+    newEquipment,
+    setNewEquipment,
 }) => {
     return (
-        <div className="space-y-7">
+        <div className="space-y-6">
             {/* Certifications */}
-            <div>
-                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2 mb-3">
-                    <Award size={18} className="text-brand-blue" />
-                    Certifications
-                </h2>
+            <SubBlock icon={Award} title="Certifications">
                 {isEditing ? (
                     <div className="flex flex-wrap gap-2">
                         {CERTIFICATIONS_LIST.map(cert => (
@@ -45,25 +48,24 @@ export const ProfessionalInfoForm: React.FC<ProfessionalInfoFormProps> = ({
                             </button>
                         ))}
                     </div>
+                ) : profile.certifications && profile.certifications.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                        {profile.certifications.map((c, i) => (
+                            <span
+                                key={i}
+                                className="px-3 py-1 bg-brand-blue/10 text-brand-blue text-sm rounded-full font-medium"
+                            >
+                                ✓ {c}
+                            </span>
+                        ))}
+                    </div>
                 ) : (
-                    profile.certifications && profile.certifications.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                            {profile.certifications.map((c, i) => (
-                                <span key={i} className="px-3 py-1 bg-brand-blue/10 text-brand-blue text-sm rounded-full font-medium">
-                                    ✓ {c}
-                                </span>
-                            ))}
-                        </div>
-                    ) : <p className="text-slate-400 italic text-sm">Aucune certification renseignée</p>
+                    <Empty text="Aucune certification renseignée" />
                 )}
-            </div>
+            </SubBlock>
 
             {/* Skills */}
-            <div>
-                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2 mb-3">
-                    <Briefcase size={18} className="text-brand-blue" />
-                    Compétences
-                </h2>
+            <SubBlock icon={Briefcase} title="Compétences">
                 {isEditing ? (
                     <div className="flex flex-wrap gap-2">
                         {SKILLS_LIST.map(skill => (
@@ -81,32 +83,39 @@ export const ProfessionalInfoForm: React.FC<ProfessionalInfoFormProps> = ({
                             </button>
                         ))}
                     </div>
+                ) : profile.skills && profile.skills.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                        {profile.skills.map((s, i) => (
+                            <span key={i} className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">
+                                {s}
+                            </span>
+                        ))}
+                    </div>
                 ) : (
-                    profile.skills && profile.skills.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                            {profile.skills.map((s, i) => (
-                                <span key={i} className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">
-                                    {s}
-                                </span>
-                            ))}
-                        </div>
-                    ) : <p className="text-slate-400 italic text-sm">Aucune compétence renseignée</p>
+                    <Empty text="Aucune compétence renseignée" />
                 )}
-            </div>
+            </SubBlock>
 
             {/* Equipment */}
-            <div>
-                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2 mb-3">
-                    <Wrench size={18} className="text-brand-blue" />
-                    Matériel & Équipement
-                </h2>
+            <SubBlock icon={Wrench} title="Matériel & Équipement">
                 {isEditing ? (
                     <div>
                         <div className="flex flex-wrap gap-2 mb-3">
                             {formData.equipment.map((item: string, i: number) => (
-                                <span key={i} className="flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">
+                                <span
+                                    key={i}
+                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full"
+                                >
                                     {item}
-                                    <button onClick={() => setFormData((prev: any) => ({ ...prev, equipment: prev.equipment.filter((_: any, j: number) => j !== i) }))}>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setFormData((prev: any) => ({
+                                                ...prev,
+                                                equipment: prev.equipment.filter((_: any, j: number) => j !== i),
+                                            }))
+                                        }
+                                    >
                                         <X size={12} className="text-slate-400 hover:text-red-500" />
                                     </button>
                                 </span>
@@ -120,8 +129,12 @@ export const ProfessionalInfoForm: React.FC<ProfessionalInfoFormProps> = ({
                                 onChange={e => setNewEquipment(e.target.value)}
                                 onKeyDown={e => {
                                     if (e.key === 'Enter' && newEquipment.trim()) {
-                                        setFormData((prev: any) => ({ ...prev, equipment: [...prev.equipment, newEquipment.trim()] }));
-                                        setNewEquipment('');
+                                        e.preventDefault()
+                                        setFormData((prev: any) => ({
+                                            ...prev,
+                                            equipment: [...prev.equipment, newEquipment.trim()],
+                                        }))
+                                        setNewEquipment('')
                                     }
                                 }}
                                 className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/30"
@@ -130,48 +143,72 @@ export const ProfessionalInfoForm: React.FC<ProfessionalInfoFormProps> = ({
                                 variant="outline"
                                 onClick={() => {
                                     if (newEquipment.trim()) {
-                                        setFormData((prev: any) => ({ ...prev, equipment: [...prev.equipment, newEquipment.trim()] }));
-                                        setNewEquipment('');
+                                        setFormData((prev: any) => ({
+                                            ...prev,
+                                            equipment: [...prev.equipment, newEquipment.trim()],
+                                        }))
+                                        setNewEquipment('')
                                     }
                                 }}
                             >
-                                <Plus size={16} />Ajouter
+                                <Plus size={16} />
+                                Ajouter
                             </Button>
                         </div>
                         <p className="text-xs text-slate-400 mt-1">Appuyez sur Entrée pour ajouter</p>
                     </div>
+                ) : profile.equipment && profile.equipment.length > 0 ? (
+                    <div className="flex flex-wrap gap-2">
+                        {profile.equipment.map((e, i) => (
+                            <span key={i} className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">
+                                🔧 {e}
+                            </span>
+                        ))}
+                    </div>
                 ) : (
-                    profile.equipment && profile.equipment.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                            {profile.equipment.map((e, i) => (
-                                <span key={i} className="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded-full">
-                                    🔧 {e}
-                                </span>
-                            ))}
-                        </div>
-                    ) : <p className="text-slate-400 italic text-sm">Aucun équipement renseigné</p>
+                    <Empty text="Aucun équipement renseigné" />
                 )}
-            </div>
+            </SubBlock>
 
             {/* Insurance */}
-            <div>
-                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2 mb-3">
-                    <Shield size={18} className="text-brand-blue" />
-                    Assurance professionnelle
-                </h2>
+            <SubBlock icon={Shield} title="Assurance professionnelle">
                 {isEditing ? (
                     <Input
                         label=""
                         value={formData.insurance_info}
-                        onChange={(e) => setFormData({ ...formData, insurance_info: e.target.value })}
+                        onChange={e => setFormData({ ...formData, insurance_info: e.target.value })}
                         placeholder="Ex: AXA RC Pro n°123456 – Valide jusqu'en 12/2026"
                     />
+                ) : profile.insurance_info ? (
+                    <p className="text-slate-700 text-sm">🛡️ {profile.insurance_info}</p>
                 ) : (
-                    profile.insurance_info
-                        ? <p className="text-slate-700 text-sm">🛡️ {profile.insurance_info}</p>
-                        : <p className="text-slate-400 italic text-sm">Aucune assurance renseignée</p>
+                    <Empty text="Aucune assurance renseignée" />
                 )}
-            </div>
+            </SubBlock>
         </div>
-    );
-};
+    )
+}
+
+function SubBlock({
+    icon: Icon,
+    title,
+    children,
+}: {
+    icon: React.ComponentType<{ size?: number; className?: string }>
+    title: string
+    children: React.ReactNode
+}) {
+    return (
+        <div>
+            <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2 mb-2">
+                <Icon size={14} className="text-brand-blue" />
+                {title}
+            </h3>
+            {children}
+        </div>
+    )
+}
+
+function Empty({ text }: { text: string }) {
+    return <p className="text-slate-400 italic text-sm">{text}</p>
+}

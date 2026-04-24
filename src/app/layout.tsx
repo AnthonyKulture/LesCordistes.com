@@ -74,7 +74,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     `}
                 </Script>
             </head>
-            <body className={`${inter.className} overflow-x-hidden`} suppressHydrationWarning>
+            <body className={`${inter.className} overflow-x-clip`} suppressHydrationWarning>
                 <Providers>
                     <div className="flex flex-col min-h-screen w-full">
                         <Header />
