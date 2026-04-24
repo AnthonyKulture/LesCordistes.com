@@ -194,7 +194,10 @@ export const PostJob: React.FC = () => {
 
             const categoryLabels: Record<string, string> = {
                 cleaning: 'Nettoyage', construction: 'Construction', masonry: 'Maçonnerie',
-                painting: 'Peinture', industry: 'Industrie', event: 'Événementiel', other: 'Mission',
+                painting: 'Peinture', industry: 'Industrie', event: 'Événementiel',
+                securing: 'Sécurisation', telecom: 'Télécommunications', inspection: 'Inspection',
+                repair: 'Dépannage', pruning: 'Élagage',
+                other: 'Mission',
             };
             const autoTitle = [categoryLabels[formData.category || 'other'] || 'Mission', formData.location_city]
                 .filter(Boolean).join(' - ');
