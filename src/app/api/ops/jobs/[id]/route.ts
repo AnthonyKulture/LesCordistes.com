@@ -7,18 +7,49 @@ export const dynamic = 'force-dynamic'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lescordistes.com'
 
+// Champs scalaires modifiables par l'admin via `action: 'update'`.
+// Volontairement exclus : id, created_at, updated_at, created_by,
+// moderated_by, moderated_at, status (transitions via approve/reject/archive),
+// photos_url (géré via l'endpoint dédié /photos).
 const UPDATABLE_FIELDS = new Set([
+    // Basiques
     'title',
+    'slug',
     'description',
     'category',
+    'type',
+    'client_type',
+    'credit_cost',
     'rejection_reason',
+    // Localisation
     'location_city',
     'location_address',
     'location_department',
+    'latitude',
+    'longitude',
+    // Budget & durée
     'budget_min',
     'budget_max',
     'daily_rate',
+    'duration_days',
     'height_meters',
+    // Dates
+    'deadline',
+    'start_date',
+    // Technique / B2B
+    'internal_reference',
+    'structure_type',
+    'specific_equipment',
+    'equipment_management',
+    'contract_type',
+    'work_night_weekend',
+    'security_plan_confirmed',
+    // Arrays
+    'required_level',
+    'required_habilitations',
+    'secondary_trades',
+    // JSONB
+    'client_contact_info',
 ])
 
 type JobAction = 'approve' | 'reject' | 'update' | 'archive'
@@ -122,7 +153,14 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
         const data = body.data ?? {}
         const cleaned: Record<string, unknown> = {}
         for (const [k, v] of Object.entries(data)) {
-            if (UPDATABLE_FIELDS.has(k)) cleaned[k] = v
+            if (!UPDATABLE_FIELDS.has(k)) continue
+            // Normalisation : "" → null pour les scalaires nullable,
+            // conserve les arrays et objets tels quels.
+            if (v === '' && k !== 'title' && k !== 'description' && k !== 'category' && k !== 'location_city') {
+                cleaned[k] = null
+            } else {
+                cleaned[k] = v
+            }
         }
         if (Object.keys(cleaned).length === 0) {
             return Response.json({ error: 'No allowed fields to update' }, { status: 400 })
