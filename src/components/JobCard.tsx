@@ -2,10 +2,19 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { MapPin, Calendar, Euro, Clock, Ruler, Lock, ChevronRight, ShieldCheck, HelpCircle } from 'lucide-react';
+import { MapPin, Calendar, Euro, Ruler, Lock, ChevronRight, ShieldCheck, HelpCircle, Compass } from 'lucide-react';
 import type { Job } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useCredits } from '../hooks/useCredits';
+import {
+    getBudgetDisplay,
+    getDepartmentLabel,
+    getProximityForPro,
+    getScheduleDisplay,
+    getLeadQuality,
+    isClientVerified,
+} from '../lib/missionEnrichment';
+import { LeadQualityBadge } from './job-detail/LeadQualityBadge';
 
 interface JobCardProps {
     job: Job;
@@ -33,6 +42,13 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
     const canViewContact = user && (isOwner || unlocked);
     const daysAgo = Math.floor((Date.now() - new Date(job.created_at).getTime()) / 86400000);
 
+    const budget = getBudgetDisplay(job);
+    const deptLabel = getDepartmentLabel(job.location_department);
+    const proximity = isPro ? getProximityForPro(job, profile?.intervention_zones) : null;
+    const schedule = getScheduleDisplay(job);
+    const quality = getLeadQuality(job);
+    const clientVerified = isClientVerified(job);
+
     const handleClick = () => {
         if (job.slug) router.push(`/jobs/${job.slug}`);
     };
@@ -47,19 +63,29 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
 
             <div className="p-5">
                 {/* Header row */}
-                <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-start justify-between gap-3 mb-2">
                     <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-brand-blue transition-colors line-clamp-2">
                             {job.title}
                         </h3>
-                        {job.creator?.role === 'pro' && (
-                            <div className="flex items-center gap-1.5 mt-1.5">
+                        <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                            {job.creator?.role === 'pro' && (
                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-brand-blue/10 text-brand-blue text-[10px] font-bold border border-brand-blue/20">
                                     <ShieldCheck size={12} />
                                     CONFRÈRE PRO
                                 </span>
-                            </div>
-                        )}
+                            )}
+                            {clientVerified && (
+                                <span
+                                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-blue-50 text-blue-700 text-[10px] font-bold border border-blue-200"
+                                    title="Client structuré (entreprise, syndic, agence) — pré-qualifié par notre équipe"
+                                >
+                                    <ShieldCheck size={12} />
+                                    Client vérifié
+                                </span>
+                            )}
+                            <LeadQualityBadge quality={quality} />
+                        </div>
                     </div>
                     <span className={`shrink-0 text-xs px-2.5 py-1 rounded-full font-medium ${cat.color}`}>
                         {cat.emoji} {cat.label}
@@ -67,61 +93,74 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
                 </div>
 
                 {/* Meta info */}
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 mb-3">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-slate-500 mb-3">
                     <span className="flex items-center gap-1">
                         <MapPin size={12} className="text-brand-blue" />
                         <strong className="text-slate-700">{job.location_city}</strong>
-                        {job.location_department && ` (${job.location_department})`}
+                        {deptLabel && <span className="text-slate-400">· {deptLabel}</span>}
                     </span>
+                    {proximity && (
+                        <span className={`flex items-center gap-1 px-1.5 py-0.5 rounded-md font-bold ${
+                            proximity.inZone
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                                : 'bg-slate-50 text-slate-600 border border-slate-100'
+                        }`}>
+                            <Compass size={11} />
+                            {proximity.label}
+                        </span>
+                    )}
                     {job.height_meters && (
                         <span className="flex items-center gap-1">
                             <Ruler size={12} />
                             {job.height_meters}m
                         </span>
                     )}
-                    <span className="flex items-center gap-1 ml-auto">
-                        <Calendar size={12} />
+                    <span className="flex items-center gap-1 ml-auto text-slate-400">
                         {daysAgo === 0 ? "Aujourd'hui" : daysAgo === 1 ? "Hier" : `Il y a ${daysAgo}j`}
                     </span>
                 </div>
 
-                {/* Description preview */}
-                <p className="text-sm text-slate-500 line-clamp-2 mb-3 leading-relaxed">
+                {/* Description preview — élargi avant déblocage */}
+                <p className="text-sm text-slate-600 line-clamp-4 mb-3 leading-relaxed">
                     {job.description}
                 </p>
 
                 {/* Badge row */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                    {job.type === 'renfort_pro' ? (
+                    {job.type === 'renfort_pro' && (
                         <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-blue text-white font-black uppercase tracking-widest flex items-center gap-1 shadow-sm">
                             🚀 Renfort PRO
                         </span>
-                    ) : null}
-                    
-                    {job.type === 'renfort_pro' && job.daily_rate ? (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold flex items-center gap-0.5 border border-blue-100">
+                    )}
+
+                    {budget && (
+                        <span
+                            className={`text-xs px-2 py-0.5 rounded-full font-medium flex items-center gap-0.5 border ${
+                                budget.dailyRate
+                                    ? 'bg-blue-50 text-blue-700 font-bold border-blue-100'
+                                    : budget.isIndicative
+                                        ? 'bg-slate-50 text-slate-600 border-slate-200 italic'
+                                        : 'bg-green-50 text-green-700 border-green-100'
+                            }`}
+                            title={budget.isIndicative ? 'Fourchette indicative — le client n\'a pas précisé son budget' : undefined}
+                        >
                             <Euro size={10} />
-                            {job.daily_rate}€ / jour HT
-                        </span>
-                    ) : (job.budget_min || job.budget_max) && (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-green-50 text-green-700 font-medium flex items-center gap-0.5 border border-green-100">
-                            <Euro size={10} />
-                            {job.budget_min}{job.budget_max ? ` – ${job.budget_max}€` : '€'}
+                            {budget.label}
+                            {budget.isIndicative && <span className="ml-1 text-[9px] uppercase tracking-wider opacity-70">indicatif</span>}
                         </span>
                     )}
 
-                    {job.type === 'renfort_pro' && job.start_date && (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-orange-50 text-orange-700 font-medium flex items-center gap-0.5 border border-orange-100">
-                            <Calendar size={10} />
-                            Dès le {new Date(job.start_date).toLocaleDateString('fr-FR')}
-                            {job.duration_days && ` (${job.duration_days}j)`}
-                        </span>
-                    ) || job.deadline && (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-orange-50 text-orange-700 font-medium flex items-center gap-0.5 border border-orange-100">
-                            <Clock size={10} />
-                            {new Date(job.deadline).toLocaleDateString('fr-FR')}
-                        </span>
-                    )}
+                    <span
+                        className={`text-xs px-2 py-0.5 rounded-full font-medium flex items-center gap-1 border ${
+                            schedule.isFlexible
+                                ? 'bg-slate-50 text-slate-600 border-slate-200'
+                                : 'bg-orange-50 text-orange-700 border-orange-100'
+                        }`}
+                    >
+                        <Calendar size={10} />
+                        {schedule.isFlexible ? 'Démarrage à convenir' : schedule.label}
+                        {job.type === 'renfort_pro' && job.duration_days && !schedule.isFlexible && ` · ${job.duration_days}j`}
+                    </span>
 
                     {job.photos_url && job.photos_url.length > 0 && (
                         <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
@@ -129,6 +168,16 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
                         </span>
                     )}
                 </div>
+
+                {/* Crédit-back guarantee — only shown to pros pre-unlock */}
+                {isPro && !canViewContact && (
+                    <div className="flex items-start gap-1.5 text-[11px] text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-lg px-2 py-1.5 mb-3">
+                        <ShieldCheck size={12} className="shrink-0 mt-0.5" />
+                        <span>
+                            <strong>Garantie 72h :</strong> client injoignable ou données frauduleuses → crédit recrédité.
+                        </span>
+                    </div>
+                )}
 
                 {/* Footer CTA */}
                 <div className="flex items-center justify-between pt-3 border-t border-slate-50">

@@ -1,15 +1,13 @@
 import React from 'react';
-import { CalendarDays, Zap, Lock, XCircle, CheckCircle } from 'lucide-react';
+import { Zap, Lock, XCircle, CheckCircle, ShieldCheck } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { UnlockLeadButton } from '../credits/UnlockLeadButton';
+import { LeadQualityBadge } from './LeadQualityBadge';
 import type { Job, Profile } from '../../types';
+import { getLeadQuality } from '../../lib/missionEnrichment';
 
 interface JobSidebarProps {
     job: Job;
-    categories: string[];
-    contractTypeLabels: Record<string, string>;
-    levelLabels: Record<string, string>;
-    structureTypeLabels: Record<string, string>;
     user: any;
     profile: Profile | null;
     isOwner: boolean;
@@ -22,109 +20,20 @@ interface JobSidebarProps {
 }
 
 export const JobSidebar: React.FC<JobSidebarProps> = ({
-    job, categories, contractTypeLabels, levelLabels, structureTypeLabels,
-    user, profile, isOwner, canViewContact, isFull,
+    job, user, profile, isOwner, canViewContact, isFull,
     unlockCount, refetchUnlockCount, startConversation, navigate
 }) => {
     const isPro = profile?.role === 'pro';
+    const showProSurface = !(user && (isOwner || profile?.role === 'client'));
+
+    const quality = getLeadQuality(job);
 
     return (
-        <div className="space-y-4">
-            {/* Mission summary */}
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
-                <h3 className="font-bold text-slate-900 mb-4 text-sm uppercase tracking-wide">
-                    Résumé
-                </h3>
-                <div className="space-y-3 text-sm divide-y divide-slate-50">
-                    <div className="flex justify-between pt-0">
-                        <span className="text-slate-500">Type</span>
-                        <span className="font-bold text-slate-900">
-                            {job.type === 'renfort_pro' ? '🚀 Renfort PRO' : '📝 Standard'}
-                        </span>
-                    </div>
-                    <div className="flex justify-between pt-3">
-                        <span className="text-slate-500">Catégorie</span>
-                        <div className="flex flex-wrap justify-end gap-1 max-w-[60%]">
-                            {categories.map((cat, i) => (
-                                <span key={i} className="font-medium text-slate-800 text-right">{cat}{i < categories.length - 1 ? ',' : ''}</span>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="flex justify-between pt-3">
-                        <span className="text-slate-500">Ville</span>
-                        <span className="font-medium text-slate-800">{job.location_city}</span>
-                    </div>
-                    {job.required_level && job.required_level.length > 0 && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Niveaux</span>
-                            <div className="flex flex-wrap justify-end gap-1 max-w-[60%]">
-                                {job.required_level.map(lvl => (
-                                    <span key={lvl} className="text-[10px] px-1.5 py-0.5 bg-slate-100 rounded font-bold text-slate-600">
-                                        {levelLabels[lvl] || lvl}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                    {job.type === 'renfort_pro' && job.structure_type && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Structure</span>
-                            <span className="font-medium text-slate-800">{structureTypeLabels[job.structure_type] || job.structure_type}</span>
-                        </div>
-                    )}
-                    {job.height_meters && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Hauteur</span>
-                            <span className="font-medium text-slate-800">{job.height_meters}m</span>
-                        </div>
-                    )}
-                    {job.type === 'renfort_pro' && job.duration_days && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Durée</span>
-                            <span className="font-medium text-slate-800">{job.duration_days} jours</span>
-                        </div>
-                    )}
-                    {(job.budget_min || job.budget_max) && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Budget</span>
-                            <span className="font-medium text-green-700">
-                                {job.budget_min && `${job.budget_min}€`}
-                                {job.budget_min && job.budget_max && ' – '}
-                                {job.budget_max && `${job.budget_max}€`}
-                            </span>
-                        </div>
-                    )}
-                    {job.type === 'renfort_pro' && job.daily_rate && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Tarif / jr</span>
-                            <span className="font-bold text-brand-blue">{job.daily_rate}€ HT</span>
-                        </div>
-                    )}
-                    {job.type === 'renfort_pro' && job.contract_type && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Contrat</span>
-                            <span className="font-medium text-slate-800 text-right">{contractTypeLabels[job.contract_type]}</span>
-                        </div>
-                    )}
-                    {job.deadline && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Délai</span>
-                            <span className="font-medium text-orange-600">
-                                {new Date(job.deadline).toLocaleDateString('fr-FR')}
-                            </span>
-                        </div>
-                    )}
-                    {job.type === 'renfort_pro' && job.start_date && (
-                        <div className="flex justify-between pt-3">
-                            <span className="text-slate-500">Début</span>
-                            <span className="font-medium text-brand-blue flex items-center gap-1">
-                                <CalendarDays size={14} />
-                                {new Date(job.start_date).toLocaleDateString('fr-FR')}
-                            </span>
-                        </div>
-                    )}
-                </div>
-            </div>
+        <div className="space-y-4 lg:sticky lg:top-6 lg:self-start">
+            {/* Lead Quality — detailed view (only for pros, pre-unlock) */}
+            {showProSurface && !canViewContact && (
+                <LeadQualityBadge quality={quality} variant="detailed" />
+            )}
 
             {/* Contact CTA */}
             {!(user && (isOwner || profile?.role === 'client')) && (
@@ -222,21 +131,28 @@ export const JobSidebar: React.FC<JobSidebarProps> = ({
                 </div>
             )}
 
-            {/* Trust badges — only for pros */}
-            {!(user && (isOwner || profile?.role === 'client')) && (
-                <div className="bg-green-50 rounded-2xl border border-green-100 p-4">
-                    <div className="space-y-2 text-xs text-green-700">
-                        <div className="flex items-center gap-2">
-                            <CheckCircle size={14} className="shrink-0" />
-                            Mission vérifiée par notre équipe
+            {/* 72h credit-back guarantee — strong promise for pros */}
+            {showProSurface && (
+                <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-2xl border border-emerald-200 p-4">
+                    <div className="flex items-start gap-2.5 mb-2.5">
+                        <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
+                            <ShieldCheck size={16} className="text-emerald-700" />
                         </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle size={14} className="shrink-0" />
-                            Coordonnées client authentiques
+                        <div>
+                            <p className="font-black text-emerald-900 text-sm leading-tight">Garantie 72h satisfait ou recrédité</p>
+                            <p className="text-[11px] text-emerald-700 mt-0.5">
+                                On assume le risque qualité à ta place.
+                            </p>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle size={14} className="shrink-0" />
-                            Réponse directe par tél. ou email
+                    </div>
+                    <div className="space-y-1.5 text-xs text-emerald-800 pl-10">
+                        <div className="flex items-start gap-1.5">
+                            <CheckCircle size={12} className="shrink-0 mt-0.5 text-emerald-600" />
+                            <span>Client injoignable sous 72h → crédit recrédité</span>
+                        </div>
+                        <div className="flex items-start gap-1.5">
+                            <CheckCircle size={12} className="shrink-0 mt-0.5 text-emerald-600" />
+                            <span>Données frauduleuses → crédit recrédité</span>
                         </div>
                     </div>
                 </div>
