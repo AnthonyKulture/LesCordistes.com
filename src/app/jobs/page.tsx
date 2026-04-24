@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { JobBoard } from '@/views/JobBoard'
 
 export const revalidate = 60 // ISR: re-render au plus toutes les 60 secondes
@@ -18,5 +19,9 @@ export const metadata: Metadata = {
 }
 
 export default function JobsPage() {
-    return <JobBoard />
+    return (
+        <Suspense fallback={null}>
+            <JobBoard />
+        </Suspense>
+    )
 }
