@@ -38,7 +38,7 @@ export interface Job {
     title: string;
     slug?: string;
     description: string;
-    category: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'other';
+    category: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'securing' | 'telecom' | 'inspection' | 'repair' | 'pruning' | 'other';
     type?: 'standard' | 'renfort_pro';
     client_type?: ClientType;
     location_city: string;

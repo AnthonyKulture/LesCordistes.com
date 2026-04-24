@@ -87,7 +87,7 @@ export interface Database {
                     slug: string | null
                     title: string
                     description: string
-                    category: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'other'
+                    category: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'securing' | 'telecom' | 'inspection' | 'repair' | 'pruning' | 'other'
                     type: 'standard' | 'renfort_pro' | null
                     client_type: 'particulier' | 'copropriete_syndic' | 'entreprise_tertiaire' | 'industrie_energie' | 'collectivite_public' | 'association_evenementiel' | 'entreprise_travaux_hauteur' | 'entreprise_btp' | 'agence_interim' | 'autre_pro' | null
                     location_city: string
@@ -129,7 +129,7 @@ export interface Database {
                     slug?: string | null
                     title: string
                     description: string
-                    category: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'other'
+                    category: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'securing' | 'telecom' | 'inspection' | 'repair' | 'pruning' | 'other'
                     type?: 'standard' | 'renfort_pro' | null
                     client_type?: 'particulier' | 'copropriete_syndic' | 'entreprise_tertiaire' | 'industrie_energie' | 'collectivite_public' | 'association_evenementiel' | 'entreprise_travaux_hauteur' | 'entreprise_btp' | 'agence_interim' | 'autre_pro' | null
                     location_city: string
@@ -171,7 +171,7 @@ export interface Database {
                     slug?: string | null
                     title?: string
                     description?: string
-                    category?: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'other'
+                    category?: 'cleaning' | 'construction' | 'masonry' | 'painting' | 'industry' | 'event' | 'securing' | 'telecom' | 'inspection' | 'repair' | 'pruning' | 'other'
                     type?: 'standard' | 'renfort_pro' | null
                     client_type?: 'particulier' | 'copropriete_syndic' | 'entreprise_tertiaire' | 'industrie_energie' | 'collectivite_public' | 'association_evenementiel' | 'entreprise_travaux_hauteur' | 'entreprise_btp' | 'agence_interim' | 'autre_pro' | null
                     location_city?: string

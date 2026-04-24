@@ -13,6 +13,11 @@ const categoryLabels: Record<string, string> = {
     painting: 'Peinture',
     industry: 'Industrie',
     event: 'Événementiel',
+    securing: 'Sécurisation',
+    telecom: 'Télécommunications',
+    inspection: 'Inspection',
+    repair: 'Dépannage',
+    pruning: 'Élagage & Végétaux',
     other: 'Travaux en hauteur',
 }
 

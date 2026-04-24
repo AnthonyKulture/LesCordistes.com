@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-  Tag,
   Eraser,
   Construction,
   BrickWall,
@@ -12,6 +11,11 @@ import {
   ClipboardList,
   CheckCircle2,
   Mail,
+  ShieldCheck,
+  RadioTower,
+  Search,
+  Wrench,
+  TreePine,
 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { motion } from 'framer-motion';
@@ -39,6 +43,11 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
         { value: 'painting' as JobCategory, label: 'Peinture', icon: Paintbrush, color: 'text-pink-500', bg: 'bg-pink-50', description: 'Peinture en hauteur' },
         { value: 'industry' as JobCategory, label: 'Industrie', icon: Factory, color: 'text-slate-500', bg: 'bg-slate-50', description: 'Maintenance industrielle' },
         { value: 'event' as JobCategory, label: 'Événementiel', icon: Tent, color: 'text-purple-500', bg: 'bg-purple-50', description: 'Installation événementielle' },
+        { value: 'securing' as JobCategory, label: 'Sécurisation', icon: ShieldCheck, color: 'text-red-500', bg: 'bg-red-50', description: 'Filets, garde-corps, lignes de vie' },
+        { value: 'telecom' as JobCategory, label: 'Télécommunications', icon: RadioTower, color: 'text-cyan-500', bg: 'bg-cyan-50', description: 'Antennes, pylônes, fibre' },
+        { value: 'inspection' as JobCategory, label: 'Inspection', icon: Search, color: 'text-indigo-500', bg: 'bg-indigo-50', description: 'Visite technique, audit, expertise' },
+        { value: 'repair' as JobCategory, label: 'Dépannage', icon: Wrench, color: 'text-yellow-600', bg: 'bg-yellow-50', description: 'Intervention urgente, réparation' },
+        { value: 'pruning' as JobCategory, label: 'Élagage & Végétaux', icon: TreePine, color: 'text-emerald-600', bg: 'bg-emerald-50', description: 'Élagage, abattage, démoussage' },
         { value: 'other' as JobCategory, label: 'Autre', icon: ClipboardList, color: 'text-gray-500', bg: 'bg-gray-50', description: 'Autre type de mission' },
     ];
 

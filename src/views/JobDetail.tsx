@@ -27,6 +27,11 @@ const categoryLabels: Record<string, string> = {
     painting: '🎨 Peinture',
     industry: '⚙️ Industrie',
     event: '🎪 Événementiel',
+    securing: '🛡️ Sécurisation',
+    telecom: '📡 Télécommunications',
+    inspection: '🔍 Inspection',
+    repair: '🔧 Dépannage',
+    pruning: '🌳 Élagage & Végétaux',
     other: 'Autre',
 };
 
@@ -80,6 +85,11 @@ const tradeLabels: Record<string, string> = {
     welding: '🔥 Soudure',
     nets: '🥅 Pose de filets',
     lifelines: '🧗 Pose de lignes de vie',
+    securing: '🛡️ Sécurisation',
+    telecom: '📡 Télécommunications',
+    inspection: '🔍 Inspection',
+    repair: '🔧 Dépannage',
+    pruning: '🌳 Élagage',
 };
 
 interface JobDetailProps {
@@ -151,7 +161,7 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
         );
     }
 
-    const VALID_CATEGORIES = ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'other'];
+    const VALID_CATEGORIES = ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'securing', 'telecom', 'inspection', 'repair', 'pruning', 'other'];
     const allCategories = [
         job.category,
         ...((job.secondary_trades || []).filter(t => VALID_CATEGORIES.includes(t))),

@@ -12,6 +12,11 @@ const INDICATIVE_BUDGET_BY_CATEGORY: Record<Job['category'], { min: number; max:
     construction: { min: 1500, max: 6000 },
     industry: { min: 1500, max: 8000 },
     event: { min: 500, max: 3000 },
+    securing: { min: 800, max: 3500 },
+    telecom: { min: 1500, max: 6000 },
+    inspection: { min: 400, max: 1500 },
+    repair: { min: 200, max: 1500 },
+    pruning: { min: 300, max: 2000 },
     other: { min: 500, max: 2500 },
 };
 

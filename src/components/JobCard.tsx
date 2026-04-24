@@ -20,14 +20,19 @@ interface JobCardProps {
     job: Job;
 }
 
-const categoryConfig: Record<string, { label: string; emoji: string; color: string }> = {
-    cleaning: { label: 'Nettoyage', emoji: '🧹', color: 'bg-sky-100 text-sky-700' },
-    construction: { label: 'Construction', emoji: '🏗️', color: 'bg-orange-100 text-orange-700' },
-    masonry: { label: 'Maçonnerie', emoji: '🧱', color: 'bg-amber-100 text-amber-700' },
-    painting: { label: 'Peinture', emoji: '🎨', color: 'bg-pink-100 text-pink-700' },
-    industry: { label: 'Industrie', emoji: '⚙️', color: 'bg-slate-100 text-slate-700' },
-    event: { label: 'Événementiel', emoji: '🎪', color: 'bg-purple-100 text-purple-700' },
-    other: { label: 'Autre', emoji: '📌', color: 'bg-slate-100 text-slate-600' },
+const categoryConfig: Record<string, { label: string; emoji: string; color: string; accent: string }> = {
+    cleaning: { label: 'Nettoyage', emoji: '🧹', color: 'bg-sky-100 text-sky-700', accent: 'bg-sky-400' },
+    construction: { label: 'Construction', emoji: '🏗️', color: 'bg-orange-100 text-orange-700', accent: 'bg-orange-400' },
+    masonry: { label: 'Maçonnerie', emoji: '🧱', color: 'bg-amber-100 text-amber-700', accent: 'bg-amber-400' },
+    painting: { label: 'Peinture', emoji: '🎨', color: 'bg-pink-100 text-pink-700', accent: 'bg-pink-400' },
+    industry: { label: 'Industrie', emoji: '⚙️', color: 'bg-slate-100 text-slate-700', accent: 'bg-slate-400' },
+    event: { label: 'Événementiel', emoji: '🎪', color: 'bg-purple-100 text-purple-700', accent: 'bg-purple-400' },
+    securing: { label: 'Sécurisation', emoji: '🛡️', color: 'bg-red-100 text-red-700', accent: 'bg-red-400' },
+    telecom: { label: 'Télécoms', emoji: '📡', color: 'bg-cyan-100 text-cyan-700', accent: 'bg-cyan-400' },
+    inspection: { label: 'Inspection', emoji: '🔍', color: 'bg-indigo-100 text-indigo-700', accent: 'bg-indigo-400' },
+    repair: { label: 'Dépannage', emoji: '🔧', color: 'bg-yellow-100 text-yellow-700', accent: 'bg-yellow-400' },
+    pruning: { label: 'Élagage', emoji: '🌳', color: 'bg-emerald-100 text-emerald-700', accent: 'bg-emerald-400' },
+    other: { label: 'Autre', emoji: '📌', color: 'bg-slate-100 text-slate-600', accent: 'bg-slate-400' },
 };
 
 export const JobCard: React.FC<JobCardProps> = ({ job }) => {
@@ -59,7 +64,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
             onClick={handleClick}
         >
             {/* Top accent bar by category */}
-            <div className={`h-1 w-full ${job.category === 'cleaning' ? 'bg-sky-400' : job.category === 'construction' ? 'bg-orange-400' : job.category === 'masonry' ? 'bg-amber-400' : job.category === 'painting' ? 'bg-pink-400' : job.category === 'industry' ? 'bg-slate-400' : 'bg-purple-400'}`} />
+            <div className={`h-1 w-full ${cat.accent}`} />
 
             <div className="p-5">
                 {/* Header row */}

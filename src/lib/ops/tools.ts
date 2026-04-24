@@ -33,7 +33,7 @@ export const TOOL_DEFINITIONS = [
             type: 'object',
             properties: {
                 status: { type: 'string', enum: ['pending', 'live', 'rejected', 'completed', 'cancelled'] },
-                category: { type: 'string', enum: ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'other'] },
+                category: { type: 'string', enum: ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'securing', 'telecom', 'inspection', 'repair', 'pruning', 'other'] },
                 city: { type: 'string' },
                 client_type: { type: 'string' },
                 search: { type: 'string', description: 'texte dans titre/description/ville' },
