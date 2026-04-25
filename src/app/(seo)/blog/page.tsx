@@ -4,13 +4,18 @@ import { SEO_BLOG, BLOG_CATEGORIES, SEO_BLOG_BASE } from '@/constants/seoBlog'
 import { SEO_BASE_URL, SEO_BRAND_NAME } from '@/constants/seoConfig'
 
 export const metadata: Metadata = {
-    title: 'Blog Travaux en Hauteur — Guides & Conseils Cordiste',
-    description: 'Guides pratiques sur les travaux en hauteur : habilitations cordiste, comparatifs, conseils pour choisir et budgétiser vos travaux sur cordes.',
+    title: 'Blog cordistes : guides & conseils',
+    description: 'Guides pratiques travaux en hauteur : habilitations cordiste, comparatifs, conseils pour choisir et budgétiser vos travaux sur cordes.',
     alternates: { canonical: `${SEO_BASE_URL}/blog` },
     openGraph: {
-        title: 'Blog Travaux en Hauteur — Guides & Conseils Cordiste',
+        title: 'Blog cordistes : guides & conseils · LesCordistes',
         description: 'Guides pratiques sur les travaux en hauteur par les experts LesCordistes.com.',
         url: `${SEO_BASE_URL}/blog`,
+        images: [{
+            url: `${SEO_BASE_URL}/og?title=${encodeURIComponent('Blog cordistes')}&kicker=${encodeURIComponent('Guides & conseils')}`,
+            width: 1200,
+            height: 630,
+        }],
     },
 }
 

@@ -23,7 +23,7 @@ export const GlossaryArticle: React.FC<Props> = ({ slugProp }) => {
         "@type": "DefinedTerm",
         "name": term.title,
         "description": term.definition,
-        "inDefinedTermSet": "https://lescordistes.com/lexique"
+        "inDefinedTermSet": "https://www.lescordistes.com/lexique"
     };
 
     return (

@@ -13,8 +13,8 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
     metadataBase: new URL('https://www.lescordistes.com'),
     title: {
-        default: 'LesCordistes.com - Plateforme pour Professionnels du Travail sur Cordes',
-        template: '%s | LesCordistes.com',
+        default: 'LesCordistes.com · Plateforme pour Professionnels du Travail sur Cordes',
+        template: '%s · LesCordistes',
     },
     description: "Trouvez des chantiers ou recrutez des cordistes qualifiés. La marketplace n°1 pour les travaux d'accès difficile et les métiers de la corde.",
     keywords: ['cordiste', 'travail en hauteur', 'accès difficile', 'IRATA', 'CQP', 'missions cordiste'],
@@ -22,6 +22,17 @@ export const metadata: Metadata = {
         siteName: 'LesCordistes.com',
         locale: 'fr_FR',
         type: 'website',
+        images: [{
+            url: 'https://www.lescordistes.com/lescordistes.com-3.webp',
+            width: 1200,
+            height: 630,
+            alt: 'LesCordistes.com — Plateforme nationale des travaux en hauteur',
+        }],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        site: '@lescordistes',
+        images: ['https://www.lescordistes.com/lescordistes.com-3.webp'],
     },
     robots: {
         index: true,

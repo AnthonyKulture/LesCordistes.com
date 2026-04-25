@@ -13,6 +13,10 @@ export const ProfessionalsNetwork: React.FC = () => {
                         <img
                             src="/lescordistes.com-new-01.webp"
                             alt="Cordiste professionnel en pleine intervention"
+                            loading="lazy"
+                            decoding="async"
+                            width={600}
+                            height={600}
                             className="relative z-10 w-full h-[600px] object-cover rounded-2xl shadow-2xl"
                         />
                         <div className="absolute -bottom-8 -right-8 z-20 bg-white rounded-xl p-6 shadow-xl border border-slate-100 hidden sm:block animate-bounce-slow">

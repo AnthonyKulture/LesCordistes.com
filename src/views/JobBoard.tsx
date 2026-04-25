@@ -44,7 +44,7 @@ export const JobBoard: React.FC = () => {
                 {/* Header */}
                 <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-slate-900">Missions disponibles</h1>
+                        <h2 className="text-3xl font-bold text-slate-900">Missions disponibles</h2>
                         <p className="text-slate-500 mt-1">
                             {isLoading ? 'Chargement…' : `${filteredJobs.length} mission${filteredJobs.length !== 1 ? 's' : ''} active${filteredJobs.length !== 1 ? 's' : ''}`}
                         </p>

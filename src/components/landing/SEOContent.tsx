@@ -11,6 +11,10 @@ export const SEOContent: React.FC = () => {
                         <img
                             src="/lescordistes.com-new-00.webp"
                             alt="Cordiste professionnel réalisant un ravalement de façade"
+                            loading="lazy"
+                            decoding="async"
+                            width={600}
+                            height={500}
                             className="relative z-10 w-full h-[500px] object-cover rounded-2xl shadow-xl"
                         />
                     </div>

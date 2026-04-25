@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { JobDetail } from '@/views/JobDetail'
+import { SEO_BASE_URL } from '@/constants/seoConfig'
 import type { Job } from '@/types'
 
 const categoryLabels: Record<string, string> = {
@@ -49,23 +50,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const category = categoryLabels[job.category] ?? 'Travaux en hauteur'
-    const title = `${job.title} — ${job.location_city} | LesCordistes`
+    const title = `${job.title} · ${job.location_city} · LesCordistes`
     const description = `Mission de ${category.toLowerCase()} à ${job.location_city}. ${job.description.slice(0, 120).replace(/\n/g, ' ')}…`
 
     return {
         title,
         description,
         alternates: {
-            canonical: `https://lescordistes.com/jobs/${slug}`,
+            canonical: `${SEO_BASE_URL}/jobs/${slug}`,
         },
         openGraph: {
             title,
             description,
-            url: `https://lescordistes.com/jobs/${slug}`,
+            url: `${SEO_BASE_URL}/jobs/${slug}`,
             type: 'article',
             images: job.photos_url?.[0]
                 ? [{ url: job.photos_url[0], width: 1200, height: 630, alt: job.title }]
-                : [{ url: '/lescordistes.com-3.webp', width: 1200, height: 630 }],
+                : [{ url: `${SEO_BASE_URL}/lescordistes.com-3.webp`, width: 1200, height: 630 }],
         },
     }
 }
@@ -99,8 +100,8 @@ function buildJobPostingSchema(job: Job, slug: string) {
         hiringOrganization: {
             '@type': 'Organization',
             name: 'LesCordistes.com',
-            sameAs: 'https://lescordistes.com',
-            logo: 'https://lescordistes.com/lescordistes.com-white-logo.png',
+            sameAs: SEO_BASE_URL,
+            logo: `${SEO_BASE_URL}/lescordistes.com-white-logo.png`,
         },
         jobLocation: {
             '@type': 'Place',
@@ -113,7 +114,7 @@ function buildJobPostingSchema(job: Job, slug: string) {
             },
         },
         ...(baseSalary ? { baseSalary } : {}),
-        url: `https://lescordistes.com/jobs/${slug}`,
+        url: `${SEO_BASE_URL}/jobs/${slug}`,
         ...(job.photos_url?.[0] ? { image: job.photos_url[0] } : {}),
         occupationalCategory: categoryLabels[job.category] ?? 'Travaux en hauteur',
         skills: 'Travaux sur cordes, accès difficile',

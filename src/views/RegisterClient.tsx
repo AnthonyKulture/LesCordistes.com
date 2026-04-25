@@ -111,14 +111,14 @@ export function RegisterClient() {
         "@type": "WebPage",
         "name": "Création de compte Client (B2B & Particuliers)",
         "description": "Trouvez le meilleur cordiste pour vos chantiers et missions en hauteur en vous inscrivant gratuitement sur LesCordistes.com.",
-        "url": "https://lescordistes.com/inscription-client"
+        "url": "https://www.lescordistes.com/inscription-client"
     });
 
     return (
         <AuthLayout
             seoTitle="Inscription Espace Client BtoB et Particulier | LesCordistes.com"
             seoDescription="Accédez à des centaines de cordistes qualifiés pour vos missions en hauteur. Inscription 100% gratuite et rapide."
-            seoCanonical="https://lescordistes.com/inscription-client"
+            seoCanonical="https://www.lescordistes.com/inscription-client"
             jsonLd={jsonLd}
             authMode="register"
         >

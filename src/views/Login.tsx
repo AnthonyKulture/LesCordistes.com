@@ -48,14 +48,14 @@ export function Login() {
         "@type": "WebPage",
         "name": "Connexion Espace Membre | LesCordistes.com",
         "description": "Accédez à votre espace personnel sécurisé LesCordistes.com pour gérer vos annonces, postuler aux missions en hauteur et mettre à jour votre profil pro.",
-        "url": "https://lescordistes.com/connexion",
+        "url": "https://www.lescordistes.com/connexion",
     });
 
     return (
         <AuthLayout
             seoTitle="Connexion Espace Membre | LesCordistes.com"
             seoDescription="Accédez à votre espace personnel sécurisé LesCordistes.com pour gérer vos annonces, postuler aux missions en hauteur et mettre à jour votre profil pro."
-            seoCanonical="https://lescordistes.com/connexion"
+            seoCanonical="https://www.lescordistes.com/connexion"
             jsonLd={jsonLd}
             authMode="login"
         >

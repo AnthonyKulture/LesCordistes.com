@@ -50,7 +50,7 @@ export default function ChoisirRolePage() {
         <AuthLayout
             seoTitle="Choisir votre rôle | LesCordistes.com"
             seoDescription="Indiquez-nous si vous êtes cordiste ou si vous recherchez des cordistes."
-            seoCanonical="https://lescordistes.com/choisir-role"
+            seoCanonical="https://www.lescordistes.com/choisir-role"
         >
             <div className="p-6 sm:p-8 pt-4">
                 <div className="text-center mb-6">

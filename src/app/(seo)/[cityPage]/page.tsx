@@ -28,13 +28,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const editorial = getEditorialContent(citySlug)
 
+    const desc = editorial.metaDescription ?? `Cordiste qualifié à ${city.name} pour vos travaux en accès difficile. Devis gratuit sous 48 h. Experts certifiés CQP/IRATA.`
     return {
-        title: `Cordiste ${city.name} : Travaux en Hauteur & Accès Difficiles`,
-        description: editorial.metaDescription ?? `Trouvez un cordiste qualifié à ${city.name} pour vos travaux en accès difficile. Devis gratuit sous 48h. Experts certifiés CQP/IRATA.`,
+        title: `Cordiste ${city.name} : travaux en hauteur`,
+        description: desc.length > 160 ? `${desc.slice(0, 157)}…` : desc,
         alternates: { canonical: `${SEO_BASE_URL}/cordiste-${citySlug}` },
         openGraph: {
-            title: `Cordiste ${city.name} : Experts Travaux en Hauteur`,
-            description: editorial.metaDescription ?? `Trouvez un cordiste qualifié à ${city.name}. Devis gratuit sous 48h.`,
+            title: `Cordiste ${city.name} : travaux en hauteur · LesCordistes`,
+            description: desc.length > 160 ? `${desc.slice(0, 157)}…` : desc,
             url: `${SEO_BASE_URL}/cordiste-${citySlug}`,
         },
         other: {

@@ -13,13 +13,31 @@ export async function generateStaticParams() {
     return SEO_GLOSSARY.map((term) => ({ slug: term.slug }))
 }
 
+// Extrait un label court du title de l'entrée glossaire (drop parenthèses + tout après ' — ' ou ' - ').
+function shortLabel(title: string): string {
+    return title
+        .replace(/\s*\(.*?\)\s*/g, '')
+        .split(/\s+[—-]\s+/)[0]
+        .trim()
+}
+
+// Tronque une description à un nombre max de caractères, en coupant au dernier espace.
+function truncate(text: string, max = 155): string {
+    if (text.length <= max) return text
+    const cut = text.slice(0, max)
+    const lastSpace = cut.lastIndexOf(' ')
+    return `${cut.slice(0, lastSpace > 0 ? lastSpace : max)}…`
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params
     const term = SEO_GLOSSARY.find((t) => t.slug === slug)
     if (!term) return {}
+    const label = shortLabel(term.title)
+    const desc = truncate(`${label} : ${term.definition}`, 155)
     return {
-        title: `${term.title} - Définition Travaux en Hauteur`,
-        description: `Définition de ${term.title} : ${term.definition}. Comprendre les standards industriels du travail sur cordes.`,
+        title: `${label} : définition`,
+        description: desc,
         alternates: { canonical: `${SEO_BASE_URL}/lexique/${term.slug}` },
     }
 }

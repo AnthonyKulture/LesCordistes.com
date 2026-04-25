@@ -79,6 +79,9 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                                         src="/lescordistes.com-new-03.webp"
                                         alt="Cordiste professionnel en pleine intervention"
                                         fetchPriority="high"
+                                        decoding="async"
+                                        width={600}
+                                        height={600}
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                                     />
                                 </div>
@@ -86,7 +89,10 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                                     <img
                                         src="/lescordistes.com-new-04.webp"
                                         alt="Intervention de cordiste pour nettoyage de façade"
-                                        fetchPriority="high"
+                                        loading="lazy"
+                                        decoding="async"
+                                        width={300}
+                                        height={300}
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                                     />
                                 </div>
@@ -94,7 +100,10 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                                     <img
                                         src="/lescordistes.com-new-10.webp"
                                         alt="Cordiste en travaux de confortement de falaise"
-                                        fetchPriority="high"
+                                        loading="lazy"
+                                        decoding="async"
+                                        width={300}
+                                        height={300}
                                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                                     />
                                 </div>

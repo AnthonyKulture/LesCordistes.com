@@ -17,6 +17,10 @@ export const Footer: React.FC = () => {
                             <img
                                 src="/lescordistes.com-white-logo.png"
                                 alt="LesCordistes Logo Blanc"
+                                loading="lazy"
+                                decoding="async"
+                                width={180}
+                                height={48}
                                 className="h-12 w-auto object-contain"
                             />
                         </div>

@@ -28,10 +28,10 @@ export function Register() {
         "@type": "WebPage",
         "name": "Inscription Client et Cordiste | LesCordistes.com",
         "description": "Rejoignez gratuitement la plateforme LesCordistes.com. Créez votre compte sécurisé pour trouver des missions en hauteur ou recruter des professionnels.",
-        "url": "https://lescordistes.com/inscription",
+        "url": "https://www.lescordistes.com/inscription",
         "potentialAction": {
             "@type": "RegisterAction",
-            "target": "https://lescordistes.com/inscription"
+            "target": "https://www.lescordistes.com/inscription"
         }
     });
 
@@ -39,7 +39,7 @@ export function Register() {
         <AuthLayout
             seoTitle="Inscription Client et Cordiste | LesCordistes.com"
             seoDescription="Rejoignez gratuitement la plateforme LesCordistes.com. Créez votre compte sécurisé dans le domaine des travaux sur cordes."
-            seoCanonical="https://lescordistes.com/inscription"
+            seoCanonical="https://www.lescordistes.com/inscription"
             jsonLd={jsonLd}
             authMode="register"
         >
