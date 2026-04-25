@@ -9,14 +9,14 @@ import { FAQ } from '@/components/landing/FAQ'
 import { CTA } from '@/components/landing/CTA'
 
 export const metadata: Metadata = {
-    title: 'LesCordistes.com - Plateforme pour Professionnels du Travail sur Cordes',
+    title: { absolute: 'Cordistes & travaux en hauteur · LesCordistes' },
     description: "Trouvez des chantiers ou recrutez des cordistes qualifiés. La marketplace n°1 pour les travaux d'accès difficile et les métiers de la corde.",
     alternates: { canonical: `${SEO_BASE_URL}/` },
     openGraph: {
-        title: 'LesCordistes.com - Plateforme pour Professionnels du Travail sur Cordes',
+        title: 'Cordistes & travaux en hauteur · LesCordistes',
         description: "Trouvez des chantiers ou recrutez des cordistes qualifiés. La marketplace n°1 pour les travaux d'accès difficile et les métiers de la corde.",
         url: `${SEO_BASE_URL}/`,
-        images: [{ url: '/lescordistes.com-3.webp', width: 1200, height: 630 }],
+        images: [{ url: `${SEO_BASE_URL}/lescordistes.com-3.webp`, width: 1200, height: 630 }],
     },
 }
 

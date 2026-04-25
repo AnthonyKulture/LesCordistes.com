@@ -37,8 +37,8 @@ export const CitySEOPage: React.FC<Props> = ({ citySlug: propCitySlug }) => {
             {
                 "@type": "LocalBusiness",
                 "name": `LesCordistes.com - ${name}`,
-                "image": "https://lescordistes.com/images/default-hero.jpg",
-                "url": `https://lescordistes.com/cordiste-${citySlug}`,
+                "image": "https://www.lescordistes.com/lescordistes.com-3.webp",
+                "url": `https://www.lescordistes.com/cordiste-${citySlug}`,
                 "priceRange": "$$",
                 "address": {
                     "@type": "PostalAddress",

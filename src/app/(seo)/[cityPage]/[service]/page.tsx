@@ -36,14 +36,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const titleTemplate = serviceData.metaTitle?.replace('{city}', city.name)
     const descTemplate = serviceData.metaDesc?.replace('{city}', city.name)
+    const fallbackTitle = `${serviceData.name} à ${city.name}`
+    const fallbackDesc = `Cordistes certifiés CQP/IRATA pour ${serviceData.name.toLowerCase()} à ${city.name}. Devis gratuit sous 48 h, sans intermédiaire.`
+    const desc = descTemplate || fallbackDesc
 
     return {
-        title: titleTemplate || `${serviceData.name} à ${city.name} — Cordiste Certifié`,
-        description: descTemplate || `Besoin de ${serviceData.name.toLowerCase()} à ${city.name} ? Nos cordistes certifiés interviennent en accès difficile. Devis rapide, sécurité garantie CQP/IRATA.`,
+        title: titleTemplate || fallbackTitle,
+        description: desc.length > 160 ? `${desc.slice(0, 157)}…` : desc,
         alternates: { canonical: `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}` },
         openGraph: {
-            title: titleTemplate || `${serviceData.name} à ${city.name} — Intervention Cordiste`,
-            description: descTemplate || `Cordiste certifié pour ${serviceData.name.toLowerCase()} à ${city.name}. Devis sous 48h.`,
+            title: `${titleTemplate || fallbackTitle} · LesCordistes`,
+            description: desc.length > 160 ? `${desc.slice(0, 157)}…` : desc,
             url: `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}`,
         },
         other: {

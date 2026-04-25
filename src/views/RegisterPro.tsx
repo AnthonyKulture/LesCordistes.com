@@ -119,14 +119,14 @@ export function RegisterPro() {
         "@type": "WebPage",
         "name": "Inscription Cordiste Indépendant ou Salarié",
         "description": "Créez votre profil de cordiste professionnel sur LesCordistes.com et trouvez des missions adaptées à vos diplômes (CQP, IRATA).",
-        "url": "https://lescordistes.com/inscription-cordiste"
+        "url": "https://www.lescordistes.com/inscription-cordiste"
     });
 
     return (
         <AuthLayout
             seoTitle="Inscription Espace Cordiste BtoB | LesCordistes.com"
             seoDescription="Créez votre profil de cordiste gratuitement. Trouvez des chantiers et missions de travaux en hauteur en France."
-            seoCanonical="https://lescordistes.com/inscription-cordiste"
+            seoCanonical="https://www.lescordistes.com/inscription-cordiste"
             jsonLd={jsonLd}
             authMode="register"
         >

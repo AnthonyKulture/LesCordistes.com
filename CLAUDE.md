@@ -1,5 +1,19 @@
 # CLAUDE.md — LesCordistes.com
 
+## Début de session
+
+Quand l'utilisateur envoie "Debut de session" :
+1. Lire `graphify-out/GRAPH_REPORT.md` pour la structure du code
+2. Charger la mémoire Mulch selon le domaine de la session :
+   - Front (composants, UI) → `bash scripts/ml prime --domain nextjs`
+   - Supabase / auth / RLS → `bash scripts/ml prime --domain supabase`
+   - SEO → `bash scripts/ml prime --domain seo`
+   - Si le domaine est inconnu, charger les 3
+3. Lire les fichiers mémoire dans `/memory/` **sauf** `project_blog_automation.md`
+4. Aucun résumé — être prêt à recevoir la première tâche
+
+---
+
 ## Behavior
 
 - Never explain what you're about to do. Execute.
@@ -140,11 +154,16 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ---
 
-## SEO (258 SSG pages)
+## SEO (1 473 SSG pages — sitemap)
 
-- `/cordiste-[ville]` — 23 cities · `/cordiste-[ville]/[service]` — 230 city×service · `/lexique/[slug]` — 5 articles
-- JSON-LD: LocalBusiness, FAQPage, Service, DefinedTerm, Organization, WebSite
+- `/cordiste-[ville]` — 61 villes · `/cordiste-[ville]/[service]` — 1 380 city×service · `/lexique/[slug]` — 13 termes · `/blog/[slug]` — 6 articles · 13 pages institutionnelles
+- JSON-LD : LocalBusiness, FAQPage, Service, BlogPosting (avec `image`), DefinedTerm, DefinedTermSet, BreadcrumbList, Organization, WebSite
+- OG image dynamique : `GET /og?title=…&kicker=…` (edge runtime) — utilisée par blog + fallback layout
+- llms-full.txt dynamique : `/llms-full.txt` concatène llms.txt + lexique complet + FAQs blog (cache 24 h)
 - WordPress → Next.js 301 redirects in `next.config.ts`
+- **Canonical rule** : tous les canonicals + URLs JSON-LD utilisent `SEO_BASE_URL = https://www.lescordistes.com` (avec www). Ne **jamais** hardcoder `https://lescordistes.com` (sans www) — Next redirect en `next.config.ts` force la canonicalisation au cas où.
+- Title template : `%s · LesCordistes` (15c, dans `layout.tsx`) — cible ≤ 60c total
+- CSP en mode report-only — observer les violations dans GSC/console avant d'enforcer
 
 ---
 
@@ -161,7 +180,7 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ## Graphify — cartographie structurelle
 
-Graphe de 1068 nœuds/1145 arêtes dans `graphify-out/`. Hook actif : rappel automatique avant Glob/Grep.
+Graphe de 1204 nœuds/1300 arêtes dans `graphify-out/`. Hook actif : rappel automatique avant Glob/Grep.
 
 - Avant toute question d'architecture ou de dépendances : `graphify-out/GRAPH_REPORT.md`
 - Requête ciblée : `source .venv-tools/bin/activate && graphify query "<question>"`

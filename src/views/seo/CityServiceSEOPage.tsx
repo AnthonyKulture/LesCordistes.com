@@ -41,7 +41,7 @@ export const CityServiceSEOPage: React.FC<Props> = ({ citySlug: propCitySlug, se
         "provider": {
             "@type": "LocalBusiness",
             "name": `LesCordistes.com - Spécialiste ${serviceName} à ${name}`,
-            "image": "https://lescordistes.com/images/default-hero.jpg"
+            "image": "https://www.lescordistes.com/lescordistes.com-3.webp"
         },
         "areaServed": {
             "@type": "City",

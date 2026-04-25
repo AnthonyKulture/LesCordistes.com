@@ -12,7 +12,7 @@ export const TrustWidget: React.FC = () => {
     const profileId = profile?.id || 'id_profil_ici';
     
     // SEO OFF-SITE: target=_blank, rel=noopener (NO nofollow!)
-    const widgetHtml = `<a href="https://lescordistes.com/pros/${profileId}?utm_source=pro-badge&utm_medium=website" target="_blank" rel="noopener">\n  <img src="https://lescordistes.com/badges/verified.svg" alt="Artisan Cordiste Vérifié par LesCordistes.com" width="250" height="60" style="border-radius: 8px; border: none; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" />\n</a>`;
+    const widgetHtml = `<a href="https://www.lescordistes.com/pros/${profileId}?utm_source=pro-badge&utm_medium=website" target="_blank" rel="noopener">\n  <img src="https://www.lescordistes.com/badges/verified.svg" alt="Artisan Cordiste Vérifié par LesCordistes.com" width="250" height="60" style="border-radius: 8px; border: none; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" />\n</a>`;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(widgetHtml);

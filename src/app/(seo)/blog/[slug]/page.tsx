@@ -13,21 +13,27 @@ export async function generateStaticParams() {
     return SEO_BLOG.map((a) => ({ slug: a.slug }))
 }
 
+function ogImageFor(title: string, kicker = 'Blog'): string {
+    return `${SEO_BASE_URL}/og?title=${encodeURIComponent(title)}&kicker=${encodeURIComponent(kicker)}`
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params
     const article = getBlogArticle(slug)
     if (!article) return {}
+    const desc = article.description.length > 160 ? `${article.description.slice(0, 157)}…` : article.description
     return {
-        title: article.title,
-        description: article.description,
+        title: article.shortTitle,
+        description: desc,
         alternates: { canonical: `${SEO_BLOG_BASE}/${slug}` },
         openGraph: {
-            title: article.title,
-            description: article.description,
+            title: `${article.shortTitle} · LesCordistes`,
+            description: desc,
             url: `${SEO_BLOG_BASE}/${slug}`,
             type: 'article',
             publishedTime: article.datePublished,
             modifiedTime: article.dateModified,
+            images: [{ url: ogImageFor(article.shortTitle), width: 1200, height: 630, alt: article.shortTitle }],
         },
     }
 }
@@ -45,6 +51,12 @@ export default async function BlogArticlePage({ params }: Props) {
                 '@id': `${SEO_BLOG_BASE}/${article.slug}#article`,
                 headline: article.title,
                 description: article.description,
+                image: {
+                    '@type': 'ImageObject',
+                    url: ogImageFor(article.shortTitle),
+                    width: 1200,
+                    height: 630,
+                },
                 url: `${SEO_BLOG_BASE}/${article.slug}`,
                 inLanguage: 'fr',
                 datePublished: article.datePublished,

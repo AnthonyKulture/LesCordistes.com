@@ -6,7 +6,7 @@ export const SEO_PHONE_DISPLAY = '+33 6 60 50 16 82'
 export const SEO_EMAIL = 'anthony@lescordistes.com'
 export const SEO_BRAND_NAME = 'LesCordistes.com'
 export const SEO_BASE_URL = 'https://www.lescordistes.com'
-export const SEO_LOGO = 'https://lescordistes.com/lescordistes.com-3.webp'
+export const SEO_LOGO = `${SEO_BASE_URL}/lescordistes.com-3.webp`
 
 export const SEO_OPENING_HOURS = [
     {
