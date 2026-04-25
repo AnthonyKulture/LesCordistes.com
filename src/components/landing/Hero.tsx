@@ -12,7 +12,6 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ user }) => {
     return (
         <section className="relative min-h-[calc(100vh-6rem)] flex items-center py-8 lg:py-0 overflow-hidden bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-from),_transparent_80%)] from-blue-50/50 via-white to-white">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] pointer-events-none"></div>
             <div className="container relative z-10 w-full">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
                     <div className="w-full lg:w-1/2 animate-slide-up">
