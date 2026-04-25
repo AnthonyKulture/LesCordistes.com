@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { PRIORITY_CITIES, SEO_SERVICES } from '@/constants/seoData'
 import { getEditorialContent } from '@/constants/seoUniqueContent'
-import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS } from '@/constants/seoConfig'
+import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS, SEO_POSTAL_ADDRESS } from '@/constants/seoConfig'
 import { TrustBadges } from '@/components/seo/TrustBadges'
 import { SEOInternalLinks } from '@/components/seo/SEOInternalLinks'
 import { SEOLocalReviews } from '@/components/seo/SEOLocalReviews'
@@ -62,41 +62,44 @@ export default async function CitySEOPage({ params }: Props) {
         '@context': 'https://schema.org',
         '@graph': [
             {
-                '@type': ['LocalBusiness', 'ProfessionalService'],
-                '@id': `${SEO_BASE_URL}/#organization`,
-                name: SEO_BRAND_NAME,
-                image: {
-                    '@type': 'ImageObject',
-                    url: SEO_LOGO,
-                    width: 1200,
-                    height: 630,
-                },
+                '@type': 'Service',
+                '@id': `${SEO_BASE_URL}/cordiste-${citySlug}#service`,
+                serviceType: 'Travaux sur cordes',
+                name: `Cordistes à ${name}`,
                 url: `${SEO_BASE_URL}/cordiste-${citySlug}`,
-                telephone: SEO_PHONE,
-                email: SEO_EMAIL,
-                priceRange: '$$',
-                address: {
-                    '@type': 'PostalAddress',
-                    addressLocality: name,
-                    addressRegion: region,
-                    addressCountry: codeISO,
-                },
-                geo: {
-                    '@type': 'GeoCoordinates',
-                    latitude: lat.toFixed(5),
-                    longitude: lng.toFixed(5),
-                },
                 areaServed: {
-                    '@type': 'GeoCircle',
-                    geoMidpoint: {
+                    '@type': 'City',
+                    name,
+                    address: {
+                        '@type': 'PostalAddress',
+                        addressLocality: name,
+                        addressRegion: region,
+                        addressCountry: codeISO,
+                    },
+                    geo: {
                         '@type': 'GeoCoordinates',
                         latitude: lat.toFixed(5),
                         longitude: lng.toFixed(5),
                     },
-                    geoRadius: 30000,
                 },
-                openingHoursSpecification: SEO_OPENING_HOURS,
-                ...(SEO_SAME_AS.length > 0 && { sameAs: SEO_SAME_AS }),
+                provider: {
+                    '@type': ['Organization', 'ProfessionalService'],
+                    '@id': `${SEO_BASE_URL}/#organization`,
+                    name: SEO_BRAND_NAME,
+                    image: {
+                        '@type': 'ImageObject',
+                        url: SEO_LOGO,
+                        width: 1200,
+                        height: 630,
+                    },
+                    url: SEO_BASE_URL,
+                    telephone: SEO_PHONE,
+                    email: SEO_EMAIL,
+                    address: SEO_POSTAL_ADDRESS,
+                    priceRange: '$$',
+                    openingHoursSpecification: SEO_OPENING_HOURS,
+                    ...(SEO_SAME_AS.length > 0 && { sameAs: SEO_SAME_AS }),
+                },
             },
             {
                 '@type': 'BreadcrumbList',

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS } from '@/constants/seoConfig'
+import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS, SEO_POSTAL_ADDRESS } from '@/constants/seoConfig'
 import { Hero } from '@/components/landing/Hero'
 import { TrustSignals } from '@/components/landing/TrustSignals'
 import { HowItWorks } from '@/components/landing/HowItWorks'
@@ -42,6 +42,7 @@ const jsonLd = {
             },
             telephone: SEO_PHONE,
             email: SEO_EMAIL,
+            address: SEO_POSTAL_ADDRESS,
             description: "Marketplace française spécialisée dans les travaux en accès difficile. Mise en relation entre cordistes certifiés CQP/IRATA et clients professionnels ou particuliers dans toute la France.",
             areaServed: { '@type': 'Country', name: 'France' },
             openingHoursSpecification: SEO_OPENING_HOURS,

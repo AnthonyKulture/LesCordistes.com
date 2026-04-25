@@ -8,6 +8,16 @@ export const SEO_BRAND_NAME = 'LesCordistes.com'
 export const SEO_BASE_URL = 'https://www.lescordistes.com'
 export const SEO_LOGO = `${SEO_BASE_URL}/lescordistes.com-3.webp`
 
+// Siège social (source unique de vérité pour le schema Organization/LocalBusiness)
+export const SEO_POSTAL_ADDRESS = {
+    '@type': 'PostalAddress',
+    streetAddress: '2 rue Pierre Pietri',
+    postalCode: '06000',
+    addressLocality: 'Nice',
+    addressRegion: 'Provence-Alpes-Côte d\'Azur',
+    addressCountry: 'FR',
+} as const
+
 export const SEO_OPENING_HOURS = [
     {
         '@type': 'OpeningHoursSpecification',
