@@ -27,6 +27,11 @@ export const Footer: React.FC = () => {
                         <p className="text-slate-400 text-sm">
                             La plateforme qui connecte les professionnels du travail en hauteur avec leurs clients.
                         </p>
+                        <address className="not-italic text-slate-400 text-sm mt-4 leading-relaxed">
+                            <span className="block font-semibold text-slate-300">LesCordistes.com</span>
+                            2 rue Pierre Pietri<br />
+                            06000 Nice · France
+                        </address>
                         <FooterContact />
                     </div>
 

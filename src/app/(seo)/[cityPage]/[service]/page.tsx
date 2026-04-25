@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { PRIORITY_CITIES, SEO_SERVICES, getServiceCityContext, DEFAULT_SERVICE_FAQS } from '@/constants/seoData'
+import { PRIORITY_CITIES, SEO_SERVICES, getServiceCityContext, hasUniqueServiceCityContext, DEFAULT_SERVICE_FAQS } from '@/constants/seoData'
 import { getEditorialContent } from '@/constants/seoUniqueContent'
-import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS } from '@/constants/seoConfig'
+import { SEO_PHONE, SEO_EMAIL, SEO_BRAND_NAME, SEO_BASE_URL, SEO_LOGO, SEO_OPENING_HOURS, SEO_SAME_AS, SEO_POSTAL_ADDRESS } from '@/constants/seoConfig'
 import { TrustBadges } from '@/components/seo/TrustBadges'
 import { SEOInternalLinks } from '@/components/seo/SEOInternalLinks'
 import { SEOLocalReviews } from '@/components/seo/SEOLocalReviews'
@@ -40,10 +40,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const fallbackDesc = `Cordistes certifiés CQP/IRATA pour ${serviceData.name.toLowerCase()} à ${city.name}. Devis gratuit sous 48 h, sans intermédiaire.`
     const desc = descTemplate || fallbackDesc
 
+    // Anti-doorway gate : la page n'est exposée à l'index que si on a rédigé un
+    // contexte UNIQUE pour ce couple (sans tomber sur le fallback `default`).
+    // Pour réactiver une page → ajouter une entry SERVICE_CITY_CONTEXT[service][city]
+    // dans seoData.ts. Aucun changement de code requis.
+    const indexable = hasUniqueServiceCityContext(serviceSlug, citySlug)
+
     return {
         title: titleTemplate || fallbackTitle,
         description: desc.length > 160 ? `${desc.slice(0, 157)}…` : desc,
         alternates: { canonical: `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}` },
+        robots: indexable
+            ? { index: true, follow: true }
+            : { index: false, follow: true },
         openGraph: {
             title: `${titleTemplate || fallbackTitle} · LesCordistes`,
             description: desc.length > 160 ? `${desc.slice(0, 157)}…` : desc,
@@ -98,11 +107,13 @@ export default async function CityServiceSEOPage({ params }: Props) {
                     availability: 'https://schema.org/InStock',
                 },
                 provider: {
-                    '@type': 'LocalBusiness',
+                    '@type': ['Organization', 'ProfessionalService'],
                     '@id': `${SEO_BASE_URL}/#organization`,
                     name: SEO_BRAND_NAME,
+                    url: SEO_BASE_URL,
                     telephone: SEO_PHONE,
                     email: SEO_EMAIL,
+                    address: SEO_POSTAL_ADDRESS,
                     openingHoursSpecification: SEO_OPENING_HOURS,
                     ...(SEO_SAME_AS.length > 0 && { sameAs: SEO_SAME_AS }),
                 },

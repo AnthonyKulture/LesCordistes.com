@@ -154,16 +154,40 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ---
 
-## SEO (1 473 SSG pages — sitemap)
+## SEO (sitemap dynamique — pages indexables auto-pilotées)
 
-- `/cordiste-[ville]` — 61 villes · `/cordiste-[ville]/[service]` — 1 380 city×service · `/lexique/[slug]` — 13 termes · `/blog/[slug]` — 6 articles · 13 pages institutionnelles
-- JSON-LD : LocalBusiness, FAQPage, Service, BlogPosting (avec `image`), DefinedTerm, DefinedTermSet, BreadcrumbList, Organization, WebSite
+- `/cordiste-[ville]` — 60 villes (toutes indexables) · `/cordiste-[ville]/[service]` — 1 380 pages générées dont **133 indexables** (contexte unique rédigé) et 1 247 en `noindex` · `/lexique/[slug]` — 13 termes · `/blog/[slug]` — 6 articles · 14 pages institutionnelles
+- Total sitemap : **~226 URLs** (uniquement pages indexables — c'est ce que Google découvre)
+- JSON-LD : Service+provider Organization, FAQPage, BlogPosting (avec `image`), DefinedTerm, DefinedTermSet, BreadcrumbList, Organization, WebSite
 - OG image dynamique : `GET /og?title=…&kicker=…` (edge runtime) — utilisée par blog + fallback layout
 - llms-full.txt dynamique : `/llms-full.txt` concatène llms.txt + lexique complet + FAQs blog (cache 24 h)
 - WordPress → Next.js 301 redirects in `next.config.ts`
 - **Canonical rule** : tous les canonicals + URLs JSON-LD utilisent `SEO_BASE_URL = https://www.lescordistes.com` (avec www). Ne **jamais** hardcoder `https://lescordistes.com` (sans www) — Next redirect en `next.config.ts` force la canonicalisation au cas où.
 - Title template : `%s · LesCordistes` (15c, dans `layout.tsx`) — cible ≤ 60c total
 - CSP en mode report-only — observer les violations dans GSC/console avant d'enforcer
+
+### Stratégie anti-doorway : `noindex` conditionnel sur contexte unique
+
+- **Toutes les 1 380 pages city × service sont générées et accessibles** (200 OK, contenu servi, link equity préservé).
+- **Seules les pages avec contexte UNIQUE city-aware rédigé sont indexables** : la fonction `hasUniqueServiceCityContext(serviceSlug, citySlug)` (dans `seoData.ts`) renvoie `true` ssi `SERVICE_CITY_CONTEXT[service][city]` existe (sans tomber sur le `default`).
+- **`generateMetadata` pose `robots: { index: false, follow: true }` sur les pages sans contexte unique** → Google ne les indexe pas mais peut suivre les liens internes.
+- **Le sitemap ne liste que les pages indexables** : il filtre via `hasUniqueServiceCityContext`. Cohérent avec les `robots`.
+- **Pour réactiver une page (la rendre indexable)** : ajouter une entry `SERVICE_CITY_CONTEXT[service][city] = { intro, useCases }` dans `seoData.ts`. Aucun changement de code requis. Le sitemap et les robots metas se mettent à jour automatiquement au build suivant.
+- **Périmètre actuellement indexable** : 133 couples (sur 1 380 possibles). À élargir au fur et à mesure de la rédaction de contextes uniques.
+
+### Cahier des charges qualité d'un contexte (E-E-A-T) — pour rédiger une nouvelle entry
+
+Cible 80-160 mots intro + 3 useCases. Chaque texte doit passer le **swap test** (impossible de remplacer la ville par une autre sans casser le sens). Mentionner 3 specifics minimum :
+- Quartier ou zone nommée (ex. Vieux-Lille, Île de Nantes, Capucins Brest)
+- Matériau/type de bâti caractéristique (ex. brique foraine, granit breton, tuffeau, basalte Volvic)
+- Climat/réglementation/économie locale (ABF, UNESCO, MaPrimeRénov', mistral, embruns, etc.)
+
+### Schema LocalBusiness — règles
+
+- **Une seule** `Organization` (homepage `@id: ${SEO_BASE_URL}/#organization`) avec `address: SEO_POSTAL_ADDRESS` (siège Nice)
+- Pages city × service : `Service` schema avec `provider: { @id: organization }` + `areaServed: City` (la ville)
+- Pages city : idem (`Service`, pas `LocalBusiness`)
+- **Ne jamais** déclarer `addressLocality: <ville-de-la-page>` dans le schema d'une city page → assimilable à local-spam pour un SAB national
 
 ---
 

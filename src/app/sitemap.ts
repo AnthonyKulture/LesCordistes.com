@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { PRIORITY_CITIES, SEO_SERVICES } from '@/constants/seoData'
+import { PRIORITY_CITIES, SEO_SERVICES, hasUniqueServiceCityContext } from '@/constants/seoData'
 import { SEO_GLOSSARY } from '@/constants/seoGlossary'
 import { SEO_BLOG } from '@/constants/seoBlog'
 import { SEO_BASE_URL as BASE_URL } from '@/constants/seoConfig'
@@ -32,13 +32,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
 
     // Pages ville × service : /cordiste-{ville}/{service}
+    // On ne liste que les couples ayant un contexte UNIQUE rédigé dans
+    // SERVICE_CITY_CONTEXT (pas le fallback default). Les pages sans contexte
+    // unique restent générées et accessibles, mais en noindex (cf generateMetadata
+    // de la page) → cohérence sitemap = pages indexables uniquement.
+    // Pour rajouter une page au sitemap : ajouter une entry SERVICE_CITY_CONTEXT.
     const cityServicePages: MetadataRoute.Sitemap = PRIORITY_CITIES.flatMap((city) =>
-        SEO_SERVICES.map((service) => ({
-            url: `${BASE_URL}/cordiste-${city.slug}/${service.slug}`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly' as const,
-            priority: 0.7,
-        }))
+        SEO_SERVICES
+            .filter((service) => hasUniqueServiceCityContext(service.slug, city.slug))
+            .map((service) => ({
+                url: `${BASE_URL}/cordiste-${city.slug}/${service.slug}`,
+                lastModified: new Date(),
+                changeFrequency: 'weekly' as const,
+                priority: 0.7,
+            }))
     )
 
     // Pages lexique : /lexique/{slug}
