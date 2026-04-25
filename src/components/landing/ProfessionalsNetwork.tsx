@@ -36,7 +36,7 @@ export const ProfessionalsNetwork: React.FC = () => {
 
                     <div className="order-1 md:order-2">
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-                            Rejoignez le réseau d'experts en <span className="text-gradient">travaux acrobatiques</span>
+                            Rejoignez le réseau d'experts en <span className="text-gradient">travaux sur corde</span>
                         </h2>
                         <p className="text-xl text-slate-600 mb-10 leading-relaxed">
                             Accédez à des dizaines d'offres de chantiers qualifiés chaque mois. Développez votre entreprise de travaux sur corde en toute indépendance.

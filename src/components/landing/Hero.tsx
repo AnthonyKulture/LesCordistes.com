@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
                             Trouvez des <span className="text-brand-blue-light">cordistes professionnels</span> pour vos travaux en hauteur
                         </h1>
                         <p className="text-lg sm:text-2xl text-slate-600 mb-6 sm:mb-10 leading-relaxed max-w-2xl font-medium">
-                            La plateforme experte de mise en relation entre entreprises, particuliers et techniciens en travaux acrobatiques. Obtenez vos devis rapidement.
+                            La plateforme experte de mise en relation entre entreprises, particuliers et techniciens en travaux sur corde. Obtenez vos devis rapidement.
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-5">
