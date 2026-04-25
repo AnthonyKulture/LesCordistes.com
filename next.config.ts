@@ -85,7 +85,8 @@ const nextConfig: NextConfig = {
             "base-uri 'self'",
             "form-action 'self'",
             "frame-ancestors 'none'",
-            "upgrade-insecure-requests",
+            // Note: 'upgrade-insecure-requests' est ignoré en report-only
+            // → à ré-ajouter quand on basculera en CSP enforcé.
         ].join('; ')
 
         return [
