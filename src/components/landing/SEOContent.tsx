@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { CheckCircle } from 'lucide-react';
 
 export const SEOContent: React.FC = () => {
@@ -8,13 +9,14 @@ export const SEOContent: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div className="order-2 md:order-1 relative">
                         <div className="absolute -inset-4 bg-brand-blue/10 rounded-3xl transform rotate-3 z-0"></div>
-                        <img
+                        <Image
                             src="/lescordistes.com-new-00.webp"
                             alt="Cordiste professionnel réalisant un ravalement de façade"
-                            loading="lazy"
-                            decoding="async"
                             width={600}
                             height={500}
+                            loading="lazy"
+                            sizes="(max-width: 768px) 100vw, 600px"
+                            quality={70}
                             className="relative z-10 w-full h-[500px] object-cover rounded-2xl shadow-xl"
                         />
                     </div>
