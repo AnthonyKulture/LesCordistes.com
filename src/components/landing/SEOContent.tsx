@@ -22,7 +22,7 @@ export const SEOContent: React.FC = () => {
                     </div>
                     <div className="order-1 md:order-2">
                         <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-tight">
-                            Cordistes et travaux acrobatiques : <span className="text-brand-blue-light">Tout ce que vous devez savoir</span>
+                            Cordistes et travaux en hauteur : <span className="text-brand-blue-light">Tout ce que vous devez savoir</span>
                         </h2>
                         <p className="text-xl text-slate-600 mb-8 leading-relaxed">
                             Un cordiste est un technicien spécialisé dans les interventions en <strong>milieu périlleux</strong>. Grâce aux techniques d'alpinisme, ces professionnels atteignent les zones inaccessibles.

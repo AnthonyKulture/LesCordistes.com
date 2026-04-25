@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
                     <div>
                         <div className="flex items-center space-x-2 mb-4">
                             <img
-                                src="/lescordistes.com-white-logo.png"
+                                src="/logowhite-lescordistes.com.svg"
                                 alt="LesCordistes Logo Blanc"
                                 loading="lazy"
                                 decoding="async"

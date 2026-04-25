@@ -117,8 +117,10 @@ export const Header: React.FC = () => {
                     <div className="flex items-center gap-12 flex-shrink-0">
                         <Link href="/" className="flex items-center">
                             <img
-                                src="/lescordistes.comFichier 10.png"
+                                src="/logo-lescordistes.com.svg"
                                 alt="LesCordistes Logo"
+                                width={220}
+                                height={60}
                                 className="h-14 w-auto object-contain hover:opacity-90 transition-opacity"
                             />
                         </Link>
@@ -337,7 +339,7 @@ export const Header: React.FC = () => {
                     {/* Top bar */}
                     <div className="flex items-center justify-between px-5 h-24 border-b border-slate-100 flex-shrink-0">
                         <Link href="/" onClick={() => setIsMenuOpen(false)}>
-                            <img src="/lescordistes.comFichier 10.png" alt="LesCordistes" className="h-12 w-auto object-contain" />
+                            <img src="/logo-lescordistes.com.svg" alt="LesCordistes" width={200} height={56} className="h-12 w-auto object-contain" />
                         </Link>
                         <button
                             onClick={() => setIsMenuOpen(false)}
