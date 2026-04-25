@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Shield, Users } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -61,7 +62,7 @@ export const HowItWorks: React.FC = () => {
                             <div className="grid md:grid-cols-3 gap-8 md:gap-12 relative">
                                 <div className="relative group rounded-3xl bg-blue-50/30 border border-blue-100/50 overflow-hidden hover:bg-blue-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/maconnerie-lescordistes.com.webp" alt="Publication de chantier" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <Image src="/maconnerie-lescordistes.com.webp" alt="Publication de chantier" fill loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" quality={70} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-brand-blue shadow-sm font-black text-lg border border-blue-50">1</div>
                                     </div>
                                     <div className="p-8">
@@ -74,7 +75,7 @@ export const HowItWorks: React.FC = () => {
 
                                 <div className="relative group rounded-3xl bg-blue-50/30 border border-blue-100/50 overflow-hidden hover:bg-blue-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/lescordistes.com-visuel-travaux-en-hauteur8.webp" alt="Candidatures d'experts" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <Image src="/lescordistes.com-visuel-travaux-en-hauteur8.webp" alt="Candidatures d'experts" fill loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" quality={70} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-brand-blue shadow-sm font-black text-lg border border-blue-50">2</div>
                                     </div>
                                     <div className="p-8">
@@ -87,7 +88,7 @@ export const HowItWorks: React.FC = () => {
 
                                 <div className="relative group rounded-3xl bg-blue-50/30 border border-blue-100/50 overflow-hidden hover:bg-blue-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/lescordistes.com-new-07.webp" alt="Sélection de l'expert" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <Image src="/lescordistes.com-new-07.webp" alt="Sélection de l'expert" fill loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" quality={70} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-brand-blue shadow-sm font-black text-lg border border-blue-50">3</div>
                                     </div>
                                     <div className="p-8">
@@ -117,7 +118,7 @@ export const HowItWorks: React.FC = () => {
                             <div className="grid md:grid-cols-3 gap-8 md:gap-12 relative">
                                 <div className="relative group rounded-3xl bg-orange-50/30 border border-orange-100/50 overflow-hidden hover:bg-orange-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/cordiste_1.webp" alt="Validation profil" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <Image src="/cordiste_1.webp" alt="Validation profil" fill loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" quality={70} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-orange-600 shadow-sm font-black text-lg border border-orange-50">1</div>
                                     </div>
                                     <div className="p-8">
@@ -130,7 +131,7 @@ export const HowItWorks: React.FC = () => {
 
                                 <div className="relative group rounded-3xl bg-orange-50/30 border border-orange-100/50 overflow-hidden hover:bg-orange-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/lescordistes.com-visuel-travaux-en-hauteur1.webp" alt="Parcourir missions" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <Image src="/lescordistes.com-visuel-travaux-en-hauteur1.webp" alt="Parcourir missions" fill loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" quality={70} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-orange-600 shadow-sm font-black text-lg border border-orange-50">2</div>
                                     </div>
                                     <div className="p-8">
@@ -143,7 +144,7 @@ export const HowItWorks: React.FC = () => {
 
                                 <div className="relative group rounded-3xl bg-orange-50/30 border border-orange-100/50 overflow-hidden hover:bg-orange-50/50 transition-all duration-500">
                                     <div className="h-44 overflow-hidden relative">
-                                        <img src="/lescordistes.com-visuel-travaux-en-hauteur2.webp" alt="Débloquer le contact" loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <Image src="/lescordistes.com-visuel-travaux-en-hauteur2.webp" alt="Débloquer le contact" fill loading="lazy" sizes="(max-width: 768px) 100vw, 33vw" quality={70} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute top-4 left-4 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-orange-600 shadow-sm font-black text-lg border border-orange-50">3</div>
                                     </div>
                                     <div className="p-8">

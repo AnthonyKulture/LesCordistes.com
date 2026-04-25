@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 
@@ -10,13 +11,14 @@ export const ProfessionalsNetwork: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-16 items-center">
                     <div className="order-2 md:order-1 relative">
                         <div className="absolute -inset-4 bg-blue-50/50 rounded-3xl transform -rotate-3 z-0"></div>
-                        <img
+                        <Image
                             src="/lescordistes.com-new-01.webp"
                             alt="Cordiste professionnel en pleine intervention"
-                            loading="lazy"
-                            decoding="async"
                             width={600}
                             height={600}
+                            loading="lazy"
+                            sizes="(max-width: 768px) 100vw, 600px"
+                            quality={70}
                             className="relative z-10 w-full h-[600px] object-cover rounded-2xl shadow-2xl"
                         />
                         <div className="absolute -bottom-8 -right-8 z-20 bg-white rounded-xl p-6 shadow-xl border border-slate-100 hidden sm:block animate-bounce-slow">

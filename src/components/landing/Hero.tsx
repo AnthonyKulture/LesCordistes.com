@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, ShieldCheck, Award, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import type { User } from '@supabase/supabase-js';
@@ -74,37 +75,37 @@ export const Hero: React.FC<HeroProps> = ({ user }) => {
 
                         <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-slate-200/50 group border border-slate-100 h-[500px] lg:h-[600px] bg-slate-100">
                             <div className="grid grid-cols-2 grid-rows-2 h-full w-full gap-2 p-2">
-                                <div className="row-span-2 overflow-hidden rounded-[1.5rem]">
-                                    <img
+                                <div className="row-span-2 overflow-hidden rounded-[1.5rem] relative">
+                                    <Image
                                         src="/lescordistes.com-new-03.webp"
                                         alt="Cordiste professionnel en pleine intervention"
-                                        fetchPriority="high"
-                                        decoding="async"
-                                        width={600}
-                                        height={600}
-                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        fill
+                                        priority
+                                        sizes="(max-width: 1024px) 50vw, 300px"
+                                        quality={75}
+                                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                     />
                                 </div>
-                                <div className="overflow-hidden rounded-[1.5rem]">
-                                    <img
+                                <div className="overflow-hidden rounded-[1.5rem] relative">
+                                    <Image
                                         src="/lescordistes.com-new-04.webp"
                                         alt="Intervention de cordiste pour nettoyage de façade"
+                                        fill
                                         loading="lazy"
-                                        decoding="async"
-                                        width={300}
-                                        height={300}
-                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        sizes="(max-width: 1024px) 25vw, 150px"
+                                        quality={70}
+                                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                     />
                                 </div>
-                                <div className="overflow-hidden rounded-[1.5rem]">
-                                    <img
+                                <div className="overflow-hidden rounded-[1.5rem] relative">
+                                    <Image
                                         src="/lescordistes.com-new-10.webp"
                                         alt="Cordiste en travaux de confortement de falaise"
+                                        fill
                                         loading="lazy"
-                                        decoding="async"
-                                        width={300}
-                                        height={300}
-                                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        sizes="(max-width: 1024px) 25vw, 150px"
+                                        quality={70}
+                                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                     />
                                 </div>
                             </div>
