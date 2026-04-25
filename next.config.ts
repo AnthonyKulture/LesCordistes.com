@@ -74,12 +74,12 @@ const nextConfig: NextConfig = {
         // CSP en report-only : observer 1-2 semaines puis migrer vers Content-Security-Policy enforcé.
         const csp = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com https://*.posthog.com https://eu-assets.i.posthog.com https://va.vercel-scripts.com https://maps.googleapis.com",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-            "img-src 'self' data: blob: https: https://*.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://maps.googleapis.com https://maps.gstatic.com",
-            "font-src 'self' data: https://fonts.gstatic.com",
-            "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://www.google-analytics.com https://*.googletagmanager.com https://api-adresse.data.gouv.fr https://*.vercel-insights.com",
-            "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://maps.google.com https://www.google.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com https://*.posthog.com https://eu-assets.i.posthog.com https://va.vercel-scripts.com https://vercel.live https://maps.googleapis.com",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live",
+            "img-src 'self' data: blob: https: https://*.supabase.co https://www.googletagmanager.com https://www.google-analytics.com https://maps.googleapis.com https://maps.gstatic.com https://vercel.live https://vercel.com",
+            "font-src 'self' data: https://fonts.gstatic.com https://vercel.live https://assets.vercel.com",
+            "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.stripe.com https://eu.i.posthog.com https://eu-assets.i.posthog.com https://www.google-analytics.com https://*.googletagmanager.com https://api-adresse.data.gouv.fr https://*.vercel-insights.com https://vercel.live wss://ws-us3.pusher.com",
+            "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://maps.google.com https://www.google.com https://vercel.live",
             "media-src 'self' https://*.supabase.co",
             "object-src 'none'",
             "base-uri 'self'",
