@@ -29,6 +29,12 @@ export interface BlogArticle {
     readTime: number
     datePublished: string
     dateModified: string
+    /**
+     * URL absolue ou relative d'une image hero/thumbnail (ratio 16:10 conseillé,
+     * 1200×750 minimum pour Discover). Si absente, fallback automatique sur
+     * l'image OG dynamique générée par /og?title=…&kicker=….
+     */
+    image?: string
     intro: string
     sections: BlogSection[]
     faqs: BlogFaq[]
@@ -843,3 +849,13 @@ export function getBlogArticle(slug: string): BlogArticle | undefined {
 }
 
 export const SEO_BLOG_BASE = `${SEO_BASE_URL}/blog`
+
+/**
+ * Retourne l'URL d'image à utiliser pour un article (hero + thumbnail).
+ * Préfère `article.image` si défini, sinon fallback sur l'OG dynamique.
+ * Toujours renvoie une URL relative pour rester compatible Next/Image local.
+ */
+export function getBlogImage(article: BlogArticle): string {
+    if (article.image) return article.image
+    return `/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}`
+}
