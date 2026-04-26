@@ -95,17 +95,24 @@ export async function GET(req: Request) {
 
                     <div
                         style={{
-                            color: '#ffffff',
-                            fontSize: `${titleFontSize}px`,
-                            fontWeight: 800,
-                            lineHeight: 1.15,
-                            letterSpacing: '-0.025em',
-                            maxWidth: '960px',
                             display: 'flex',
-                            textAlign: 'center',
+                            width: '100%',
+                            maxWidth: '960px',
+                            justifyContent: 'center',
                         }}
                     >
-                        {rawTitle}
+                        <span
+                            style={{
+                                color: '#ffffff',
+                                fontSize: `${titleFontSize}px`,
+                                fontWeight: 800,
+                                lineHeight: 1.15,
+                                letterSpacing: '-0.025em',
+                                textAlign: 'center',
+                            }}
+                        >
+                            {rawTitle}
+                        </span>
                     </div>
                 </div>
 

@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const desc = article.description.length > 160 ? `${article.description.slice(0, 157)}…` : article.description
     const image = article.image
         ? (article.image.startsWith('http') ? article.image : `${SEO_BASE_URL}${article.image}`)
-        : `${SEO_BASE_URL}/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}`
+        : `${SEO_BASE_URL}/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}&v=3`
     return {
         title: article.shortTitle,
         description: desc,
@@ -49,7 +49,7 @@ export default async function BlogArticlePage({ params }: Props) {
     const heroImage = getBlogImage(article)
     const heroImageAbs = article.image
         ? (article.image.startsWith('http') ? article.image : `${SEO_BASE_URL}${article.image}`)
-        : `${SEO_BASE_URL}/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}`
+        : `${SEO_BASE_URL}/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}&v=3`
 
     const otherArticles = SEO_BLOG
         .filter((a) => a.slug !== slug)
