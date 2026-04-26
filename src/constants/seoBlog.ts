@@ -600,12 +600,133 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
         ],
     },
+    {
+        slug: 'premier-chantier-cordiste-apres-cqp',
+        title: 'Premier chantier cordiste après le CQP : trouver et facturer',
+        shortTitle: 'Premier chantier après le CQP',
+        description:
+            'Décrochez vos premiers chantiers cordiste après le CQP TPS : où chercher du travail, combien facturer, comment prospecter. Le guide terrain concret 2026.',
+        category: 'Métier & Carrière',
+        readTime: 8,
+        datePublished: '2026-04-26',
+        dateModified: '2026-04-26',
+        intro:
+            'Le CQP TPS niveau 1 en poche, la question arrive vite : comment trouver son premier chantier cordiste ? Le diplôme ouvre les portes, mais il ne signe pas les devis à ta place. Les premières semaines sont souvent le moment le plus difficile de la carrière — pas par manque de compétences, mais par manque de méthode pour prospecter, fixer ses tarifs et convaincre un donneur d\'ordre de parier sur un profil sans références. Ce guide est écrit pour les 0-12 premiers mois : où chercher du travail, combien facturer comme technicien d\'accès en début d\'activité, comment rédiger un devis crédible et éviter les erreurs classiques qui font traîner le démarrage.',
+        sections: [
+            {
+                heading: 'Où trouver ses premiers chantiers cordiste ?',
+                body: 'La plupart des fraîchement diplômés font la même erreur : ils attendent que le travail vienne à eux. Le marché des TAC (techniques d\'accès sur cordes) fonctionne peu par les grandes plateformes généralistes. Les chantiers circulent d\'abord dans les réseaux professionnels, par recommandation et bouche-à-oreille entre cordistes.\n\nTrois canaux fonctionnent en priorité pour un profil CQP niveau 1 en début d\'activité.\n\n**Les organismes de formation.** Ton centre CQP TPS ou IRATA entretient des relations avec des entreprises qui recrutent régulièrement des équipiers pour du renfort ponctuel. Demande directement à ton formateur si des prestataires de la région cherchent des profils. C\'est le levier le plus rapide à activer — et souvent le plus fiable pour un premier chantier sans références.\n\n**Les entreprises de travaux spécialisées.** Plutôt que de chercher en direct des clients particuliers ou des syndics — ce qui nécessite une structure juridique, une RC Pro et un minimum de références — commence par travailler en sous-traitance pour une ETT (entreprise de travaux sur cordes) existante. Tu factures à une entreprise, tu constitues ton carnet de références, et tu ne portes pas seul la responsabilité du plan de prévention face au donneur d\'ordre.\n\n**Les plateformes spécialisées.** LesCordistes.com centralise des missions postées par des clients qui ont déjà décidé de faire appel à un cordiste. Les missions sont qualifiées — le client sait ce qu\'il cherche. En tant que professionnel inscrit, tu vois les chantiers disponibles dans ta zone et tu peux candidater directement, sans intermédiaire.',
+                listIntro: 'Les six canaux à activer dans les premières semaines :',
+                list: [
+                    'Formation : demande à ton organisme CQP/IRATA une liste de contacts entreprises régionaux',
+                    'Sous-traitance : approche les ETT locales comme équipier avant de prospecter en direct',
+                    'LesCordistes.com : inscris-toi, complète ton profil et accède aux missions de ta région',
+                    'LinkedIn : contacte les gérants de petites entreprises de travaux en hauteur localement',
+                    'SFETH : le syndicat professionnel met en relation adhérents et techniciens',
+                    'Marchés publics : surveille les appels d\'offres sur BOAMP — certains cherchent des équipiers supplémentaires',
+                ],
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    description: 'Des chantiers cordiste qualifiés, triés par région. Accès libre à l\'inscription.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Combien facturer : TJM cordiste débutant en 2026',
+                body: 'C\'est la question qui revient le plus souvent — et la plus mal documentée. Les chiffres ci-dessous sont des repères de marché issus des pratiques observées chez les indépendants et ETT françaises en 2026.\n\n**Junior (CQP niveau 1, 0-2 ans) : 280 à 380 €/j HT.** La fourchette réaliste pour démarrer en régions moyennes. À Paris et en IDF, vise plutôt 320-450 €/j.\n\n**Confirmé (CQP niveau 2, 2-5 ans) : 380 à 550 €/j HT.** Accessible après 2-3 ans et un carnet de références étoffé. Ce niveau justifie l\'encadrement d\'un équipier N1.\n\n**Expert (CQP niveau 3 ou IRATA L3) : 550 à 900 €/j HT.** Réservé aux chantiers industriels, à l\'encadrement de chantiers complexes et à la formation. Rare sous 5 ans d\'expérience.\n\nEn micro-entreprise, les charges représentent environ 22 % du chiffre d\'affaires. Sur 300 €/j facturés, tu encaisses environ 234 € nets. Prévois également : déplacements, entretien du matériel, recyclage triennal CQP ou IRATA (600 à 1 200 € tous les 3 ans), RC Pro (400 à 900 €/an) et heures de prospection non facturées.\n\nDeux erreurs classiques en début d\'activité : se brader pour décrocher le premier contrat — tu crées un précédent difficile à corriger — et facturer trop cher sans références pour justifier le prix. Reste dans la fourchette basse de ton niveau, puis fais monter le tarif après 2-3 missions avec retours clients positifs. Un TJM trop bas attire aussi des clients qui négocient sur tout — ce n\'est pas le vivier avec lequel tu veux construire ton activité.',
+                list: [
+                    'Junior CQP N1 : 280-380 €/j — zone de démarrage réaliste en régions moyennes',
+                    'Confirmé CQP N2 : 380-550 €/j — accessible après 2-3 ans et références documentées',
+                    'Expert CQP N3 / IRATA L3 : 550-900 €/j — chantiers industriels ou encadrement d\'équipe',
+                    'Paris et grandes métropoles : majorer de 15 à 25 % par rapport aux fourchettes nationales',
+                    'Chantier ATEX, nucléaire, habilitation électrique : surcote 30 à 50 %',
+                    'Astreinte ou travail de nuit : majoration 25-40 % à négocier au contrat',
+                ],
+            },
+            {
+                heading: 'Rédiger un devis cordiste crédible dès le premier chantier',
+                body: 'Un devis, c\'est ta première carte de visite. Un donneur d\'ordre qui ne te connaît pas va évaluer ton sérieux à travers ce document autant qu\'à travers ta réputation. Un devis vague ou mal structuré, c\'est souvent un contrat perdu — même si ton prix est compétitif.\n\nDès le départ, travaille avec un modèle simple mais complet. Utilise un outil comme Zervant, Henrri ou même un modèle Word avec en-tête. La forme signale le fond : un devis sans logo ni SIRET visible, envoyé en message WhatsApp, te positionne d\'emblée comme un artisan informel.\n\nLa **clause météo** mérite une attention particulière. Le vent au-dessus de 45 km/h interrompt tout chantier en suspension — c\'est une règle de sécurité, pas une excuse. Si tu ne la mentionnes pas dans le devis, un report peut devenir un litige. Prévois également la mention de ton niveau de certification (CQP TPS niveau X ou IRATA L1/L2) et le numéro de ta police RC Pro. Certains donneurs d\'ordre professionnels l\'exigent avant de signer, et ça te distingue d\'un travailleur non déclaré. Sur le plan de prévention, c\'est à toi de le proposer — l\'OPPBTP met des modèles à disposition gratuitement.',
+                listIntro: 'Ce qu\'un bon devis cordiste doit contenir :',
+                list: [
+                    'En-tête complet : SIRET, adresse, contact, assureur et numéro de police',
+                    'Description précise : nature des travaux, surface estimée, hauteur, durée',
+                    'Nombre de techniciens et leur niveau (CQP N1, N2, IRATA L1…)',
+                    'Prix HT, taux de TVA applicable, prix TTC',
+                    'Clause météo : report sans frais si vent > 45 km/h ou conditions dangereuses',
+                    'Mention de la certification avec date d\'expiration',
+                    'Délai de validité (30 jours recommandé)',
+                    'Conditions de paiement (30 jours date de facture ou à réception)',
+                ],
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    description: 'Profil complet, certifications affichées, accès aux missions en région.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Prospecter sans budget : les 4 leviers qui marchent',
+                body: 'La prospection à froid par mail ou téléphone donne peu de résultats dans le secteur des TAC. Le marché repose sur la confiance — et la confiance se construit par la preuve et la recommandation, pas par un message générique envoyé à cent syndics.\n\n**1. Ton réseau de formation.** Tes condisciples de CQP ou d\'IRATA sont tes premiers contacts professionnels. Certains vont rejoindre des ETT, d\'autres vont monter leur activité. Un technicien d\'accès sur cordes qui a trop de travail te fera remonter une mission — et vice versa. Entretiens ces liens dès la fin de formation.\n\n**2. La présence en ligne minimale.** Un profil LinkedIn complet (photo de chantier, certifications mentionnées, zone d\'intervention) et un profil LesCordistes à jour sont la base. Tu n\'as pas besoin d\'un site web en année 1 — mais tu dois être trouvable.\n\n**3. Le porte-à-porte ciblé.** Identifie les syndics de copropriété, les gestionnaires de patrimoine et les responsables maintenance dans ta zone. Un courrier court, professionnel, avec ta certification et ta zone d\'intervention suffit pour créer un premier contact. Cible les bâtiments R+5 et au-delà — ce sont eux qui ont régulièrement besoin de techniciens en suspension.\n\n**4. Les réseaux professionnels.** La SFETH (Syndicat Français des Entreprises de Travaux en Hauteur) relie les acteurs du secteur. Même sans en être adhérent, participe aux événements sectoriels (salons, journées de formation continue, recyclages triennaux) pour te faire connaître des donneurs d\'ordre et des bureaux d\'études prescripteurs. Le CATEC publie également des ressources utiles pour les entreprises qui débutent.',
+            },
+            {
+                heading: 'Les 6 erreurs qui font rater les premières semaines',
+                body: 'Ce n\'est pas le manque de compétences techniques qui freine le démarrage d\'une activité cordiste. La formation CQP ou IRATA t\'a préparé aux gestes, aux EPI, aux protocoles de sécurité et aux plans de sauvetage. Ce qui freine en début de carrière, c\'est presque toujours une combinaison d\'erreurs organisationnelles et commerciales — des points sur lesquels aucune formation technique ne t\'a préparé.\n\nLa première année est une phase de rodage. Ce qui compte, c\'est ne pas répéter les erreurs qui laissent des traces durables : une responsabilité engagée sans assurance, un tarif bradé qui devient ta norme de marché, un chantier pris hors de ta portée technique qui ternit ta réputation avant même que tu l\'aies construite. Ces 6 points reviennent systématiquement chez les indépendants dont le démarrage a été difficile. À vérifier avant chaque nouveau chantier en début d\'activité.',
+                listIntro: 'À éviter absolument :',
+                list: [
+                    'Démarrer sans RC Pro — une seule intervention sans assurance engage ta responsabilité personnelle',
+                    'Accepter des chantiers hors de ta portée — le CQP N1 travaille sous supervision N2 ou N3, pas en autonome',
+                    'Oublier le plan de prévention — obligatoire même pour un nettoyage d\'une demi-journée',
+                    'Sous-facturer pour décrocher le client — tu crées un référentiel prix difficile à corriger ensuite',
+                    'Négliger le recyclage triennal — une certification expirée t\'exclut de tout chantier formalisé',
+                    'Travailler sans contrat écrit — un devis signé vaut bien mieux qu\'un accord verbal',
+                ],
+                cta: {
+                    text: 'Découvrir les chantiers de cette semaine',
+                    href: '/jobs',
+                    description: 'Missions cordiste qualifiées par région — sans intermédiaire entre toi et le client.',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien peut-on facturer comme cordiste débutant après le CQP ?',
+                a: 'Après le CQP TPS niveau 1, comptez 280 à 380 €/j en TJM hors taxes selon la région. Les charges en micro-entreprise représentent environ 22 % du CA. Les grandes métropoles permettent de viser le haut de la fourchette.',
+            },
+            {
+                q: 'Peut-on travailler comme cordiste indépendant juste après le CQP niveau 1 ?',
+                a: 'Oui, le CQP N1 autorise à exercer en tant qu\'équipier sous supervision d\'un technicien N2 ou N3. Pour travailler en autonomie complète ou encadrer une équipe, le niveau 2 est requis. En micro-entreprise, l\'immatriculation prend 1 à 2 semaines — ensuite tu es opérationnel.',
+            },
+            {
+                q: 'Le plan de prévention est-il obligatoire dès le premier chantier ?',
+                a: 'Oui, quelle que soit la durée. Les travaux par techniques d\'accès sur cordes figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993 — le plan de prévention écrit est donc systématiquement obligatoire. Des modèles gratuits sont disponibles sur le site de l\'OPPBTP.',
+            },
+            {
+                q: 'Quelle est la meilleure façon de trouver ses premiers clients cordiste ?',
+                a: 'La sous-traitance auprès d\'ETT locales est la voie la plus rapide en début de carrière : tu travailles, tu accumules des références et tu évites la prospection à froid. En parallèle, inscris-toi sur LesCordistes.com pour accéder aux missions qualifiées en direct.',
+            },
+            {
+                q: 'Quels documents faut-il avoir avant de commencer à facturer ?',
+                a: 'Au minimum : un numéro SIRET (micro-entreprise ou EURL), une attestation RC Pro couvrant les travaux en hauteur sur cordes, un CQP TPS ou IRATA en cours de validité, et un modèle de devis avec en-tête. Pour les clients professionnels, une attestation URSSAF à jour peut également être demandée.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Habilitations CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Comment les clients choisissent leur cordiste', href: '/blog/comment-choisir-son-cordiste' },
+            { label: 'Voir les missions disponibles', href: '/jobs' },
+            { label: 'Créer mon profil cordiste', href: '/inscription-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
     'Réglementation': 'Réglementation',
     'Guide achat': 'Guide achat',
     'Travaux & technique': 'Travaux & technique',
+    'Métier & Carrière': 'Métier & Carrière',
 }
 
 export function getBlogArticle(slug: string): BlogArticle | undefined {
