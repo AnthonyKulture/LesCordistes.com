@@ -7,102 +7,147 @@ const SIZE = { width: 1200, height: 630 }
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
     const rawTitle = (searchParams.get('title') ?? 'LesCordistes').slice(0, 90)
-    const rawKicker = (searchParams.get('kicker') ?? 'Plateforme nationale').slice(0, 40)
+    const rawKicker = (searchParams.get('kicker') ?? 'Blog').slice(0, 40)
+
+    const titleFontSize = rawTitle.length > 75 ? 44 : rawTitle.length > 55 ? 56 : 68
 
     return new ImageResponse(
         (
             <div
                 style={{
-                    width: `${SIZE.width}px`,
-                    height: `${SIZE.height}px`,
+                    width: '100%',
+                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    background: 'linear-gradient(135deg, #0f1e3a 0%, #243355 60%, #1a3a6b 100%)',
+                    background: 'linear-gradient(135deg, #0a1730 0%, #1a2d5a 50%, #243355 100%)',
                     fontFamily: 'system-ui, sans-serif',
                     position: 'relative',
                     overflow: 'hidden',
                 }}
             >
-                <div style={{
-                    position: 'absolute', top: 0, left: 0, right: 0,
-                    height: '6px',
-                    background: 'linear-gradient(90deg, #243355, #5B8DDB)',
-                    display: 'flex',
-                }} />
-
-                <div style={{
-                    position: 'absolute', top: '-80px', right: '-80px',
-                    width: '420px', height: '420px',
-                    borderRadius: '50%',
-                    background: 'rgba(91,141,219,0.12)',
-                    display: 'flex',
-                }} />
-                <div style={{
-                    position: 'absolute', bottom: '-60px', left: '20%',
-                    width: '320px', height: '320px',
-                    borderRadius: '50%',
-                    background: 'rgba(91,141,219,0.08)',
-                    display: 'flex',
-                }} />
-
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    height: '100%',
-                    padding: '60px 80px',
-                }}>
-                    <div style={{
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '-220px',
+                        right: '-220px',
+                        width: '620px',
+                        height: '620px',
+                        borderRadius: '50%',
+                        background: 'radial-gradient(circle, rgba(91,141,219,0.28) 0%, rgba(91,141,219,0) 70%)',
                         display: 'flex',
+                    }}
+                />
+                <div
+                    style={{
+                        position: 'absolute',
+                        bottom: '-180px',
+                        left: '-120px',
+                        width: '520px',
+                        height: '520px',
+                        borderRadius: '50%',
+                        background: 'radial-gradient(circle, rgba(91,141,219,0.18) 0%, rgba(91,141,219,0) 70%)',
+                        display: 'flex',
+                    }}
+                />
+
+                <div
+                    style={{
+                        height: '6px',
+                        background: 'linear-gradient(90deg, transparent 0%, #5B8DDB 50%, transparent 100%)',
+                        display: 'flex',
+                    }}
+                />
+
+                <div
+                    style={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
                         alignItems: 'center',
-                        gap: '10px',
-                        background: 'rgba(91,141,219,0.15)',
-                        border: '1px solid rgba(91,141,219,0.3)',
-                        borderRadius: '50px',
-                        padding: '10px 22px',
-                        alignSelf: 'flex-start',
-                    }}>
-                        <span style={{ color: '#5B8DDB', fontSize: '18px', fontWeight: 600 }}>
+                        padding: '60px 110px',
+                        textAlign: 'center',
+                    }}
+                >
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            background: 'rgba(91,141,219,0.18)',
+                            border: '1px solid rgba(91,141,219,0.45)',
+                            borderRadius: '50px',
+                            padding: '12px 28px',
+                            marginBottom: '40px',
+                        }}
+                    >
+                        <span
+                            style={{
+                                color: '#9DB8E5',
+                                fontSize: '20px',
+                                fontWeight: 700,
+                                letterSpacing: '0.08em',
+                                textTransform: 'uppercase',
+                            }}
+                        >
                             {rawKicker}
                         </span>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                        <div style={{
+                    <div
+                        style={{
                             color: '#ffffff',
-                            fontSize: rawTitle.length > 60 ? '56px' : '72px',
+                            fontSize: `${titleFontSize}px`,
                             fontWeight: 800,
-                            lineHeight: 1.1,
-                            letterSpacing: '-0.02em',
-                        }}>
-                            {rawTitle}
-                        </div>
+                            lineHeight: 1.15,
+                            letterSpacing: '-0.025em',
+                            maxWidth: '960px',
+                            display: 'flex',
+                            textAlign: 'center',
+                        }}
+                    >
+                        {rawTitle}
                     </div>
+                </div>
 
-                    <div style={{
+                <div
+                    style={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
-                        borderTop: '1px solid rgba(255,255,255,0.15)',
-                        paddingTop: '24px',
-                    }}>
-                        <div style={{
+                        justifyContent: 'center',
+                        gap: '16px',
+                        padding: '28px 40px',
+                        borderTop: '1px solid rgba(255,255,255,0.12)',
+                    }}
+                >
+                    <div
+                        style={{
                             color: '#ffffff',
-                            fontSize: '28px',
-                            fontWeight: 700,
+                            fontSize: '24px',
+                            fontWeight: 800,
                             letterSpacing: '-0.01em',
                             display: 'flex',
-                        }}>
-                            LesCordistes.com
-                        </div>
-                        <div style={{
-                            color: '#5B8DDB',
-                            fontSize: '20px',
+                        }}
+                    >
+                        LesCordistes.com
+                    </div>
+                    <div
+                        style={{
+                            width: '5px',
+                            height: '5px',
+                            borderRadius: '50%',
+                            background: '#5B8DDB',
+                            display: 'flex',
+                        }}
+                    />
+                    <div
+                        style={{
+                            color: '#94a3b8',
+                            fontSize: '18px',
                             fontWeight: 500,
                             display: 'flex',
-                        }}>
-                            Plateforme nationale · Cordistes certifiés CQP/IRATA
-                        </div>
+                        }}
+                    >
+                        Plateforme nationale · CQP / IRATA
                     </div>
                 </div>
             </div>

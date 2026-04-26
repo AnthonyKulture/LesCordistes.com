@@ -87,7 +87,7 @@ export default function BlogPage() {
                         className="group block mb-16 bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-brand-blue hover:shadow-2xl transition-all duration-300"
                     >
                         <div className="grid md:grid-cols-5 gap-0">
-                            <div className="md:col-span-3 relative aspect-[16/10] md:aspect-auto bg-slate-900 overflow-hidden">
+                            <div className="md:col-span-3 relative aspect-[1200/630] md:aspect-auto bg-slate-900 overflow-hidden">
                                 <Image
                                     src={getBlogImage(featured)}
                                     alt={featured.title}
@@ -149,7 +149,7 @@ export default function BlogPage() {
                                     href={`/blog/${article.slug}`}
                                     className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all duration-300"
                                 >
-                                    <div className="relative aspect-[16/10] bg-slate-900 overflow-hidden">
+                                    <div className="relative aspect-[1200/630] bg-slate-900 overflow-hidden">
                                         <Image
                                             src={getBlogImage(article)}
                                             alt={article.title}
@@ -197,10 +197,10 @@ export default function BlogPage() {
                         </p>
                         <Link
                             href="/post-job"
-                            className="inline-flex items-center gap-2 bg-white text-brand-blue px-10 py-5 rounded-xl font-bold hover:bg-slate-100 transition-colors shadow-xl text-lg"
+                            className="inline-flex items-center justify-center gap-2 bg-white text-brand-blue px-6 sm:px-10 py-4 sm:py-5 rounded-xl font-bold hover:bg-slate-100 transition-colors shadow-xl text-base sm:text-lg max-w-full"
                         >
-                            Déposer une demande gratuite
-                            <ArrowRight size={20} />
+                            <span>Déposer une demande gratuite</span>
+                            <ArrowRight size={20} className="shrink-0" />
                         </Link>
                     </div>
                 </div>

@@ -125,13 +125,13 @@ export default async function BlogArticlePage({ params }: Props) {
                 )}
                 <Link
                     href={cta.href}
-                    className={`shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-colors whitespace-nowrap ${
+                    className={`w-full sm:w-auto sm:shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold transition-colors text-sm sm:text-base text-center ${
                         isBlue ? 'bg-white text-brand-blue hover:bg-slate-100' :
                         'bg-brand-blue text-white hover:bg-brand-blue-light'
                     }`}
                 >
-                    {cta.text}
-                    <ArrowRight size={16} />
+                    <span>{cta.text}</span>
+                    <ArrowRight size={16} className="shrink-0" />
                 </Link>
             </div>
         )
@@ -285,10 +285,10 @@ export default async function BlogArticlePage({ params }: Props) {
                         </p>
                         <Link
                             href={article.ctaHref}
-                            className="inline-flex items-center gap-2 bg-white text-brand-blue px-10 py-5 rounded-xl font-bold hover:bg-slate-100 transition-colors shadow-xl text-lg"
+                            className="inline-flex items-center justify-center gap-2 bg-white text-brand-blue px-6 sm:px-10 py-4 sm:py-5 rounded-xl font-bold hover:bg-slate-100 transition-colors shadow-xl text-base sm:text-lg max-w-full"
                         >
-                            {article.ctaText}
-                            <ArrowRight size={20} />
+                            <span className="break-words">{article.ctaText}</span>
+                            <ArrowRight size={20} className="shrink-0" />
                         </Link>
                     </div>
                 </div>
@@ -330,7 +330,7 @@ export default async function BlogArticlePage({ params }: Props) {
                                     href={`/blog/${other.slug}`}
                                     className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-brand-blue hover:shadow-lg transition-all"
                                 >
-                                    <div className="relative aspect-[16/10] bg-slate-900 overflow-hidden">
+                                    <div className="relative aspect-[1200/630] bg-slate-900 overflow-hidden">
                                         <Image
                                             src={getBlogImage(other)}
                                             alt={other.title}
