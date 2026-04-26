@@ -722,6 +722,113 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Créer mon profil cordiste', href: '/inscription-cordiste' },
         ],
     },
+    {
+        slug: 'missions-cordiste-independant',
+        title: 'Missions cordiste indépendant : trouver du travail toute l\'année',
+        shortTitle: 'Missions cordiste indépendant',
+        description:
+            'Décrochez des missions cordiste en indépendant sans interruption : types de chantiers disponibles, plateformes spécialisées, prospection ciblée — le guide concret 2026.',
+        category: 'Métier & Carrière',
+        readTime: 7,
+        datePublished: '2026-04-26',
+        dateModified: '2026-04-26',
+        intro:
+            'Trouver des missions cordiste en indépendant régulièrement, sans traverser des semaines creuses qui mangent la trésorerie — c\'est là que se joue la durabilité d\'une activité en TAC. Les techniques d\'accès sur cordes génèrent une demande réelle et croissante en France : façades résidentielles, installations industrielles, ouvrages d\'art, éoliennes, inspection de structures. Mais ce marché ne s\'active pas seul. Les techniciens qui remplissent leur planning le savent : il faut diversifier les canaux, comprendre la saisonnalité et être présent là où les donneurs d\'ordre cherchent. Ce guide fait le tour des types de missions disponibles pour un cordiste indépendant, de ce qui fonctionne pour les décrocher — et comment réduire le temps passé à prospecter.',
+        sections: [
+            {
+                heading: 'Quels types de missions pour un cordiste indépendant ?',
+                body: 'Le marché est plus diversifié que beaucoup ne le pensent à la sortie de la formation CQP TPS ou IRATA. Quatre grandes familles de missions coexistent, avec des profils de rentabilité très différents.\n\n**Façade et bâtiment** : le volume le plus important en nombre de missions. Nettoyage, ravalement, traitement hydrofuge, réparation de joints, pose de systèmes anti-pigeons. Durée typique : une demi-journée à 3 jours. TJM : 280-450 €/j selon niveau et région. Ce segment est fortement saisonnier — printemps et début d\'automne concentrent 60 à 70 % des demandes.\n\n**Industrie et ouvrages d\'art** : chantiers plus longs (1 à 3 semaines), TJM plus élevé (450-900 €/j). Pétrochimie, silos, réservoirs, ponts, pylônes, éoliennes. L\'IRATA niveau 2 ou 3 est souvent exigé contractuellement. Ce segment est moins saisonnier — les arrêts techniques industriels se programment hors haute saison.\n\n**Inspection et diagnostic** : missions courtes (demi-journée à 1 jour), à haute valeur ajoutée. Rapport technique écrit, photographies, préconisations de travaux. Facturé à la mission ou au tarif journalier majoré (450-800 €/j). Accessible dès le CQP niveau 2.\n\n**Travaux spécialisés** : purge de falaise, travaux en montagne, espaces naturels, sites classés. Missions rares mais bien valorisées, souvent pour des collectivités ou des gestionnaires de parcs naturels. Requièrent des compétences complémentaires (secourisme spécialisé, habilitations spécifiques, EPI adaptés au milieu naturel).',
+                listIntro: 'Les six types de missions accessibles en indépendant :',
+                list: [
+                    'Façade résidentielle et tertiaire (nettoyage, ravalement, joints) : 280-450 €/j',
+                    'Lavage de vitres en hauteur : immeubles de bureaux, centres commerciaux, façades vitrées',
+                    'Industrie et ouvrages d\'art (pétrochimie, ponts, silos, éoliennes) : 450-900 €/j',
+                    'Inspection et diagnostic de structure avec rapport écrit : demi-journée à 1 jour',
+                    'Traitement anti-pigeons, végétation sur bâti, urgences post-sinistre',
+                    'Milieu naturel (falaise, barrage, site classé) : missions spécialisées bien valorisées',
+                ],
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    description: 'Missions cordiste qualifiées par région et type de chantier — accès libre à l\'inscription.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Où trouver des missions cordiste indépendant en 2026 ?',
+                body: 'Aucun canal unique ne suffit. Les cordistes indépendants qui remplissent leur planning activent plusieurs sources en parallèle.\n\n**LesCordistes.com** agrège des missions postées directement par des clients — syndics, gestionnaires de patrimoine, industriels, collectivités — qui ont déjà décidé de faire appel à un technicien sur cordes. Contrairement à un appel d\'offres classique, tu accèdes à la mission sans intermédiaire commercial. La plateforme filtre par région : tu vois ce qui est disponible dans ta zone, tu décides de postuler.\n\n**La sous-traitance auprès d\'ETT** te garantit un flux régulier sans avoir à prospecter. Inconvénient : les tarifs sont négociés en amont et tu travailles sous la responsabilité d\'une autre structure. Avantage : la relation client est entièrement gérée. Idéal pour combler les creux entre missions en direct.\n\n**Les marchés publics.** Sur BOAMP et les plateformes régionales, des collectivités et gestionnaires d\'ouvrages lancent des consultations pour des travaux sur cordes. L\'accès est plus complexe (DC1, DC2, RC Pro adaptée) mais les missions sont souvent longues et mieux valorisées que le marché privé.\n\n**Le réseau professionnel.** Un cordiste satisfait qui ne peut pas prendre une mission te la transmet. Une ETT qui cherche un équipier te contacte. Ce canal est lent à construire — 12 à 24 mois — mais il devient ensuite le plus productif et le moins chronophage.',
+                list: [
+                    'LesCordistes.com : missions qualifiées, filtrées par région, sans intermédiaire',
+                    'Sous-traitance ETT : flux régulier, tarifs négociés en amont',
+                    'Marchés publics (BOAMP, plateformes régionales) : missions longues, accès administratif',
+                    'Réseau professionnel : canal le plus efficace à long terme, lent à construire',
+                    'LinkedIn et profil en ligne : visibilité passive, génère des demandes entrantes',
+                    'Syndics et gestionnaires de patrimoine : prospection directe, relation récurrente',
+                ],
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    description: 'Profil visible, certifications affichées, accès immédiat aux missions de ta région.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Optimiser son profil pour que les missions viennent à toi',
+                body: 'La prospection active prend du temps non facturé. L\'objectif à moyen terme, c\'est d\'inverser la logique : que les donneurs d\'ordre te trouvent, pas l\'inverse. Ça se construit avec quelques leviers simples.\n\n**Les certifications visibles.** Un profil complet — niveau CQP TPS, date de validité, zone d\'intervention précise (département ou rayon kilométrique), types de missions acceptées — génère des demandes entrantes. Les clients qui cherchent un cordiste ne veulent pas écrire à dix prestataires : ils choisissent le profil le plus complet et le plus réactif.\n\n**La rapidité de réponse.** Sur LesCordistes, les missions sont souvent attribuées au premier profil pertinent qui répond. Un délai de réponse de moins de 2 heures te positionne avant les techniciens moins réactifs. Active les alertes pour les nouvelles missions dans ta zone.\n\n**Les photos de chantier.** Avant/après, mise en situation en suspension, résultats obtenus — une galerie de 8 à 12 photos de chantiers réels vaut plus qu\'un long texte. Elle prouve ce que tu sais faire et rassure un donneur d\'ordre sans référence préalable sur toi. Harnais cuissard visible, longe double, point d\'ancrage identifiable : ça parle immédiatement au client professionnel qui sait ce qu\'il commande.\n\n**Les avis clients.** Après chaque mission, demande un retour écrit au client. Une note et deux phrases sur la qualité d\'exécution, la ponctualité et le plan de prévention constituent ta crédibilité accumulée. Chaque avis supplémentaire réduit le frein du prochain client à te confier une mission sans références.',
+            },
+            {
+                heading: 'Saisonnalité des missions cordiste : combler les creux',
+                body: 'La haute saison pour les travaux de façade va de mars à octobre, avec des pics en avril-mai et septembre. L\'hiver est la période la plus difficile pour les indépendants dont l\'activité se concentre sur la façade résidentielle. Mais la saisonnalité est gérable si tu l\'anticipes.\n\n**Le segment industriel est peu saisonnier.** Les arrêts techniques et les maintenances préventives se programment souvent en hiver (novembre à février), quand la production est réduite. Si tu as l\'IRATA ou une expérience en pétrochimie, cible ce segment dès l\'automne pour remplir le creux hivernal. Un seul chantier de 10 jours à 550 €/j compense 3 semaines de façade creuse.\n\n**Les missions d\'inspection et de diagnostic** se font toute l\'année. Les bailleurs sociaux, les collectivités et les assureurs commandent des états des lieux de façade indépendamment des saisons — souvent après un sinistre (tempête, gel) ou en préparation d\'un ravalement obligatoire.\n\n**La diversification géographique** complète le dispositif. Un cordiste basé en Bretagne peut compléter son planning hivernal sur des missions industrielles dans les zones pétrochimiques du Grand Ouest (Saint-Nazaire, Donges, Lorient) — des chantiers qui ne souffrent pas des conditions côtières et qui cherchent des techniciens certifiés IRATA à moins de 3 heures de déplacement.',
+                listIntro: 'Les 4 types de missions disponibles même en basse saison :',
+                list: [
+                    'Arrêts techniques industriels : pétrochimie, énergie, agroalimentaire (novembre à février)',
+                    'Inspection et diagnostic de structure pour bailleurs sociaux et collectivités',
+                    'Travaux urgents post-tempête : la Toussaint et les épisodes venteux génèrent des demandes',
+                    'Maintenance préventive d\'ouvrages d\'art : programmée hors saison de navigation ou de trafic',
+                ],
+                cta: {
+                    text: 'Découvrir les chantiers de cette semaine',
+                    href: '/jobs',
+                    description: 'Missions disponibles en temps réel, toute l\'année, filtrées par région.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Sur LesCordistes.com : comment les missions arrivent concrètement',
+                body: 'LesCordistes est une marketplace qui connecte des clients ayant un besoin de travaux en hauteur avec des cordistes indépendants ou des entreprises. Le modèle est conçu pour réduire le temps de prospection côté pro.\n\n**Le client décrit son chantier** — localisation, type de travaux, urgence, contraintes de site. La mission est qualifiée avant d\'être publiée : les demandes floues ou hors périmètre ne sont pas diffusées, ce qui garantit la pertinence de ce que tu reçois.\n\n**Tu consultes les missions disponibles** dans ta zone sans frais. Le descriptif, la localisation approximative et le type de travaux sont accessibles librement depuis ton espace pro. Tu évalues si la mission correspond à ton profil et ta disponibilité avant d\'engager quoi que ce soit.\n\n**Tu débloqués les coordonnées du client** pour te positionner sur la mission. Chaque déverrouillage coûte 1 crédit (pack Starter 5 crédits/50 €, Pro 10 crédits/90 €, Business 20 crédits/160 €). L\'accès aux coordonnées complètes te permet de contacter le client directement, sans intermédiaire.\n\nPour un cordiste actif qui convertit 2 prises de contact sur 5 à un TJM moyen de 380 €/j, un crédit à 10 € est rentabilisé sur la première heure de la première mission décrochée. C\'est une logique d\'investissement, pas un abonnement à l\'aveugle.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Comment trouver des missions cordiste en indépendant ?',
+                a: 'Pour trouver des missions cordiste en indépendant, activez plusieurs canaux : plateformes spécialisées (LesCordistes.com), sous-traitance auprès d\'ETT locales, marchés publics et réseau professionnel. Aucun canal unique ne suffit — la combinaison garantit un flux régulier.',
+            },
+            {
+                q: 'Combien de jours facturés par mois peut-on réaliser en indépendant ?',
+                a: 'En haute saison (avril à septembre), un cordiste indépendant actif peut enchaîner 12 à 18 jours facturés par mois selon les types de missions. En basse saison concentrée sur la façade résidentielle, descendre à 6-8 jours est courant. Le segment industriel permet de lisser cet écart.',
+            },
+            {
+                q: 'Les missions cordiste sont-elles disponibles toute l\'année ?',
+                a: 'La façade résidentielle est saisonnière (mars à octobre). En revanche, les missions industrielles, les inspections de structure et les arrêts techniques se programment toute l\'année. Diversifier les segments couvre l\'essentiel des creux hivernaux.',
+            },
+            {
+                q: 'Faut-il un statut particulier pour accéder aux missions sur LesCordistes ?',
+                a: 'Non, tout statut juridique est accepté : micro-entreprise, EURL, SASU, ETT. L\'important est d\'avoir un SIRET actif, une attestation RC Pro couvrant les travaux en hauteur sur cordes, et une certification CQP TPS ou IRATA valide.',
+            },
+            {
+                q: 'Peut-on cumuler plusieurs types de missions cordiste en indépendant ?',
+                a: 'Oui, et c\'est recommandé pour lisser la saisonnalité. Un cordiste CQP niveau 2 peut enchaîner missions de façade au printemps, chantier industriel en automne, et missions d\'inspection en hiver. La diversité des segments réduit la dépendance à un seul flux de demande.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Premier chantier après le CQP', href: '/blog/premier-chantier-cordiste-apres-cqp' },
+            { label: 'Habilitations CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Voir les missions disponibles', href: '/jobs' },
+            { label: 'Créer mon profil cordiste', href: '/inscription-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
