@@ -31,17 +31,23 @@ const jsonLd = {
         '@id': `${SEO_BASE_URL}/#organization`,
         name: SEO_BRAND_NAME,
     },
-    blogPost: SEO_BLOG.map((a) => ({
+    blogPost: [...SEO_BLOG]
+        .sort((a, b) => b.datePublished.localeCompare(a.datePublished))
+        .map((a) => ({
         '@type': 'BlogPosting',
         headline: a.title,
         url: `${SEO_BLOG_BASE}/${a.slug}`,
         datePublished: a.datePublished,
         dateModified: a.dateModified,
         description: a.description,
-    })),
+        })),
 }
 
 export default function BlogPage() {
+    const sortedArticles = [...SEO_BLOG].sort((a, b) =>
+        b.datePublished.localeCompare(a.datePublished)
+    )
+
     return (
         <div className="min-h-screen bg-white">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -62,7 +68,7 @@ export default function BlogPage() {
 
             <div className="container max-w-4xl py-16">
                 <div className="grid gap-8">
-                    {SEO_BLOG.map((article) => (
+                    {sortedArticles.map((article) => (
                         <Link
                             key={article.slug}
                             href={`/blog/${article.slug}`}
