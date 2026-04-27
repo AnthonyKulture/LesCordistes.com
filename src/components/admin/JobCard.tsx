@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { MapPin, Image as ImageIcon, Calendar, Wallet, ArrowRight, Check, X } from 'lucide-react'
+import { MapPin, Image as ImageIcon, Calendar, Wallet, ArrowRight, Check, X, CheckCircle2, Mail } from 'lucide-react'
 import { StatusBadge, LqsBadge } from './StatusBadge'
 import { ConfirmDialog } from './ConfirmDialog'
 import { computeLQS } from '@/lib/types/ops'
@@ -134,6 +134,22 @@ export function JobCard({ job, onChange }: Props) {
                     </span>
                 )}
             </div>
+
+            {(job.last_validated_at || job.revalidation_email_sent_at) && (
+                <div className="flex items-center gap-2 mb-3 text-xs">
+                    {job.last_validated_at ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-100 font-medium">
+                            <CheckCircle2 className="h-3 w-3" />
+                            Confirmée par le client le {new Date(job.last_validated_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                        </span>
+                    ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-50 text-amber-700 border border-amber-100 font-medium">
+                            <Mail className="h-3 w-3" />
+                            Email de revalidation envoyé le {new Date(job.revalidation_email_sent_at!).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })} — en attente du clic client
+                        </span>
+                    )}
+                </div>
+            )}
 
             <p className="text-sm text-slate-700 line-clamp-2 mb-3">{job.description}</p>
 
