@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
-import { verifyRevalidationToken } from '@/lib/revalidation-token'
+import { verifyRevalidationTokenDetailed } from '@/lib/revalidation-token'
 import { SEO_BASE_URL } from '@/constants/seoConfig'
 
 export const runtime = 'nodejs'
@@ -15,11 +15,21 @@ export async function GET(req: Request) {
         return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=invalid`)
     }
 
-    const decoded = verifyRevalidationToken(token)
-    if (!decoded) {
-        console.warn('[validate] token verification failed (signature or expiry) — check REVALIDATION_SECRET parity Vercel ↔ Supabase')
-        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=expired`)
+    const verifyResult = verifyRevalidationTokenDetailed(token)
+    if (!verifyResult.ok) {
+        console.warn('[validate] token verification failed', {
+            reason: verifyResult.reason,
+            debug: verifyResult.debug,
+            tokenSample: token.slice(0, 32),
+        })
+        // Mapping des causes vers le statut UI affiché
+        const status =
+            verifyResult.reason === 'expired' ? 'expired' :
+            verifyResult.reason === 'bad_format' || verifyResult.reason === 'decode_error' ? 'invalid' :
+            'expired' // bad_signature ou bad_exp → on dit "expiré" à l'utilisateur (pas de fuite info)
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=${status}`)
     }
+    const decoded = { jobId: verifyResult.jobId, clientIdentifier: verifyResult.clientIdentifier }
 
     // Cast to any: les nouvelles colonnes (last_validated_at, revalidation_email_sent_at)
     // ne sont pas encore dans database.types.ts (à régénérer après migration en prod).
