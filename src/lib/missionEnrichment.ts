@@ -290,3 +290,43 @@ export function getLeadQuality(job: Job): LeadQuality {
 
     return { score, tier, label, color, bg, border, signals: signals.slice(0, 4) };
 }
+
+// ─── FRESHNESS BADGE ────────────────────────────────────────────────────────
+// Replaces the "Posté il y a Xj" counter on the public listing.
+// Only 2 positive states surfaced; missions in the 8–15 days dead zone get no
+// age badge (neutral). Beyond J+15 the cron flips status='expired' and they
+// disappear from /jobs entirely.
+
+export interface FreshnessBadge {
+    label: string;
+    className: string;
+}
+
+const DAY_MS = 86_400_000;
+
+export function getFreshnessBadge(
+    job: Pick<Job, 'created_at' | 'last_validated_at'>
+): FreshnessBadge | null {
+    const now = Date.now();
+    const created = new Date(job.created_at).getTime();
+
+    if (Number.isFinite(created) && now - created < 7 * DAY_MS) {
+        return {
+            label: 'Nouveau',
+            className:
+                'text-white border border-brand-blue-light/30 shadow-sm bg-gradient-to-r from-brand-blue via-brand-blue-light to-brand-blue animate-gradient-shift',
+        };
+    }
+
+    if (job.last_validated_at) {
+        const validated = new Date(job.last_validated_at).getTime();
+        if (Number.isFinite(validated) && now - validated < 5 * DAY_MS) {
+            return {
+                label: '✓ Mission relancée',
+                className: 'bg-blue-50 text-blue-700 border border-blue-200',
+            };
+        }
+    }
+
+    return null;
+}

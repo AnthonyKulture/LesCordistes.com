@@ -239,6 +239,7 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
                                 categories={allCategories}
                                 clientType={clientType}
                                 proInterventionZones={profile?.role === 'pro' ? profile?.intervention_zones : null}
+                                showPublishDate={!!canViewContact}
                             />
                             <JobSummary
                                 job={job}

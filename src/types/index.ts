@@ -49,7 +49,7 @@ export interface Job {
     budget_max?: number;
     deadline?: string; // ISO date string
     photos_url?: string[];
-    status: 'pending' | 'live' | 'rejected' | 'completed' | 'cancelled';
+    status: 'pending' | 'live' | 'rejected' | 'completed' | 'cancelled' | 'expired';
     rejection_reason?: string;
     latitude?: number;
     longitude?: number;
@@ -81,6 +81,10 @@ export interface Job {
     security_plan_confirmed?: boolean;
     created_at: string;
     updated_at: string;
+    // Freshness / revalidation
+    revalidation_email_sent_at?: string | null;
+    last_validated_at?: string | null;
+    expired_at?: string | null;
 }
 
 export interface JobFormData {

@@ -9,6 +9,7 @@ import { Input } from '../components/ui/Input';
 import { GoogleSignInButton } from '../components/GoogleSignInButton';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthLayout } from '../components/layout/AuthLayout';
+import { translateAuthError } from '../lib/authErrors';
 import posthog from 'posthog-js';
 
 export function Login() {
@@ -18,12 +19,20 @@ export function Login() {
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
+    const errorRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
         if (!authLoading && user) {
             router.push('/dashboard');
         }
     }, [user, authLoading, router]);
+
+    React.useEffect(() => {
+        if (error && errorRef.current) {
+            errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorRef.current.focus();
+        }
+    }, [error]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,7 +44,7 @@ export function Login() {
             posthog.identify(email, { email });
             posthog.capture('user_logged_in', { method: 'password' });
         } catch (err: any) {
-            setError(err.message || 'Email ou mot de passe incorrect');
+            setError(translateAuthError(err, 'Email ou mot de passe incorrect.'));
         } finally {
             setLoading(false);
         }
@@ -70,9 +79,9 @@ export function Login() {
                 <div className="space-y-6">
                     <div aria-live="polite" className="empty:hidden">
                         {error && (
-                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4 flex items-start" role="alert" id="login-error">
-                                <span className="shrink-0 mr-2">⚠️</span>
-                                <span>{error}</span>
+                            <div ref={errorRef} tabIndex={-1} className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-4 flex items-start gap-2 scroll-mt-24 outline-none" role="alert" id="login-error">
+                                <span className="shrink-0" aria-hidden="true">⚠️</span>
+                                <span className="min-w-0 break-words">{error}</span>
                             </div>
                         )}
                         {isRegistered && (

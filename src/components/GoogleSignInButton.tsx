@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { createSupabaseBrowserClient } from '../lib/supabase-browser';
+import { translateAuthError } from '../lib/authErrors';
 
 interface GoogleSignInButtonProps {
     mode?: 'signin' | 'signup';
@@ -35,11 +36,11 @@ export function GoogleSignInButton({ mode = 'signin', redirectTo, onBeforeClick,
 
             if (error) {
                 console.error('Google sign in error:', error);
-                onError?.(error.message);
+                onError?.(translateAuthError(error, 'Échec de la connexion via Google. Réessayez.'));
             }
         } catch (err) {
             console.error('Unexpected error:', err);
-            onError?.('Une erreur inattendue est survenue');
+            onError?.(translateAuthError(err, 'Une erreur inattendue est survenue.'));
         } finally {
             setLoading(false);
         }
