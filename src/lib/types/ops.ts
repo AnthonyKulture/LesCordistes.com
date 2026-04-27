@@ -59,6 +59,24 @@ export type OpsStats = {
   }
   top_cities: { city: string; count: number }[]
   recent_actions: AdminAction[]
+  recent_unlocks: RecentUnlock[]
+}
+
+export type RecentUnlock = {
+  id: string
+  unlocked_at: string
+  pro: {
+    id: string
+    full_name: string | null
+    company_name: string | null
+    avatar_url: string | null
+  } | null
+  job: {
+    id: string
+    title: string
+    location_city: string | null
+    status: string
+  } | null
 }
 
 // ---------- Chat (tool use multi-turn) ----------

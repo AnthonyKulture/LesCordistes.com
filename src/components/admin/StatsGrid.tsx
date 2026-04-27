@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Briefcase, Users, CreditCard, Mail, AlertTriangle, MapPin } from 'lucide-react'
+import { Briefcase, Users, CreditCard, AlertTriangle, MapPin, KeyRound } from 'lucide-react'
 import type { OpsStats } from '@/lib/types/ops'
 
 type Props = {
@@ -117,15 +117,10 @@ export function StatsGrid({ initial }: Props) {
                 <MetricCard
                     label="Crédits dépensés (cumul)"
                     value={stats.credits.total_spent}
+                    sub="Voir les déblocages →"
                     icon={CreditCard}
                     accent="slate"
-                />
-                <MetricCard
-                    label="Leads funnel total"
-                    value={stats.leads.total}
-                    sub={`${stats.leads.step_5} complets · ${stats.leads.last_week} cette semaine`}
-                    icon={Mail}
-                    accent="blue"
+                    href="#unlocks"
                 />
                 <MetricCard
                     label="Clients inscrits"
@@ -133,6 +128,55 @@ export function StatsGrid({ initial }: Props) {
                     icon={Users}
                     accent="slate"
                 />
+            </div>
+
+            <div id="unlocks" className="bg-white border border-slate-200 rounded-xl p-5 scroll-mt-6">
+                <div className="flex items-center gap-2 mb-3">
+                    <KeyRound className="h-4 w-4 text-[#243355]" />
+                    <h3 className="font-semibold text-sm">Derniers leads débloqués</h3>
+                    <span className="text-xs text-slate-400">(pro × mission)</span>
+                </div>
+                {stats.recent_unlocks.length === 0 ? (
+                    <p className="text-sm text-slate-500">Aucun déblocage encore.</p>
+                ) : (
+                    <ul className="divide-y divide-slate-100">
+                        {stats.recent_unlocks.map(u => (
+                            <li key={u.id} className="py-2 flex items-center justify-between gap-3 text-sm">
+                                <div className="flex items-center gap-2 min-w-0 flex-1">
+                                    {u.pro?.avatar_url ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img src={u.pro.avatar_url} alt="" className="h-6 w-6 rounded-full object-cover bg-slate-100" />
+                                    ) : (
+                                        <span className="h-6 w-6 rounded-full bg-slate-100 inline-flex items-center justify-center text-[10px] font-semibold text-slate-500">
+                                            {(u.pro?.full_name ?? '?').slice(0, 1).toUpperCase()}
+                                        </span>
+                                    )}
+                                    {u.pro ? (
+                                        <Link href={`/admin/profils/${u.pro.id}`} className="font-medium text-slate-800 hover:text-[#243355] truncate">
+                                            {u.pro.full_name || 'Pro sans nom'}
+                                            {u.pro.company_name ? <span className="text-slate-400 font-normal"> · {u.pro.company_name}</span> : null}
+                                        </Link>
+                                    ) : (
+                                        <span className="text-slate-400">Pro supprimé</span>
+                                    )}
+                                </div>
+                                <div className="flex items-center gap-2 min-w-0 flex-1 justify-end">
+                                    {u.job ? (
+                                        <Link href={`/admin/missions/${u.job.id}`} className="text-slate-600 hover:text-[#243355] truncate text-right">
+                                            {u.job.title}
+                                            {u.job.location_city ? <span className="text-slate-400"> · {u.job.location_city}</span> : null}
+                                        </Link>
+                                    ) : (
+                                        <span className="text-slate-400">Mission supprimée</span>
+                                    )}
+                                </div>
+                                <span className="text-xs text-slate-400 whitespace-nowrap tabular-nums">
+                                    {new Date(u.unlocked_at).toLocaleString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

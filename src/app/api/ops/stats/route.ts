@@ -1,6 +1,6 @@
 import { requireAdmin } from '@/lib/ops/guard'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
-import type { OpsStats, AdminAction } from '@/lib/types/ops'
+import type { OpsStats, AdminAction, RecentUnlock } from '@/lib/types/ops'
 
 export const dynamic = 'force-dynamic'
 
@@ -41,6 +41,7 @@ export async function GET() {
         leadsWeek,
         topCitiesQ,
         recentActions,
+        recentUnlocksQ,
     ] = await Promise.all([
         admin.from('jobs').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
         admin.from('jobs').select('id', { count: 'exact', head: true }).eq('status', 'live'),
@@ -57,6 +58,11 @@ export async function GET() {
         admin.from('leads').select('id', { count: 'exact', head: true }).gte('created_at', weekAgo),
         admin.from('jobs').select('location_city').eq('status', 'live').not('location_city', 'is', null).limit(500),
         admin.from('admin_actions').select('*').order('created_at', { ascending: false }).limit(10),
+        admin
+            .from('unlocked_leads')
+            .select('id, unlocked_at, pro:profiles!pro_id(id, full_name, company_name, avatar_url), job:jobs!job_id(id, title, location_city, status)')
+            .order('unlocked_at', { ascending: false })
+            .limit(15),
     ])
 
     const balances: number[] = (creditsRows.data ?? []).map((c: any) => Number(c.balance) || 0)
@@ -101,6 +107,7 @@ export async function GET() {
         },
         top_cities: topCities,
         recent_actions: (recentActions.data ?? []) as AdminAction[],
+        recent_unlocks: (recentUnlocksQ.data ?? []) as unknown as RecentUnlock[],
     }
 
     return Response.json(stats, {
