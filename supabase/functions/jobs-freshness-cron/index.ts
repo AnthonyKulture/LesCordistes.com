@@ -111,25 +111,22 @@ serve(async (req: Request) => {
     });
 
     const now = new Date();
-    const tenDaysAgo = new Date(now.getTime() - 10 * 86_400_000).toISOString();
-    const fifteenDaysAgo = new Date(now.getTime() - 15 * 86_400_000).toISOString();
+    // J+5 : seuil d'envoi de l'email de revalidation
+    const revalidationThreshold = new Date(now.getTime() - 5 * 86_400_000).toISOString();
+    // J+15 : seuil d'auto-archivage (status='expired')
+    const archiveThreshold = new Date(now.getTime() - 15 * 86_400_000).toISOString();
 
-    // ─── A. Send revalidation emails (J+10) ────────────────────────────────
-    // Use coalesce(last_validated_at, created_at) < J-10 AND revalidation_email_sent_at IS NULL
-    // OR (revalidation_email_sent_at < last_validated_at) → re-revalidation cycle.
-    //
-    // For simplicity (v1), we use: status='live' AND revalidation_email_sent_at IS NULL
-    //   AND coalesce(last_validated_at, created_at) < J-10
-    // After last_validated_at is set, the next cycle requires manually clearing
-    // revalidation_email_sent_at — we do that automatically when last_validated_at
-    // is updated via /api/jobs/validate.
+    // ─── A. Send revalidation emails (J+5) ─────────────────────────────────
+    // Use coalesce(last_validated_at, created_at) < J-5 AND revalidation_email_sent_at IS NULL.
+    // After last_validated_at is set, /api/jobs/validate clears revalidation_email_sent_at
+    // → le cycle peut repartir 5 jours plus tard.
 
     const { data: toRevalidate, error: errA } = await supabase
         .from('jobs')
         .select('id, title, location_city, created_by, client_contact_info, created_at, last_validated_at')
         .eq('status', 'live')
         .is('revalidation_email_sent_at', null)
-        .or(`last_validated_at.lt.${tenDaysAgo},and(last_validated_at.is.null,created_at.lt.${tenDaysAgo})`);
+        .or(`last_validated_at.lt.${revalidationThreshold},and(last_validated_at.is.null,created_at.lt.${revalidationThreshold})`);
 
     if (errA) {
         console.error('[freshness-cron] query A error:', errA);
@@ -154,7 +151,7 @@ serve(async (req: Request) => {
         .update({ status: 'expired', expired_at: now.toISOString() })
         .eq('status', 'live')
         .is('last_validated_at', null)
-        .lt('created_at', fifteenDaysAgo)
+        .lt('created_at', archiveThreshold)
         .select('id');
 
     if (errB) {
