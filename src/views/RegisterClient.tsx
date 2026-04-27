@@ -11,6 +11,7 @@ import { Input } from '../components/ui/Input';
 import { Select } from '../components/ui/Select';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthLayout } from '../components/layout/AuthLayout';
+import { translateAuthError } from '../lib/authErrors';
 import posthog from 'posthog-js';
 
 const STORAGE_KEY = 'lescordistes_client_reg';
@@ -28,6 +29,14 @@ export function RegisterClient() {
     });
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
+    const errorRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (error && errorRef.current) {
+            errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorRef.current.focus();
+        }
+    }, [error]);
 
     React.useEffect(() => {
         if (!authLoading && user) {
@@ -80,11 +89,7 @@ export function RegisterClient() {
             });
 
             if (signUpError) {
-                if (signUpError.message.toLowerCase().includes('already registered')) {
-                    setError('Un compte existe déjà avec cet email. Connectez-vous.');
-                } else {
-                    throw signUpError;
-                }
+                setError(translateAuthError(signUpError));
                 return;
             }
 
@@ -100,7 +105,7 @@ export function RegisterClient() {
             }).catch(() => {});
             router.push('/dashboard');
         } catch (err: any) {
-            setError(err.message || 'Une erreur est survenue');
+            setError(translateAuthError(err));
         } finally {
             setLoading(false);
         }
@@ -135,9 +140,9 @@ export function RegisterClient() {
 
                     <div className="space-y-6">
                         {error && (
-                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start" role="alert">
-                                <span className="shrink-0 mr-2">⚠️</span>
-                                <span>{error}</span>
+                            <div ref={errorRef} tabIndex={-1} className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2 scroll-mt-24 outline-none" role="alert">
+                                <span className="shrink-0" aria-hidden="true">⚠️</span>
+                                <span className="min-w-0 break-words">{error}</span>
                             </div>
                         )}
 
