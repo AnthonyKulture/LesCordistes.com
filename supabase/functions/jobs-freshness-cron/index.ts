@@ -31,9 +31,13 @@ const SEO_BASE_URL = Deno.env.get('SEO_BASE_URL') || 'https://www.lescordistes.c
 const TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
 
 // ─── HMAC token signing (Deno Web Crypto) ──────────────────────────────────────
+// Séparateur `~` (synchronisé avec src/lib/revalidation-token.ts) : évite le bug
+// de split('.') quand le clientIdentifier (email) contient des points.
+const SEP = '~';
+
 async function sign(jobId: string, clientIdentifier: string): Promise<string> {
     const exp = Date.now() + TTL_MS;
-    const payload = `${jobId}.${clientIdentifier}.${exp}`;
+    const payload = `${jobId}${SEP}${clientIdentifier}${SEP}${exp}`;
     const enc = new TextEncoder();
     const key = await crypto.subtle.importKey(
         'raw',
@@ -46,7 +50,7 @@ async function sign(jobId: string, clientIdentifier: string): Promise<string> {
     const sigHex = Array.from(new Uint8Array(sigBuf))
         .map((b) => b.toString(16).padStart(2, '0'))
         .join('');
-    const full = `${payload}.${sigHex}`;
+    const full = `${payload}${SEP}${sigHex}`;
     // base64url
     return btoa(full).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
