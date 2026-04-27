@@ -7,6 +7,7 @@ import { useToast } from '../ui/Toast'
 import { useAuth } from '../../contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { createSupabaseBrowserClient } from '../../lib/supabase-browser'
+import { translateAuthError } from '../../lib/authErrors'
 
 export function AccountSection() {
     const { signOut } = useAuth()
@@ -40,7 +41,7 @@ export function AccountSection() {
             setNewPassword('')
             setNewPasswordConfirm('')
         } catch (error: any) {
-            toast.error(error.message || 'Erreur lors de la mise à jour du mot de passe')
+            toast.error(translateAuthError(error, 'Erreur lors de la mise à jour du mot de passe.'))
         } finally {
             setSavingPassword(false)
         }

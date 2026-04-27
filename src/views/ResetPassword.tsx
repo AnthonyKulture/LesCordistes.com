@@ -15,6 +15,20 @@ export function ResetPassword() {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
     const [success, setSuccess] = React.useState(false);
+    const errorRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (error && errorRef.current) {
+            errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorRef.current.focus();
+        }
+    }, [error]);
+
+    React.useEffect(() => {
+        if (success && typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [success]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -52,7 +66,7 @@ export function ResetPassword() {
 
     if (success) {
         return (
-            <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+            <div className="min-h-[calc(100vh-80px)] bg-slate-50 flex justify-center pt-8 sm:pt-16 pb-12 px-4">
                 <Card className="w-full max-w-md">
                     <CardHeader>
                         <h1 className="text-2xl font-bold text-green-600">Mot de passe réinitialisé !</h1>
@@ -68,7 +82,7 @@ export function ResetPassword() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="min-h-[calc(100vh-80px)] bg-slate-50 flex justify-center pt-8 sm:pt-16 pb-12 px-4">
             <Card className="w-full max-w-md">
                 <CardHeader>
                     <h1 className="text-2xl font-bold text-slate-900">Nouveau mot de passe</h1>
@@ -79,7 +93,7 @@ export function ResetPassword() {
                 <CardBody>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {error && (
-                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm break-words" role="alert">
+                            <div ref={errorRef} tabIndex={-1} className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm break-words scroll-mt-24 outline-none" role="alert">
                                 {error}
                             </div>
                         )}
