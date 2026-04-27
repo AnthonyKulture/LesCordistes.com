@@ -19,12 +19,14 @@ export const JobBoard: React.FC = () => {
     const [limit, setLimit] = useState(PAGE_SIZE);
 
     const { data: jobs, isLoading, error } = useQuery({
-        queryKey: ['jobs', 'live', limit],
+        queryKey: ['jobs', 'visible', limit],
         queryFn: async () => {
+            // 'live' = active, 'expired' = "Déjà effectuée" (J+15 sans revalidation),
+            // toujours visible mais désactivée pour preuve sociale.
             const { data, error } = await supabase
                 .from('jobs')
                 .select('*, creator:profiles!created_by(role)')
-                .eq('status', 'live')
+                .in('status', ['live', 'expired'])
                 .order('created_at', { ascending: false })
                 .limit(limit);
 
@@ -34,6 +36,7 @@ export const JobBoard: React.FC = () => {
     });
 
     const filteredJobs = jobs || [];
+    const activeCount = filteredJobs.filter(j => j.status === 'live').length;
 
     return (
         <>
@@ -46,7 +49,7 @@ export const JobBoard: React.FC = () => {
                     <div>
                         <h2 className="text-3xl font-bold text-slate-900">Missions disponibles</h2>
                         <p className="text-slate-500 mt-1">
-                            {isLoading ? 'Chargement…' : `${filteredJobs.length} mission${filteredJobs.length !== 1 ? 's' : ''} active${filteredJobs.length !== 1 ? 's' : ''}`}
+                            {isLoading ? 'Chargement…' : `${activeCount} mission${activeCount !== 1 ? 's' : ''} active${activeCount !== 1 ? 's' : ''}${filteredJobs.length > activeCount ? ` · ${filteredJobs.length - activeCount} déjà effectuée${filteredJobs.length - activeCount !== 1 ? 's' : ''}` : ''}`}
                         </p>
                     </div>
 

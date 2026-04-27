@@ -9,6 +9,7 @@ import type { Job } from '@/lib/types/ops'
 const TABS = [
     { id: 'pending', label: 'En attente' },
     { id: 'live', label: 'En ligne' },
+    { id: 'expired', label: 'Déjà effectuées' },
     { id: 'rejected', label: 'Rejetées' },
     { id: 'completed', label: 'Terminées' },
 ] as const
