@@ -6,6 +6,7 @@ import { supabase } from '../lib/supabase';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardHeader, CardBody } from '../components/ui/Card';
+import { translateAuthError } from '../lib/authErrors';
 
 export function ForgotPassword() {
     const router = useRouter();
@@ -29,7 +30,7 @@ export function ForgotPassword() {
             setSuccess(true);
         } catch (err: any) {
             console.error('Password reset error:', err);
-            setError(err.message || 'Une erreur est survenue');
+            setError(translateAuthError(err));
         } finally {
             setLoading(false);
         }
@@ -77,7 +78,7 @@ export function ForgotPassword() {
                 <CardBody>
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {error && (
-                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm break-words" role="alert">
                                 {error}
                             </div>
                         )}

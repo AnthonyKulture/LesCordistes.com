@@ -81,9 +81,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const signOut = async () => {
         const supabase = createSupabaseBrowserClient();
-        await supabase.auth.signOut();
+        try {
+            await supabase.auth.signOut({ scope: 'local' });
+        } catch (err) {
+            console.warn('[auth] signOut API failed, forcing local cleanup', err);
+        }
         setUser(null);
         setProfile(null);
+        if (typeof window !== 'undefined') {
+            try {
+                Object.keys(window.localStorage).forEach((k) => {
+                    if (k.startsWith('sb-') && k.endsWith('-auth-token')) {
+                        window.localStorage.removeItem(k);
+                    }
+                });
+            } catch {}
+        }
     };
 
     const isAdmin = profile?.role === 'admin';
