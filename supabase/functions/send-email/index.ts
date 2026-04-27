@@ -279,7 +279,7 @@ function jobRevalidationRequest(data: Record<string, string>): string {
     <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Votre mission est-elle toujours d'actualité&nbsp;?</h1>
     <p style="font-size:15px;color:${S5};margin:0 0 24px;">Bonjour ${name},</p>
     <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 20px;">
-      Vous avez publié <strong>${title}${city}</strong> il y a 10 jours. Avant de la laisser en ligne plus longtemps, nous voulons être sûrs qu'elle est toujours d'actualité.
+      Vous avez publié <strong>${title}${city}</strong> il y a 5 jours. Avant de la laisser en ligne plus longtemps, nous voulons être sûrs qu'elle est toujours d'actualité.
     </p>
     <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 28px;">
       Si oui, un simple clic suffit — votre mission obtiendra le badge <strong>«&nbsp;Mission relancée&nbsp;»</strong> sur le tableau pour rassurer les cordistes intéressés.
@@ -287,7 +287,7 @@ function jobRevalidationRequest(data: Record<string, string>): string {
     ${btn(validateUrl, 'Oui, je cherche toujours un cordiste')}
     <div style="background:${S1};border-radius:8px;padding:20px;margin:28px 0 0;">
       <p style="font-size:13px;color:${S5};margin:0;line-height:20px;">
-        <strong style="color:${B};">Sans réponse sous 5 jours</strong>, votre mission sera automatiquement archivée pour ne pas pénaliser les cordistes qui parcourent le tableau. Vous pourrez la republier à tout moment depuis votre espace.
+        <strong style="color:${B};">Sans réponse sous 10 jours</strong>, votre mission sera automatiquement archivée pour ne pas pénaliser les cordistes qui parcourent le tableau. Vous pourrez la republier à tout moment depuis votre espace.
       </p>
     </div>
     <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
