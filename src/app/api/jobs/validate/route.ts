@@ -11,12 +11,14 @@ export async function GET(req: Request) {
     const token = url.searchParams.get('token')
 
     if (!token) {
-        return NextResponse.redirect(`${SEO_BASE_URL}/?revalidation=invalid`)
+        console.warn('[validate] no token in request')
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=invalid`)
     }
 
     const decoded = verifyRevalidationToken(token)
     if (!decoded) {
-        return NextResponse.redirect(`${SEO_BASE_URL}/?revalidation=expired`)
+        console.warn('[validate] token verification failed (signature or expiry) — check REVALIDATION_SECRET parity Vercel ↔ Supabase')
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=expired`)
     }
 
     // Cast to any: les nouvelles colonnes (last_validated_at, revalidation_email_sent_at)
@@ -27,7 +29,7 @@ export async function GET(req: Request) {
     // On accepte les deux et on filtre par jobId + status='live' pour rester safe.
     const isUuid = /^[0-9a-f-]{36}$/i.test(decoded.clientIdentifier)
 
-    // On reset revalidation_email_sent_at pour que le prochain cycle J+10 puisse repartir
+    // On reset revalidation_email_sent_at pour que le prochain cycle J+5 puisse repartir
     // (sinon le cron ne renverra jamais d'email même si last_validated_at devient ancien).
     let query = admin
         .from('jobs')
@@ -47,9 +49,15 @@ export async function GET(req: Request) {
 
     const { error, data } = await query.select('id')
 
-    if (error || !data || data.length === 0) {
-        return NextResponse.redirect(`${SEO_BASE_URL}/?revalidation=notfound`)
+    if (error) {
+        console.error('[validate] update error:', error.message, { jobId: decoded.jobId, isUuid })
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=notfound&job=${decoded.jobId}`)
+    }
+    if (!data || data.length === 0) {
+        console.warn('[validate] no row matched', { jobId: decoded.jobId, clientIdentifier: decoded.clientIdentifier, isUuid })
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=notfound&job=${decoded.jobId}`)
     }
 
-    return NextResponse.redirect(`${SEO_BASE_URL}/dashboard?revalidation=ok&job=${decoded.jobId}`)
+    console.log('[validate] success', { jobId: decoded.jobId })
+    return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=ok&job=${decoded.jobId}`)
 }
