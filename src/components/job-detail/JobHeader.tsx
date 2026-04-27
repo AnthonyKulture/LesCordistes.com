@@ -14,9 +14,10 @@ interface JobHeaderProps {
     categories: string[];
     clientType: string | null;
     proInterventionZones?: string[] | null;
+    showPublishDate?: boolean;
 }
 
-export const JobHeader: React.FC<JobHeaderProps> = ({ job, categories, clientType, proInterventionZones }) => {
+export const JobHeader: React.FC<JobHeaderProps> = ({ job, categories, clientType, proInterventionZones, showPublishDate = false }) => {
     const deptLabel = getDepartmentLabel(job.location_department);
     const proximity = getProximityForPro(job, proInterventionZones);
     const quality = getLeadQuality(job);
@@ -37,10 +38,12 @@ export const JobHeader: React.FC<JobHeaderProps> = ({ job, categories, clientTyp
                         {clientType}
                     </span>
                 )}
-                <span className="text-xs text-slate-400 flex items-center gap-1">
-                    <Calendar size={13} />
-                    Publiée le {new Date(job.created_at).toLocaleDateString('fr-FR')}
-                </span>
+                {showPublishDate && (
+                    <span className="text-xs text-slate-400 flex items-center gap-1">
+                        <Calendar size={13} />
+                        Publiée le {new Date(job.created_at).toLocaleDateString('fr-FR')}
+                    </span>
+                )}
             </div>
             <h1 className="text-2xl font-bold text-slate-900 mb-2">{job.title}</h1>
 
