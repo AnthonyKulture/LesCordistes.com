@@ -13,6 +13,7 @@ import {
     getScheduleDisplay,
     getLeadQuality,
     isClientVerified,
+    getFreshnessBadge,
 } from '../lib/missionEnrichment';
 import { LeadQualityBadge } from './job-detail/LeadQualityBadge';
 
@@ -45,7 +46,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
     const isOwner = user && job.created_by === user.id;
     const unlocked = isJobUnlocked(job.id);
     const canViewContact = user && (isOwner || unlocked);
-    const daysAgo = Math.floor((Date.now() - new Date(job.created_at).getTime()) / 86400000);
+    const freshness = getFreshnessBadge(job);
 
     const budget = getBudgetDisplay(job);
     const deptLabel = getDepartmentLabel(job.location_department);
@@ -120,9 +121,11 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
                             {job.height_meters}m
                         </span>
                     )}
-                    <span className="flex items-center gap-1 ml-auto text-slate-400">
-                        {daysAgo === 0 ? "Aujourd'hui" : daysAgo === 1 ? "Hier" : `Il y a ${daysAgo}j`}
-                    </span>
+                    {freshness && (
+                        <span className={`ml-auto text-[10px] px-2 py-0.5 rounded-full font-bold ${freshness.className}`}>
+                            {freshness.label}
+                        </span>
+                    )}
                 </div>
 
                 {/* Description preview — élargi avant déblocage */}
