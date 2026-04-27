@@ -35,6 +35,8 @@ interface JobLite {
 async function getRecentJobs(): Promise<JobLite[]> {
     try {
         const supabase = await createSupabaseServerClient()
+        // SSR : seulement les 'live' pour le JSON-LD ItemList (pas pertinent
+        // d'indexer les expired comme "missions disponibles" pour SEO).
         const { data } = await supabase
             .from('jobs')
             .select('id, slug, title, description, location_city, location_department, category, created_at')
