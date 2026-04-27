@@ -165,6 +165,18 @@ img, video, iframe {
   animation: colorPulse 3s ease-in-out infinite;
 }
 
+/* Animated gradient for "Nouveau" mission badge */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
