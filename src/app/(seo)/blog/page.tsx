@@ -47,7 +47,7 @@ const jsonLd = {
         datePublished: a.datePublished,
         dateModified: a.dateModified,
         description: a.description,
-        image: a.image ?? `${SEO_BASE_URL}/og?title=${encodeURIComponent(a.shortTitle)}&kicker=${encodeURIComponent(a.category)}`,
+        image: a.image ?? `${SEO_BASE_URL}/og?title=${encodeURIComponent(a.shortTitle)}&kicker=${encodeURIComponent(a.category)}&v=3`,
     })),
 }
 
@@ -87,7 +87,7 @@ export default function BlogPage() {
                         className="group block mb-16 bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-brand-blue hover:shadow-2xl transition-all duration-300"
                     >
                         <div className="grid md:grid-cols-5 gap-0">
-                            <div className="md:col-span-3 relative aspect-[1200/630] md:aspect-auto bg-slate-900 overflow-hidden">
+                            <div className="md:col-span-3 relative aspect-[1200/630] bg-slate-900 overflow-hidden">
                                 <Image
                                     src={getBlogImage(featured)}
                                     alt={featured.title}

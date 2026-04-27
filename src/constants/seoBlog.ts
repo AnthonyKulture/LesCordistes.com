@@ -854,8 +854,13 @@ export const SEO_BLOG_BASE = `${SEO_BASE_URL}/blog`
  * Retourne l'URL d'image à utiliser pour un article (hero + thumbnail).
  * Préfère `article.image` si défini, sinon fallback sur l'OG dynamique.
  * Toujours renvoie une URL relative pour rester compatible Next/Image local.
+ *
+ * Le param `v` casse le cache CDN Vercel (max-age 7 jours sur /og) à chaque
+ * refonte du visuel. Bumper cette constante après modification de /og/route.tsx.
  */
+const OG_VERSION = '3'
+
 export function getBlogImage(article: BlogArticle): string {
     if (article.image) return article.image
-    return `/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}`
+    return `/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}&v=${OG_VERSION}`
 }
