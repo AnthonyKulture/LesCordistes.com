@@ -312,8 +312,9 @@ export function getFreshnessBadge(
 
     if (Number.isFinite(created) && now - created < 7 * DAY_MS) {
         return {
-            label: '🆕 Nouveau',
-            className: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+            label: 'Nouveau',
+            className:
+                'text-white border border-brand-blue-light/30 shadow-sm bg-gradient-to-r from-brand-blue via-brand-blue-light to-brand-blue animate-gradient-shift',
         };
     }
 
