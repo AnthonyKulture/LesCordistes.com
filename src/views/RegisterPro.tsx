@@ -30,6 +30,14 @@ export function RegisterPro() {
     });
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
+    const errorRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        if (error && errorRef.current) {
+            errorRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorRef.current.focus();
+        }
+    }, [error]);
 
     React.useEffect(() => {
         if (!authLoading && user) {
@@ -140,7 +148,7 @@ export function RegisterPro() {
 
                     <div className="space-y-6">
                         {error && (
-                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2" role="alert">
+                            <div ref={errorRef} tabIndex={-1} className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2 scroll-mt-24 outline-none" role="alert">
                                 <span className="shrink-0" aria-hidden="true">⚠️</span>
                                 <span className="min-w-0 break-words">{error}</span>
                             </div>
