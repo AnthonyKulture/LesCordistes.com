@@ -59,16 +59,15 @@ interface JobRow {
     client_contact_info: { name?: string; first_name?: string; email?: string } | null;
 }
 
-async function sendRevalidationEmail(job: JobRow, supabase: any) {
-    // Determine recipient: client_contact_info.email is the source of truth
-    // (filled for both registered and guest clients).
+async function sendRevalidationEmail(
+    job: JobRow,
+    supabase: any
+): Promise<{ ok: boolean; reason?: string }> {
     const email = job.client_contact_info?.email;
     if (!email) {
-        console.warn(`[freshness-cron] job ${job.id} has no client email, skipping`);
-        return false;
+        return { ok: false, reason: 'no_email' };
     }
 
-    // clientIdentifier for the token: use created_by UUID if present, fallback to email.
     const clientIdentifier = job.created_by || email;
     const token = await sign(job.id, clientIdentifier);
     const validateUrl = `${SEO_BASE_URL}/api/jobs/validate?token=${encodeURIComponent(token)}`;
@@ -77,8 +76,13 @@ async function sendRevalidationEmail(job: JobRow, supabase: any) {
         job.client_contact_info?.name?.split(' ')[0] ||
         '';
 
-    const { error } = await supabase.functions.invoke('send-email', {
-        body: {
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/send-email`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
             to: email,
             subject: `Votre mission « ${job.title} » est-elle toujours d'actualité ?`,
             templateId: 'job-revalidation-request',
@@ -88,13 +92,14 @@ async function sendRevalidationEmail(job: JobRow, supabase: any) {
                 city: job.location_city ?? '',
                 validateUrl,
             },
-        },
+        }),
     });
-    if (error) {
-        console.error(`[freshness-cron] send-email error for job ${job.id}:`, error);
-        return false;
+
+    if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        return { ok: false, reason: `send_${res.status}: ${body.slice(0, 300)}` };
     }
-    return true;
+    return { ok: true };
 }
 
 serve(async (req: Request) => {
@@ -117,26 +122,53 @@ serve(async (req: Request) => {
     const archiveThreshold = new Date(now.getTime() - 15 * 86_400_000).toISOString();
 
     // ─── A. Send revalidation emails (J+5) ─────────────────────────────────
-    // Use coalesce(last_validated_at, created_at) < J-5 AND revalidation_email_sent_at IS NULL.
-    // After last_validated_at is set, /api/jobs/validate clears revalidation_email_sent_at
-    // → le cycle peut repartir 5 jours plus tard.
+    // Logique : coalesce(last_validated_at, created_at) < J-5 AND revalidation_email_sent_at IS NULL.
+    // Implémentée en 2 requêtes (PostgREST `.or(...)` casse sur les ISO timestamps
+    // contenant des `.` car `.` est le séparateur field.op.value).
+    const SELECT_COLS =
+        'id, title, location_city, created_by, client_contact_info, created_at, last_validated_at';
 
-    const { data: toRevalidate, error: errA } = await supabase
+    // A1 — jobs déjà revalidés au moins une fois mais last_validated_at < J-5.
+    const { data: a1, error: errA1 } = await supabase
         .from('jobs')
-        .select('id, title, location_city, created_by, client_contact_info, created_at, last_validated_at')
+        .select(SELECT_COLS)
         .eq('status', 'live')
         .is('revalidation_email_sent_at', null)
-        .or(`last_validated_at.lt.${revalidationThreshold},and(last_validated_at.is.null,created_at.lt.${revalidationThreshold})`);
+        .not('last_validated_at', 'is', null)
+        .lt('last_validated_at', revalidationThreshold);
 
-    if (errA) {
-        console.error('[freshness-cron] query A error:', errA);
-        return new Response(JSON.stringify({ error: errA.message }), { status: 500 });
+    // A2 — jobs jamais revalidés, créés il y a > 5 jours.
+    const { data: a2, error: errA2 } = await supabase
+        .from('jobs')
+        .select(SELECT_COLS)
+        .eq('status', 'live')
+        .is('revalidation_email_sent_at', null)
+        .is('last_validated_at', null)
+        .lt('created_at', revalidationThreshold);
+
+    if (errA1 || errA2) {
+        console.error('[freshness-cron] query A error:', errA1 || errA2);
+        return new Response(
+            JSON.stringify({ error: (errA1 || errA2)?.message }),
+            { status: 500 }
+        );
+    }
+
+    const seen = new Set<string>();
+    const toRevalidate: JobRow[] = [];
+    for (const j of [...(a1 ?? []), ...(a2 ?? [])]) {
+        if (!seen.has(j.id)) {
+            seen.add(j.id);
+            toRevalidate.push(j as JobRow);
+        }
     }
 
     let emailsSent = 0;
+    const debug: Array<{ id: string; ok: boolean; reason?: string }> = [];
     for (const job of toRevalidate ?? []) {
-        const ok = await sendRevalidationEmail(job as JobRow, supabase);
-        if (ok) {
+        const result = await sendRevalidationEmail(job as JobRow, supabase);
+        debug.push({ id: job.id, ok: result.ok, reason: result.reason });
+        if (result.ok) {
             await supabase
                 .from('jobs')
                 .update({ revalidation_email_sent_at: now.toISOString() })
@@ -165,6 +197,19 @@ serve(async (req: Request) => {
             emailsSent,
             expiredCount: expired?.length ?? 0,
             timestamp: now.toISOString(),
+            debug: {
+                a1Count: a1?.length ?? 0,
+                a2Count: a2?.length ?? 0,
+                uniqueCount: toRevalidate.length,
+                threshold: revalidationThreshold,
+                perJob: debug,
+                envCheck: {
+                    SUPABASE_URL: SUPABASE_URL?.slice(0, 40) || 'MISSING',
+                    SERVICE_ROLE_LEN: SUPABASE_SERVICE_ROLE_KEY?.length || 0,
+                    SERVICE_ROLE_PREFIX: SUPABASE_SERVICE_ROLE_KEY?.slice(0, 10) || '',
+                    SERVICE_ROLE_DOTS: (SUPABASE_SERVICE_ROLE_KEY?.match(/\./g) || []).length,
+                },
+            },
         }),
         { headers: { 'Content-Type': 'application/json' } }
     );

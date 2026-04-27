@@ -3,7 +3,7 @@ import { createSupabaseAdminClient } from '@/lib/supabase-server'
 
 export const dynamic = 'force-dynamic'
 
-const ALLOWED_STATUSES = ['pending', 'live', 'rejected', 'completed', 'cancelled'] as const
+const ALLOWED_STATUSES = ['pending', 'live', 'rejected', 'completed', 'cancelled', 'expired'] as const
 type JobStatus = typeof ALLOWED_STATUSES[number]
 
 export async function GET(req: Request) {

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { MapPin, Calendar, Euro, Ruler, Lock, ChevronRight, ShieldCheck, Compass } from 'lucide-react';
+import { MapPin, Calendar, Euro, Ruler, Lock, ChevronRight, ShieldCheck, Compass, CheckCircle2 } from 'lucide-react';
 import type { Job } from '../types';
 import { useAuth } from '../contexts/AuthContext';
 import { useCredits } from '../hooks/useCredits';
@@ -45,7 +45,8 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
     const isOwner = user && job.created_by === user.id;
     const unlocked = isJobUnlocked(job.id);
     const canViewContact = user && (isOwner || unlocked);
-    const freshness = getFreshnessBadge(job);
+    const isClosed = job.status === 'expired';
+    const freshness = isClosed ? null : getFreshnessBadge(job);
 
     const budget = getBudgetDisplay(job);
     const deptLabel = getDepartmentLabel(job.location_department);
@@ -59,16 +60,27 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
 
     return (
         <div
-            className="bg-white rounded-2xl border border-slate-100 hover:border-brand-blue/40 hover:shadow-md transition-all cursor-pointer group overflow-hidden flex flex-col h-full"
+            className={`bg-white rounded-2xl border border-slate-100 transition-all cursor-pointer group overflow-hidden flex flex-col h-full ${
+                isClosed
+                    ? 'opacity-70 hover:opacity-100 hover:border-slate-300'
+                    : 'hover:border-brand-blue/40 hover:shadow-md'
+            }`}
             onClick={handleClick}
         >
             <div className="p-5 flex flex-col flex-1">
-                {/* Header row : titre + freshness badge top-right */}
+                {/* Header row : titre + badge top-right (closed | freshness) */}
                 <div className="flex items-start justify-between gap-3 mb-2">
-                    <h3 className="font-bold text-slate-900 text-base leading-snug group-hover:text-brand-blue transition-colors line-clamp-2 flex-1 min-w-0">
+                    <h3 className={`font-bold text-base leading-snug transition-colors line-clamp-2 flex-1 min-w-0 ${
+                        isClosed ? 'text-slate-600' : 'text-slate-900 group-hover:text-brand-blue'
+                    }`}>
                         {job.title}
                     </h3>
-                    {freshness && (
+                    {isClosed ? (
+                        <span className="shrink-0 inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wide bg-slate-200 text-slate-700">
+                            <CheckCircle2 size={11} />
+                            Déjà effectuée
+                        </span>
+                    ) : freshness && (
                         <span className={`shrink-0 text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wide ${freshness.className}`}>
                             {freshness.label}
                         </span>
@@ -141,7 +153,11 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
                 {/* Footer — discret, aligné horizontalement entre cards.
                     Toujours même hauteur (h-9) pour que le bottom soit aligné en grille. */}
                 <div className="flex items-center justify-between h-9 pt-3 border-t border-slate-50 text-xs">
-                    {canViewContact ? (
+                    {isClosed ? (
+                        <span className="text-slate-500 flex items-center gap-1 italic">
+                            Mission archivée — déblocage indisponible
+                        </span>
+                    ) : canViewContact ? (
                         <span className="text-emerald-600 font-bold flex items-center gap-1">
                             ✓ Coordonnées disponibles
                         </span>
@@ -159,7 +175,9 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
                             <Lock size={11} /> Crédits requis
                         </span>
                     )}
-                    <span className="ml-auto text-brand-blue font-bold flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <span className={`ml-auto font-bold flex items-center gap-1 group-hover:gap-2 transition-all ${
+                        isClosed ? 'text-slate-500' : 'text-brand-blue'
+                    }`}>
                         Voir la mission <ChevronRight size={14} />
                     </span>
                 </div>

@@ -464,6 +464,45 @@ function escHtml(s: string): string {
     .replace(/'/g, '&#39;');
 }
 
+// ─── Plain-text & deliverability helpers ──────────────────────────────────────
+
+function htmlToText(html: string): string {
+  return html
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<a [^>]*href="([^"]+)"[^>]*>([^<]*)<\/a>/gi, '$2 ($1)')
+    .replace(/<\/(p|div|tr|table|li|h[1-6]|section|header|footer)>/gi, '\n\n')
+    .replace(/<br\s*\/?\s*>/gi, '\n')
+    .replace(/<\/td>/gi, ' ')
+    .replace(/<hr\s*\/?\s*>/gi, '\n----\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n[ \t]+/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+// Templates "subscribable" (notifications, onboarding, marketing).
+// Hors liste : password-reset, verify-email, payment-receipt — purement transactionnels,
+// pas de désinscription possible (l'utilisateur a explicitement déclenché l'action).
+const SUBSCRIBABLE_TEMPLATES = new Set<string>([
+  'welcome-client',
+  'welcome-pro',
+  'admin-alert',
+  'job-status',
+  'match-job',
+  'guest-job-created',
+  'job-revalidation-request',
+  'pro-credit-offer',
+  'admin-custom',
+]);
+
 function adminCustom(data: Record<string, string>): string {
   const name = escHtml(data.name || '');
   const subject = escHtml(data.subject || 'Message de LesCordistes.com');
@@ -518,11 +557,21 @@ serve(async (req) => {
         throw new Error(`Template not found: ${templateId}`);
     }
 
+    const text = htmlToText(html);
+
+    const headers: Record<string, string> = {};
+    if (SUBSCRIBABLE_TEMPLATES.has(templateId)) {
+      const mailtoSubject = encodeURIComponent(`Désinscription ${templateId}`);
+      headers['List-Unsubscribe'] = `<mailto:contact@lescordistes.com?subject=${mailtoSubject}>`;
+    }
+
     const { data: resendData, error } = await resend.emails.send({
       from: 'LesCordistes <contact@lescordistes.com>',
       to: Array.isArray(to) ? to : [to],
       subject,
       html,
+      text,
+      ...(Object.keys(headers).length > 0 ? { headers } : {}),
     });
 
     if (error) {

@@ -1,10 +1,11 @@
 type Props = {
-    status: 'pending' | 'live' | 'rejected' | 'completed' | 'cancelled' | string
+    status: 'pending' | 'live' | 'rejected' | 'completed' | 'cancelled' | 'expired' | string
 }
 
 const MAP: Record<string, { label: string; className: string }> = {
     pending: { label: 'En attente', className: 'bg-amber-100 text-amber-800' },
     live: { label: 'En ligne', className: 'bg-emerald-100 text-emerald-800' },
+    expired: { label: 'Déjà effectuée', className: 'bg-slate-200 text-slate-700' },
     rejected: { label: 'Rejetée', className: 'bg-red-100 text-red-800' },
     completed: { label: 'Terminée', className: 'bg-slate-200 text-slate-700' },
     cancelled: { label: 'Archivée', className: 'bg-slate-100 text-slate-500' },
