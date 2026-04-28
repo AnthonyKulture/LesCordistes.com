@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ShieldCheck, ArrowRight, Phone } from 'lucide-react'
-import { SEO_PHONE } from '@/constants/seoConfig'
+import { SEO_PHONE, getCityRegionLabel } from '@/constants/seoConfig'
 
 interface Props {
     cityName: string
@@ -32,6 +32,7 @@ export function CityLeadHero({ cityName, citySlug }: Props) {
     const [submitting, setSubmitting] = useState(false)
 
     const isValid = category && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    const regionLabel = getCityRegionLabel(citySlug, cityName)
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
@@ -66,7 +67,7 @@ export function CityLeadHero({ cityName, citySlug }: Props) {
                     <div>
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-full text-xs font-medium mb-5">
                             <ShieldCheck size={14} />
-                            Cordistes certifiés CQP/IRATA en région lyonnaise
+                            Cordistes certifiés CQP/IRATA {regionLabel}
                         </div>
 
                         <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-4">
