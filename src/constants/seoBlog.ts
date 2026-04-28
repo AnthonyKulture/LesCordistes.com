@@ -835,6 +835,111 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Créer mon profil cordiste', href: '/inscription-cordiste' },
         ],
     },
+    {
+        slug: 'trouver-cordiste-marseille',
+        title: 'Trouver un cordiste à Marseille : tarifs, zones et guide 2026',
+        shortTitle: 'Trouver un cordiste à Marseille',
+        description:
+            'Trouvez un cordiste certifié à Marseille pour vos travaux en hauteur. Tarifs 2026, zones couvertes, contraintes mistral et patrimoine — le guide pratique.',
+        category: 'Guide achat',
+        readTime: 8,
+        datePublished: '2026-04-28',
+        dateModified: '2026-04-28',
+        intro:
+            'Marseille concentre, après Paris et Lyon, l\'une des demandes les plus intenses de France en travaux en hauteur. Sa géographie singulière — le Vieux-Port aux façades calcaires, le quartier du Panier aux ruelles étroites impossibles à mécaniser, les grandes barres des années 1970 du Plan d\'Aou ou de Frais-Vallon, et le Grand Port Maritime de Marseille (GPMM) avec ses silos et ses terminaux — crée des situations que seul un cordiste à Marseille habitué de ces terrains sait aborder. À quoi s\'ajoute la contrainte locale la plus imprévisible : le mistral. Trouver le bon prestataire ne se résume pas à obtenir le devis le moins cher : c\'est identifier un technicien qui connaît les fenêtres météo locales, les matériaux des façades marseillaises — pierre de Cassis, enduit à la chaux, béton brut — et les exigences des Architectes des Bâtiments de France sur les secteurs classés. Ce guide vous donne les clés pour faire le bon choix en 2026.',
+        sections: [
+            {
+                heading: 'Marseille : pourquoi les travaux cordistes y sont-ils spécifiques ?',
+                body: 'La troisième agglomération de France présente un profil architectural et climatique sans équivalent en Europe du Sud. Le Vieux-Port et ses quais côtoient les tours de la Joliette dans l\'Euroméditerranée, les immeubles de La Canebière jouxtent les cités des années 1960 des quartiers Nord — et tout cela surplombe la mer. Ce contexte maritime impose une contrainte permanente : les embruns salins dégradent les enduits, les ferronneries et les fixations métalliques deux à trois fois plus vite qu\'à l\'intérieur des terres. Un cordiste à Marseille doit sélectionner des EPI (équipements de protection individuelle) et des matériaux de traitement certifiés pour environnement marin — harnais avec sangles anti-sel, cordes traitées UV, produits hydrofuges compatibles avec le calcaire local.\n\nLe mistral représente l\'autre spécificité majeure. Ce vent de nord-ouest peut dépasser 80 à 100 km/h en rafales et interdit tout travail en suspension dès que la vitesse moyenne atteint 50 km/h. Les cordistes marseillais expérimentés calent leurs plannings sur les fenêtres météo de 3 à 5 jours consécutifs sans vent fort — ce qui peut décaler un chantier de plusieurs semaines en hiver. Ce facteur doit être anticipé dès la signature du devis et intégré dans les délais contractuels.\n\nÀ ces réalités s\'ajoute la densité industrielle du Grand Port Maritime de Marseille (GPMM), deuxième port de Méditerranée, et des zones pétrochimiques de Fos-sur-Mer et de l\'étang de Berre. Sur ces chantiers, la certification IRATA (niveau 2 ou 3) est souvent exigée contractuellement, et les intervenants travaillent avec des plans de prévention spécifiques aux risques chimiques.',
+            },
+            {
+                heading: 'Quels travaux un cordiste peut-il réaliser à Marseille ?',
+                body: 'Les missions cordiste à Marseille couvrent un spectre très large, du bâtiment résidentiel aux ouvrages industriels. La technique d\'accès sur cordes (TAC) permet d\'intervenir sur n\'importe quelle façade ou structure en hauteur dès lors que des points d\'ancrage fiables existent ou peuvent être installés en toiture — sans échafaudage ni nacelle, sans occupation de la voie publique. Le démarrage est possible sous 48 à 72 heures sur un chantier simple, contre 1 à 2 semaines pour un montage d\'échafaudage complet.',
+                listIntro: 'Les missions les plus fréquentes à Marseille et dans la métropole :',
+                list: [
+                    'Nettoyage de façades en calcaire ou en pierre de Cassis — produits adaptés aux embruns et à la végétation marine',
+                    'Ravalement et réfection d\'enduit sur immeubles haussmanniens et Art déco du 6e et du 8e arrondissement',
+                    'Lavage de vitres en hauteur : tours de la Joliette, Euroméditerranée, immeubles tertiaires du 2e arrondissement',
+                    'Réparation de toitures en tuiles romanes sur les villas des arrondissements Sud (8e, 9e, 12e)',
+                    'Traitement anti-pigeons (filets, pics, répulsifs) sur corniches, balcons et façades du Vieux-Port',
+                    'Inspection et diagnostic structurel de façade après mistral ou épisode méditerranéen (fissures, décrochements)',
+                    'Hydrofugation et traitement imperméabilisant sur façades exposées aux embruns salins',
+                    'Travaux industriels sur silos, terminaux portuaires, cheminées et structures métalliques du GPMM',
+                    'Pose et vérification de lignes de vie et systèmes anti-chute permanents sur toitures et quais',
+                    'Purge et sécurisation de falaises calcaires dans les secteurs de La Treille, La Valentine et aux abords des Calanques',
+                ],
+                cta: {
+                    text: 'Décrire mes travaux en 2 minutes',
+                    href: '/post-job',
+                    description: 'Façade calcaire, immeuble de la Canebière ou installation portuaire — publiez votre besoin gratuitement.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Le Panier et les secteurs ABF : contraintes patrimoniales à anticiper',
+                body: 'Le quartier du Panier, perché sur la colline qui surplombe le Vieux-Port, est le plus ancien quartier de Marseille. Son tissu urbain médiéval — ruelles en pente, façades en calcaire ocre, escaliers millénaires — est classé en secteur sauvegardé et placé sous le contrôle étroit des Architectes des Bâtiments de France (ABF). Toute intervention modifiant l\'aspect extérieur d\'un bâtiment, même un simple nettoyage de façade, requiert un avis préalable dès lors que le bâtiment est situé dans le périmètre de protection d\'un monument historique.\n\n**Pierre de Cassis** : ce calcaire blanc-jaune, extrait depuis l\'Antiquité dans les carrières de Cassis à 30 km de Marseille, constitue le matériau de construction historique de la ville. Il est extrêmement sensible aux produits de nettoyage chimiques acides. Seuls les produits alcalins doux ou les techniques de micro-gommage homologués ABF peuvent être utilisés — un cordiste expérimenté sur le patrimoine marseillais les maîtrise et les mentionne explicitement dans son devis.\n\n**Points d\'ancrage non destructifs** : dans le secteur sauvegardé, percer une façade pour installer un ancrage permanent est soumis à autorisation préalable. Les cordistes expérimentés utilisent des systèmes temporaires posés sur le faîtage ou fixés sur des structures existantes. Cette contrainte doit être évaluée lors d\'une visite préalable systématique du site.\n\n**Euroméditerranée** : le nouveau quartier d\'affaires autour de la Joliette (2e arrondissement) échappe aux contraintes ABF mais impose ses propres exigences de sécurité, notamment pour les façades vitrées double peau des immeubles tertiaires récents. Les délais d\'autorisation en secteur protégé peuvent atteindre 15 à 30 jours ouvrés — intégrez-les dans votre planning.',
+            },
+            {
+                heading: 'Tarifs d\'un cordiste à Marseille en 2026',
+                body: 'Le marché marseillais se situe légèrement en dessous de Lyon, avec des tarifs environ 20 à 25 % inférieurs à ceux pratiqués en Île-de-France. La disponibilité d\'un vivier de cordistes qualifiés en région PACA et la moindre tension sur la main-d\'œuvre qualifiée contribuent à des prix compétitifs. Toutefois, les chantiers industriels du GPMM ou de l\'étang de Berre, qui requièrent des compétences IRATA spécialisées et des plans de prévention renforcés, affichent des tarifs proches des standards parisiens.',
+                listIntro: 'Fourchette indicative à Marseille (HT) :',
+                list: [
+                    'Journée cordiste (8h, 1 technicien) : 350 € à 600 € selon spécialité et type de chantier',
+                    'Nettoyage de façade au m² : 7 € à 15 € selon le matériau et le niveau d\'encrassement',
+                    'Lavage de vitres en hauteur : 3 € à 6 € par m²',
+                    'Inspection technique avec rapport écrit : 450 € à 900 € la demi-journée',
+                    'Chantier industriel GPMM (IRATA niveau 2 ou 3 exigé) : 580 € à 850 € HT/j par technicien',
+                    'Traitement hydrofuge sur façade maritime : tarif à la surface — devis indispensable selon exposition',
+                ],
+                cta: {
+                    text: 'Comparer des devis sans engagement',
+                    href: '/post-job',
+                    description: 'Obtenez plusieurs offres de cordistes certifiés sur Marseille pour votre budget réel.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Bien choisir son cordiste à Marseille : 5 critères qui font la différence',
+                body: 'Marseille dispose d\'un vivier de cordistes qualifiés, mais la qualité varie considérablement d\'un prestataire à l\'autre. Voici les 5 points de vigilance spécifiques au marché marseillais.\n\n**1. La gestion du mistral intégrée au contrat** — Un cordiste professionnel mentionne explicitement les conditions météo d\'annulation et de report dans son devis. Vérifiez que le contrat précise les seuils de vent (généralement 50 km/h en rafales) et les modalités de report sans pénalité. Un prestataire qui n\'aborde pas ce point sous-estime les contraintes locales.\n\n**2. La certification adaptée au chantier** — Pour un bâtiment résidentiel ou du patrimoine, le CQP TPS (niveau 2 minimum pour encadrer une équipe) est la référence française. Pour les chantiers du GPMM ou de Fos-sur-Mer, un IRATA niveau 2 ou 3 est souvent exigé contractuellement. Demandez la copie des certificats avec date d\'expiration : CQP et IRATA sont valables 3 ans.\n\n**3. La connaissance des matériaux locaux** — Un cordiste habitué au Panier ou aux villas du 8e sait immédiatement quel produit utiliser sur la pierre de Cassis et quels ancrages temporaires ne risquent pas de dégrader une corniche en calcaire. Cette expertise évite des erreurs coûteuses et des conflits avec les ABF.\n\n**4. La RC Pro couvrant l\'environnement marin** — Vérifiez que l\'attestation mentionne explicitement les techniques d\'accès sur cordes (TAC) et les interventions en milieu maritime. Certaines polices excluent les dommages liés à la corrosion par embruns.\n\n**5. Le plan de prévention systématique** — Les travaux en hauteur figurent dans la liste des travaux dangereux de l\'arrêté du 19 mars 1993. Sur les chantiers industriels du port, un plan de prévention spécifique aux risques chimiques est obligatoire. Un prestataire sérieux — qu\'il soit membre de la SFETH ou non — le propose spontanément après une visite commune du site.',
+                cta: {
+                    text: 'Trouver mon cordiste à Marseille',
+                    href: '/post-job',
+                    description: 'Des cordistes habitués à Marseille et à ses contraintes reçoivent votre demande et répondent sous 48h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Zones couvertes : Marseille intra-muros et Métropole Aix-Marseille-Provence',
+                body: 'Les cordistes basés dans la région marseillaise couvrent généralement l\'ensemble des 16 arrondissements de Marseille, de La Canebière (1er) aux calanques de Sormiou et Morgiou (9e) en passant par les quartiers Nord (13e à 16e) et les collines de Plan de Cuques et de La Treille (11e, 12e). La grande majorité des prestataires interviennent dans ce périmètre sans facturer de frais kilométriques supplémentaires.\n\nAu-delà de la ville, les cordistes marseillais couvrent les principales communes de la Métropole Aix-Marseille-Provence : Aix-en-Provence, Aubagne, Cassis, La Ciotat, Vitrolles, Marignane, Martigues, Istres, Salon-de-Provence et les communes de l\'étang de Berre (Port-de-Bouc, Fos-sur-Mer). Pour les chantiers industriels du complexe pétrochimique, des cordistes IRATA locaux sont disponibles avec des délais courts.\n\nAu-delà de la métropole, des frais kilométriques s\'appliquent généralement à partir de 50 à 70 km du centre de Marseille — comptez entre 0,40 € et 0,70 € HT par kilomètre. Les cordistes marseillais acceptent fréquemment des missions dans le Var (Toulon, Hyères, La Seyne-sur-Mer) et dans le Vaucluse (Avignon, Arles, Tarascon). La région PACA concentre un vivier important de techniciens d\'accès difficile (TAC), en partie alimenté par la demande industrielle continue du port et des zones pétrochimiques.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste à Marseille ?',
+                a: 'Comptez entre 350 € et 600 € HT par journée à Marseille selon la spécialité et le type de chantier. Le nettoyage de façade oscille entre 7 € et 15 € HT au m². C\'est environ 20 % moins cher qu\'à Paris.',
+            },
+            {
+                q: 'Le mistral peut-il annuler un chantier cordiste à Marseille ?',
+                a: 'Oui. Dès que les rafales dépassent 50 km/h, le travail en suspension est interrompu pour des raisons de sécurité. Un cordiste sérieux intègre cette contrainte dans le contrat : seuils d\'annulation et modalités de report sans pénalité. En hiver, le mistral peut décaler un chantier de 1 à 3 semaines.',
+            },
+            {
+                q: 'Quel délai pour trouver un cordiste disponible à Marseille ?',
+                a: 'En dehors des pics saisonniers, comptez 1 à 3 semaines entre la prise de contact et le démarrage. Au printemps et en début d\'été (avril à juillet), les cordistes de la région PACA sont souvent complets 3 à 5 semaines à l\'avance. Pour une urgence post-mistral, certains prestataires interviennent sous 24 à 72 heures avec une majoration tarifaire.',
+            },
+            {
+                q: 'Un cordiste marseillais peut-il intervenir à Aix-en-Provence ou dans l\'étang de Berre ?',
+                a: 'Oui. La Métropole Aix-Marseille-Provence est couverte intégralement, souvent sans surcoût kilométrique. Pour les chantiers industriels de l\'étang de Berre et de Fos-sur-Mer, des cordistes IRATA locaux sont disponibles. Des frais de déplacement s\'appliquent au-delà de 50 à 70 km du centre de Marseille.',
+            },
+        ],
+        ctaText: 'Trouver mon cordiste à Marseille',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Cordistes certifiés à Marseille', href: '/cordiste-marseille' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
+            { label: 'Trouver un cordiste à Lyon', href: '/blog/trouver-cordiste-lyon' },
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
