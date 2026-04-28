@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
-import { verifyRevalidationToken } from '@/lib/revalidation-token'
+import { verifyRevalidationTokenDetailed } from '@/lib/revalidation-token'
 import { SEO_BASE_URL } from '@/constants/seoConfig'
 
 export const runtime = 'nodejs'
@@ -11,13 +11,25 @@ export async function GET(req: Request) {
     const token = url.searchParams.get('token')
 
     if (!token) {
-        return NextResponse.redirect(`${SEO_BASE_URL}/?revalidation=invalid`)
+        console.warn('[validate] no token in request')
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=invalid`)
     }
 
-    const decoded = verifyRevalidationToken(token)
-    if (!decoded) {
-        return NextResponse.redirect(`${SEO_BASE_URL}/?revalidation=expired`)
+    const verifyResult = verifyRevalidationTokenDetailed(token)
+    if (!verifyResult.ok) {
+        console.warn('[validate] token verification failed', {
+            reason: verifyResult.reason,
+            debug: verifyResult.debug,
+            tokenSample: token.slice(0, 32),
+        })
+        // Mapping des causes vers le statut UI affiché
+        const status =
+            verifyResult.reason === 'expired' ? 'expired' :
+            verifyResult.reason === 'bad_format' || verifyResult.reason === 'decode_error' ? 'invalid' :
+            'expired' // bad_signature ou bad_exp → on dit "expiré" à l'utilisateur (pas de fuite info)
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=${status}`)
     }
+    const decoded = { jobId: verifyResult.jobId, clientIdentifier: verifyResult.clientIdentifier }
 
     // Cast to any: les nouvelles colonnes (last_validated_at, revalidation_email_sent_at)
     // ne sont pas encore dans database.types.ts (à régénérer après migration en prod).
@@ -27,7 +39,7 @@ export async function GET(req: Request) {
     // On accepte les deux et on filtre par jobId + status='live' pour rester safe.
     const isUuid = /^[0-9a-f-]{36}$/i.test(decoded.clientIdentifier)
 
-    // On reset revalidation_email_sent_at pour que le prochain cycle J+10 puisse repartir
+    // On reset revalidation_email_sent_at pour que le prochain cycle J+5 puisse repartir
     // (sinon le cron ne renverra jamais d'email même si last_validated_at devient ancien).
     let query = admin
         .from('jobs')
@@ -47,9 +59,15 @@ export async function GET(req: Request) {
 
     const { error, data } = await query.select('id')
 
-    if (error || !data || data.length === 0) {
-        return NextResponse.redirect(`${SEO_BASE_URL}/?revalidation=notfound`)
+    if (error) {
+        console.error('[validate] update error:', error.message, { jobId: decoded.jobId, isUuid })
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=notfound&job=${decoded.jobId}`)
+    }
+    if (!data || data.length === 0) {
+        console.warn('[validate] no row matched', { jobId: decoded.jobId, clientIdentifier: decoded.clientIdentifier, isUuid })
+        return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=notfound&job=${decoded.jobId}`)
     }
 
-    return NextResponse.redirect(`${SEO_BASE_URL}/dashboard?revalidation=ok&job=${decoded.jobId}`)
+    console.log('[validate] success', { jobId: decoded.jobId })
+    return NextResponse.redirect(`${SEO_BASE_URL}/mission-confirmee?status=ok&job=${decoded.jobId}`)
 }
