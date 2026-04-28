@@ -57,29 +57,32 @@ export const PostJob: React.FC = () => {
     // Keep formDataRef in sync for use inside stable closures
     formDataRef.current = formData;
 
-    // Exit-intent: fire once if email not yet captured
+    // Exit-intent: fire once if email not yet captured et si user encore au step 1
     useEffect(() => {
+        const shouldSkip = () =>
+            exitFired.current ||
+            !!formDataRef.current.contact_email ||
+            currentStep > 1;
+
         const handleMouseLeave = (e: MouseEvent) => {
             if (e.clientY > 10) return;
-            if (exitFired.current) return;
-            if (formDataRef.current.contact_email) return;
+            if (shouldSkip()) return;
             exitFired.current = true;
             setShowExitIntent(true);
         };
 
         const idleTimer = setTimeout(() => {
-            if (exitFired.current) return;
-            if (formDataRef.current.contact_email) return;
+            if (shouldSkip()) return;
             exitFired.current = true;
             setShowExitIntent(true);
-        }, 60_000);
+        }, 240_000);
 
         document.addEventListener('mouseleave', handleMouseLeave);
         return () => {
             document.removeEventListener('mouseleave', handleMouseLeave);
             clearTimeout(idleTimer);
         };
-    }, []);
+    }, [currentStep]);
 
     // Load draft on mount
     useEffect(() => {
