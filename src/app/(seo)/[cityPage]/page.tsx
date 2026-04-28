@@ -7,6 +7,7 @@ import { TrustBadges } from '@/components/seo/TrustBadges'
 import { SEOInternalLinks } from '@/components/seo/SEOInternalLinks'
 import { SEOLocalReviews } from '@/components/seo/SEOLocalReviews'
 import { SEOLocalStats } from '@/components/seo/SEOLocalStats'
+import { CityLeadHero } from '@/components/seo/CityLeadHero'
 import Link from 'next/link'
 
 interface Props {
@@ -141,24 +142,7 @@ export default async function CitySEOPage({ params }: Props) {
         <div className="min-h-screen bg-white">
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-            <div className="bg-slate-900 text-white pt-24 pb-16">
-                <div className="container max-w-4xl text-center">
-                    <h1 className="text-4xl md:text-5xl font-black mb-6">
-                        Entreprise de Travaux sur Cordes à {name} :{' '}
-                        <br />
-                        <span className="text-brand-blue-light">Experts en Accès Difficiles</span>
-                    </h1>
-                    <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
-                        Spécialistes des travaux en hauteur pour le nettoyage, la maintenance industrielle et le génie civil dans le secteur de {name}.
-                    </p>
-                    <Link
-                        href="/post-job"
-                        className="inline-block bg-brand-blue hover:bg-brand-blue-light text-white px-8 py-3 text-lg font-bold rounded-xl transition-colors"
-                    >
-                        Publiez votre besoin en 3 min - Devis sous 48h
-                    </Link>
-                </div>
-            </div>
+            <CityLeadHero cityName={name} citySlug={citySlug} />
 
             <div className="container max-w-5xl py-12">
                 <SEOLocalStats cityName={name} />
