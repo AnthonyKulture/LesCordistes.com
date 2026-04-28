@@ -126,6 +126,22 @@ export const PostJob: React.FC = () => {
             setCurrentStep(isRenfortDraft ? 7 : 5);
             toast.success("Compte activé ! Vous pouvez maintenant publier votre mission.");
         }
+
+        // Handoff depuis une landing SEO (city hero) : skipper step 1 si on a la trinité catégorie+email+ville
+        const prefillCity = params.get('prefill_city');
+        const prefillEmail = params.get('prefill_email');
+        const prefillCategory = params.get('prefill_category');
+        if (prefillCity && prefillEmail && prefillCategory) {
+            const validCategories = ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'securing', 'telecom', 'inspection', 'repair', 'pruning', 'other'] as const;
+            const cat = validCategories.includes(prefillCategory as any) ? (prefillCategory as JobFormData['category']) : 'other';
+            updateFormData({
+                category: cat,
+                contact_email: prefillEmail,
+                location_city: prefillCity,
+            });
+            // Standard wizard: step 2 = Détails. On y envoie le user.
+            setCurrentStep(2);
+        }
     }, []);
 
     // Scroll to top and save step on step change
