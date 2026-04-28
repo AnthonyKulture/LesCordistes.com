@@ -531,11 +531,11 @@ export const PostJob: React.FC = () => {
                             100% gratuit · Sans engagement
                         </div>
                         <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 mb-3 leading-tight animate-intro-in-delay">
-                            Votre projet, posté en{' '}
+                            Trouvez un cordiste pour vos travaux en hauteur en{' '}
                             <span className="text-brand-blue-light">2 minutes</span>.
                         </h1>
                         <p className="text-slate-500 text-sm sm:text-base max-w-md mx-auto leading-relaxed animate-intro-in-delay2">
-                            Les cordistes certifiés de votre région reçoivent votre mission et vous répondent sous 24h.<br />
+                            Postez votre mission de travaux sur cordes : les cordistes certifiés de votre région vous répondent sous 48h.<br />
                             <span className="font-bold animate-color-pulse">
                                 Directement, sans intermédiaire.
                             </span>
