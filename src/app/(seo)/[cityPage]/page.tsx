@@ -169,7 +169,7 @@ export default async function CitySEOPage({ params }: Props) {
                 )}
 
                 {editorial.tarifsLocaux && (
-                    <div className="mb-16 bg-slate-50 rounded-2xl p-8 border border-slate-200">
+                    <div id="devis-gratuit" className="mb-16 bg-slate-50 rounded-2xl p-8 border border-slate-200 scroll-mt-24">
                         <h2 className="text-2xl font-bold text-slate-900 mb-4">Tarifs cordiste à {name}</h2>
                         <div className="flex items-center gap-6 mb-4">
                             <div className="text-center bg-white rounded-xl p-4 border border-slate-200 min-w-[120px]">
@@ -219,7 +219,7 @@ export default async function CitySEOPage({ params }: Props) {
                     </div>
                 </div>
 
-                <div className="mb-16">
+                <div id="prestations" className="mb-16 scroll-mt-24">
                     <h2 className="text-3xl font-bold text-slate-900 mb-8 border-b pb-4">Nos services d'accès difficiles à {name}</h2>
                     <div className="grid md:grid-cols-2 gap-8">
                         {(['urbain', 'industriel', 'genie_civil'] as const).map((clusterType) => (
@@ -246,7 +246,9 @@ export default async function CitySEOPage({ params }: Props) {
                     </div>
                 </div>
 
-                <TrustBadges />
+                <div id="certifications" className="scroll-mt-24">
+                    <TrustBadges />
+                </div>
                 <SEOLocalReviews cityName={name} />
 
                 <div className="mt-16 bg-slate-50 rounded-2xl p-8 border border-slate-200">

@@ -98,8 +98,9 @@ export function CityLeadHero({ cityName, citySlug }: Props) {
                     </div>
 
                     <form
+                        id="deposer-mission"
                         onSubmit={handleSubmit}
-                        className="bg-white rounded-2xl shadow-xl border border-slate-200 p-5 md:p-6"
+                        className="bg-white rounded-2xl shadow-xl border border-slate-200 p-5 md:p-6 scroll-mt-24"
                         aria-label={`Demander un devis cordiste à ${cityName}`}
                     >
                         <p className="text-sm font-bold text-slate-900 mb-1">
