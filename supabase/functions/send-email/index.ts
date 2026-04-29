@@ -32,8 +32,8 @@ function base(previewText: string, content: string): string {
 <!-- Header -->
 <table width="100%" cellpadding="0" cellspacing="0" style="background:${B};">
   <tr><td align="center" style="padding:24px 40px;">
-    <a href="https://lescordistes.com" style="text-decoration:none;">
-      <span style="font-family:Inter,Arial,sans-serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.3px;">Les<span style="color:${BL};">Cordistes</span><span style="color:#ffffff;opacity:0.6;">.com</span></span>
+    <a href="https://www.lescordistes.com" style="text-decoration:none;">
+      <img src="https://www.lescordistes.com/lescordistes.com-white-logo.png" alt="LesCordistes" width="160" style="display:block;max-width:160px;height:auto;border:0;outline:none;text-decoration:none;"/>
     </a>
   </td></tr>
 </table>
@@ -573,12 +573,23 @@ function adminCustom(data: Record<string, string>): string {
   const rawLink = (data.link || '').trim();
   const safeLink = /^https?:\/\/[^\s"'<>]+$/i.test(rawLink) ? rawLink : '';
   const cta = safeLink && data.linkText ? btn(escHtml(safeLink), escHtml(data.linkText)) : '';
+  // Footer marketing obligatoire (RGPD) — lien de désinscription en clair.
+  const unsubscribeUrl = (data.unsubscribeUrl || '').trim();
+  const safeUnsub = /^https?:\/\/[^\s"'<>]+$/i.test(unsubscribeUrl)
+    ? unsubscribeUrl
+    : 'https://www.lescordistes.com/marketing/unsubscribe';
   return base(subject, `
     ${name ? `<p style="font-size:15px;color:${S5};margin:0 0 18px;">Bonjour ${name},</p>` : ''}
     ${paragraphs || `<p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 18px;">(message vide)</p>`}
     ${cta}
     <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
-    <p style="font-size:13px;color:${S5};margin:0;">Une question ? Répondez directement à cet email.</p>
+    <p style="font-size:13px;color:${S5};margin:0 0 16px;">Une question ? Répondez directement à cet email.</p>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0 0 6px;text-align:center;">
+      Vous recevez cet email parce que vous êtes inscrit sur LesCordistes.com.
+    </p>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0;text-align:center;">
+      <a href="${escHtml(safeUnsub)}" style="color:${S5};text-decoration:underline;">Se désinscrire des emails marketing</a>
+    </p>
   `);
 }
 
