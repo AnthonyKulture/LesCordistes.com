@@ -3,6 +3,7 @@
 // CRON_SECRET ; côté Next.js on l'attache au header Authorization.
 
 import { NextRequest } from 'next/server'
+import { createHash } from 'crypto'
 import { requireAdmin } from '@/lib/ops/guard'
 import { logAdminAction } from '@/lib/ops/audit'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
@@ -10,6 +11,10 @@ import { createSupabaseAdminClient } from '@/lib/supabase-server'
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
 export const maxDuration = 300
+
+function hashShort(s: string): string {
+    return createHash('sha256').update(s).digest('hex').slice(0, 12)
+}
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -88,16 +93,22 @@ export async function POST(
                 error?: string
                 expected_len?: number
                 received_len?: number
+                expected_hash?: string
+                received_hash?: string
                 has_authorization?: boolean
             }
+            const vercelHash = hashShort(cronSecret)
             return Response.json(
                 {
                     error: 'edge_unauthorized',
-                    hint: 'CRON_SECRET côté Vercel ≠ côté Supabase. Voir details ci-dessous.',
+                    hint: 'CRON_SECRET côté Vercel ≠ côté Supabase. Compare les hashes.',
                     details: {
                         vercel_cron_secret_len: cronSecret.length,
+                        vercel_cron_secret_hash: vercelHash,
                         edge_expected_len: edgeBody.expected_len ?? null,
+                        edge_expected_hash: edgeBody.expected_hash ?? null,
                         edge_received_len: edgeBody.received_len ?? null,
+                        edge_received_hash: edgeBody.received_hash ?? null,
                         edge_has_authorization_header: edgeBody.has_authorization ?? null,
                         edge_error: edgeBody.error ?? null,
                     },

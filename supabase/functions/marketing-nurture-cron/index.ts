@@ -253,20 +253,30 @@ function sleep(ms: number): Promise<void> {
     return new Promise((r) => setTimeout(r, ms));
 }
 
+async function hashShort(s: string): Promise<string> {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(buf))
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('')
+        .slice(0, 12);
+}
+
 // ─── HTTP entrypoint ──────────────────────────────────────────────────────────
 serve(async (req: Request) => {
     if (CRON_SECRET) {
         const auth = req.headers.get('Authorization') || '';
         const expected = `Bearer ${CRON_SECRET}`;
         if (auth !== expected) {
-            const receivedLen = auth.startsWith('Bearer ')
-                ? auth.slice('Bearer '.length).length
-                : 0;
+            const receivedSecret = auth.startsWith('Bearer ')
+                ? auth.slice('Bearer '.length)
+                : '';
             return new Response(
                 JSON.stringify({
                     error: 'cron_secret_mismatch',
                     expected_len: CRON_SECRET.length,
-                    received_len: receivedLen,
+                    received_len: receivedSecret.length,
+                    expected_hash: await hashShort(CRON_SECRET),
+                    received_hash: receivedSecret ? await hashShort(receivedSecret) : null,
                     has_authorization: !!req.headers.get('Authorization'),
                 }),
                 {
