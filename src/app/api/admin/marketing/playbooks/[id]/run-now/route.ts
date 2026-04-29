@@ -17,14 +17,26 @@ export async function POST(
     _req: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
+    console.log('[run-now] entered POST handler')
     const guard = await requireAdmin()
-    if (!guard.ok) return guard.response
+    if (!guard.ok) {
+        console.log('[run-now] requireAdmin failed → returning its response')
+        return guard.response
+    }
+    console.log('[run-now] requireAdmin OK, user:', guard.user.id)
 
     const { id } = await params
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
     const cronSecret = process.env.CRON_SECRET
+    console.log('[run-now] CRON_SECRET defined:', !!cronSecret, 'len:', cronSecret?.length ?? 0)
     if (!cronSecret) {
-        return Response.json({ error: 'cron_secret_missing' }, { status: 500 })
+        return Response.json(
+            {
+                error: 'cron_secret_missing',
+                hint: 'CRON_SECRET env var manquante côté Vercel. Ajoute-la et redéploie.',
+            },
+            { status: 500 }
+        )
     }
 
     // Vérifie l'existence du playbook avant l'invocation distante.
