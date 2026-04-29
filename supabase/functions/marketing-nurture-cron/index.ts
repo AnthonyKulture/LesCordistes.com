@@ -27,6 +27,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY') || '';
 const CRON_SECRET = Deno.env.get('CRON_SECRET') || '';
 const MARKETING_UNSUBSCRIBE_SECRET =
     Deno.env.get('MARKETING_UNSUBSCRIBE_SECRET') ||
@@ -184,10 +185,11 @@ async function processPlaybook(supabase: any, pb: ActivePlaybook): Promise<RunSt
             campaignName: pb.name,
         };
 
-        // Appel direct à l'edge send-email via fetch (l'API supabase
-        // functions.invoke côté Deno est moins fiable pour les fonctions
-        // déployées avec auth ; un POST signé avec le service-role JWT marche
-        // partout).
+        // Appel direct à l'edge send-email via fetch. On utilise la clé
+        // ANON (même pattern que les triggers SQL transactionnels du projet,
+        // cf. supabase-email-triggers.sql). L'edge send-email accepte ainsi
+        // toute requête authentifiée par la clé anon, sans rejet 401.
+        const authKey = SUPABASE_ANON_KEY || SUPABASE_SERVICE_ROLE_KEY;
         let sendOk = false;
         let resendId: string | null = null;
         let errorMessage: string | null = null;
@@ -197,8 +199,8 @@ async function processPlaybook(supabase: any, pb: ActivePlaybook): Promise<RunSt
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-                    apikey: SUPABASE_SERVICE_ROLE_KEY,
+                    Authorization: `Bearer ${authKey}`,
+                    apikey: authKey,
                 },
                 body: JSON.stringify({
                     to: emailLc,
@@ -207,15 +209,27 @@ async function processPlaybook(supabase: any, pb: ActivePlaybook): Promise<RunSt
                     data: fullData,
                 }),
             });
-            const body = (await res.json().catch(() => ({}))) as { id?: string; error?: unknown };
+            // Lire en text d'abord pour récupérer la cause exacte du 4xx/5xx
+            // (sinon res.json() peut crasher si Supabase Gateway retourne un
+            // text/html au lieu d'un JSON pour un 401 d'auth).
+            const rawBody = await res.text().catch(() => '');
+            let body: { id?: string; error?: unknown } = {};
+            try {
+                body = rawBody ? JSON.parse(rawBody) : {};
+            } catch {
+                /* corps non-JSON */
+            }
             if (res.ok) {
                 sendOk = true;
                 resendId = body.id ?? null;
             } else {
-                errorMessage =
+                const errPart =
                     typeof body.error === 'string'
                         ? body.error
-                        : JSON.stringify(body.error ?? `HTTP ${res.status}`);
+                        : body.error
+                          ? JSON.stringify(body.error)
+                          : rawBody.slice(0, 200);
+                errorMessage = `HTTP ${res.status} ${errPart}`;
             }
         } catch (err) {
             errorMessage = err instanceof Error ? err.message : String(err);
