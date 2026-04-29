@@ -70,9 +70,22 @@ export async function POST(
     })
 
     if (!response.ok) {
+        const edgeError = (body as { error?: string })?.error
+        // Distinguer un 401 venant de l'edge (CRON_SECRET mismatch) d'un 401
+        // venant de requireAdmin (côté Next.js).
+        if (response.status === 401) {
+            return Response.json(
+                {
+                    error: 'edge_unauthorized',
+                    hint: "L'edge function a refusé l'auth. Vérifie que CRON_SECRET est identique entre Vercel et Supabase secrets.",
+                    edge_response: edgeError ?? null,
+                },
+                { status: 502 }
+            )
+        }
         return Response.json(
-            { error: (body as { error?: string })?.error ?? `HTTP ${response.status}` },
-            { status: response.status }
+            { error: edgeError ?? `HTTP ${response.status}`, edge_status: response.status },
+            { status: 502 }
         )
     }
     return Response.json({ ok: true, ...body })
