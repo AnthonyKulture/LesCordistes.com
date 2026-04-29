@@ -27,7 +27,13 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY') || '';
+// Clé ANON publique (identique au bundle frontend, déjà hardcodée dans
+// supabase-email-triggers.sql). Utilisée pour invoquer send-email via la
+// gateway Supabase (qui exige un JWT valide). Supabase n'expose pas
+// systématiquement SUPABASE_ANON_KEY aux edge functions, d'où le fallback.
+const ANON_KEY_FALLBACK =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVzdm52eGtibmh2eHBubGh5anN3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzMDQ3MjEsImV4cCI6MjA4ODg4MDcyMX0.8P53xQ3pnGud3-TuZQ-5Pnpv-29PW_pfkAvJuCfDOKs';
+const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY') || ANON_KEY_FALLBACK;
 const CRON_SECRET = Deno.env.get('CRON_SECRET') || '';
 const MARKETING_UNSUBSCRIBE_SECRET =
     Deno.env.get('MARKETING_UNSUBSCRIBE_SECRET') ||
@@ -189,7 +195,7 @@ async function processPlaybook(supabase: any, pb: ActivePlaybook): Promise<RunSt
         // ANON (même pattern que les triggers SQL transactionnels du projet,
         // cf. supabase-email-triggers.sql). L'edge send-email accepte ainsi
         // toute requête authentifiée par la clé anon, sans rejet 401.
-        const authKey = SUPABASE_ANON_KEY || SUPABASE_SERVICE_ROLE_KEY;
+        const authKey = SUPABASE_ANON_KEY;
         let sendOk = false;
         let resendId: string | null = null;
         let errorMessage: string | null = null;
