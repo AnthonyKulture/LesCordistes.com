@@ -41,7 +41,10 @@ export function NewCampaignForm({
     const [templateKey, setTemplateKey] = useState('')
     const [subject, setSubject] = useState('')
     const [previewText, setPreviewText] = useState('')
-    const [extraData, setExtraData] = useState('{}')
+    const [bodyText, setBodyText] = useState('')
+    const [htmlContent, setHtmlContent] = useState('')
+    const [ctaLink, setCtaLink] = useState('')
+    const [ctaText, setCtaText] = useState('')
     const [submitting, setSubmitting] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
@@ -55,18 +58,33 @@ export function NewCampaignForm({
     )
 
     const selectedTemplate = templates.find(t => t.template_key === templateKey)
-    const variables = (selectedTemplate?.metadata as { variables?: string[] } | null)?.variables ?? []
+    const edgeId = selectedTemplate?.edge_template_id ?? ''
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
         setError(null)
 
-        let templateData: Record<string, unknown> = {}
-        try {
-            templateData = JSON.parse(extraData || '{}')
-        } catch {
-            setError('Le champ template_data n\'est pas un JSON valide.')
-            return
+        const templateData: Record<string, unknown> = {}
+        if (edgeId === 'admin-custom') {
+            if (!bodyText.trim()) {
+                setError('Le message est obligatoire.')
+                return
+            }
+            templateData.body = bodyText
+            if (ctaLink.trim()) {
+                templateData.link = ctaLink.trim()
+                templateData.linkText = ctaText.trim() || 'En savoir plus'
+            }
+        } else if (edgeId === 'marketing-generic') {
+            if (!htmlContent.trim()) {
+                setError('Le contenu HTML est obligatoire.')
+                return
+            }
+            templateData.html = htmlContent
+            if (ctaLink.trim()) {
+                templateData.link = ctaLink.trim()
+                templateData.linkText = ctaText.trim() || 'En savoir plus'
+            }
         }
 
         setSubmitting(true)
@@ -187,40 +205,60 @@ export function NewCampaignForm({
                 </Field>
             </div>
 
-            {variables.length > 0 && (
-                <div className="rounded-lg bg-slate-50 border border-slate-200 p-3 text-xs space-y-1">
-                    <div className="font-semibold text-slate-700">Variables disponibles dans ce template :</div>
-                    <div className="flex flex-wrap gap-1">
-                        {variables.map(v => (
-                            <span
-                                key={v}
-                                className="font-mono bg-white border border-slate-200 px-1.5 py-0.5 rounded text-slate-700"
-                            >
-                                {v}
-                            </span>
-                        ))}
-                    </div>
-                    <p className="text-slate-500 mt-1">
-                        <code>name</code>, <code>prenom</code>, <code>firstName</code>, <code>email</code> et{' '}
-                        <code>unsubscribeUrl</code> sont injectés automatiquement par destinataire.
-                    </p>
+            {edgeId === 'pro-credit-offer' && (
+                <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-sm text-emerald-800">
+                    Ce template est figé (visuel BIENVENUE1). Le prénom du destinataire est inséré
+                    automatiquement, rien à personnaliser ici.
                 </div>
             )}
 
-            <Field label="Variables JSON (optionnel)">
-                <textarea
-                    value={extraData}
-                    onChange={e => setExtraData(e.target.value)}
-                    rows={5}
-                    spellCheck={false}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
-                    placeholder='{"body":"Bonjour…","link":"https://…","linkText":"Voir"}'
-                />
-                <p className="text-xs text-slate-500 mt-1">
-                    Pour <code>admin-custom</code> : <code>body</code>, <code>link</code>, <code>linkText</code>.
-                    Pour <code>marketing-generic</code> : <code>html</code>, <code>link</code>, <code>linkText</code>.
-                </p>
-            </Field>
+            {edgeId === 'admin-custom' && (
+                <>
+                    <Field label="Message *">
+                        <textarea
+                            value={bodyText}
+                            onChange={e => setBodyText(e.target.value)}
+                            rows={8}
+                            placeholder={`Bonjour,\n\nNous lançons une nouvelle fonctionnalité…\n\nMerci,\nAnthony`}
+                            className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
+                        />
+                        <p className="text-xs text-slate-500 mt-1">
+                            Texte simple. Sautez 1 ligne pour un retour à la ligne, 2 lignes pour un
+                            nouveau paragraphe.
+                        </p>
+                    </Field>
+                    <CtaFields
+                        ctaLink={ctaLink}
+                        setCtaLink={setCtaLink}
+                        ctaText={ctaText}
+                        setCtaText={setCtaText}
+                    />
+                </>
+            )}
+
+            {edgeId === 'marketing-generic' && (
+                <>
+                    <Field label="Contenu HTML *">
+                        <textarea
+                            value={htmlContent}
+                            onChange={e => setHtmlContent(e.target.value)}
+                            rows={10}
+                            spellCheck={false}
+                            placeholder={`<h2>Titre</h2>\n<p>Paragraphe…</p>`}
+                            className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
+                        />
+                        <p className="text-xs text-slate-500 mt-1">
+                            HTML libre. Le footer de désinscription est ajouté automatiquement.
+                        </p>
+                    </Field>
+                    <CtaFields
+                        ctaLink={ctaLink}
+                        setCtaLink={setCtaLink}
+                        ctaText={ctaText}
+                        setCtaText={setCtaText}
+                    />
+                </>
+            )}
 
             {error && (
                 <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-2 text-sm text-red-700">
@@ -248,5 +286,47 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
             <span className="block text-xs font-medium text-slate-700 mb-1">{label}</span>
             {children}
         </label>
+    )
+}
+
+function CtaFields({
+    ctaLink,
+    setCtaLink,
+    ctaText,
+    setCtaText,
+}: {
+    ctaLink: string
+    setCtaLink: (v: string) => void
+    ctaText: string
+    setCtaText: (v: string) => void
+}) {
+    return (
+        <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-4 space-y-3">
+            <div className="text-xs font-semibold text-slate-700">Bouton d&apos;action (optionnel)</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <Field label="Lien (URL)">
+                    <input
+                        type="url"
+                        value={ctaLink}
+                        onChange={e => setCtaLink(e.target.value)}
+                        placeholder="https://www.lescordistes.com/…"
+                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
+                    />
+                </Field>
+                <Field label="Libellé du bouton">
+                    <input
+                        type="text"
+                        value={ctaText}
+                        onChange={e => setCtaText(e.target.value)}
+                        placeholder="Ex : Découvrir l'offre"
+                        maxLength={40}
+                        className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
+                    />
+                </Field>
+            </div>
+            <p className="text-xs text-slate-500">
+                Laissez vide pour un email sans bouton. Le lien doit commencer par <code>https://</code>.
+            </p>
+        </div>
     )
 }
