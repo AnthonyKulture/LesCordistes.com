@@ -8,8 +8,10 @@ import { Loader2, RefreshCw } from 'lucide-react'
 const ITEMS = [
     { href: '/admin/marketing', label: 'Dashboard', exact: true },
     { href: '/admin/marketing/campaigns', label: 'Campagnes', exact: false },
+    { href: '/admin/marketing/playbooks', label: 'Playbooks', exact: false },
     { href: '/admin/marketing/templates', label: 'Templates', exact: true },
     { href: '/admin/marketing/segments', label: 'Segments', exact: true },
+    { href: '/admin/marketing/contacts/test-recipients', label: 'Comptes test', exact: false },
 ] as const
 
 export function MarketingSubNav() {

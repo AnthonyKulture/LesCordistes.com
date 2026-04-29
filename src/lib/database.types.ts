@@ -578,6 +578,76 @@ export interface Database {
                 }
                 Update: Partial<Database['public']['Tables']['marketing_unsubscribes']['Insert']>
             }
+            marketing_playbooks: {
+                Row: {
+                    id: string
+                    name: string
+                    description: string | null
+                    audience_type: 'client' | 'pro' | 'mixed'
+                    segment_id: string
+                    template_key: string
+                    template_data: Json
+                    subject: string
+                    preview_text: string | null
+                    trigger_kind: 'cron_daily' | 'manual_only'
+                    cooldown_days: number
+                    max_per_run: number
+                    is_active: boolean
+                    last_run_at: string | null
+                    stats: Json
+                    created_by: string | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    description?: string | null
+                    audience_type?: 'client' | 'pro' | 'mixed'
+                    segment_id: string
+                    template_key: string
+                    template_data?: Json
+                    subject: string
+                    preview_text?: string | null
+                    trigger_kind?: 'cron_daily' | 'manual_only'
+                    cooldown_days?: number
+                    max_per_run?: number
+                    is_active?: boolean
+                    last_run_at?: string | null
+                    stats?: Json
+                    created_by?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_playbooks']['Insert']>
+            }
+            marketing_playbook_runs: {
+                Row: {
+                    id: string
+                    playbook_id: string
+                    contact_id: string | null
+                    email: string
+                    status: 'pending' | 'sent' | 'failed' | 'skipped' | 'unsubscribed'
+                    skip_reason: string | null
+                    resend_email_id: string | null
+                    error_message: string | null
+                    sent_at: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    playbook_id: string
+                    contact_id?: string | null
+                    email: string
+                    status?: 'pending' | 'sent' | 'failed' | 'skipped' | 'unsubscribed'
+                    skip_reason?: string | null
+                    resend_email_id?: string | null
+                    error_message?: string | null
+                    sent_at?: string | null
+                    created_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_playbook_runs']['Insert']>
+            }
         }
     }
 }

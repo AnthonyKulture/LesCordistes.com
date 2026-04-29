@@ -39,11 +39,29 @@ export function CampaignDetailActions({
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ to: testEmail }),
             })
-            const data = await res.json()
+            const data = (await res.json()) as {
+                ok?: boolean
+                sent?: number
+                failed?: number
+                results?: Array<{ to: string; ok: boolean; error: string | null }>
+                error?: string
+            }
             if (!res.ok) {
                 setError(data?.error ?? 'Erreur envoi test')
+            } else if (typeof data.sent === 'number') {
+                const failedDetail =
+                    data.failed && data.failed > 0
+                        ? ' · ' +
+                          (data.results ?? [])
+                              .filter(r => !r.ok)
+                              .map(r => `${r.to}: ${r.error}`)
+                              .join(', ')
+                        : ''
+                setTestResult(
+                    `Test : ${data.sent} envoyé(s)${data.failed ? `, ${data.failed} échec(s)${failedDetail}` : ''}.`
+                )
             } else {
-                setTestResult(`Test envoyé à ${testEmail}.`)
+                setTestResult(`Test envoyé.`)
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Erreur')
@@ -117,14 +135,15 @@ export function CampaignDetailActions({
                     <span className="text-sm font-semibold text-slate-900">Envoyer un test</span>
                 </div>
                 <p className="text-xs text-slate-500 mb-3">
-                    Envoie une copie marquée [TEST] sans créer de destinataire de campagne.
+                    Envoie une copie marquée [TEST] sans créer de destinataire de campagne. Plusieurs adresses séparées
+                    par virgule (max 10).
                 </p>
                 <div className="flex gap-2">
                     <input
-                        type="email"
+                        type="text"
                         value={testEmail}
                         onChange={e => setTestEmail(e.target.value)}
-                        placeholder="vous@lescordistes.com"
+                        placeholder="anthony@surly.fr, anthonyprofit.sydney@gmail.com"
                         className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
                     />
                     <button
