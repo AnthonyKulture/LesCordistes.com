@@ -219,7 +219,7 @@ export function NewCampaignForm({
                             value={bodyText}
                             onChange={e => setBodyText(e.target.value)}
                             rows={8}
-                            placeholder={`Bonjour,\n\nNous lançons une nouvelle fonctionnalité…\n\nMerci,\nAnthony`}
+                            placeholder={`Bonjour {{prenom}},\n\nNous lançons une nouvelle fonctionnalité…\n\nMerci,\nAnthony`}
                             className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
                         />
                         <p className="text-xs text-slate-500 mt-1">
@@ -227,6 +227,7 @@ export function NewCampaignForm({
                             nouveau paragraphe.
                         </p>
                     </Field>
+                    <PersonalizationHint />
                     <CtaFields
                         ctaLink={ctaLink}
                         setCtaLink={setCtaLink}
@@ -244,13 +245,14 @@ export function NewCampaignForm({
                             onChange={e => setHtmlContent(e.target.value)}
                             rows={10}
                             spellCheck={false}
-                            placeholder={`<h2>Titre</h2>\n<p>Paragraphe…</p>`}
+                            placeholder={`<h2>Bonjour {{prenom}},</h2>\n<p>Paragraphe…</p>`}
                             className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#243355]/30"
                         />
                         <p className="text-xs text-slate-500 mt-1">
                             HTML libre. Le footer de désinscription est ajouté automatiquement.
                         </p>
                     </Field>
+                    <PersonalizationHint />
                     <CtaFields
                         ctaLink={ctaLink}
                         setCtaLink={setCtaLink}
@@ -286,6 +288,27 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
             <span className="block text-xs font-medium text-slate-700 mb-1">{label}</span>
             {children}
         </label>
+    )
+}
+
+function PersonalizationHint() {
+    return (
+        <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-blue-900 space-y-1">
+            <div className="font-semibold">Personnaliser avec le prénom du destinataire</div>
+            <p className="text-blue-800">
+                Écrivez{' '}
+                <code className="font-mono bg-white border border-blue-200 px-1 py-0.5 rounded">
+                    {'{{prenom}}'}
+                </code>{' '}
+                là où vous voulez insérer le prénom. Variables disponibles :{' '}
+                <code className="font-mono">{'{{prenom}}'}</code>,{' '}
+                <code className="font-mono">{'{{name}}'}</code>,{' '}
+                <code className="font-mono">{'{{firstName}}'}</code>,{' '}
+                <code className="font-mono">{'{{email}}'}</code>. Si la valeur est vide, elle est
+                remplacée par rien (donc «&nbsp;Bonjour {'{{prenom}}'},&nbsp;» devient
+                «&nbsp;Bonjour ,&nbsp;»).
+            </p>
+        </div>
     )
 }
 
