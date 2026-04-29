@@ -29,42 +29,40 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ isOpen, onClos
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30"
                     onClick={onClose}
                 >
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                        initial={{ opacity: 0, scale: 0.96, y: 8 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: 16 }}
-                        transition={{ duration: 0.25, ease: 'easeOut' }}
-                        className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full relative"
+                        exit={{ opacity: 0, scale: 0.96, y: 8 }}
+                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        className="bg-white rounded-2xl shadow-xl p-5 max-w-sm w-full relative border border-slate-100"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
                             onClick={onClose}
-                            className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                            aria-label="Fermer"
+                            className="absolute top-2.5 right-2.5 p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
                         >
-                            <X size={18} />
+                            <X size={16} />
                         </button>
 
                         {sent ? (
-                            <div className="text-center py-4">
-                                <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <Mail size={26} className="text-green-600" />
-                                </div>
-                                <p className="text-lg font-bold text-slate-900">C'est noté !</p>
-                                <p className="text-sm text-slate-500 mt-1">Nous vous recontacterons bientôt.</p>
+                            <div className="text-center py-2">
+                                <p className="text-sm font-semibold text-slate-900">C'est noté.</p>
+                                <p className="text-xs text-slate-500 mt-0.5">Nous vous recontacterons bientôt.</p>
                             </div>
                         ) : (
                             <>
-                                <div className="w-12 h-12 bg-brand-blue/10 rounded-2xl flex items-center justify-center mb-4">
-                                    <Mail size={22} className="text-brand-blue" />
+                                <div className="flex items-center gap-2 mb-1.5">
+                                    <Mail size={15} className="text-brand-blue shrink-0" />
+                                    <h2 className="text-sm font-semibold text-slate-900">Garder votre projet en mémoire</h2>
                                 </div>
-                                <h2 className="text-xl font-bold text-slate-900 mb-1">Votre projet est en cours</h2>
-                                <p className="text-sm text-slate-500 mb-6">
-                                    Laissez votre email — nous vous aidons à trouver le bon cordiste.
+                                <p className="text-xs text-slate-500 mb-4 leading-relaxed">
+                                    Laissez votre email — on reprend où vous vous êtes arrêté, sans relance commerciale.
                                 </p>
-                                <div className="flex flex-col gap-3">
+                                <div className="flex flex-col gap-2">
                                     <input
                                         type="email"
                                         value={email}
@@ -72,21 +70,18 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ isOpen, onClos
                                         onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
                                         placeholder="votre@email.fr"
                                         autoFocus
-                                        className="w-full px-4 py-3 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all"
+                                        className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
                                     />
                                     <Button
                                         variant="primary"
                                         onClick={handleSubmit}
                                         disabled={!email}
-                                        className="w-full h-11 font-bold"
+                                        className="w-full h-10 text-sm font-semibold"
                                     >
-                                        Être recontacté
-                                        <ArrowRight size={16} className="ml-2" />
+                                        Sauvegarder
+                                        <ArrowRight size={14} className="ml-1.5" />
                                     </Button>
                                 </div>
-                                <p className="text-xs text-slate-400 text-center mt-3">
-                                    Aucun spam — uniquement pour votre projet.
-                                </p>
                             </>
                         )}
                     </motion.div>
