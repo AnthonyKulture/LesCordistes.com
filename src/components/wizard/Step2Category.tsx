@@ -25,9 +25,10 @@ interface Step2Props {
     data: Partial<JobFormData>;
     updateData: (data: Partial<JobFormData>) => void;
     onNext: () => void;
+    isAuthenticated?: boolean;
 }
 
-export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }) => {
+export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext, isAuthenticated = false }) => {
     // Reconstruire la sélection initiale depuis category + secondary_trades
     const initialSelected: JobCategory[] = data.category
         ? [data.category, ...((data.secondary_trades || []) as JobCategory[])]
@@ -68,13 +69,15 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
 
     const handleNext = () => {
         if (selected.length === 0) return;
-        updateData({ contact_email: emailValue });
-        if (emailValue && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-            fetch('/api/leads', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: emailValue, category: selected[0], step_reached: 1, source: 'wizard_step1' }),
-            }).catch(() => {});
+        if (!isAuthenticated) {
+            updateData({ contact_email: emailValue });
+            if (emailValue && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                fetch('/api/leads', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailValue, category: selected[0], step_reached: 1, source: 'wizard_step1' }),
+                }).catch(() => {});
+            }
         }
         onNext();
     };
@@ -151,7 +154,7 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext }
                 })}
             </div>
 
-            {selected.length > 0 && (
+            {selected.length > 0 && !isAuthenticated && (
                 <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}

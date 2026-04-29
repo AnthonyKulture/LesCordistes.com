@@ -61,6 +61,7 @@ export const PostJob: React.FC = () => {
     useEffect(() => {
         const shouldSkip = () =>
             exitFired.current ||
+            !!authUser ||
             !!formDataRef.current.contact_email ||
             currentStep > 1;
 
@@ -82,7 +83,7 @@ export const PostJob: React.FC = () => {
             document.removeEventListener('mouseleave', handleMouseLeave);
             clearTimeout(idleTimer);
         };
-    }, [currentStep]);
+    }, [currentStep, authUser]);
 
     // Load draft on mount
     useEffect(() => {
@@ -411,15 +412,16 @@ export const PostJob: React.FC = () => {
             switch (currentStep) {
                 case 1:
                     return (
-                        <Step2Category 
-                            data={formData} 
-                            updateData={updateFormData} 
-                            onNext={nextStep} 
+                        <Step2Category
+                            data={formData}
+                            updateData={updateFormData}
+                            onNext={nextStep}
+                            isAuthenticated={!!authUser}
                         />
                     );
                 case 2:
                     return (
-                        <Step1Location 
+                        <Step1Location
                             data={formData} 
                             updateData={updateFormData} 
                             onNext={nextStep} 
@@ -475,10 +477,11 @@ export const PostJob: React.FC = () => {
         switch (currentStep) {
             case 1:
                 return (
-                    <Step2Category 
-                        data={formData} 
-                        updateData={updateFormData} 
-                        onNext={nextStep} 
+                    <Step2Category
+                        data={formData}
+                        updateData={updateFormData}
+                        onNext={nextStep}
+                        isAuthenticated={!!authUser}
                     />
                 );
             case 2:
