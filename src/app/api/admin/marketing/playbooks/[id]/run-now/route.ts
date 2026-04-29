@@ -17,14 +17,26 @@ export async function POST(
     _req: NextRequest,
     { params }: { params: Promise<{ id: string }> }
 ) {
+    console.log('[run-now] entered POST handler')
     const guard = await requireAdmin()
-    if (!guard.ok) return guard.response
+    if (!guard.ok) {
+        console.log('[run-now] requireAdmin failed → returning its response')
+        return guard.response
+    }
+    console.log('[run-now] requireAdmin OK, user:', guard.user.id)
 
     const { id } = await params
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
     const cronSecret = process.env.CRON_SECRET
+    console.log('[run-now] CRON_SECRET defined:', !!cronSecret, 'len:', cronSecret?.length ?? 0)
     if (!cronSecret) {
-        return Response.json({ error: 'cron_secret_missing' }, { status: 500 })
+        return Response.json(
+            {
+                error: 'cron_secret_missing',
+                hint: 'CRON_SECRET env var manquante côté Vercel. Ajoute-la et redéploie.',
+            },
+            { status: 500 }
+        )
     }
 
     // Vérifie l'existence du playbook avant l'invocation distante.
@@ -70,15 +82,25 @@ export async function POST(
     })
 
     if (!response.ok) {
-        const edgeError = (body as { error?: string })?.error
-        // Distinguer un 401 venant de l'edge (CRON_SECRET mismatch) d'un 401
-        // venant de requireAdmin (côté Next.js).
+        const edgeError = (body as { error?: string; expected_len?: number; received_len?: number })?.error
         if (response.status === 401) {
+            const edgeBody = body as {
+                error?: string
+                expected_len?: number
+                received_len?: number
+                has_authorization?: boolean
+            }
             return Response.json(
                 {
                     error: 'edge_unauthorized',
-                    hint: "L'edge function a refusé l'auth. Vérifie que CRON_SECRET est identique entre Vercel et Supabase secrets.",
-                    edge_response: edgeError ?? null,
+                    hint: 'CRON_SECRET côté Vercel ≠ côté Supabase. Voir details ci-dessous.',
+                    details: {
+                        vercel_cron_secret_len: cronSecret.length,
+                        edge_expected_len: edgeBody.expected_len ?? null,
+                        edge_received_len: edgeBody.received_len ?? null,
+                        edge_has_authorization_header: edgeBody.has_authorization ?? null,
+                        edge_error: edgeBody.error ?? null,
+                    },
                 },
                 { status: 502 }
             )
