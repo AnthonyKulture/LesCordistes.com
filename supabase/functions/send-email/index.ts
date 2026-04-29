@@ -464,6 +464,19 @@ function escHtml(s: string): string {
     .replace(/'/g, '&#39;');
 }
 
+// Remplace {{prenom}}, {{name}}, {{firstName}}, {{email}} dans un texte/HTML.
+// Les valeurs sont escHtml-isées avant insertion. Si la variable n'existe pas
+// ou est vide, le placeholder devient "" (évite "Bonjour {{prenom}}").
+// Tolère les espaces dans le placeholder : {{ prenom }} fonctionne aussi.
+function interpolate(template: string, data: Record<string, string>): string {
+  const allowed = ['prenom', 'name', 'firstName', 'email'];
+  return template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key) => {
+    if (!allowed.includes(key)) return '';
+    const v = (data[key] || '').trim();
+    return v ? escHtml(v) : '';
+  });
+}
+
 // ─── Plain-text & deliverability helpers ──────────────────────────────────────
 
 function htmlToText(html: string): string {
@@ -524,7 +537,8 @@ function marketingGeneric(data: Record<string, string>): string {
   const name = escHtml(data.name || '');
   const subject = escHtml(data.subject || 'Message de LesCordistes.com');
   const previewText = escHtml(data.previewText || data.subject || '');
-  const rawHtml = data.html || '';
+  // HTML libre — interpolation des variables ({{prenom}}…) avec valeurs escHtml-isées.
+  const rawHtml = interpolate(data.html || '', data);
   const rawLink = (data.link || '').trim();
   const safeLink = /^https?:\/\/[^\s"'<>]+$/i.test(rawLink) ? rawLink : '';
   const cta = safeLink && data.linkText ? btn(escHtml(safeLink), escHtml(data.linkText)) : '';
@@ -561,8 +575,9 @@ function adminCustom(data: Record<string, string>): string {
   const name = escHtml(data.name || '');
   const subject = escHtml(data.subject || 'Message de LesCordistes.com');
   const rawBody = data.body || '';
-  // Corps en texte brut — échappé puis reconverti en paragraphes.
-  const escaped = escHtml(rawBody);
+  // Corps en texte brut — escHtml d'abord (sécurité), interpolation ensuite
+  // (les valeurs interpolées sont elles-mêmes escHtml-isées par interpolate()).
+  const escaped = interpolate(escHtml(rawBody), data);
   const paragraphs = escaped
     .split(/\n{2,}/)
     .map(p => p.replace(/\n/g, '<br/>').trim())
