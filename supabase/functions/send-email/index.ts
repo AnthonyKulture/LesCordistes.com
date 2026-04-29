@@ -501,7 +501,61 @@ const SUBSCRIBABLE_TEMPLATES = new Set<string>([
   'job-revalidation-request',
   'pro-credit-offer',
   'admin-custom',
+  'marketing-generic',
 ]);
+
+// Templates strictement marketing (jamais déclenchés par un trigger transactionnel).
+// Ces templates DOIVENT recevoir un lien de désinscription `unsubscribeUrl`.
+const MARKETING_TEMPLATES = new Set<string>([
+  'marketing-generic',
+  'pro-credit-offer',
+]);
+
+// ─── Marketing generic ────────────────────────────────────────────────────────
+// Template marketing standard avec footer obligatoire de désinscription.
+// Variables :
+//   - name (optionnel) : prénom destinataire
+//   - subject : sujet (utilisé aussi comme <title>)
+//   - previewText (optionnel) : texte de preview
+//   - html : corps HTML libre (déjà mis en forme — l'admin sait ce qu'il fait)
+//   - link (optionnel) + linkText (optionnel) : CTA principal
+//   - unsubscribeUrl : OBLIGATOIRE — lien public signé HMAC vers /marketing/unsubscribe
+function marketingGeneric(data: Record<string, string>): string {
+  const name = escHtml(data.name || '');
+  const subject = escHtml(data.subject || 'Message de LesCordistes.com');
+  const previewText = escHtml(data.previewText || data.subject || '');
+  const rawHtml = data.html || '';
+  const rawLink = (data.link || '').trim();
+  const safeLink = /^https?:\/\/[^\s"'<>]+$/i.test(rawLink) ? rawLink : '';
+  const cta = safeLink && data.linkText ? btn(escHtml(safeLink), escHtml(data.linkText)) : '';
+  const unsubscribeUrl = (data.unsubscribeUrl || '').trim();
+  const safeUnsub = /^https?:\/\/[^\s"'<>]+$/i.test(unsubscribeUrl)
+    ? unsubscribeUrl
+    : 'https://www.lescordistes.com/marketing/unsubscribe';
+
+  const greeting = name
+    ? `<p style="font-size:15px;color:${S5};margin:0 0 18px;">Bonjour ${name},</p>`
+    : '';
+
+  // Footer marketing renforcé — lien désinscription en clair.
+  const marketingFooter = `
+    <hr style="border:none;border-top:1px solid ${S2};margin:32px 0 20px;"/>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0 0 8px;text-align:center;">
+      Vous recevez cet email parce que vous êtes inscrit sur LesCordistes.com.
+    </p>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0;text-align:center;">
+      <a href="${escHtml(safeUnsub)}" style="color:${S5};text-decoration:underline;">Se désinscrire des emails marketing</a>
+    </p>
+  `;
+
+  return base(subject, `
+    <div style="display:none;max-height:0;overflow:hidden;">${previewText}</div>
+    ${greeting}
+    ${rawHtml}
+    ${cta}
+    ${marketingFooter}
+  `);
+}
 
 function adminCustom(data: Record<string, string>): string {
   const name = escHtml(data.name || '');
@@ -553,6 +607,7 @@ serve(async (req) => {
       case 'job-revalidation-request': html = jobRevalidationRequest(data); break;
       case 'pro-credit-offer': html = proCreditOffer(data); break;
       case 'admin-custom':     html = adminCustom(data); break;
+      case 'marketing-generic': html = marketingGeneric(data); break;
       default:
         throw new Error(`Template not found: ${templateId}`);
     }
@@ -562,7 +617,16 @@ serve(async (req) => {
     const headers: Record<string, string> = {};
     if (SUBSCRIBABLE_TEMPLATES.has(templateId)) {
       const mailtoSubject = encodeURIComponent(`Désinscription ${templateId}`);
-      headers['List-Unsubscribe'] = `<mailto:contact@lescordistes.com?subject=${mailtoSubject}>`;
+      const unsub: string[] = [`<mailto:contact@lescordistes.com?subject=${mailtoSubject}>`];
+      // Pour les emails marketing : ajouter le lien clic en plus du mailto (RFC 8058).
+      if (MARKETING_TEMPLATES.has(templateId) && data?.unsubscribeUrl) {
+        const url = String(data.unsubscribeUrl).trim();
+        if (/^https?:\/\/[^\s"'<>]+$/i.test(url)) {
+          unsub.unshift(`<${url}>`);
+          headers['List-Unsubscribe-Post'] = 'List-Unsubscribe=One-Click';
+        }
+      }
+      headers['List-Unsubscribe'] = unsub.join(', ');
     }
 
     const { data: resendData, error } = await resend.emails.send({

@@ -402,6 +402,182 @@ export interface Database {
                     updated_at?: string
                 }
             }
+            marketing_contacts: {
+                Row: {
+                    id: string
+                    user_id: string | null
+                    email: string
+                    first_name: string | null
+                    last_name: string | null
+                    audience_type: 'client' | 'pro' | 'mixed' | 'unknown'
+                    marketing_opt_in: boolean
+                    unsubscribed_at: string | null
+                    source: string | null
+                    metadata: Json
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    user_id?: string | null
+                    email: string
+                    first_name?: string | null
+                    last_name?: string | null
+                    audience_type?: 'client' | 'pro' | 'mixed' | 'unknown'
+                    marketing_opt_in?: boolean
+                    unsubscribed_at?: string | null
+                    source?: string | null
+                    metadata?: Json
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_contacts']['Insert']>
+            }
+            marketing_email_templates: {
+                Row: {
+                    id: string
+                    template_key: string
+                    name: string
+                    description: string | null
+                    audience_type: 'client' | 'pro' | 'mixed'
+                    edge_template_id: string
+                    subject_default: string | null
+                    preview_text_default: string | null
+                    react_template_path: string | null
+                    metadata: Json
+                    is_active: boolean
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    template_key: string
+                    name: string
+                    description?: string | null
+                    audience_type?: 'client' | 'pro' | 'mixed'
+                    edge_template_id: string
+                    subject_default?: string | null
+                    preview_text_default?: string | null
+                    react_template_path?: string | null
+                    metadata?: Json
+                    is_active?: boolean
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_email_templates']['Insert']>
+            }
+            marketing_segments: {
+                Row: {
+                    id: string
+                    name: string
+                    description: string | null
+                    audience_type: 'client' | 'pro' | 'mixed'
+                    filters: Json
+                    is_system: boolean
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    description?: string | null
+                    audience_type?: 'client' | 'pro' | 'mixed'
+                    filters?: Json
+                    is_system?: boolean
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_segments']['Insert']>
+            }
+            marketing_campaigns: {
+                Row: {
+                    id: string
+                    name: string
+                    subject: string
+                    preview_text: string | null
+                    template_key: string
+                    template_data: Json
+                    audience_type: 'client' | 'pro' | 'mixed'
+                    segment_id: string | null
+                    status: 'draft' | 'scheduled' | 'sending' | 'sent' | 'failed' | 'cancelled'
+                    scheduled_at: string | null
+                    sending_started_at: string | null
+                    sent_at: string | null
+                    created_by: string | null
+                    stats: Json
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    subject: string
+                    preview_text?: string | null
+                    template_key: string
+                    template_data?: Json
+                    audience_type?: 'client' | 'pro' | 'mixed'
+                    segment_id?: string | null
+                    status?: 'draft' | 'scheduled' | 'sending' | 'sent' | 'failed' | 'cancelled'
+                    scheduled_at?: string | null
+                    sending_started_at?: string | null
+                    sent_at?: string | null
+                    created_by?: string | null
+                    stats?: Json
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_campaigns']['Insert']>
+            }
+            marketing_campaign_recipients: {
+                Row: {
+                    id: string
+                    campaign_id: string
+                    contact_id: string | null
+                    email: string
+                    status: 'pending' | 'sent' | 'failed' | 'skipped' | 'unsubscribed'
+                    skip_reason: string | null
+                    resend_email_id: string | null
+                    error_message: string | null
+                    sent_at: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    campaign_id: string
+                    contact_id?: string | null
+                    email: string
+                    status?: 'pending' | 'sent' | 'failed' | 'skipped' | 'unsubscribed'
+                    skip_reason?: string | null
+                    resend_email_id?: string | null
+                    error_message?: string | null
+                    sent_at?: string | null
+                    created_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_campaign_recipients']['Insert']>
+            }
+            marketing_unsubscribes: {
+                Row: {
+                    id: string
+                    email: string
+                    contact_id: string | null
+                    campaign_id: string | null
+                    reason: string | null
+                    user_agent: string | null
+                    ip_hash: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    email: string
+                    contact_id?: string | null
+                    campaign_id?: string | null
+                    reason?: string | null
+                    user_agent?: string | null
+                    ip_hash?: string | null
+                    created_at?: string
+                }
+                Update: Partial<Database['public']['Tables']['marketing_unsubscribes']['Insert']>
+            }
         }
     }
 }
