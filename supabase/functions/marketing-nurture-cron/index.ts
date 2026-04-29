@@ -257,8 +257,23 @@ function sleep(ms: number): Promise<void> {
 serve(async (req: Request) => {
     if (CRON_SECRET) {
         const auth = req.headers.get('Authorization') || '';
-        if (auth !== `Bearer ${CRON_SECRET}`) {
-            return new Response('Unauthorized', { status: 401 });
+        const expected = `Bearer ${CRON_SECRET}`;
+        if (auth !== expected) {
+            const receivedLen = auth.startsWith('Bearer ')
+                ? auth.slice('Bearer '.length).length
+                : 0;
+            return new Response(
+                JSON.stringify({
+                    error: 'cron_secret_mismatch',
+                    expected_len: CRON_SECRET.length,
+                    received_len: receivedLen,
+                    has_authorization: !!req.headers.get('Authorization'),
+                }),
+                {
+                    status: 401,
+                    headers: { 'Content-Type': 'application/json' },
+                }
+            );
         }
     }
 
