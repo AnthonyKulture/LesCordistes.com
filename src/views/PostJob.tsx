@@ -57,29 +57,33 @@ export const PostJob: React.FC = () => {
     // Keep formDataRef in sync for use inside stable closures
     formDataRef.current = formData;
 
-    // Exit-intent: fire once if email not yet captured
+    // Exit-intent: fire once if email not yet captured et si user encore au step 1
     useEffect(() => {
+        const shouldSkip = () =>
+            exitFired.current ||
+            !!authUser ||
+            !!formDataRef.current.contact_email ||
+            currentStep > 1;
+
         const handleMouseLeave = (e: MouseEvent) => {
             if (e.clientY > 10) return;
-            if (exitFired.current) return;
-            if (formDataRef.current.contact_email) return;
+            if (shouldSkip()) return;
             exitFired.current = true;
             setShowExitIntent(true);
         };
 
         const idleTimer = setTimeout(() => {
-            if (exitFired.current) return;
-            if (formDataRef.current.contact_email) return;
+            if (shouldSkip()) return;
             exitFired.current = true;
             setShowExitIntent(true);
-        }, 60_000);
+        }, 240_000);
 
         document.addEventListener('mouseleave', handleMouseLeave);
         return () => {
             document.removeEventListener('mouseleave', handleMouseLeave);
             clearTimeout(idleTimer);
         };
-    }, []);
+    }, [currentStep, authUser]);
 
     // Load draft on mount
     useEffect(() => {
@@ -122,6 +126,22 @@ export const PostJob: React.FC = () => {
             const isRenfortDraft = draft?.type === 'renfort_pro';
             setCurrentStep(isRenfortDraft ? 7 : 5);
             toast.success("Compte activé ! Vous pouvez maintenant publier votre mission.");
+        }
+
+        // Handoff depuis une landing SEO (city hero) : skipper step 1 si on a la trinité catégorie+email+ville
+        const prefillCity = params.get('prefill_city');
+        const prefillEmail = params.get('prefill_email');
+        const prefillCategory = params.get('prefill_category');
+        if (prefillCity && prefillEmail && prefillCategory) {
+            const validCategories = ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'securing', 'telecom', 'inspection', 'repair', 'pruning', 'other'] as const;
+            const cat = validCategories.includes(prefillCategory as any) ? (prefillCategory as JobFormData['category']) : 'other';
+            updateFormData({
+                category: cat,
+                contact_email: prefillEmail,
+                location_city: prefillCity,
+            });
+            // Standard wizard: step 2 = Détails. On y envoie le user.
+            setCurrentStep(2);
         }
     }, []);
 
@@ -392,15 +412,16 @@ export const PostJob: React.FC = () => {
             switch (currentStep) {
                 case 1:
                     return (
-                        <Step2Category 
-                            data={formData} 
-                            updateData={updateFormData} 
-                            onNext={nextStep} 
+                        <Step2Category
+                            data={formData}
+                            updateData={updateFormData}
+                            onNext={nextStep}
+                            isAuthenticated={!!authUser}
                         />
                     );
                 case 2:
                     return (
-                        <Step1Location 
+                        <Step1Location
                             data={formData} 
                             updateData={updateFormData} 
                             onNext={nextStep} 
@@ -456,10 +477,11 @@ export const PostJob: React.FC = () => {
         switch (currentStep) {
             case 1:
                 return (
-                    <Step2Category 
-                        data={formData} 
-                        updateData={updateFormData} 
-                        onNext={nextStep} 
+                    <Step2Category
+                        data={formData}
+                        updateData={updateFormData}
+                        onNext={nextStep}
+                        isAuthenticated={!!authUser}
                     />
                 );
             case 2:
