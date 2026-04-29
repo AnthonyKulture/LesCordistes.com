@@ -29,9 +29,21 @@ export function RunNowButton({ id }: { id: string }) {
             const res = await fetch(`/api/admin/marketing/playbooks/${id}/run-now`, {
                 method: 'POST',
             })
-            const data = (await res.json()) as RunResult & { error?: string }
+            const data = (await res.json()) as RunResult & {
+                error?: string
+                hint?: string
+                details?: Record<string, unknown>
+            }
             if (!res.ok) {
-                setError(data?.error ?? 'Erreur')
+                const detailStr = data?.details
+                    ? ' · ' +
+                      Object.entries(data.details)
+                          .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
+                          .join(', ')
+                    : ''
+                setError(
+                    `${data?.error ?? 'Erreur'}${data?.hint ? ' — ' + data.hint : ''}${detailStr}`
+                )
                 return
             }
             const r = data.results?.[0]
