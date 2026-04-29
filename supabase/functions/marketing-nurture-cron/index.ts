@@ -235,7 +235,11 @@ async function processPlaybook(supabase: any, pb: ActivePlaybook): Promise<RunSt
                         : body.error
                           ? JSON.stringify(body.error)
                           : rawBody.slice(0, 200);
-                errorMessage = `HTTP ${res.status} ${errPart}`;
+                // Diagnostic : prouver quelle clé est utilisée. authKey doit
+                // être un JWT (3 parties séparées par '.', commence par 'eyJ').
+                const dots = (authKey.match(/\./g) ?? []).length;
+                const looksLikeJwt = authKey.startsWith('eyJ');
+                errorMessage = `HTTP ${res.status} ${errPart} | auth_len=${authKey.length} dots=${dots} jwt=${looksLikeJwt}`;
             }
         } catch (err) {
             errorMessage = err instanceof Error ? err.message : String(err);
