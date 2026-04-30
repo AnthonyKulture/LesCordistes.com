@@ -591,6 +591,18 @@ export const PostJob: React.FC = () => {
                 {/* Progress Bar + Step Content + Nav — masqués tant que le wizard n'est pas actif */}
                 {wizardActive && (
                 <>
+                {/* Bouton retour vers les 3 cartes (uniquement à l'étape 1) */}
+                {currentStep === 1 && (
+                    <button
+                        type="button"
+                        onClick={() => setWizardActive(false)}
+                        className="group inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-semibold text-brand-blue bg-white border-2 border-brand-blue/20 hover:border-brand-blue hover:bg-brand-blue hover:text-white rounded-full shadow-sm hover:shadow-md transition-all"
+                    >
+                        <ChevronLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
+                        Choisir une autre méthode
+                    </button>
+                )}
+
                 <div className="mb-8 space-y-2.5">
                     <div className="flex items-center justify-between">
                         <motion.span

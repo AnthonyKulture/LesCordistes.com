@@ -95,14 +95,18 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: error.message }, { status: 500 })
         }
 
-        // Notification Telegram (best-effort, non-bloquant)
+        // Notifications admin (best-effort, non-bloquant) : Telegram + email
         const slotLabel = cleanSlot
             ? ({ morning: 'matin', afternoon: 'après-midi', evening: 'soir' } as const)[
                   cleanSlot as 'morning' | 'afternoon' | 'evening'
               ]
             : null
-        const lines = [
-            request_type === 'callback' ? '📞 <b>Demande de rappel</b>' : '💬 <b>Message rapide</b>',
+        const isCallback = request_type === 'callback'
+        const adminUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lescordistes.com'}/admin/contact-requests`
+
+        // Telegram
+        const tgLines = [
+            isCallback ? '📞 <b>Demande de rappel</b>' : '💬 <b>Message rapide</b>',
             cleanFirstName ? `Prénom : ${escapeHtml(cleanFirstName)}` : '',
             cleanEmail ? `Email : ${escapeHtml(cleanEmail)}` : '',
             cleanPhone ? `Tél. : ${escapeHtml(cleanPhone)}` : '',
@@ -112,9 +116,46 @@ export async function POST(req: NextRequest) {
             cleanChannel ? `Canal préféré : ${cleanChannel}` : '',
             cleanMessage ? `\n💬 ${escapeHtml(cleanMessage)}` : '',
             '',
-            `→ ${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lescordistes.com'}/admin/contact-requests`,
+            `→ ${adminUrl}`,
         ].filter(Boolean)
-        sendTelegram(lines.join('\n')).catch(() => {})
+        sendTelegram(tgLines.join('\n')).catch(() => {})
+
+        // Email admin via send-email + admin-alert
+        const emailTitle = isCallback
+            ? `Demande de rappel — ${cleanFirstName ?? 'Anonyme'}${cleanCity ? ` (${cleanCity})` : ''}`
+            : `Message rapide — ${cleanFirstName ?? 'Anonyme'}${cleanCity ? ` (${cleanCity})` : ''}`
+
+        const emailLines = [
+            cleanEmail ? `Email : ${cleanEmail}` : null,
+            cleanPhone ? `Téléphone : ${cleanPhone}` : null,
+            cleanCity ? `Ville : ${cleanCity}` : null,
+            cleanCategory ? `Type de travaux : ${cleanCategory}` : null,
+            slotLabel ? `Créneau préféré : ${slotLabel}` : null,
+            isCallback && cleanChannel ? `Canal préféré : ${cleanChannel === 'phone' ? 'téléphone' : 'email'}` : null,
+            cleanMessage ? `\nMessage :\n${cleanMessage}` : null,
+        ]
+            .filter(Boolean)
+            .join('<br>')
+            .replace(/\n/g, '<br>')
+
+        const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'anthony@lescordistes.com'
+        admin.functions
+            .invoke('send-email', {
+                body: {
+                    to: ADMIN_EMAIL,
+                    subject: `[LesCordistes] ${emailTitle}`,
+                    templateId: 'admin-alert',
+                    data: {
+                        title: emailTitle,
+                        message: emailLines || 'Nouvelle demande de contact reçue.',
+                        link: adminUrl,
+                        linkText: 'Voir dans l\'admin',
+                    },
+                },
+            })
+            .catch((err: unknown) => {
+                console.error('[contact_requests] admin email failed:', err)
+            })
 
         return NextResponse.json({ ok: true, id: inserted?.id })
     } catch (err: unknown) {

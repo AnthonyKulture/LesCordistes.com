@@ -289,9 +289,7 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
     const [channel, setChannel] = useState<'phone' | 'email'>('phone')
     const [phone, setPhone] = useState('')
     const [email, setEmail] = useState('')
-    const [city, setCity] = useState('')
     const [slot, setSlot] = useState<'morning' | 'afternoon' | 'evening' | ''>('')
-    const [message, setMessage] = useState('')
     const [submitting, setSubmitting] = useState(false)
     const [done, setDone] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -316,10 +314,8 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
                     first_name: firstName.trim(),
                     email: channel === 'email' ? email.trim().toLowerCase() : null,
                     phone: channel === 'phone' ? phone.trim() : null,
-                    city: city.trim() || null,
-                    message: message.trim() || null,
                     preferred_channel: channel,
-                    preferred_time_slot: slot || null,
+                    preferred_time_slot: channel === 'phone' && slot ? slot : null,
                     source: 'post_job_picker',
                 }),
             })
@@ -383,16 +379,29 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
             </div>
 
             {channel === 'phone' ? (
-                <Field label="Téléphone">
-                    <input
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        required
-                        placeholder="06 12 34 56 78"
-                        className={inputCls}
-                    />
-                </Field>
+                <>
+                    <Field label="Téléphone">
+                        <input
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            required
+                            placeholder="06 12 34 56 78"
+                            className={inputCls}
+                        />
+                    </Field>
+
+                    <div className="mt-3">
+                        <Field label="Créneau préféré (optionnel)">
+                            <select value={slot} onChange={(e) => setSlot(e.target.value as typeof slot)} className={inputCls}>
+                                <option value="">Pas de préférence</option>
+                                <option value="morning">Matin</option>
+                                <option value="afternoon">Après-midi</option>
+                                <option value="evening">Fin de journée</option>
+                            </select>
+                        </Field>
+                    </div>
+                </>
             ) : (
                 <Field label="Email">
                     <input
@@ -405,37 +414,6 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
                     />
                 </Field>
             )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-                <Field label="Ville (optionnel)">
-                    <input
-                        type="text"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
-                        placeholder="Lyon, Paris…"
-                        className={inputCls}
-                    />
-                </Field>
-                <Field label="Créneau (optionnel)">
-                    <select value={slot} onChange={(e) => setSlot(e.target.value as typeof slot)} className={inputCls}>
-                        <option value="">Pas de préférence</option>
-                        <option value="morning">Matin</option>
-                        <option value="afternoon">Après-midi</option>
-                        <option value="evening">Fin de journée</option>
-                    </select>
-                </Field>
-            </div>
-
-            <Field label="Quelques mots sur votre besoin (optionnel)">
-                <textarea
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    rows={2}
-                    placeholder="Ex. : Renseignements tarifs cordiste pour façade haussmannienne."
-                    className={inputCls}
-                    maxLength={500}
-                />
-            </Field>
 
             {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
 
@@ -462,10 +440,10 @@ function BackButton({ onClose }: { onClose: () => void }) {
         <button
             type="button"
             onClick={onClose}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-slate-800 mb-4 transition-colors"
+            className="group inline-flex items-center gap-2 px-4 py-2 mb-5 text-sm font-semibold text-brand-blue bg-white border-2 border-brand-blue/20 hover:border-brand-blue hover:bg-brand-blue hover:text-white rounded-full shadow-sm hover:shadow-md transition-all"
         >
-            <ArrowLeft size={14} />
-            Retour aux choix
+            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
+            Choisir une autre méthode
         </button>
     )
 }
