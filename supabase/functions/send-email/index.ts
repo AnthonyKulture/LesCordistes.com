@@ -616,7 +616,7 @@ serve(async (req) => {
   }
 
   try {
-    const { to, subject, templateId, data } = await req.json();
+    const { to, subject, templateId, data, from: fromOverride, replyTo: replyToOverride } = await req.json();
 
     let html = '';
 
@@ -655,12 +655,29 @@ serve(async (req) => {
       headers['List-Unsubscribe'] = unsub.join(', ');
     }
 
+    // Whitelist des `from` autorisés (anti-impersonation accidentelle).
+    // Tout autre `from` = on tombe sur le défaut.
+    const FROM_WHITELIST = new Set<string>([
+      'LesCordistes <contact@lescordistes.com>',
+      'Anthony Profit <anthony@lescordistes.com>',
+    ]);
+    const fromAddress =
+      typeof fromOverride === 'string' && FROM_WHITELIST.has(fromOverride)
+        ? fromOverride
+        : 'LesCordistes <contact@lescordistes.com>';
+
+    const replyToValid =
+      typeof replyToOverride === 'string' && /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(replyToOverride)
+        ? replyToOverride
+        : null;
+
     const { data: resendData, error } = await resend.emails.send({
-      from: 'LesCordistes <contact@lescordistes.com>',
+      from: fromAddress,
       to: Array.isArray(to) ? to : [to],
       subject,
       html,
       text,
+      ...(replyToValid ? { reply_to: replyToValid } : {}),
       ...(Object.keys(headers).length > 0 ? { headers } : {}),
     });
 

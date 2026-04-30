@@ -32,6 +32,9 @@
     { "source": "/register/", "destination": "/inscription", "permanent": true }
   ],
   "framework": "nextjs",
+  "crons": [
+    { "path": "/api/cron/leads-followup", "schedule": "*/5 * * * *" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
