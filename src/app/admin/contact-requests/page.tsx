@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import { CATEGORY_LABELS } from '@/constants/categories'
 import { MarkContactedButton } from './MarkContactedButton'
@@ -24,6 +25,7 @@ interface RequestRow {
     contacted_at: string | null
     notes: string | null
     created_at: string
+    converted_to_job_id: string | null
 }
 
 const formatDateTime = (iso: string) =>
@@ -166,9 +168,31 @@ function RequestCard({ r }: { r: RequestRow }) {
                             Contacté le {formatDateTime(r.contacted_at)}
                         </p>
                     )}
+
+                    {r.converted_to_job_id && (
+                        <p className="text-xs text-emerald-700 mt-2 font-semibold">
+                            ✓ Convertie en mission{' '}
+                            <Link
+                                href={`/admin/missions/${r.converted_to_job_id}`}
+                                className="underline hover:text-emerald-900"
+                            >
+                                voir
+                            </Link>
+                        </p>
+                    )}
                 </div>
 
-                {isNew && <MarkContactedButton id={r.id} />}
+                <div className="flex flex-col gap-2 shrink-0">
+                    {!r.converted_to_job_id && (
+                        <Link
+                            href={`/admin/jobs/new?from_request=${r.id}`}
+                            className="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors whitespace-nowrap"
+                        >
+                            + Convertir en mission
+                        </Link>
+                    )}
+                    {isNew && <MarkContactedButton id={r.id} />}
+                </div>
             </div>
         </article>
     )

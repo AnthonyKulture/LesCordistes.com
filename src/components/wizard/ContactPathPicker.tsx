@@ -41,8 +41,8 @@ export function ContactPathPicker({ onWizardSelected }: Props) {
                 <Card
                     onClick={() => onWizardSelected()}
                     icon={<FileText className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.7} />}
-                    title="Décrire mon projet"
-                    duration="3 min"
+                    title="Publier mon projet"
+                    duration="5 min"
                     accent="blue"
                 />
                 <Card
@@ -349,15 +349,15 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
         const firstWord = firstName.split(' ')[0]
         let body: string
         if (channel === 'email') {
-            body = `Merci ${firstWord} ! Anthony vous écrit par email sous 1 heure ouvrée.`
+            body = `Merci ${firstWord} ! On vous écrit par email dès que possible.`
         } else if (slot === 'morning') {
-            body = `Merci ${firstWord} ! Anthony vous appelle demain matin (ou ce matin si on est encore en début de journée).`
+            body = `Merci ${firstWord} ! On vous appelle dans la matinée.`
         } else if (slot === 'afternoon') {
-            body = `Merci ${firstWord} ! Anthony vous appelle cet après-midi (ou demain après-midi si vous écrivez en soirée).`
+            body = `Merci ${firstWord} ! On vous appelle dans l'après-midi.`
         } else if (slot === 'evening') {
-            body = `Merci ${firstWord} ! Anthony vous appelle en fin de journée.`
+            body = `Merci ${firstWord} ! On vous appelle en fin de journée.`
         } else {
-            body = `Merci ${firstWord} ! Anthony vous appelle dès que possible (sous 1 heure ouvrée).`
+            body = `Merci ${firstWord} ! On vous rappelle dès que possible.`
         }
         return <SuccessPanel title="Demande reçue" body={body} onClose={onClose} />
     }
@@ -368,7 +368,7 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
             className="mt-5 bg-white rounded-2xl border-2 border-amber-200 p-6 md:p-7 shadow-sm"
         >
             <h4 className="font-bold text-slate-900 text-lg mb-1">Comment vous joindre ?</h4>
-            <p className="text-sm text-slate-500 mb-5">Anthony vous recontacte sous 1 h ouvrée.</p>
+            <p className="text-sm text-slate-500 mb-5">On vous rappelle dès que possible.</p>
 
             <Field label="Prénom">
                 <input
@@ -376,7 +376,7 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
-                    placeholder="Anthony"
+                    placeholder="Votre prénom"
                     className={inputCls}
                 />
             </Field>

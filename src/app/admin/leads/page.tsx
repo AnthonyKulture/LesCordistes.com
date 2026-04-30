@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import { CATEGORY_LABELS } from '@/constants/categories'
 
@@ -91,12 +92,13 @@ export default async function AdminLeadsPage() {
                                 <th className="px-4 py-3">Ville</th>
                                 <th className="px-4 py-3">Source</th>
                                 <th className="px-4 py-3">Relance</th>
+                                <th className="px-4 py-3"></th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100">
                             {rows.length === 0 && (
                                 <tr>
-                                    <td colSpan={7} className="px-4 py-12 text-center text-slate-400">
+                                    <td colSpan={8} className="px-4 py-12 text-center text-slate-400">
                                         Aucun lead pour le moment.
                                     </td>
                                 </tr>
@@ -152,6 +154,22 @@ export default async function AdminLeadsPage() {
                                                     En attente
                                                 </span>
                                             )}
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            <Link
+                                                href={{
+                                                    pathname: '/admin/jobs/new',
+                                                    query: {
+                                                        prefill_email: l.email,
+                                                        ...(l.phone ? { prefill_phone: l.phone } : {}),
+                                                        ...(l.city ? { prefill_city: l.city } : {}),
+                                                        ...(l.category ? { prefill_category: l.category } : {}),
+                                                    },
+                                                }}
+                                                className="inline-flex items-center px-2.5 py-1 text-xs font-bold bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors whitespace-nowrap"
+                                            >
+                                                + Mission
+                                            </Link>
                                         </td>
                                     </tr>
                                 )
