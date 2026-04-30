@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Briefcase, Users, Menu, X, BellDot, ExternalLink, Mail, Inbox, MessageSquare } from 'lucide-react'
+import { LayoutDashboard, Briefcase, Users, Menu, X, BellDot, ExternalLink, Mail, Inbox, MessageSquare, PlusCircle } from 'lucide-react'
 
 type Props = {
     adminEmail: string
@@ -58,6 +58,13 @@ export function AdminShell({ adminEmail, adminName, pendingCount, children }: Pr
                         </Link>
                     </div>
                     <nav className="flex-1 px-3 py-4 space-y-1">
+                        <Link
+                            href="/admin/jobs/new"
+                            className="flex items-center gap-2 px-3 py-2.5 mb-2 rounded-lg text-sm font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm"
+                        >
+                            <PlusCircle className="h-4 w-4" />
+                            Nouvelle mission
+                        </Link>
                         {NAV.map(item => {
                             const active = item.exact ? pathname === item.href : pathname.startsWith(item.href)
                             const Icon = item.icon
@@ -110,6 +117,14 @@ export function AdminShell({ adminEmail, adminName, pendingCount, children }: Pr
                                 <div className="text-xs uppercase tracking-wider text-slate-500">Admin Ops</div>
                             </div>
                             <nav className="flex-1 px-3 py-4 space-y-1">
+                                <Link
+                                    href="/admin/jobs/new"
+                                    onClick={() => setMobileOpen(false)}
+                                    className="flex items-center gap-2 px-3 py-2.5 mb-2 rounded-lg text-sm font-bold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm"
+                                >
+                                    <PlusCircle className="h-4 w-4" />
+                                    Nouvelle mission
+                                </Link>
                                 {NAV.map(item => {
                                     const active = item.exact ? pathname === item.href : pathname.startsWith(item.href)
                                     const Icon = item.icon

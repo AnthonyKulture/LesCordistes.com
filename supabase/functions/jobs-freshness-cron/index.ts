@@ -133,10 +133,12 @@ serve(async (req: Request) => {
         'id, title, location_city, created_by, client_contact_info, created_at, last_validated_at';
 
     // A1 — jobs déjà revalidés au moins une fois mais last_validated_at < J-5.
+    // ⚠️ admin_created=true exclus : le client n'a pas posté lui-même, on ne lui envoie pas d'email automatique.
     const { data: a1, error: errA1 } = await supabase
         .from('jobs')
         .select(SELECT_COLS)
         .eq('status', 'live')
+        .eq('admin_created', false)
         .is('revalidation_email_sent_at', null)
         .not('last_validated_at', 'is', null)
         .lt('last_validated_at', revalidationThreshold);
@@ -146,6 +148,7 @@ serve(async (req: Request) => {
         .from('jobs')
         .select(SELECT_COLS)
         .eq('status', 'live')
+        .eq('admin_created', false)
         .is('revalidation_email_sent_at', null)
         .is('last_validated_at', null)
         .lt('created_at', revalidationThreshold);
