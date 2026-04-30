@@ -31,6 +31,9 @@ export const PostJob: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [formData, setFormData] = useState<Partial<JobFormData>>({});
     const [showExitIntent, setShowExitIntent] = useState(false);
+    // Wizard caché par défaut tant que l'utilisateur n'a pas choisi cette voie
+    // dans le ContactPathPicker. Auto-activé si un draft / handoff existe.
+    const [wizardActive, setWizardActive] = useState(false);
     const exitFired = useRef(false);
     const formDataRef = useRef(formData);
 
@@ -90,10 +93,15 @@ export const PostJob: React.FC = () => {
     useEffect(() => {
         const draft = loadJobDraft();
         const savedStep = localStorage.getItem('lescordistes_postjob_step');
-        
+
         if (draft) {
             setFormData(draft);
+            // Si on a déjà entamé le wizard, on le ré-affiche directement
+            if (Object.keys(draft).length > 0) setWizardActive(true);
         }
+        if (savedStep && parseInt(savedStep, 10) > 1) setWizardActive(true);
+        // Utilisateur connecté : on présume qu'il sait ce qu'il fait, pas besoin de cacher le wizard
+        if (authUser) setWizardActive(true);
 
         const params = new URLSearchParams(window.location.search);
         const typeParam = params.get('type') as 'standard' | 'renfort_pro' | null;
@@ -126,6 +134,7 @@ export const PostJob: React.FC = () => {
         if (params.get('confirmed') === 'true') {
             const isRenfortDraft = draft?.type === 'renfort_pro';
             setCurrentStep(isRenfortDraft ? 7 : 5);
+            setWizardActive(true);
             toast.success("Compte activé ! Vous pouvez maintenant publier votre mission.");
         }
 
@@ -143,6 +152,7 @@ export const PostJob: React.FC = () => {
             });
             // Standard wizard: step 2 = Détails. On y envoie le user.
             setCurrentStep(2);
+            setWizardActive(true);
         }
     }, []);
 
@@ -566,10 +576,21 @@ export const PostJob: React.FC = () => {
                     </div>
                 )}
 
-                {/* 3 cartes : alternatives au wizard (étape 1 seulement) */}
-                {currentStep === 1 && <ContactPathPicker />}
+                {/* 3 cartes : channel picker (étape 1 + wizard pas encore choisi) */}
+                {currentStep === 1 && !wizardActive && (
+                    <ContactPathPicker
+                        onWizardSelected={() => {
+                            setWizardActive(true)
+                            setTimeout(() => {
+                                window.scrollTo({ top: 0, behavior: 'smooth' })
+                            }, 50)
+                        }}
+                    />
+                )}
 
-                {/* Progress Bar */}
+                {/* Progress Bar + Step Content + Nav — masqués tant que le wizard n'est pas actif */}
+                {wizardActive && (
+                <>
                 <div className="mb-8 space-y-2.5">
                     <div className="flex items-center justify-between">
                         <motion.span
@@ -628,6 +649,8 @@ export const PostJob: React.FC = () => {
                             Précédent
                         </Button>
                     </div>
+                )}
+                </>
                 )}
             </div>
 
