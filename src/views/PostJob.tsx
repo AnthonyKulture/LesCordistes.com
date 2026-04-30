@@ -13,6 +13,7 @@ import { StepReinfortTechnical } from '../components/wizard/StepReinfortTechnica
 import { StepReinfortTrades } from '../components/wizard/StepReinfortTrades';
 import { StepReinfortConditions } from '../components/wizard/StepReinfortConditions';
 import { ExitIntentModal } from '../components/wizard/ExitIntentModal';
+import { ContactPathPicker } from '../components/wizard/ContactPathPicker';
 import { createSupabaseBrowserClient, uploadJobPhoto } from '../lib/supabase-browser';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../components/ui/Toast';
@@ -564,6 +565,9 @@ export const PostJob: React.FC = () => {
                         </p>
                     </div>
                 )}
+
+                {/* 3 cartes : alternatives au wizard (étape 1 seulement) */}
+                {currentStep === 1 && <ContactPathPicker />}
 
                 {/* Progress Bar */}
                 <div className="mb-8 space-y-2.5">
