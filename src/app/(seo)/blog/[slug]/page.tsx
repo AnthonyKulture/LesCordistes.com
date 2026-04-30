@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowLeft, ArrowRight, Calendar, Clock, RefreshCw } from 'lucide-react'
 import { SEO_BLOG, SEO_BLOG_BASE, getBlogArticle, getBlogImage, BLOG_CATEGORIES, type BlogSectionCta } from '@/constants/seoBlog'
 import { SEO_BASE_URL, SEO_BRAND_NAME } from '@/constants/seoConfig'
+import { BlogLeadForm } from '@/components/seo/BlogLeadForm'
 
 interface Props {
     params: Promise<{ slug: string }>
@@ -205,6 +206,15 @@ export default async function BlogArticlePage({ params }: Props) {
             {/* ARTICLE BODY */}
             <div className="container max-w-3xl py-16 md:py-20">
                 <article className="prose-article">
+                    {article.leadForm && (
+                        <BlogLeadForm
+                            title={article.leadForm.title}
+                            subtitle={article.leadForm.subtitle}
+                            defaultCategory={article.leadForm.defaultCategory}
+                            ctaLabel={article.leadForm.ctaLabel}
+                            source={`blog_${article.slug}`}
+                        />
+                    )}
                     <div className="space-y-12">
                         {article.sections.map((section, i) => (
                             <section key={i}>

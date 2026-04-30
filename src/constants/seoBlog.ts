@@ -41,6 +41,17 @@ export interface BlogArticle {
     ctaText: string
     ctaHref: string
     relatedLinks: { label: string; href: string }[]
+    /**
+     * Active un formulaire de capture de lead intégré sous l'intro
+     * (variante allégée du hero des city pages). Permet de transformer
+     * un article en mini-landing tout en gardant le format BlogArticle.
+     */
+    leadForm?: {
+        title?: string
+        subtitle?: string
+        defaultCategory?: 'cleaning' | 'masonry' | 'painting' | 'construction' | 'securing' | 'industry' | 'telecom' | 'event' | 'inspection' | 'repair' | 'pruning' | 'other'
+        ctaLabel?: string
+    }
 }
 
 export const SEO_BLOG: BlogArticle[] = [
@@ -938,6 +949,140 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
             { label: 'Trouver un cordiste à Lyon', href: '/blog/trouver-cordiste-lyon' },
             { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+        ],
+    },
+    {
+        slug: 'elagage-abattage-grande-hauteur-cordiste',
+        title: 'Élagage et abattage de grande hauteur : quand le cordiste s\'impose',
+        shortTitle: 'Élagage et abattage grande hauteur',
+        description:
+            'Élagage et abattage de grande hauteur : pourquoi recourir à un cordiste-élagueur, tarifs 2026, contraintes urbaines et démêlés réglementaires.',
+        category: 'Travaux & technique',
+        readTime: 9,
+        datePublished: '2026-04-30',
+        dateModified: '2026-04-30',
+        intro:
+            'Au-delà de 25 mètres, l\'élagage et l\'abattage de grande hauteur sortent du périmètre de l\'élagueur-grimpeur traditionnel. Platanes d\'alignement parisiens, pins parasols battus par le mistral, séquoias de parcs urbains, chênes centenaires fragilisés par la sécheresse : ce sont des arbres qui touchent les bâtiments, surplombent la voie publique ou côtoient des lignes électriques. Le cordiste-élagueur, formé aux techniques d\'accès sur cordes industrielles, est alors le seul intervenant capable d\'opérer en sécurité, par démontage progressif, sans endommager l\'environnement immédiat. Ce guide explique quand y recourir, comment se déroule le chantier, ce que coûte l\'intervention en 2026 et où la demande est la plus forte en France.',
+        leadForm: {
+            title: 'Élagage ou abattage en grande hauteur ?',
+            subtitle: 'Recevez 3 devis cordistes-élagueurs sous 48h · gratuit, sans engagement',
+            defaultCategory: 'pruning',
+            ctaLabel: 'Recevoir mes devis cordiste-élagueur',
+        },
+        sections: [
+            {
+                heading: 'Pourquoi l\'élagage de grande hauteur exige un cordiste, pas un élagueur classique',
+                body: 'L\'élagueur-grimpeur traditionnel travaille avec une corde unique, des griffes (pour les abattages) et une nacelle quand l\'arbre est accessible par la voirie. Sa zone de confort se situe entre 8 et 20 mètres, dans des configurations où la cime est saine et où l\'arbre n\'est pas adossé à un bâti.\n\nAu-delà de 25 mètres, ou lorsque l\'arbre surplombe une toiture, une voie publique, des lignes haute tension ou un monument classé, le cordiste-élagueur prend le relais. Il intervient avec une **double corde de sécurité** (corde de travail + corde de secours indépendante), des **points d\'ancrage redondants** (généralement deux par étage de descente) et les techniques de **rope rigging** issues de l\'industrie : descente contrôlée par moufle, billon retenu, plateforme suspendue ponctuelle.\n\nLes profils qui combinent les deux compétences sont rares. Un cordiste élagueur dispose au minimum du **CQP TPS niveau 1** ou de l\'**IRATA Level 1**, doublé d\'un **CS Arboriste élagueur** ou d\'un **CSE** (Certificat de Spécialisation Élagage et Soin aux Arbres). Sur les grands sujets remarquables, l\'European Tree Worker (ETW) est un plus. Cette double qualification justifie un surcoût de 30 à 50 % par rapport à un élagueur classique, mais elle rend possible des chantiers que personne d\'autre ne peut prendre en charge.',
+            },
+            {
+                heading: 'Les situations où l\'abattage par démontage est la seule option viable',
+                body: 'L\'abattage classique au pied — qui consiste à faire tomber l\'arbre d\'un bloc dans une zone de chute — est interdit dès que l\'environnement n\'est pas dégagé sur 1,5 fois la hauteur de l\'arbre. En contexte urbain ou semi-urbain, c\'est presque toujours le cas. L\'abattage par démontage devient alors obligatoire.',
+                listIntro: 'Le démontage en hauteur s\'impose dans les configurations suivantes :',
+                list: [
+                    'Arbre à moins de 30 mètres d\'un bâtiment habité, d\'un mur de clôture ou d\'une véranda',
+                    'Sujet en bord de voie publique (voirie, trottoir, parking de copropriété)',
+                    'Arbre à proximité de lignes électriques BT/MT — la sécurisation impose la coordination avec Enedis',
+                    'Arbre malade ou fragilisé (chancre, pourriture du collet, fissures de tronc) — la chute serait imprévisible',
+                    'Sujet remarquable ou protégé en Espace Boisé Classé (EBC), où la zone de chute est interdite',
+                    'Arbre adossé à une falaise, un talus ou un cours d\'eau, où la billonnaison conventionnelle n\'est pas sécurisable',
+                    'Sujet dans une cour intérieure d\'immeuble, sans accès possible pour une nacelle',
+                ],
+                cta: {
+                    text: 'Décrire mon arbre dangereux en 2 minutes',
+                    href: '/post-job',
+                    description: 'Plusieurs cordistes-élagueurs reçoivent votre demande et vous transmettent un devis sous 48h.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Comment se déroule un chantier d\'abattage par démontage en hauteur',
+                body: 'Un démontage propre suit une séquence rigoureuse. Tout écart compromet la sécurité du chantier et peut rendre l\'arbre instable au mauvais moment.',
+                listIntro: 'Les étapes-clés d\'un démontage en grande hauteur :',
+                list: [
+                    '1. **Reconnaissance** — diagnostic phytosanitaire, mesure de hauteur, identification des points faibles, analyse de l\'environnement (bâti, voirie, réseaux aériens)',
+                    '2. **Plan de prévention** et déclaration de travaux à proximité de réseaux (DT-DICT) si lignes électriques ou télécoms à moins de 5 m',
+                    '3. **Sécurisation au sol** — périmètre de protection, balisage voirie, coordination avec gestionnaire de réseau si nécessaire',
+                    '4. **Pose des points d\'ancrage** — sangles arborico-larges sur fourches saines, anneau d\'ancrage haut, contrôle de tenue',
+                    '5. **Démontage progressif** — coupe des branches charpentières par sections, descente en rétention via moufle ou treuil',
+                    '6. **Billonnage du tronc** — abattage du fût par segments d\'1,5 à 3 mètres, retenue par corde dynamique, dépose contrôlée au sol',
+                    '7. **Dessouchage** — broyage de souche ou rognage selon contrainte du site (souvent en sous-traitance)',
+                    '8. **Évacuation et broyage** — bois en filière biomasse ou paillage, branches en compostage municipal',
+                ],
+            },
+            {
+                heading: 'Tarifs 2026 d\'un cordiste-élagueur en France',
+                body: 'Les fourchettes ci-dessous correspondent à la moyenne nationale observée chez les cordistes-élagueurs certifiés. Le coût final dépend de la hauteur réelle de l\'arbre, de l\'accessibilité du site, des contraintes de circulation et de l\'évacuation des bois.\n\n**Fourchettes indicatives HT en 2026 :**',
+                list: [
+                    'Journée cordiste-élagueur (équipe de 2, 8h) : **800 € à 1 500 € HT** — surcoût d\'environ 30 à 50 % vs élagueur grimpeur classique',
+                    'Élagage de couronne sur grand sujet (platane, séquoia, pin parasol) : **600 € à 2 200 € HT** par arbre selon hauteur',
+                    'Abattage par démontage d\'un arbre de 20 à 30 m en milieu urbain : **1 200 € à 3 500 € HT**',
+                    'Abattage d\'un sujet de plus de 30 m avec coordination Enedis ou ABF : **3 000 € à 8 000 € HT**',
+                    'Sécurisation d\'urgence après tempête (24-72h) : majoration de 30 à 60 % sur tarif de base',
+                    'Dessouchage par rognage : **150 € à 600 € HT** selon diamètre et accessibilité',
+                ],
+                cta: {
+                    text: 'Comparer plusieurs devis d\'élagage cordiste',
+                    href: '/post-job',
+                    description: 'Publiez votre demande gratuitement, recevez 3 devis détaillés de cordistes-élagueurs vérifiés.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Réglementation et responsabilités : ce qui change quand l\'arbre est dangereux',
+                body: 'Avant tout abattage, il faut vérifier que l\'arbre n\'est pas protégé. Plusieurs régimes coexistent et leur méconnaissance expose le donneur d\'ordre à des sanctions allant jusqu\'à 300 000 € d\'amende et la replantation imposée.\n\n**Espace Boisé Classé (EBC)** — défini au PLU local, l\'EBC interdit tout changement d\'affectation et soumet l\'abattage à déclaration préalable en mairie (délai 1 mois). En cas d\'arbre dangereux, une dérogation est possible mais l\'urgence doit être documentée par expertise phytosanitaire.\n\n**Alignements protégés** — depuis la loi du 8 août 2016 (article L. 350-3 du Code de l\'environnement), les alignements d\'arbres bordant les voies publiques sont protégés. Toute coupe nécessite une autorisation préfectorale, sauf danger imminent attesté.\n\n**Abords de monument historique** — dans les 500 m d\'un MH classé, l\'avis des Architectes des Bâtiments de France (ABF) est requis. Délai 2 à 3 mois en moyenne.\n\n**Code du travail** — pour l\'employeur ou le donneur d\'ordre : le **plan de prévention** (R. 4513-1) est obligatoire dès qu\'il y a coactivité, et le **PPSPS** dès que le chantier dépasse 30 jours ou 500 hommes-jours. Pour le travail sur cordes, l\'article R. 4323-89 impose deux supports indépendants — le cordiste-élagueur respecte cette règle nativement, l\'élagueur classique non.',
+                cta: {
+                    text: 'Publier ma mission d\'élagage maintenant',
+                    href: '/post-job',
+                    description: 'Des cordistes-élagueurs disponibles dans votre département reçoivent votre demande sous 24h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Spécificités locales : où la grande hauteur est la norme',
+                body: 'La demande en cordiste-élagueur n\'est pas répartie uniformément en France. Certaines villes concentrent un patrimoine arboré atypique qui rend la double qualification quasi-obligatoire.',
+                listIntro: 'Cinq zones où l\'élagage de grande hauteur structure le marché :',
+                list: [
+                    '**Paris et Île-de-France** — alignements de platanes (jusqu\'à 35 m) sur les grands boulevards, marronniers du jardin du Luxembourg, séquoias des parcs Monceau et Buttes-Chaumont. Contraintes ABF systématiques en intra-muros, AOT obligatoire pour neutralisation de voirie.',
+                    '**Marseille et Côte d\'Azur (Nice, Toulon, Cannes)** — pins parasols et pins d\'Alep fragilisés par les épisodes mistral à 100 km/h, palmiers Phoenix décimés par le charançon rouge nécessitant abattage sanitaire en urgence, embruns marins exigeant des EPI et points d\'ancrage en inox AISI 316L marine-grade.',
+                    '**Bordeaux et Sud-Ouest** — chênes pédonculés bicentenaires des parcs (Jardin Public, Chartrons) fragilisés par la sécheresse récurrente, pins maritimes du Médoc en zone urbaine côtière, contraintes patrimoniales sur le centre UNESCO.',
+                    '**Lyon et région lyonnaise** — platanes du parc de la Tête d\'Or (certains > 30 m), arbres remarquables des berges du Rhône classés au patrimoine local, pression réglementaire forte sur les EBC de la Métropole.',
+                    '**Nantes, Brest, façade atlantique** — sécurisation post-tempête (Ciaran 2023, Domingos 2023) sur grands sujets fragilisés, chênes têtards du Marais breton, sapins Douglas des parcs reconvertis en arboretums.',
+                ],
+            },
+            {
+                heading: 'Cordiste, élagueur grimpeur ou nacelle : comment choisir',
+                body: 'Trois solutions coexistent pour les travaux d\'élagage. Aucune n\'est universelle. Le choix se fait sur trois critères : hauteur, accessibilité, complexité de la chute.\n\n**Nacelle élévatrice** — la solution la moins coûteuse quand l\'accès véhicule est possible jusqu\'au pied de l\'arbre. Limitée à 18-25 m de hauteur de travail pour les modèles courants. Inutilisable sur sol meuble, en cour intérieure, ou si la voirie ne supporte pas le poids. Tarif journée : 350 à 700 € HT selon modèle.\n\n**Élagueur grimpeur classique** — adapté aux sujets sains de 8 à 20 m, dans des environnements dégagés ou semi-dégagés. Il utilise une corde unique avec descendeur, des griffes pour l\'abattage, et abat l\'arbre d\'un bloc quand la zone de chute est sécurisable. Tarif journée : 400 à 900 € HT selon expérience.\n\n**Cordiste-élagueur** — au-delà de 25 m, ou en présence de bâti, voirie, lignes ou réglementation patrimoniale. Double corde, ancrages redondants, démontage progressif par billons retenus. Tarif journée : 800 à 1 500 € HT en équipe de 2.\n\nLa règle pratique : si la zone de chute fait moins de 1,5 fois la hauteur de l\'arbre dans toutes les directions, ou si l\'arbre dépasse 25 m, ne sollicitez que des cordistes-élagueurs.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Quel est le prix d\'un abattage par démontage en grande hauteur en 2026 ?',
+                a: 'Comptez entre 1 200 € et 3 500 € HT pour un arbre de 20 à 30 mètres en milieu urbain, et 3 000 € à 8 000 € HT pour un sujet de plus de 30 m avec coordination Enedis ou avis ABF. Les facteurs de variation : hauteur réelle, accessibilité, contraintes de voirie, gestion du bois et du dessouchage.',
+            },
+            {
+                q: 'Faut-il une autorisation pour abattre un arbre de plus de 20 mètres ?',
+                a: 'Pas systématiquement, mais souvent. Vérifier d\'abord le PLU communal : si l\'arbre est en Espace Boisé Classé, l\'abattage est soumis à déclaration préalable en mairie (1 mois). En alignement de voie publique (loi du 8 août 2016), une autorisation préfectorale est requise sauf danger imminent attesté. À moins de 500 m d\'un monument historique, l\'avis ABF est obligatoire (2 à 3 mois).',
+            },
+            {
+                q: 'Cordiste-élagueur ou élagueur grimpeur traditionnel : quelle différence concrète ?',
+                a: 'L\'élagueur grimpeur travaille avec une corde unique et des griffes, sur des sujets sains de 8 à 20 mètres dans des environnements dégagés. Le cordiste-élagueur ajoute une seconde corde de sécurité indépendante, des ancrages redondants et les techniques de rope rigging industriel : il intervient au-delà de 25 m, sur arbres adossés au bâti, en bord de voirie ou sous lignes électriques. La double certification CQP TPS + CS Arboriste justifie un surcoût de 30 à 50 %.',
+            },
+            {
+                q: 'Combien de temps faut-il pour abattre un arbre de 30 mètres en milieu urbain ?',
+                a: 'Une équipe de deux cordistes-élagueurs traite un sujet de 30 m par démontage en 1 à 2 jours selon densité du houppier et complexité d\'évacuation. Ajouter une demi-journée pour le dessouchage et 1 à 3 mois en amont si le dossier nécessite une autorisation ABF, EBC ou alignement protégé. Pour une urgence post-tempête sur sujet dangereux, certains cordistes interviennent sous 24 à 72 heures avec une majoration de 30 à 60 %.',
+            },
+            {
+                q: 'Que devient le bois après abattage par démontage ?',
+                a: 'Le bois de fût des grands sujets sains (chêne, platane, châtaignier) part généralement en filière scierie ou bois de chauffage : certains cordistes-élagueurs déduisent la valeur du bois de leur devis. Les rémanents (branches, cimes) sont broyés sur place ou évacués pour compostage municipal ou paillage paysager. Le dessouchage par rognage pulvérise la souche jusqu\'à 30 cm sous le sol pour permettre une replantation ou un réaménagement.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste-élagueur disponible',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Habilitations cordiste : CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+            { label: 'Responsabilité du maître d\'ouvrage', href: '/blog/responsabilite-maitre-ouvrage-chantier-cordiste' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
         ],
     },
 ]
