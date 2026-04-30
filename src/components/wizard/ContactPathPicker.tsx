@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileText, MessageSquare, PhoneCall, CheckCircle2, Mail, Phone, Send, ArrowLeft } from 'lucide-react'
+import { FileText, MessageSquare, PhoneCall, CheckCircle2, Mail, Phone, Send } from 'lucide-react'
 import { CATEGORY_LABELS } from '@/constants/categories'
 
 type CardId = 'wizard' | 'message' | 'callback'
@@ -202,8 +202,6 @@ function QuickMessageForm({ onClose }: { onClose: () => void }) {
             onSubmit={handleSubmit}
             className="mt-5 bg-white rounded-2xl border-2 border-emerald-200 p-6 md:p-7 shadow-sm"
         >
-            <BackButton onClose={onClose} />
-
             <h4 className="font-bold text-slate-900 text-lg mb-1">Décrivez votre projet</h4>
             <p className="text-sm text-slate-500 mb-5">Quelques mots suffisent.</p>
 
@@ -346,8 +344,6 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
             onSubmit={handleSubmit}
             className="mt-5 bg-white rounded-2xl border-2 border-amber-200 p-6 md:p-7 shadow-sm"
         >
-            <BackButton onClose={onClose} />
-
             <h4 className="font-bold text-slate-900 text-lg mb-1">Comment vous joindre ?</h4>
             <p className="text-sm text-slate-500 mb-5">Anthony vous recontacte sous 1 h ouvrée.</p>
 
@@ -434,19 +430,6 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function BackButton({ onClose }: { onClose: () => void }) {
-    return (
-        <button
-            type="button"
-            onClick={onClose}
-            className="group inline-flex items-center gap-2 px-4 py-2 mb-5 text-sm font-semibold text-brand-blue bg-white border-2 border-brand-blue/20 hover:border-brand-blue hover:bg-brand-blue hover:text-white rounded-full shadow-sm hover:shadow-md transition-all"
-        >
-            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-0.5" />
-            Choisir une autre méthode
-        </button>
-    )
-}
 
 function ChannelToggle({
     selected,
