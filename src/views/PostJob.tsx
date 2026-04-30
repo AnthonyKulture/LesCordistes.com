@@ -552,18 +552,18 @@ export const PostJob: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-slate-50 py-6 sm:py-12">
+        <div className="min-h-screen bg-slate-50 py-3 sm:py-12">
 
             <div className="container max-w-3xl">
 
-                {/* Intro — step 1 only */}
+                {/* Intro — step 1 only (compact sur mobile pour faire remonter les 3 cartes) */}
                 {currentStep === 1 && (
-                    <div className="text-center mb-8 animate-intro-in">
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 text-green-700 rounded-full text-xs font-bold mb-4 border border-green-100">
+                    <div className="text-center mb-4 sm:mb-8 animate-intro-in">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-[11px] sm:text-xs font-bold mb-2 sm:mb-4 border border-green-100">
                             <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                             100% gratuit · Sans engagement
                         </div>
-                        <h1 className="text-xl sm:text-3xl font-extrabold text-slate-900 mb-3 leading-tight animate-intro-in-delay">
+                        <h1 className="text-lg sm:text-3xl font-extrabold text-slate-900 mb-1.5 sm:mb-3 leading-snug sm:leading-tight animate-intro-in-delay">
                             Trouvez un cordiste pour vos travaux en hauteur en{' '}
                             <span className="text-brand-blue-light">2 minutes</span>.
                         </h1>

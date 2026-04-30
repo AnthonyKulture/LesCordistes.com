@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, MessageSquare, PhoneCall, CheckCircle2, Mail, Phone, Send } from 'lucide-react'
 import { CATEGORY_LABELS } from '@/constants/categories'
@@ -19,14 +19,28 @@ const CATEGORIES = Object.entries(CATEGORY_LABELS) as Array<[string, string]>
 
 export function ContactPathPicker({ onWizardSelected }: Props) {
     const [active, setActive] = useState<'message' | 'callback' | null>(null)
+    const formRef = useRef<HTMLDivElement>(null)
+
+    // Sur mobile, scroll léger vers le formulaire qui s'ouvre
+    useEffect(() => {
+        if (!active) return
+        if (typeof window === 'undefined') return
+        if (window.innerWidth >= 768) return // desktop : pas besoin (cartes côte à côte)
+
+        // Attendre la fin de l'animation framer-motion (250ms) avant de scroller
+        const t = window.setTimeout(() => {
+            formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }, 280)
+        return () => window.clearTimeout(t)
+    }, [active])
 
     return (
-        <div className="mb-10">
-            {/* 3 cartes minimales */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mb-6 sm:mb-10">
+            {/* 3 cartes minimales — empilées compactes sur mobile, colonnes sur desktop */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-4">
                 <Card
                     onClick={() => onWizardSelected()}
-                    icon={<FileText size={28} strokeWidth={1.7} />}
+                    icon={<FileText className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.7} />}
                     title="Décrire mon projet"
                     duration="3 min"
                     accent="blue"
@@ -34,7 +48,7 @@ export function ContactPathPicker({ onWizardSelected }: Props) {
                 <Card
                     onClick={() => setActive(active === 'message' ? null : 'message')}
                     selected={active === 'message'}
-                    icon={<MessageSquare size={28} strokeWidth={1.7} />}
+                    icon={<MessageSquare className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.7} />}
                     title="Message rapide"
                     duration="2 min"
                     accent="emerald"
@@ -42,7 +56,7 @@ export function ContactPathPicker({ onWizardSelected }: Props) {
                 <Card
                     onClick={() => setActive(active === 'callback' ? null : 'callback')}
                     selected={active === 'callback'}
-                    icon={<PhoneCall size={28} strokeWidth={1.7} />}
+                    icon={<PhoneCall className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.7} />}
                     title="Être recontacté"
                     duration="< 1 min"
                     accent="amber"
@@ -50,32 +64,34 @@ export function ContactPathPicker({ onWizardSelected }: Props) {
             </div>
 
             {/* Inline forms (cartes 2 et 3 uniquement) */}
-            <AnimatePresence mode="wait">
-                {active === 'message' && (
-                    <motion.div
-                        key="message"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="overflow-hidden"
-                    >
-                        <QuickMessageForm onClose={() => setActive(null)} />
-                    </motion.div>
-                )}
-                {active === 'callback' && (
-                    <motion.div
-                        key="callback"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="overflow-hidden"
-                    >
-                        <CallbackForm onClose={() => setActive(null)} />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            <div ref={formRef} className="scroll-mt-4">
+                <AnimatePresence mode="wait">
+                    {active === 'message' && (
+                        <motion.div
+                            key="message"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                        >
+                            <QuickMessageForm onClose={() => setActive(null)} />
+                        </motion.div>
+                    )}
+                    {active === 'callback' && (
+                        <motion.div
+                            key="callback"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                        >
+                            <CallbackForm onClose={() => setActive(null)} />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
         </div>
     )
 }
@@ -123,19 +139,21 @@ function Card({
         <button
             type="button"
             onClick={onClick}
-            className={`group relative bg-white rounded-2xl border-2 transition-all duration-200 px-6 py-7 text-center hover:-translate-y-0.5 hover:shadow-lg ${
+            className={`group relative bg-white rounded-2xl border-2 transition-all duration-200 flex md:block items-center gap-3 px-4 py-3 sm:px-6 sm:py-7 text-left md:text-center hover:-translate-y-0.5 hover:shadow-lg ${
                 selected ? a.active : `border-slate-200 ${a.ring}`
             }`}
         >
             <div
-                className={`mx-auto mb-3 w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${
+                className={`md:mx-auto md:mb-3 shrink-0 w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center transition-colors ${
                     selected ? a.activeIcon : a.iconBg
                 }`}
             >
                 {icon}
             </div>
-            <h3 className="font-bold text-slate-900 text-base">{title}</h3>
-            <p className="text-xs text-slate-500 mt-1">{duration}</p>
+            <div className="flex-1 min-w-0 md:flex-none">
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-tight">{title}</h3>
+                <p className="text-xs text-slate-500 mt-0.5 sm:mt-1">{duration}</p>
+            </div>
         </button>
     )
 }
@@ -328,15 +346,20 @@ function CallbackForm({ onClose }: { onClose: () => void }) {
     }
 
     if (done) {
-        return (
-            <SuccessPanel
-                title="Demande reçue"
-                body={`Merci ${firstName.split(' ')[0]} ! Anthony vous contacte ${
-                    channel === 'phone' ? 'par téléphone' : 'par email'
-                } sous 1 heure ouvrée.`}
-                onClose={onClose}
-            />
-        )
+        const firstWord = firstName.split(' ')[0]
+        let body: string
+        if (channel === 'email') {
+            body = `Merci ${firstWord} ! Anthony vous écrit par email sous 1 heure ouvrée.`
+        } else if (slot === 'morning') {
+            body = `Merci ${firstWord} ! Anthony vous appelle demain matin (ou ce matin si on est encore en début de journée).`
+        } else if (slot === 'afternoon') {
+            body = `Merci ${firstWord} ! Anthony vous appelle cet après-midi (ou demain après-midi si vous écrivez en soirée).`
+        } else if (slot === 'evening') {
+            body = `Merci ${firstWord} ! Anthony vous appelle en fin de journée.`
+        } else {
+            body = `Merci ${firstWord} ! Anthony vous appelle dès que possible (sous 1 heure ouvrée).`
+        }
+        return <SuccessPanel title="Demande reçue" body={body} onClose={onClose} />
     }
 
     return (
