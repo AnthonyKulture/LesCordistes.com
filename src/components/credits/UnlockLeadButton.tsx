@@ -28,7 +28,7 @@ export const UnlockLeadButton: React.FC<UnlockLeadButtonProps> = ({ job, onUnloc
 
     const unlocked = isJobUnlocked(job.id);
 
-    if (job.status === 'expired') {
+    if (job.status === 'expired' || job.status === 'completed') {
         return (
             <div className="flex items-center gap-2 text-slate-600 text-sm font-semibold p-3 bg-slate-100 rounded-xl border border-slate-200">
                 <CheckCircle2 size={18} className="text-slate-500" />

@@ -21,12 +21,13 @@ export const JobBoard: React.FC = () => {
     const { data: jobs, isLoading, error } = useQuery({
         queryKey: ['jobs', 'visible', limit],
         queryFn: async () => {
-            // 'live' = active, 'expired' = "Déjà effectuée" (J+15 sans revalidation),
-            // toujours visible mais désactivée pour preuve sociale.
+            // 'live' = active, 'expired' = J+15 sans revalidation, 'completed' =
+            // mission terminée explicitement. 'expired' + 'completed' affichées
+            // en grisé pour preuve sociale.
             const { data, error } = await supabase
                 .from('jobs')
                 .select('*, creator:profiles!created_by(role)')
-                .in('status', ['live', 'expired'])
+                .in('status', ['live', 'expired', 'completed'])
                 .order('created_at', { ascending: false })
                 .limit(limit);
 
@@ -37,6 +38,7 @@ export const JobBoard: React.FC = () => {
 
     const filteredJobs = jobs || [];
     const activeCount = filteredJobs.filter(j => j.status === 'live').length;
+    const closedCount = filteredJobs.length - activeCount;
 
     return (
         <>
@@ -49,7 +51,7 @@ export const JobBoard: React.FC = () => {
                     <div>
                         <h2 className="text-3xl font-bold text-slate-900">Missions disponibles</h2>
                         <p className="text-slate-500 mt-1">
-                            {isLoading ? 'Chargement…' : `${activeCount} mission${activeCount !== 1 ? 's' : ''} active${activeCount !== 1 ? 's' : ''}${filteredJobs.length > activeCount ? ` · ${filteredJobs.length - activeCount} déjà effectuée${filteredJobs.length - activeCount !== 1 ? 's' : ''}` : ''}`}
+                            {isLoading ? 'Chargement…' : `${activeCount} mission${activeCount !== 1 ? 's' : ''} active${activeCount !== 1 ? 's' : ''}${closedCount > 0 ? ` · ${closedCount} déjà effectuée${closedCount !== 1 ? 's' : ''}` : ''}`}
                         </p>
                     </div>
 

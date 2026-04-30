@@ -26,13 +26,13 @@ interface Props {
 async function getJob(slug: string): Promise<Job | null> {
     try {
         const supabase = await createSupabaseServerClient()
-        // 'live' (active) et 'expired' (déjà effectuée) accessibles publiquement.
-        // 'pending', 'rejected', 'completed', 'cancelled' restent cachés.
+        // 'live' (active), 'expired' (J+15) et 'completed' (terminée) accessibles publiquement.
+        // 'pending', 'rejected', 'cancelled' restent cachés.
         const { data, error } = await supabase
             .from('jobs')
             .select('*')
             .eq('slug', slug)
-            .in('status', ['live', 'expired'])
+            .in('status', ['live', 'expired', 'completed'])
             .single()
         if (error || !data) return null
         return data as Job
