@@ -45,7 +45,7 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
     const isOwner = user && job.created_by === user.id;
     const unlocked = isJobUnlocked(job.id);
     const canViewContact = user && (isOwner || unlocked);
-    const isClosed = job.status === 'expired';
+    const isClosed = job.status === 'expired' || job.status === 'completed';
     const freshness = isClosed ? null : getFreshnessBadge(job);
 
     const budget = getBudgetDisplay(job);
