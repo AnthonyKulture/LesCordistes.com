@@ -1,35 +1,9 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
-import { Bell, Check, X, Search } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
+import { Bell, Check, Search, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FRENCH_DEPARTMENTS } from '../../constants/departments'
-
-const DISMISS_KEY = 'pro_alert_cta_dismissed_at'
-const SUCCESS_KEY = 'pro_alert_cta_subscribed_at'
-const DISMISS_TTL_MS = 1000 * 60 * 60 * 24 * 14   // 14 jours
-const SUCCESS_TTL_MS = 1000 * 60 * 60 * 24 * 90   // 90 jours
-
-function isFreshFlag(key: string, ttl: number): boolean {
-    if (typeof window === 'undefined') return false
-    try {
-        const raw = window.localStorage.getItem(key)
-        if (!raw) return false
-        const ts = Number(raw)
-        if (!Number.isFinite(ts)) return false
-        return Date.now() - ts < ttl
-    } catch {
-        return false
-    }
-}
-
-function setFlag(key: string) {
-    try {
-        window.localStorage.setItem(key, String(Date.now()))
-    } catch {
-        // ignore
-    }
-}
 
 interface Props {
     /** Optionnel : valeur initiale du sélecteur de départements (ex: zones d'intervention du pro). */
@@ -39,7 +13,9 @@ interface Props {
 }
 
 export const ProAlertCTA: React.FC<Props> = ({ defaultDepartments, defaultEmail }) => {
-    const [hidden, setHidden] = useState(true)
+    // Le bloc reste TOUJOURS affiché — pas de close ni de localStorage dismiss.
+    // C'est volontaire : on veut maximiser la capture d'emails côté pro,
+    // notamment pour les visiteurs non-connectés.
     const [expanded, setExpanded] = useState(false)
     const [email, setEmail] = useState(defaultEmail || '')
     const [departments, setDepartments] = useState<string[]>(defaultDepartments ?? [])
@@ -47,18 +23,6 @@ export const ProAlertCTA: React.FC<Props> = ({ defaultDepartments, defaultEmail 
     const [submitting, setSubmitting] = useState(false)
     const [done, setDone] = useState(false)
     const [error, setError] = useState<string | null>(null)
-
-    useEffect(() => {
-        if (isFreshFlag(SUCCESS_KEY, SUCCESS_TTL_MS)) {
-            setHidden(true)
-            return
-        }
-        if (isFreshFlag(DISMISS_KEY, DISMISS_TTL_MS)) {
-            setHidden(true)
-            return
-        }
-        setHidden(false)
-    }, [])
 
     const toggleDept = (code: string) => {
         setDepartments(prev =>
@@ -73,11 +37,6 @@ export const ProAlertCTA: React.FC<Props> = ({ defaultDepartments, defaultEmail 
             d => d.label.toLowerCase().includes(q) || d.code.includes(q)
         )
     }, [search])
-
-    const handleDismiss = () => {
-        setFlag(DISMISS_KEY)
-        setHidden(true)
-    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -102,7 +61,6 @@ export const ProAlertCTA: React.FC<Props> = ({ defaultDepartments, defaultEmail 
                 setError(body?.error ?? 'Inscription impossible')
                 return
             }
-            setFlag(SUCCESS_KEY)
             setDone(true)
             setExpanded(false)
         } catch {
@@ -112,32 +70,20 @@ export const ProAlertCTA: React.FC<Props> = ({ defaultDepartments, defaultEmail 
         }
     }
 
-    if (hidden) return null
-
     if (done) {
         return (
-            <div className="flex items-start sm:items-center justify-between gap-3 bg-emerald-50 border border-emerald-200 rounded-xl p-4 sm:px-5 sm:py-3.5 mb-6">
-                <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-0">
-                        <Check size={16} className="text-emerald-600" />
-                    </div>
-                    <div className="min-w-0">
-                        <p className="text-sm font-semibold text-emerald-900 leading-snug">
-                            C'est noté — alertes activées pour {departments.length === 1 ? 'le département' : 'les départements'} {departments.join(', ')}.
-                        </p>
-                        <p className="text-xs text-emerald-700 mt-1 break-words">
-                            On vous écrit à <strong>{email}</strong> dès qu'une nouvelle mission tombe.
-                        </p>
-                    </div>
+            <div className="flex items-start sm:items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl p-4 sm:px-5 sm:py-3.5 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-0">
+                    <Check size={16} className="text-emerald-600" />
                 </div>
-                <button
-                    type="button"
-                    onClick={() => setHidden(true)}
-                    aria-label="Masquer"
-                    className="flex-shrink-0 p-1.5 rounded-md text-emerald-700 hover:bg-emerald-100 transition-colors"
-                >
-                    <X size={16} />
-                </button>
+                <div className="min-w-0">
+                    <p className="text-sm font-semibold text-emerald-900 leading-snug">
+                        C'est noté — alertes activées pour {departments.length === 1 ? 'le département' : 'les départements'} {departments.join(', ')}.
+                    </p>
+                    <p className="text-xs text-emerald-700 mt-1 break-words">
+                        On vous écrit à <strong>{email}</strong> dès qu'une nouvelle mission tombe.
+                    </p>
+                </div>
             </div>
         )
     }
@@ -158,37 +104,17 @@ export const ProAlertCTA: React.FC<Props> = ({ defaultDepartments, defaultEmail 
                             Email + vos départements — gratuit, désinscription en 1 clic.
                         </p>
                     </div>
-                    {/* Bouton fermer flottant — à droite uniquement sur mobile (top-right de la card sur sm+ via flex). */}
-                    <button
-                        type="button"
-                        onClick={handleDismiss}
-                        aria-label="Masquer"
-                        className="sm:hidden flex-shrink-0 p-1.5 -mr-1 rounded-md text-slate-500 hover:bg-slate-200/60 transition-colors"
-                    >
-                        <X size={16} />
-                    </button>
                 </div>
 
                 {/* CTA — pleine largeur sur mobile, auto sur sm+. Animé. */}
-                <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto">
-                    <button
-                        type="button"
-                        onClick={() => setExpanded(v => !v)}
-                        className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 sm:py-2 bg-gradient-to-r from-brand-blue via-brand-blue-light to-brand-blue animate-gradient-shift text-white rounded-lg text-sm sm:text-xs font-bold uppercase tracking-wide shadow-sm hover:shadow-md transition-shadow"
-                    >
-                        <Bell size={14} className="sm:hidden" />
-                        {expanded ? 'Réduire' : 'Activer mes alertes'}
-                    </button>
-                    {/* Bouton fermer desktop uniquement. */}
-                    <button
-                        type="button"
-                        onClick={handleDismiss}
-                        aria-label="Masquer"
-                        className="hidden sm:inline-flex p-1.5 rounded-md text-slate-500 hover:bg-slate-200/60 transition-colors"
-                    >
-                        <X size={16} />
-                    </button>
-                </div>
+                <button
+                    type="button"
+                    onClick={() => setExpanded(v => !v)}
+                    className="w-full sm:w-auto flex-shrink-0 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 sm:py-2 bg-gradient-to-r from-brand-blue via-brand-blue-light to-brand-blue animate-gradient-shift text-white rounded-lg text-sm sm:text-xs font-bold uppercase tracking-wide shadow-sm hover:shadow-md transition-shadow"
+                >
+                    <Bell size={14} className="sm:hidden" />
+                    {expanded ? 'Réduire' : 'Activer mes alertes'}
+                </button>
             </div>
 
             <AnimatePresence initial={false}>
