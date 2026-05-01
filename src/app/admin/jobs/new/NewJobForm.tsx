@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CATEGORY_LABELS } from '@/constants/categories'
+import { FRENCH_DEPARTMENTS } from '@/constants/departments'
 import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 
 interface InitialData {
@@ -13,6 +14,7 @@ interface InitialData {
     contact_company_name?: string
     location_city?: string
     location_address?: string
+    location_department?: string
     category?: string
     description?: string
     title?: string
@@ -45,6 +47,7 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
     const [description, setDescription] = useState(initial?.description ?? '')
     const [city, setCity] = useState(initial?.location_city ?? '')
     const [address, setAddress] = useState(initial?.location_address ?? '')
+    const [department, setDepartment] = useState(initial?.location_department ?? '')
     const [heightMeters, setHeightMeters] = useState(initial?.height_meters ?? '')
     const [budgetMin, setBudgetMin] = useState(initial?.budget_min ?? '')
     const [budgetMax, setBudgetMax] = useState(initial?.budget_max ?? '')
@@ -80,6 +83,7 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
                     description: description.trim(),
                     location_city: city.trim(),
                     location_address: address.trim() || null,
+                    location_department: department || null,
                     height_meters: heightMeters ? Number(heightMeters) : null,
                     budget_min: budgetMin ? Number(budgetMin) : null,
                     budget_max: budgetMax ? Number(budgetMax) : null,
@@ -216,16 +220,34 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
                             className={inputCls}
                         />
                     </Field>
-                    <Field label="Adresse (optionnel)">
-                        <input
-                            type="text"
-                            value={address}
-                            onChange={(e) => setAddress(e.target.value)}
-                            placeholder="12 rue de la République"
+                    <Field
+                        label="Département"
+                        hint="Indispensable pour les alertes pros par zone."
+                    >
+                        <select
+                            value={department}
+                            onChange={(e) => setDepartment(e.target.value)}
                             className={inputCls}
-                        />
+                        >
+                            <option value="">— Choisir —</option>
+                            {FRENCH_DEPARTMENTS.map((d) => (
+                                <option key={d.code} value={d.code}>
+                                    {d.label}
+                                </option>
+                            ))}
+                        </select>
                     </Field>
                 </Row>
+
+                <Field label="Adresse (optionnel)">
+                    <input
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="12 rue de la République"
+                        className={inputCls}
+                    />
+                </Field>
 
                 <Row>
                     <Field label="Hauteur (m)">
