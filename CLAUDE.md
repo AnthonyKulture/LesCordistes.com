@@ -198,7 +198,6 @@ Cible 80-160 mots intro + 3 useCases. Chaque texte doit passer le **swap test** 
 | Supabase project ref | `esvnvxkbnhvxpnlhyjsw` |
 | Admin email | `anthony@lescordistes.com` |
 | Node/npm | `/Users/anthony/.nvm/versions/node/v22.14.0/bin/` |
-| Mode switcher spec | `bmad-transition-switcher.md` |
 
 ---
 
