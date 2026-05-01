@@ -28,16 +28,8 @@ export default function ChoisirRolePage() {
             const supabase = createSupabaseBrowserClient()
             await (supabase.from('profiles') as any).update({ role }).eq('id', user.id)
             await refreshProfile()
-            supabase.functions.invoke('send-email', {
-                body: {
-                    to: user.email,
-                    subject: role === 'pro'
-                        ? 'Votre profil pro est actif — LesCordistes.com'
-                        : 'Bienvenue sur LesCordistes.com',
-                    templateId: role === 'pro' ? 'welcome-pro' : 'welcome-client',
-                    data: { name: profile?.first_name || '' },
-                },
-            }).catch(() => {})
+            // Welcome email envoyé par le trigger SQL handle_new_user_update
+            // (OLD.full_name vide → NEW.full_name renseigné). Ne pas dupliquer.
             router.replace(role === 'pro' ? '/dashboard/pro?welcome=pro' : '/dashboard/client?welcome=client')
         } finally {
             setSelecting(false)

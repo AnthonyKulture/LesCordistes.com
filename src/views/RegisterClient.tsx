@@ -95,14 +95,7 @@ export function RegisterClient() {
 
             posthog.identify(formData.email, { email: formData.email, role: 'client', client_type: formData.client_type });
             posthog.capture('user_signed_up', { role: 'client', client_type: formData.client_type });
-            supabase.functions.invoke('send-email', {
-                body: {
-                    to: formData.email,
-                    subject: 'Bienvenue sur LesCordistes.com',
-                    templateId: 'welcome-client',
-                    data: { name: formData.firstName || '' },
-                },
-            }).catch(() => {});
+            // Welcome email envoyé par le trigger SQL handle_new_user (INSERT) — ne pas dupliquer ici.
             router.push('/dashboard');
         } catch (err: any) {
             setError(translateAuthError(err));
