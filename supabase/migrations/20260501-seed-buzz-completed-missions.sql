@@ -9,8 +9,8 @@
 --   • status='completed' → exclu du matching pro-alerts-cron (qui filtre 'live')
 --   • admin_created=true → exclu du jobs-freshness-cron (J+5 / J+10)
 --   • created_by=NULL → pas de propriétaire client (pas d'email transactionnel)
---   • client_contact_info=NULL → rien à débloquer (UnlockLeadButton bloque
---     les missions completed de toute façon)
+--   • client_contact_info=placeholder archive (NOT NULL côté schéma) — la
+--     UnlockLeadButton bloque de toute façon les missions completed
 --   • admin_notes='SEED — buzz/social proof' → permet le rollback ciblé
 --
 -- ROLLBACK :
@@ -18,12 +18,16 @@
 --
 -- À exécuter MANUELLEMENT dans Supabase SQL Editor.
 
+-- Placeholder archive utilisé pour client_contact_info (colonne NOT NULL côté
+-- schéma). La UnlockLeadButton bloque le déblocage sur status='completed',
+-- donc cette donnée n'est jamais exposée à un pro.
+
 INSERT INTO jobs (
     title, slug, description, category, type, status,
     location_city, location_department, height_meters,
     budget_min, budget_max, daily_rate, duration_days,
     contract_type, credit_cost,
-    admin_created, admin_notes,
+    admin_created, admin_notes, client_contact_info,
     created_at, moderated_at
 ) VALUES
 
@@ -36,7 +40,7 @@ INSERT INTO jobs (
     'Lyon', '69', 24,
     3200, 4500, NULL, 4,
     NULL, 1,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '52 days', NOW() - INTERVAL '50 days'
 ),
 
@@ -49,7 +53,7 @@ INSERT INTO jobs (
     'Bordeaux', '33', 22,
     1400, 1800, NULL, 2,
     NULL, 1,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '21 days', NOW() - INTERVAL '20 days'
 ),
 
@@ -62,7 +66,7 @@ INSERT INTO jobs (
     'Paris', '75', 28,
     7800, 9500, NULL, 5,
     NULL, 2,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '34 days', NOW() - INTERVAL '32 days'
 ),
 
@@ -75,7 +79,7 @@ INSERT INTO jobs (
     'Saint-Nazaire', '44', 95,
     NULL, NULL, 850, 3,
     'subcontracting', 2,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '14 days', NOW() - INTERVAL '13 days'
 ),
 
@@ -88,7 +92,7 @@ INSERT INTO jobs (
     'Marseille', '13', 52,
     5800, 7400, NULL, 4,
     NULL, 2,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '42 days', NOW() - INTERVAL '40 days'
 ),
 
@@ -101,7 +105,7 @@ INSERT INTO jobs (
     'Nice', '06', 35,
     18000, 24000, NULL, 8,
     'subcontracting', 3,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '38 days', NOW() - INTERVAL '36 days'
 ),
 
@@ -114,7 +118,7 @@ INSERT INTO jobs (
     'Strasbourg', '67', 18,
     6500, 8200, NULL, 6,
     NULL, 2,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '64 days', NOW() - INTERVAL '62 days'
 ),
 
@@ -127,7 +131,7 @@ INSERT INTO jobs (
     'Lille', '59', 9,
     420, 600, NULL, 1,
     NULL, 1,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '11 days', NOW() - INTERVAL '10 days'
 ),
 
@@ -140,7 +144,7 @@ INSERT INTO jobs (
     'Le Havre', '76', 28,
     NULL, NULL, 920, 5,
     'subcontracting', 3,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '46 days', NOW() - INTERVAL '44 days'
 ),
 
@@ -153,7 +157,7 @@ INSERT INTO jobs (
     'Lyon', '69', 32,
     3400, 4200, NULL, 2,
     NULL, 2,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '17 days', NOW() - INTERVAL '16 days'
 ),
 
@@ -166,7 +170,7 @@ INSERT INTO jobs (
     'Megève', '74', 14,
     4200, 5500, NULL, 3,
     NULL, 2,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '58 days', NOW() - INTERVAL '56 days'
 ),
 
@@ -179,7 +183,7 @@ INSERT INTO jobs (
     'Cannes', '06', 16,
     1900, 2400, NULL, 2,
     NULL, 1,
-    TRUE, 'SEED — buzz/social proof',
+    TRUE, 'SEED — buzz/social proof', '{"name": "Mission archivée", "email": "archive@lescordistes.com", "phone": ""}'::jsonb,
     NOW() - INTERVAL '24 days', NOW() - INTERVAL '23 days'
 )
 
