@@ -516,6 +516,7 @@ const SUBSCRIBABLE_TEMPLATES = new Set<string>([
   'admin-custom',
   'marketing-generic',
   'pro-mission-alert',
+  'pro-alert-confirmation',
 ]);
 
 // Templates strictement marketing (jamais déclenchés par un trigger transactionnel).
@@ -524,7 +525,63 @@ const MARKETING_TEMPLATES = new Set<string>([
   'marketing-generic',
   'pro-credit-offer',
   'pro-mission-alert',
+  'pro-alert-confirmation',
 ]);
+
+// ─── Pro alert confirmation ───────────────────────────────────────────────────
+// Confirmation d'inscription aux alertes mission par département.
+// Variables :
+//   - departments    : "Alpes-Maritimes (06), Bouches-du-Rhône (13)" (texte joli)
+//   - departmentCount : nombre de départements (string)
+//   - unsubscribeUrl : OBLIGATOIRE — lien public signé HMAC
+function proAlertConfirmation(data: Record<string, string>): string {
+  const departments = escHtml(data.departments || '');
+  const count = parseInt(data.departmentCount || '1', 10) || 1;
+  const isPlural = count > 1;
+  const unsubscribeUrl = (data.unsubscribeUrl || '').trim();
+  const safeUnsub = /^https?:\/\/[^\s"'<>]+$/i.test(unsubscribeUrl)
+    ? unsubscribeUrl
+    : 'https://www.lescordistes.com/marketing/unsubscribe';
+
+  const subject = `Vos alertes missions sont actives — ${count} département${isPlural ? 's' : ''} suivi${isPlural ? 's' : ''}`;
+
+  return base(escHtml(subject), `
+    ${badge('#15803d', '#f0fdf4', '#16a34a', 'Alertes activées')}
+    <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">
+      C'est noté ! Vos alertes sont en place.
+    </h1>
+    <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 24px;">
+      Dès qu'une nouvelle mission est publiée sur LesCordistes.com dans ${isPlural ? 'l\'un de vos départements' : 'votre département'}, vous recevrez un email récapitulatif. Pas de spam : <strong>uniquement quand il y a du nouveau pour vous</strong>.
+    </p>
+
+    <div style="background:${S1};border-radius:8px;padding:20px 24px;margin:0 0 28px;">
+      <p style="font-size:12px;font-weight:600;color:${B};margin:0 0 10px;text-transform:uppercase;letter-spacing:0.05em;">
+        ${isPlural ? 'Départements suivis' : 'Département suivi'}
+      </p>
+      <p style="font-size:15px;color:${S7};margin:0;line-height:22px;">${departments}</p>
+    </div>
+
+    <div style="background:${S1};border-radius:8px;padding:24px;margin:0 0 28px;">
+      <p style="font-size:13px;font-weight:600;color:${B};margin:0 0 16px;text-transform:uppercase;letter-spacing:0.05em;">Comment ça marche</p>
+      <p style="font-size:14px;color:${S7};margin:0 0 10px;line-height:20px;"><span style="color:${BL};font-weight:700;">1.</span> <strong>Une mission tombe</strong> dans ${isPlural ? 'l\'un de vos départements' : 'votre département'}</p>
+      <p style="font-size:14px;color:${S7};margin:0 0 10px;line-height:20px;"><span style="color:${BL};font-weight:700;">2.</span> <strong>Email récap automatique</strong> avec les détails (lieu, type, budget)</p>
+      <p style="font-size:14px;color:${S7};margin:0;line-height:20px;"><span style="color:${BL};font-weight:700;">3.</span> <strong>Un clic</strong> vous emmène sur la mission, vous débloquez le contact si elle vous intéresse</p>
+    </div>
+
+    ${btn('https://www.lescordistes.com/jobs', 'Voir les missions disponibles')}
+
+    <hr style="border:none;border-top:1px solid ${S2};margin:28px 0 20px;"/>
+    <p style="font-size:13px;color:${S5};line-height:20px;margin:0 0 16px;">
+      Une question ? Répondez directement à cet email.
+    </p>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0 0 8px;text-align:center;">
+      Vous recevez cet email parce que vous vous êtes inscrit aux alertes missions sur LesCordistes.com.
+    </p>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0;text-align:center;">
+      <a href="${escHtml(safeUnsub)}" style="color:${S5};text-decoration:underline;">Se désinscrire des alertes</a>
+    </p>
+  `);
+}
 
 // ─── Pro mission alert ────────────────────────────────────────────────────────
 // Alerte cordiste : nouvelles missions dans ses départements.
@@ -722,6 +779,7 @@ serve(async (req) => {
       case 'admin-custom':     html = adminCustom(data); break;
       case 'marketing-generic': html = marketingGeneric(data); break;
       case 'pro-mission-alert': html = proMissionAlert(data); break;
+      case 'pro-alert-confirmation': html = proAlertConfirmation(data); break;
       default:
         throw new Error(`Template not found: ${templateId}`);
     }

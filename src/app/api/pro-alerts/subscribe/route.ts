@@ -1,8 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import { FRENCH_DEPARTMENTS } from '@/constants/departments'
+import { signUnsubscribeToken } from '@/lib/marketing/unsubscribeToken'
 
 const VALID_DEPT_CODES = new Set(FRENCH_DEPARTMENTS.map(d => d.code))
+const DEPT_LABEL = new Map(FRENCH_DEPARTMENTS.map(d => [d.code, d.label]))
+const SEO_BASE_URL = process.env.SEO_BASE_URL || 'https://www.lescordistes.com'
+
+// Pseudo-id partagé avec pro-alerts-cron pour le token HMAC unsub.
+const ALERT_CAMPAIGN_ID = 'pro-mission-alert'
+
+function buildUnsubscribeUrl(email: string): string {
+    try {
+        const token = signUnsubscribeToken(email, ALERT_CAMPAIGN_ID)
+        return `${SEO_BASE_URL}/marketing/unsubscribe?token=${encodeURIComponent(token)}&source=pro-alerts`
+    } catch {
+        // MARKETING_UNSUBSCRIBE_SECRET manquant — on tombe sur la page générique.
+        return `${SEO_BASE_URL}/marketing/unsubscribe`
+    }
+}
 
 export async function POST(req: NextRequest) {
     try {
@@ -66,6 +82,39 @@ export async function POST(req: NextRequest) {
                     ? 'Sélectionnez au moins un département'
                     : 'Inscription impossible'
             return NextResponse.json({ error: message }, { status: 400 })
+        }
+
+        // Email de confirmation — envoyé pour created/updated, JAMAIS pour
+        // 'updated_but_unsubscribed' (le user reste désinscrit, on ne lui
+        // envoie rien tant qu'il n'a pas explicitement opt-in à nouveau).
+        if (data.action === 'created' || data.action === 'updated') {
+            const finalDepts: string[] = Array.isArray(data.departments)
+                ? data.departments
+                : departments
+            const departmentsLabel = finalDepts
+                .map(code => DEPT_LABEL.get(code) ?? code)
+                .join(', ')
+            const unsubscribeUrl = buildUnsubscribeUrl(email.toLowerCase().trim())
+
+            // Fire-and-forget — on ne bloque pas la réponse à l'utilisateur si
+            // l'email échoue (l'inscription en base est déjà OK).
+            admin.functions
+                .invoke('send-email', {
+                    body: {
+                        to: email.toLowerCase().trim(),
+                        subject: `Vos alertes missions sont actives — ${finalDepts.length} département${finalDepts.length > 1 ? 's' : ''} suivi${finalDepts.length > 1 ? 's' : ''}`,
+                        templateId: 'pro-alert-confirmation',
+                        data: {
+                            departments: departmentsLabel,
+                            departmentCount: String(finalDepts.length),
+                            unsubscribeUrl,
+                            unsubscribe_url: unsubscribeUrl,
+                        },
+                    },
+                })
+                .catch((err: unknown) => {
+                    console.error('[pro-alerts/subscribe] confirmation email failed:', err)
+                })
         }
 
         return NextResponse.json({
