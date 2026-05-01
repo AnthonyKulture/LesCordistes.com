@@ -310,7 +310,7 @@ export function getFreshnessBadge(
     const now = Date.now();
     const created = new Date(job.created_at).getTime();
 
-    if (Number.isFinite(created) && now - created < 7 * DAY_MS) {
+    if (Number.isFinite(created) && now - created < 14 * DAY_MS) {
         return {
             label: 'Nouveau',
             className:

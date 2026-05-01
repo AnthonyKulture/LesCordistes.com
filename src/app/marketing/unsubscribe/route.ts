@@ -102,6 +102,16 @@ async function processUnsubscribe(
         )
     }
 
+    // Désinscrit aussi des alertes pro-mission (idempotent — no-op si l'email
+    // n'a pas de souscription). Le token unsub est partagé entre tous les
+    // emails marketing.
+    const { error: alertErr } = await admin.rpc('unsubscribe_pro_alert', {
+        p_email: payload.email,
+    })
+    if (alertErr) {
+        console.warn('[marketing/unsubscribe] pro-alerts unsub warning:', alertErr.message)
+    }
+
     if (data && (data as any).ok === false) {
         return page(
             'Lien invalide',

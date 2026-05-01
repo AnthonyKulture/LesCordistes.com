@@ -515,6 +515,7 @@ const SUBSCRIBABLE_TEMPLATES = new Set<string>([
   'pro-credit-offer',
   'admin-custom',
   'marketing-generic',
+  'pro-mission-alert',
 ]);
 
 // Templates strictement marketing (jamais déclenchés par un trigger transactionnel).
@@ -522,7 +523,93 @@ const SUBSCRIBABLE_TEMPLATES = new Set<string>([
 const MARKETING_TEMPLATES = new Set<string>([
   'marketing-generic',
   'pro-credit-offer',
+  'pro-mission-alert',
 ]);
+
+// ─── Pro mission alert ────────────────────────────────────────────────────────
+// Alerte cordiste : nouvelles missions dans ses départements.
+// Variables :
+//   - departments : "06, 13" (texte joli)
+//   - missions    : Array<{ title, city, departmentLabel, slug, isRenfort?, creditCost? }>
+//                   (déjà sérialisé en JSON par le cron, on parse ici)
+//   - unsubscribeUrl : OBLIGATOIRE — lien public signé HMAC
+function proMissionAlert(data: Record<string, string>): string {
+  const departments = escHtml(data.departments || '');
+  let missions: Array<{
+    title?: string;
+    city?: string;
+    departmentLabel?: string;
+    slug?: string;
+    isRenfort?: boolean;
+    creditCost?: number;
+  }> = [];
+  try {
+    const raw = data.missions || '[]';
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) missions = parsed.slice(0, 12);
+  } catch {
+    missions = [];
+  }
+  const count = missions.length;
+  const unsubscribeUrl = (data.unsubscribeUrl || '').trim();
+  const safeUnsub = /^https?:\/\/[^\s"'<>]+$/i.test(unsubscribeUrl)
+    ? unsubscribeUrl
+    : 'https://www.lescordistes.com/marketing/unsubscribe';
+
+  const subject = count === 1
+    ? `Nouvelle mission disponible — ${missions[0]?.city ?? departments}`
+    : `${count} nouvelles missions dans vos départements`;
+
+  const missionCards = missions
+    .map((m) => {
+      const title = escHtml(m.title || 'Mission');
+      const city = escHtml(m.city || '');
+      const dept = escHtml(m.departmentLabel || '');
+      const slug = escHtml(m.slug || '');
+      const url = `https://www.lescordistes.com/jobs/${slug}`;
+      const renfortBadge = m.isRenfort
+        ? `<span style="display:inline-block;background:${B};color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-right:6px;text-transform:uppercase;letter-spacing:0.04em;">Renfort PRO</span>`
+        : '';
+      const cost = typeof m.creditCost === 'number' && m.creditCost > 0 ? m.creditCost : 1;
+      return `
+        <div style="background:${S1};border-radius:8px;padding:16px 20px;margin:0 0 12px;">
+          <div style="margin-bottom:6px;">
+            ${renfortBadge}
+            <span style="font-size:11px;color:${S5};text-transform:uppercase;letter-spacing:0.04em;">${cost} crédit${cost > 1 ? 's' : ''} pour débloquer</span>
+          </div>
+          <p style="font-size:16px;font-weight:700;color:${B};margin:0 0 6px;line-height:22px;">${title}</p>
+          <p style="font-size:13px;color:${S5};margin:0 0 10px;">${city}${dept ? ` · ${dept}` : ''}</p>
+          <a href="${url}" style="display:inline-block;background:${B};color:#fff;font-size:13px;font-weight:600;text-decoration:none;padding:8px 16px;border-radius:6px;">Voir la mission →</a>
+        </div>
+      `;
+    })
+    .join('');
+
+  const intro = count === 1
+    ? `Une nouvelle mission vient d'être publiée dans <strong>${departments}</strong>.`
+    : `<strong>${count} nouvelles missions</strong> viennent d'être publiées dans <strong>${departments}</strong>.`;
+
+  const subjectEsc = escHtml(subject);
+
+  return base(subjectEsc, `
+    <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">
+      ${count === 1 ? '1 nouvelle mission' : `${count} nouvelles missions`}
+    </h1>
+    <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 24px;">${intro}</p>
+    ${missionCards || `<p style="font-size:14px;color:${S5};">Aucune mission à afficher.</p>`}
+    <p style="font-size:13px;color:${S5};line-height:20px;margin:24px 0 0;">
+      Les meilleures missions se débloquent vite — un coup d'œil sur la liste complète :
+    </p>
+    ${btn('https://www.lescordistes.com/jobs', 'Voir toutes les missions')}
+    <hr style="border:none;border-top:1px solid ${S2};margin:32px 0 20px;"/>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0 0 8px;text-align:center;">
+      Vous recevez cet email car vous avez activé les alertes missions sur LesCordistes.com pour : ${departments}.
+    </p>
+    <p style="font-size:12px;color:${S4};line-height:18px;margin:0;text-align:center;">
+      <a href="${escHtml(safeUnsub)}" style="color:${S5};text-decoration:underline;">Se désinscrire des alertes</a>
+    </p>
+  `);
+}
 
 // ─── Marketing generic ────────────────────────────────────────────────────────
 // Template marketing standard avec footer obligatoire de désinscription.
@@ -634,6 +721,7 @@ serve(async (req) => {
       case 'pro-credit-offer': html = proCreditOffer(data); break;
       case 'admin-custom':     html = adminCustom(data); break;
       case 'marketing-generic': html = marketingGeneric(data); break;
+      case 'pro-mission-alert': html = proMissionAlert(data); break;
       default:
         throw new Error(`Template not found: ${templateId}`);
     }

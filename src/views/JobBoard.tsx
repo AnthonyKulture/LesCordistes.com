@@ -8,6 +8,8 @@ import { supabase } from '../lib/supabase';
 import { JobCard } from '../components/JobCard';
 import { Button } from '../components/ui/Button';
 import { PromoActivation } from '../components/promo/PromoActivation';
+import { ProAlertCTA } from '../components/pro-alerts/ProAlertCTA';
+import { useAuth } from '../contexts/AuthContext';
 import type { Job } from '../types';
 
 const JobMap = lazy(() => import('../components/map/JobMap').then(m => ({ default: m.JobMap })));
@@ -17,6 +19,7 @@ const PAGE_SIZE = 50;
 export const JobBoard: React.FC = () => {
     const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
     const [limit, setLimit] = useState(PAGE_SIZE);
+    const { user, profile } = useAuth();
 
     const { data: jobs, isLoading, error } = useQuery({
         queryKey: ['jobs', 'visible', limit],
@@ -81,6 +84,12 @@ export const JobBoard: React.FC = () => {
                         </button>
                     </div>
                 </div>
+
+                {/* Pro alert subscription — visible mais non intrusif */}
+                <ProAlertCTA
+                    defaultEmail={user?.email ?? undefined}
+                    defaultDepartments={profile?.intervention_zones ?? undefined}
+                />
 
                 {/* Reinforcement CTA */}
                 <div className="flex items-center justify-between gap-4 bg-white border border-slate-200 rounded-xl px-5 py-3.5 mb-6">
