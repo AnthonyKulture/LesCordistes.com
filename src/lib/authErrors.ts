@@ -25,8 +25,10 @@ const CODE_MAP: Record<string, string> = {
     email_address_not_authorized: "Cette adresse email n'est pas autorisée.",
     email_provider_disabled: "L'inscription par email est désactivée.",
 
-    // Password
-    weak_password: 'Mot de passe trop faible. Utilisez au moins 6 caractères.',
+    // Password — exigences Supabase :
+    //   • 8 caractères minimum
+    //   • au moins 1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial
+    weak_password: 'Mot de passe trop faible. Il doit contenir au moins 8 caractères, avec une minuscule, une majuscule, un chiffre et un caractère spécial (!@#$…).',
     same_password: 'Le nouveau mot de passe doit être différent de l\'ancien.',
 
     // OTP / magic link
@@ -70,8 +72,13 @@ const MESSAGE_PATTERNS: Array<[RegExp, string]> = [
     [/email not confirmed/i, 'Email non confirmé. Vérifiez votre boîte de réception.'],
     [/already (registered|exists)/i, 'Un compte existe déjà avec cet email. Connectez-vous.'],
     [/user already registered/i, 'Un compte existe déjà avec cet email. Connectez-vous.'],
-    [/password should be at least/i, 'Le mot de passe doit contenir au moins 6 caractères.'],
-    [/password is too weak/i, 'Mot de passe trop faible. Utilisez au moins 6 caractères.'],
+    [/password should be at least/i, 'Le mot de passe doit contenir au moins 8 caractères.'],
+    [/password should contain.*lower.*upper.*digit.*symbol/i, 'Mot de passe trop faible. Il doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial (!@#$…).'],
+    [/password should contain.*lower/i, 'Mot de passe trop faible. Il manque une lettre minuscule.'],
+    [/password should contain.*upper/i, 'Mot de passe trop faible. Il manque une lettre majuscule.'],
+    [/password should contain.*digit|password should contain.*number/i, 'Mot de passe trop faible. Il manque un chiffre.'],
+    [/password should contain.*symbol|password should contain.*special/i, 'Mot de passe trop faible. Il manque un caractère spécial (!@#$…).'],
+    [/password is too weak/i, 'Mot de passe trop faible. Il doit contenir au moins 8 caractères, avec une minuscule, une majuscule, un chiffre et un caractère spécial (!@#$…).'],
     [/new password should be different/i, 'Le nouveau mot de passe doit être différent de l\'ancien.'],
     [/unable to validate email/i, "Cette adresse email n'est pas valide."],
     [/invalid email/i, "Cette adresse email n'est pas valide."],
