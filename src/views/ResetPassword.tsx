@@ -7,6 +7,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card, CardHeader, CardBody } from '../components/ui/Card';
 import { translateAuthError } from '../lib/authErrors';
+import { validatePassword } from '../lib/passwordPolicy';
 
 export function ResetPassword() {
     const router = useRouter();
@@ -39,8 +40,9 @@ export function ResetPassword() {
             return;
         }
 
-        if (password.length < 6) {
-            setError('Le mot de passe doit contenir au moins 6 caractères');
+        const pwdError = validatePassword(password);
+        if (pwdError) {
+            setError(pwdError);
             return;
         }
 
@@ -103,7 +105,7 @@ export function ResetPassword() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Minimum 6 caractères"
+                            placeholder="Min. 8 caractères avec maj, min, chiffre, spécial"
                             required
                         />
 
@@ -119,8 +121,20 @@ export function ResetPassword() {
                         <div className="text-sm text-slate-600">
                             <p className="font-semibold mb-1">Votre mot de passe doit contenir :</p>
                             <ul className="list-disc list-inside space-y-1">
-                                <li className={password.length >= 6 ? 'text-green-600' : ''}>
-                                    Au moins 6 caractères
+                                <li className={password.length >= 8 ? 'text-green-600' : ''}>
+                                    Au moins 8 caractères
+                                </li>
+                                <li className={/[a-z]/.test(password) ? 'text-green-600' : ''}>
+                                    Une lettre minuscule
+                                </li>
+                                <li className={/[A-Z]/.test(password) ? 'text-green-600' : ''}>
+                                    Une lettre majuscule
+                                </li>
+                                <li className={/\d/.test(password) ? 'text-green-600' : ''}>
+                                    Un chiffre
+                                </li>
+                                <li className={/[^A-Za-z0-9]/.test(password) ? 'text-green-600' : ''}>
+                                    Un caractère spécial (!@#$…)
                                 </li>
                                 <li className={password === confirmPassword && password ? 'text-green-600' : ''}>
                                     Les deux mots de passe correspondent

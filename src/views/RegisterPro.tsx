@@ -11,6 +11,7 @@ import { Input } from '../components/ui/Input';
 import { useAuth } from '../contexts/AuthContext';
 import { AuthLayout } from '../components/layout/AuthLayout';
 import { translateAuthError } from '../lib/authErrors';
+import { validatePassword, PASSWORD_HINT } from '../lib/passwordPolicy';
 import posthog from 'posthog-js';
 
 const STORAGE_KEY = 'lescordistes_pro_reg';
@@ -71,8 +72,9 @@ export function RegisterPro() {
             return;
         }
 
-        if (formData.password.length < 6) {
-            setError('Le mot de passe doit contenir au moins 6 caractères');
+        const pwdError = validatePassword(formData.password);
+        if (pwdError) {
+            setError(pwdError);
             return;
         }
 
@@ -222,15 +224,20 @@ export function RegisterPro() {
                                 required
                             />
 
-                            <Input
-                                label="Mot de passe *"
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                placeholder="Au moins 6 caractères"
-                                required
-                            />
+                            <div>
+                                <Input
+                                    label="Mot de passe *"
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="Min. 8 caractères avec maj, min, chiffre, spécial"
+                                    required
+                                />
+                                <p className="mt-1.5 text-xs text-slate-500 leading-snug">
+                                    {PASSWORD_HINT}
+                                </p>
+                            </div>
 
                             <Button
                                 type="submit"
