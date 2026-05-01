@@ -189,8 +189,90 @@ INSERT INTO jobs (
 
 ON CONFLICT (slug) DO NOTHING;
 
--- Vérification
-SELECT id, title, location_city, location_department, category, status, created_at
+-- ============================================================
+-- Enrichissement variable des Lead Quality Scores
+-- ============================================================
+-- Sans enrichissement, toutes les missions atterrissent à 65 (baseline 50
+-- + budget 12 + height 3) → "Lead Qualifié" partout = paraît suspect.
+-- Ces UPDATEs ajoutent des signaux variés (client_type pro, lat/lng,
+-- start_date, deadline, habilitations) pour disperser les scores entre
+-- 65 et ~100 — distribution réaliste : ~5 Premium, ~5 Qualifié+, ~2 base.
+
+-- #1 Lyon façade R+8 (copro) → ~77 Qualifié+
+UPDATE jobs SET
+    client_type = 'copropriete_syndic',
+    latitude = 45.7745, longitude = 4.8527
+WHERE slug = 'nettoyage-facade-r8-lyon-tete-or';
+
+-- #3 Paris pignon copro → ~77 Qualifié+
+UPDATE jobs SET
+    client_type = 'copropriete_syndic'
+WHERE slug = 'peinture-pignon-7etages-paris-batignolles';
+
+-- #4 Éolienne offshore → ~100 Premium (signal max)
+UPDATE jobs SET
+    client_type = 'industrie_energie',
+    latitude = 47.0467, longitude = -2.7833,
+    start_date = (NOW() - INTERVAL '17 days')::date,
+    required_habilitations = ARRAY['GWO BST', 'GWO BTW', 'Sea Survival'],
+    required_level = ARRAY['cordiste_2']
+WHERE slug = 'inspection-pales-eolienne-saint-nazaire';
+
+-- #5 Marseille tour bureaux → ~93 Premium
+UPDATE jobs SET
+    client_type = 'entreprise_tertiaire',
+    latitude = 43.3099, longitude = 5.3621,
+    deadline = (NOW() - INTERVAL '38 days')::date
+WHERE slug = 'nettoyage-vitres-tour-bureaux-marseille-joliette';
+
+-- #6 Nice falaise → ~96 Premium
+UPDATE jobs SET
+    client_type = 'collectivite_public',
+    latitude = 43.7019, longitude = 7.3013,
+    start_date = (NOW() - INTERVAL '40 days')::date,
+    required_habilitations = ARRAY['CACES R486 nacelle', 'Travail en hauteur N2']
+WHERE slug = 'securisation-falaise-nice-mont-boron';
+
+-- #7 Strasbourg église ABF → ~77 Qualifié+
+UPDATE jobs SET
+    client_type = 'collectivite_public'
+WHERE slug = 'reprise-joints-eglise-strasbourg-petite-france';
+
+-- #9 Le Havre cuves silo → ~96 Premium
+UPDATE jobs SET
+    client_type = 'industrie_energie',
+    latitude = 49.4934, longitude = 0.1078,
+    start_date = (NOW() - INTERVAL '47 days')::date,
+    required_habilitations = ARRAY['ATEX zone 22', 'CATEC', 'AIPR']
+WHERE slug = 'nettoyage-cuves-silo-le-havre-port';
+
+-- #10 Lyon Confluence → ~77 Qualifié+
+UPDATE jobs SET
+    client_type = 'entreprise_tertiaire'
+WHERE slug = 'nettoyage-vitres-siege-lyon-confluence';
+
+-- #11 Megève hôtel verrière → ~85 Premium
+UPDATE jobs SET
+    client_type = 'entreprise_tertiaire',
+    start_date = (NOW() - INTERVAL '60 days')::date
+WHERE slug = 'nettoyage-verriere-hotel-megeve-mont-arbois';
+
+-- #12 Cannes palmiers (B2C luxe géocodé) → ~73 Qualifié
+UPDATE jobs SET
+    client_type = 'particulier',
+    latitude = 43.5528, longitude = 7.0174
+WHERE slug = 'elagage-palmiers-cannes-californie';
+
+-- #2 Bordeaux chêne et #8 Lille gouttière → 65 (base) — petites missions B2C, c'est cohérent.
+
+-- Vérification — incluant aperçu des signaux qui composent le LQS
+SELECT
+    title, location_city, category, status,
+    client_type,
+    (latitude IS NOT NULL) AS geocoded,
+    (start_date IS NOT NULL OR deadline IS NOT NULL) AS planning_set,
+    coalesce(array_length(required_habilitations, 1), 0) AS habilitations_count,
+    created_at
 FROM jobs
 WHERE admin_notes = 'SEED — buzz/social proof'
 ORDER BY created_at DESC;
