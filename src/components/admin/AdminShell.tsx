@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Briefcase, Users, Menu, X, BellDot, ExternalLink, Mail, Inbox, MessageSquare, PlusCircle } from 'lucide-react'
+import { LayoutDashboard, Briefcase, Users, Menu, X, BellDot, ExternalLink, Mail, Inbox, MessageSquare, PlusCircle, Bell } from 'lucide-react'
 
 type Props = {
     adminEmail: string
@@ -16,6 +16,7 @@ const NAV = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
     { href: '/admin/missions', label: 'Missions', icon: Briefcase, exact: false },
     { href: '/admin/leads', label: 'Leads', icon: Inbox, exact: false },
+    { href: '/admin/alerts', label: 'Alertes pros', icon: Bell, exact: false },
     { href: '/admin/contact-requests', label: 'Contacts', icon: MessageSquare, exact: false },
     { href: '/admin/profils', label: 'Profils', icon: Users, exact: false },
     { href: '/admin/marketing', label: 'Marketing', icon: Mail, exact: false },
