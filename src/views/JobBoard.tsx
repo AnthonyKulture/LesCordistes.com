@@ -40,8 +40,10 @@ export const JobBoard: React.FC = () => {
     });
 
     const filteredJobs = jobs || [];
-    const activeCount = filteredJobs.filter(j => j.status === 'live').length;
-    const closedCount = filteredJobs.length - activeCount;
+    const liveJobs = filteredJobs.filter(j => j.status === 'live');
+    const closedJobs = filteredJobs.filter(j => j.status !== 'live');
+    const activeCount = liveJobs.length;
+    const closedCount = closedJobs.length;
 
     return (
         <>
@@ -127,11 +129,44 @@ export const JobBoard: React.FC = () => {
                         </div>
                     </Suspense>
                 ) : filteredJobs.length > 0 ? (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                        {filteredJobs.map((job) => (
-                            <JobCard key={job.id} job={job} />
-                        ))}
-                    </div>
+                    <>
+                        {/* Missions actives — bloc principal */}
+                        {liveJobs.length > 0 ? (
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                {liveJobs.map((job) => (
+                                    <JobCard key={job.id} job={job} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 text-center">
+                                <p className="text-slate-600 text-base font-semibold">Aucune mission active à l'instant.</p>
+                                <p className="text-slate-400 mt-1 text-sm">De nouvelles missions arrivent chaque jour — revenez bientôt.</p>
+                            </div>
+                        )}
+
+                        {/* Séparateur + bloc des missions déjà réalisées */}
+                        {closedJobs.length > 0 && (
+                            <>
+                                <div className="flex items-center gap-4 mt-12 mb-6">
+                                    <div className="flex-1 h-px bg-slate-200" />
+                                    <div className="text-center">
+                                        <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                            Missions déjà réalisées
+                                        </h3>
+                                        <p className="text-xs text-slate-500 mt-1">
+                                            Aperçu de ce que les cordistes du réseau accomplissent — non débloquables.
+                                        </p>
+                                    </div>
+                                    <div className="flex-1 h-px bg-slate-200" />
+                                </div>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                    {closedJobs.map((job) => (
+                                        <JobCard key={job.id} job={job} />
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </>
                 ) : (
                     <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-12 text-center">
                         <p className="text-slate-600 text-lg">Aucune mission disponible pour le moment.</p>
