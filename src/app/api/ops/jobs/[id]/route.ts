@@ -52,7 +52,14 @@ const UPDATABLE_FIELDS = new Set([
     'client_contact_info',
 ])
 
-type JobAction = 'approve' | 'reject' | 'update' | 'archive'
+type JobAction =
+    | 'approve'
+    | 'reject'
+    | 'update'
+    | 'archive'
+    | 'complete'      // marquer comme effectuée (status='completed')
+    | 'set_pending'   // repasser en brouillon (status='pending')
+    | 'set_live'      // republier (status='live')
 
 type Body = {
     action: JobAction
@@ -149,6 +156,62 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
         return Response.json({ ok: true, status: 'cancelled' })
     }
 
+    if (body.action === 'complete') {
+        const { error } = await admin
+            .from('jobs')
+            .update({ status: 'completed' })
+            .eq('id', id)
+        if (error) return Response.json({ error: error.message }, { status: 500 })
+
+        await logAdminAction({
+            action: 'job_completed',
+            target_table: 'jobs',
+            target_id: id,
+            payload: { before: existing.status, after: 'completed' },
+            performed_by: guard.user.id,
+        })
+        return Response.json({ ok: true, status: 'completed' })
+    }
+
+    if (body.action === 'set_pending') {
+        const { error } = await admin
+            .from('jobs')
+            .update({ status: 'pending', moderated_at: null, moderated_by: null, rejection_reason: null })
+            .eq('id', id)
+        if (error) return Response.json({ error: error.message }, { status: 500 })
+
+        await logAdminAction({
+            action: 'job_set_pending',
+            target_table: 'jobs',
+            target_id: id,
+            payload: { before: existing.status, after: 'pending' },
+            performed_by: guard.user.id,
+        })
+        return Response.json({ ok: true, status: 'pending' })
+    }
+
+    if (body.action === 'set_live') {
+        const { error } = await admin
+            .from('jobs')
+            .update({
+                status: 'live',
+                moderated_at: now,
+                moderated_by: guard.user.id,
+                rejection_reason: null,
+            })
+            .eq('id', id)
+        if (error) return Response.json({ error: error.message }, { status: 500 })
+
+        await logAdminAction({
+            action: 'job_set_live',
+            target_table: 'jobs',
+            target_id: id,
+            payload: { before: existing.status, after: 'live' },
+            performed_by: guard.user.id,
+        })
+        return Response.json({ ok: true, status: 'live' })
+    }
+
     if (body.action === 'update') {
         const data = body.data ?? {}
         const cleaned: Record<string, unknown> = {}
@@ -181,4 +244,41 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
     }
 
     return Response.json({ error: 'Unknown action' }, { status: 400 })
+}
+
+// Suppression définitive — irréversible. Toutes les FK ON DELETE CASCADE
+// (unlocked_leads, pro_alert_sends) suivent automatiquement.
+export async function DELETE(_req: Request, { params }: { params: Promise<{ id: string }> }) {
+    const guard = await requireAdmin()
+    if (!guard.ok) return guard.response
+
+    const { id } = await params
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    const admin = createSupabaseAdminClient() as any
+
+    const { data: existing, error: fetchErr } = await admin
+        .from('jobs')
+        .select('id, status, title')
+        .eq('id', id)
+        .single()
+    if (fetchErr || !existing) {
+        return Response.json({ error: 'Job not found' }, { status: 404 })
+    }
+
+    const { error } = await admin.from('jobs').delete().eq('id', id)
+    if (error) return Response.json({ error: error.message }, { status: 500 })
+
+    await logAdminAction({
+        action: 'job_deleted',
+        target_table: 'jobs',
+        target_id: id,
+        payload: { title: existing.title, status_before: existing.status },
+        performed_by: guard.user.id,
+    })
+
+    sendTelegram(
+        `<b>🗑 Mission supprimée</b>\n${escapeHtml(existing.title)}`
+    ).catch(() => {})
+
+    return Response.json({ ok: true })
 }
