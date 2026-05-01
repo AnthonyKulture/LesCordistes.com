@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { MapPin, Lock, ChevronRight, CheckCircle2, Mail } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { MapPin, Lock, ChevronRight, CheckCircle2, Mail, Trash2, Archive, RotateCcw, FileEdit, Power } from 'lucide-react'
 import { StatusBadge, LqsBadge } from '@/components/admin/StatusBadge'
 import { AiSidebar } from '@/components/admin/AiSidebar'
 import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
@@ -56,13 +57,17 @@ export function MissionDetail({
     initial: Job
     unlocks?: UnlockEntry[]
 }) {
+    const router = useRouter()
     const [job, setJob] = useState<Job>(initial)
     const [confirmApprove, setConfirmApprove] = useState(false)
     const [showReject, setShowReject] = useState(false)
     const [reasonChoice, setReasonChoice] = useState('')
     const [reasonCustom, setReasonCustom] = useState('')
-    const [busy, setBusy] = useState<'approve' | 'reject' | null>(null)
+    const [busy, setBusy] = useState<
+        'approve' | 'reject' | 'complete' | 'set_pending' | 'set_live' | 'archive' | 'delete' | null
+    >(null)
     const [feedback, setFeedback] = useState<string | null>(null)
+    const [confirmDelete, setConfirmDelete] = useState(false)
 
     const lqs = computeLQS(job)
     const photos = Array.isArray(job.photos_url) ? job.photos_url : []
@@ -90,6 +95,42 @@ export function MissionDetail({
         } finally {
             setBusy(null)
             setConfirmApprove(false)
+        }
+    }
+
+    async function patchAction(
+        action: 'complete' | 'set_pending' | 'set_live' | 'archive',
+        successLabel: string
+    ) {
+        setBusy(action)
+        try {
+            const res = await fetch(`/api/ops/jobs/${job.id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action }),
+            })
+            if (!res.ok) throw new Error(await res.text())
+            await refresh()
+            setFeedback(successLabel)
+            setTimeout(() => setFeedback(null), 3000)
+        } catch (err) {
+            setFeedback('Erreur : ' + (err instanceof Error ? err.message : 'inconnue'))
+        } finally {
+            setBusy(null)
+        }
+    }
+
+    async function deleteJob() {
+        setBusy('delete')
+        try {
+            const res = await fetch(`/api/ops/jobs/${job.id}`, { method: 'DELETE' })
+            if (!res.ok) throw new Error(await res.text())
+            // Redirection vers la liste après suppression
+            router.push('/admin/missions')
+        } catch (err) {
+            setFeedback('Erreur suppression : ' + (err instanceof Error ? err.message : 'inconnue'))
+            setBusy(null)
+            setConfirmDelete(false)
         }
     }
 
@@ -183,6 +224,87 @@ export function MissionDetail({
                         <strong>Motif de rejet :</strong> {job.rejection_reason}
                     </div>
                 )}
+
+                {/* Gestion du statut — transitions disponibles selon l'état courant. */}
+                <div className="bg-white border border-slate-200 rounded-xl p-5">
+                    <h2 className="text-sm font-semibold text-slate-700 mb-1">Gestion du statut</h2>
+                    <p className="text-xs text-slate-500 mb-3">
+                        Statut courant : <strong className="text-slate-800">{job.status}</strong>
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                        {job.status !== 'live' && job.status !== 'pending' && (
+                            <button
+                                type="button"
+                                onClick={() => patchAction('set_live', 'Mission republiée ✓')}
+                                disabled={!!busy}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-semibold hover:bg-emerald-700 disabled:opacity-50"
+                            >
+                                <Power className="h-3.5 w-3.5" />
+                                {busy === 'set_live' ? 'Republication…' : 'Republier (live)'}
+                            </button>
+                        )}
+                        {job.status !== 'completed' && (
+                            <button
+                                type="button"
+                                onClick={() => patchAction('complete', 'Mission marquée comme effectuée ✓')}
+                                disabled={!!busy}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 text-white rounded-lg text-xs font-semibold hover:bg-slate-800 disabled:opacity-50"
+                            >
+                                <CheckCircle2 className="h-3.5 w-3.5" />
+                                {busy === 'complete' ? 'Mise à jour…' : 'Marquer effectuée'}
+                            </button>
+                        )}
+                        {job.status !== 'pending' && (
+                            <button
+                                type="button"
+                                onClick={() => patchAction('set_pending', 'Mission repassée en brouillon ✓')}
+                                disabled={!!busy}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-slate-300 text-slate-700 rounded-lg text-xs font-semibold hover:bg-slate-50 disabled:opacity-50"
+                            >
+                                <FileEdit className="h-3.5 w-3.5" />
+                                {busy === 'set_pending' ? 'Mise à jour…' : 'Repasser en brouillon'}
+                            </button>
+                        )}
+                        {job.status !== 'cancelled' && (
+                            <button
+                                type="button"
+                                onClick={() => patchAction('archive', 'Mission annulée ✓')}
+                                disabled={!!busy}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-amber-300 text-amber-800 rounded-lg text-xs font-semibold hover:bg-amber-50 disabled:opacity-50"
+                            >
+                                <Archive className="h-3.5 w-3.5" />
+                                {busy === 'archive' ? 'Annulation…' : 'Annuler'}
+                            </button>
+                        )}
+                        {job.status === 'expired' && (
+                            <button
+                                type="button"
+                                onClick={() => patchAction('set_live', 'Mission relancée ✓')}
+                                disabled={!!busy}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue text-white rounded-lg text-xs font-semibold hover:bg-brand-blue/90 disabled:opacity-50"
+                            >
+                                <RotateCcw className="h-3.5 w-3.5" />
+                                Relancer
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Zone dangereuse — suppression définitive séparée visuellement. */}
+                    <div className="mt-5 pt-4 border-t border-slate-100">
+                        <p className="text-xs text-slate-500 mb-2">
+                            <span className="font-semibold text-red-700">Zone dangereuse</span> — irréversible.
+                        </p>
+                        <button
+                            type="button"
+                            onClick={() => setConfirmDelete(true)}
+                            disabled={!!busy}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-red-300 text-red-700 rounded-lg text-xs font-semibold hover:bg-red-50 disabled:opacity-50"
+                        >
+                            <Trash2 className="h-3.5 w-3.5" />
+                            Supprimer définitivement
+                        </button>
+                    </div>
+                </div>
 
                 {/* Revalidation client (statut email + clic) */}
                 {(job.last_validated_at || job.revalidation_email_sent_at) && (
@@ -320,6 +442,16 @@ export function MissionDetail({
                 busy={busy === 'approve'}
                 onConfirm={approve}
                 onCancel={() => setConfirmApprove(false)}
+            />
+
+            <ConfirmDialog
+                open={confirmDelete}
+                title="Supprimer définitivement"
+                description={`Supprimer « ${job.title} » ? Cette action est irréversible. Les leads débloqués et alertes envoyées seront aussi supprimés.`}
+                confirmLabel="Supprimer"
+                busy={busy === 'delete'}
+                onConfirm={deleteJob}
+                onCancel={() => setConfirmDelete(false)}
             />
 
             {showReject && (
