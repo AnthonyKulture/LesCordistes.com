@@ -73,15 +73,21 @@ export default async function JobsPage() {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }}
             />
 
-            {/* SSR SEO header — visible et crawlable. Le JobBoard interactif suit en dessous. */}
-            <section className="bg-slate-900 text-white pt-24 pb-12">
-                <div className="container max-w-4xl text-center">
-                    <h1 className="text-3xl md:text-4xl font-black mb-4">
-                        Missions cordistes disponibles partout en France
+            {/* SSR SEO header — visible et crawlable. Compact + design plus brandé.
+                Padding symétrique top/bottom pour centrage vertical visuel. */}
+            <section className="bg-gradient-to-br from-brand-blue via-brand-blue to-brand-blue-light text-white py-10 md:py-16">
+                <div style={{ textAlign: 'center' }} className="mx-auto max-w-2xl px-4 sm:px-6">
+                    <h1 className="text-xl md:text-3xl font-black mb-2 md:mb-3 leading-tight">
+                        Missions cordistes
+                        <br className="md:hidden" />
+                        <span className="hidden md:inline"> </span>
+                        partout en France
                     </h1>
-                    <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto">
-                        Toutes les missions visibles gratuitement. Pour les pros : 1 crédit suffit pour
-                        accéder aux coordonnées du client, sans commission sur le chantier.
+                    <p className="text-xs md:text-base text-slate-100/90 leading-relaxed">
+                        Consultation libre. Côté pros : <strong className="text-white">1 à 5 crédits</strong> selon la mission pour accéder aux coordonnées
+                        <span className="hidden md:inline"> — </span>
+                        <br className="md:hidden" />
+                        <strong className="text-white">zéro commission</strong> sur le chantier.
                     </p>
                 </div>
             </section>

@@ -49,19 +49,43 @@ export const JobBoard: React.FC = () => {
         <>
         <PromoActivation />
 
-        <div className="min-h-screen bg-slate-50 py-10">
+        <div className="min-h-screen bg-slate-50 py-10 pb-28 md:pb-10">
             <div className="container max-w-7xl">
-                {/* Header */}
-                <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
-                    <div>
-                        <h2 className="text-3xl font-bold text-slate-900">Missions disponibles</h2>
-                        <p className="text-slate-500 mt-1">
-                            {isLoading ? 'Chargement…' : `${activeCount} mission${activeCount !== 1 ? 's' : ''} active${activeCount !== 1 ? 's' : ''}${closedCount > 0 ? ` · ${closedCount} déjà effectuée${closedCount !== 1 ? 's' : ''}` : ''}`}
-                        </p>
+                {/* Header — compteurs en avant + toggle vue.
+                    Le H1 est dans le header SSR au-dessus, ici on évite le doublon. */}
+                <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
+                    <div className="flex items-center gap-1.5 sm:gap-2 flex-nowrap">
+                        {isLoading ? (
+                            <span className="text-sm text-slate-500">Chargement…</span>
+                        ) : (
+                            <>
+                                {/* Badge primaire — missions actives, mis en avant */}
+                                <span className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg whitespace-nowrap">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                                        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                                    </span>
+                                    <span className="text-base sm:text-lg font-black text-emerald-700 leading-none">{activeCount}</span>
+                                    <span className="text-[11px] sm:text-xs font-semibold text-emerald-700 uppercase tracking-wide">
+                                        mission{activeCount !== 1 ? 's' : ''} active{activeCount !== 1 ? 's' : ''}
+                                    </span>
+                                </span>
+
+                                {/* Badge secondaire — missions effectuées, plus discret */}
+                                {closedCount > 0 && (
+                                    <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 sm:py-1.5 bg-slate-100 border border-slate-200 rounded-lg whitespace-nowrap">
+                                        <span className="text-xs sm:text-sm font-bold text-slate-600 leading-none">{closedCount}</span>
+                                        <span className="text-[10px] sm:text-[11px] font-medium text-slate-500 tracking-wide">
+                                            déjà effectuée{closedCount !== 1 ? 's' : ''}
+                                        </span>
+                                    </span>
+                                )}
+                            </>
+                        )}
                     </div>
 
-                    {/* View toggle */}
-                    <div className="flex bg-white border border-slate-200 rounded-lg p-1 gap-1">
+                    {/* View toggle — desktop/tablette uniquement, masqué sur mobile */}
+                    <div className="hidden md:flex bg-white border border-slate-200 rounded-lg p-1 gap-1">
                         <button
                             onClick={() => setViewMode('list')}
                             className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
@@ -125,7 +149,9 @@ export const JobBoard: React.FC = () => {
                         </div>
                     }>
                         <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-4">
-                            <JobMap jobs={filteredJobs} height="560px" />
+                            {/* Vue carte : missions live uniquement (les missions déjà réalisées
+                                n'apportent rien sur la carte). */}
+                            <JobMap jobs={liveJobs} height="560px" />
                         </div>
                     </Suspense>
                 ) : filteredJobs.length > 0 ? (
@@ -148,16 +174,16 @@ export const JobBoard: React.FC = () => {
                         {closedJobs.length > 0 && (
                             <>
                                 <div className="flex items-center gap-4 mt-12 mb-6">
-                                    <div className="flex-1 h-px bg-slate-200" />
+                                    <div className="flex-1 h-0.5 bg-gradient-to-r from-transparent to-brand-blue/20 rounded-full" />
                                     <div className="text-center">
-                                        <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+                                        <h2 className="text-sm font-bold text-brand-blue uppercase tracking-wider">
                                             Missions déjà réalisées
-                                        </h3>
+                                        </h2>
                                         <p className="text-xs text-slate-500 mt-1">
                                             Aperçu de ce que les cordistes du réseau accomplissent — non débloquables.
                                         </p>
                                     </div>
-                                    <div className="flex-1 h-px bg-slate-200" />
+                                    <div className="flex-1 h-0.5 bg-gradient-to-l from-transparent to-brand-blue/20 rounded-full" />
                                 </div>
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                     {closedJobs.map((job) => (
