@@ -85,10 +85,19 @@ async function processUnsubscribe(
         null
     const userAgent = req.headers.get('user-agent') || null
 
+    // p_campaign_id est typé UUID dans la RPC marketing. Les campagnes "système"
+    // (ex: pro-mission-alert) utilisent un slug textuel, pas un UUID — on doit
+    // alors passer null pour ne pas casser le cast Postgres.
+    const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    const campaignUuid =
+        payload.campaignId && UUID_RE.test(payload.campaignId)
+            ? payload.campaignId
+            : null
+
     const { data, error } = await admin.rpc('mark_marketing_unsubscribed', {
         p_email: payload.email,
         p_reason: 'unsubscribe_link',
-        p_campaign_id: payload.campaignId,
+        p_campaign_id: campaignUuid,
         p_user_agent: userAgent,
         p_ip_hash: hashIp(ip),
     })
