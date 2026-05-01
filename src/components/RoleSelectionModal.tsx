@@ -37,16 +37,9 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({ userId, 
 
             if (error) throw error;
 
-            const firstName = (googleName || '').split(' ')[0];
-            supabase.functions.invoke('send-email', {
-                body: {
-                    to: user?.email,
-                    subject: selected === 'pro' ? 'Votre profil pro est actif — LesCordistes.com' : 'Bienvenue sur LesCordistes.com',
-                    templateId: selected === 'pro' ? 'welcome-pro' : 'welcome-client',
-                    data: { name: firstName || '' },
-                },
-            }).catch(() => {});
-
+            // Welcome email envoyé par le trigger SQL handle_new_user_update
+            // (déclenché par OLD.full_name vide → NEW.full_name renseigné).
+            // Ne pas dupliquer ici.
             queryClient.invalidateQueries({ queryKey: ['profile'] });
             toast.success(`Compte ${selected === 'pro' ? 'professionnel' : 'client'} activé !`);
             onComplete();

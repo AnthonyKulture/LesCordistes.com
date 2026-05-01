@@ -377,17 +377,9 @@ export const PostJob: React.FC = () => {
 
             posthog.capture('job_posted', { job_type: formData.type || 'standard', category: formData.category || 'other', location_city: formData.location_city });
 
-            if (isNewUser && formData.contact_email) {
-                const isProRole = formData.type === 'renfort_pro';
-                supabase.functions.invoke('send-email', {
-                    body: {
-                        to: formData.contact_email,
-                        subject: isProRole ? 'Votre profil pro est actif — LesCordistes.com' : 'Bienvenue sur LesCordistes.com',
-                        templateId: isProRole ? 'welcome-pro' : 'welcome-client',
-                        data: { name: formData.contact_first_name || '' },
-                    },
-                }).catch(() => {});
-            }
+            // Si un nouvel utilisateur a été créé (signUp côté wizard), le
+            // welcome email est envoyé par le trigger SQL handle_new_user.
+            // Ne pas dupliquer ici (sinon double-envoi).
 
             if (!finalUserId && formData.contact_email) {
                 supabase.functions.invoke('send-email', {
