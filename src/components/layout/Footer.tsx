@@ -2,11 +2,14 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Linkedin } from 'lucide-react';
 import { FooterContact, FooterMailIcon } from './FooterContact';
 import { ConsentManager } from '@/components/ConsentBanner';
 
 export const Footer: React.FC = () => {
+    const pathname = usePathname();
+    if (pathname?.startsWith('/admin')) return null;
     return (
         <footer className="bg-slate-900 text-white">
             <div className="container py-12">

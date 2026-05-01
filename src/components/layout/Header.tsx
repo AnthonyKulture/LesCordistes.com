@@ -47,6 +47,10 @@ export const Header: React.FC = () => {
     const router = useRouter();
     const pathname = usePathname();
 
+    // L'admin a son propre shell (sidebar + header). On masque le header public
+    // pour éviter le conflit z-index sur sidebar desktop + drawer mobile.
+    const isAdminRoute = pathname?.startsWith('/admin') ?? false;
+
     // Close profile dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -107,6 +111,8 @@ export const Header: React.FC = () => {
             ctaUrl = '/post-job';
         }
     }
+
+    if (isAdminRoute) return null;
 
     return (
         <>
