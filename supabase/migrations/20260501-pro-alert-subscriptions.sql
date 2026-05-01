@@ -260,18 +260,18 @@ BEGIN
     RETURN QUERY
     WITH ranked AS (
         SELECT
-            s.id              AS subscription_id,
-            s.email           AS email,
-            s.departments     AS departments,
-            j.id              AS job_id,
-            j.title           AS job_title,
-            j.slug            AS job_slug,
-            j.location_city   AS job_city,
-            j.location_department AS job_department,
-            j.category        AS job_category,
-            j.type            AS job_type,
-            j.credit_cost     AS job_credit_cost,
-            j.created_at      AS job_created_at,
+            s.id                          AS subscription_id,
+            s.email::TEXT                 AS email,
+            s.departments                 AS departments,
+            j.id                          AS job_id,
+            j.title::TEXT                 AS job_title,
+            j.slug::TEXT                  AS job_slug,
+            j.location_city::TEXT         AS job_city,
+            j.location_department::TEXT   AS job_department,
+            j.category::TEXT              AS job_category,
+            j.type::TEXT                  AS job_type,
+            COALESCE(j.credit_cost, 1)::INTEGER AS job_credit_cost,
+            j.created_at                  AS job_created_at,
             ROW_NUMBER() OVER (PARTITION BY s.id ORDER BY j.created_at DESC) AS rn
         FROM pro_alert_subscriptions s
         JOIN jobs j ON j.location_department = ANY(s.departments)
