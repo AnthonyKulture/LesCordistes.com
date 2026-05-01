@@ -76,12 +76,13 @@ export const JobCard: React.FC<JobCardProps> = ({ job }) => {
                         {job.title}
                     </h3>
                     {isClosed ? (
-                        <span className="shrink-0 inline-flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wide bg-slate-200 text-slate-700">
-                            <CheckCircle2 size={11} />
+                        <span className="shrink-0 inline-flex items-center gap-1 text-[9px] sm:text-[11px] px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-bold uppercase tracking-wide bg-slate-200 text-slate-700">
+                            <CheckCircle2 size={10} className="sm:hidden" />
+                            <CheckCircle2 size={11} className="hidden sm:inline" />
                             Déjà effectuée
                         </span>
                     ) : freshness && (
-                        <span className={`shrink-0 text-[11px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wide ${freshness.className}`}>
+                        <span className={`shrink-0 text-[9px] sm:text-[11px] px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full font-bold uppercase tracking-wide ${freshness.className}`}>
                             {freshness.label}
                         </span>
                     )}
