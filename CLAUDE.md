@@ -156,8 +156,8 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ## SEO (sitemap dynamique — pages indexables auto-pilotées)
 
-- `/cordiste-[ville]` — 60 villes (toutes indexables) · `/cordiste-[ville]/[service]` — 1 380 pages générées dont **133 indexables** (contexte unique rédigé) et 1 247 en `noindex` · `/lexique/[slug]` — 13 termes · `/blog/[slug]` — 6 articles · 14 pages institutionnelles
-- Total sitemap : **~226 URLs** (uniquement pages indexables — c'est ce que Google découvre)
+- `/cordiste-[ville]` — 60 villes (toutes indexables) · `/cordiste-[ville]/[service]` — 1 380 pages générées dont **301 indexables** (contexte unique rédigé) et 1 079 en `noindex` · `/lexique/[slug]` — 13 termes · `/blog/[slug]` — 10 articles · 13 pages institutionnelles
+- Total sitemap : **~398 URLs** (uniquement pages indexables — c'est ce que Google découvre). Pour vérifier le décompte : `curl -s https://www.lescordistes.com/sitemap.xml | grep -c '<loc>'`
 - JSON-LD : Service+provider Organization, FAQPage, BlogPosting (avec `image`), DefinedTerm, DefinedTermSet, BreadcrumbList, Organization, WebSite
 - OG image dynamique : `GET /og?title=…&kicker=…` (edge runtime) — utilisée par blog + fallback layout
 - llms-full.txt dynamique : `/llms-full.txt` concatène llms.txt + lexique complet + FAQs blog (cache 24 h)
@@ -173,7 +173,7 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 - **`generateMetadata` pose `robots: { index: false, follow: true }` sur les pages sans contexte unique** → Google ne les indexe pas mais peut suivre les liens internes.
 - **Le sitemap ne liste que les pages indexables** : il filtre via `hasUniqueServiceCityContext`. Cohérent avec les `robots`.
 - **Pour réactiver une page (la rendre indexable)** : ajouter une entry `SERVICE_CITY_CONTEXT[service][city] = { intro, useCases }` dans `seoData.ts`. Aucun changement de code requis. Le sitemap et les robots metas se mettent à jour automatiquement au build suivant.
-- **Périmètre actuellement indexable** : 133 couples (sur 1 380 possibles). À élargir au fur et à mesure de la rédaction de contextes uniques.
+- **Périmètre actuellement indexable** : 301 couples (sur 1 380 possibles). À élargir au fur et à mesure de la rédaction de contextes uniques.
 
 ### Cahier des charges qualité d'un contexte (E-E-A-T) — pour rédiger une nouvelle entry
 
@@ -233,3 +233,12 @@ bash scripts/ml record <domaine> --type <convention|pattern|failure|decision> --
 ```
 
 Ne pas enregistrer : ce qui est déjà ici, des hypothèses, des états temporaires.
+
+## Fin de session
+
+1. Y a-t-il une découverte (bug, pattern, décision) non documentée dans CLAUDE.md 
+   qui vaut la peine d'être mémorisée pour la prochaine session ?
+   Si oui, enregistre-la : `bash scripts/ml record <domaine> --type <type> --description "..."`
+
+2. Si tu as modifié des fichiers dans src/, régénère le graphe Graphify :
+   `source .venv-tools/bin/activate && python3 -c "from graphify.watch import _rebuild_code; from pathlib import Path; _rebuild_code(Path('.'))"`
