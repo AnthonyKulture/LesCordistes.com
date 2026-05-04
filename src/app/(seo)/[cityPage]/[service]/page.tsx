@@ -103,8 +103,14 @@ export default async function CityServiceSEOPage({ params }: Props) {
                 offers: {
                     '@type': 'Offer',
                     priceCurrency: 'EUR',
-                    priceRange: '350€–600€/jour',
                     availability: 'https://schema.org/InStock',
+                    priceSpecification: {
+                        '@type': 'UnitPriceSpecification',
+                        priceCurrency: 'EUR',
+                        minPrice: 350,
+                        maxPrice: 600,
+                        unitText: 'jour',
+                    },
                 },
                 provider: {
                     '@type': ['Organization', 'ProfessionalService'],
@@ -128,6 +134,8 @@ export default async function CityServiceSEOPage({ params }: Props) {
             },
             {
                 '@type': 'FAQPage',
+                '@id': `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}#faq`,
+                mainEntityOfPage: `${SEO_BASE_URL}/cordiste-${citySlug}/${serviceSlug}`,
                 mainEntity: faqs.map((faq: { question: string; answer: string }) => ({
                     '@type': 'Question',
                     name: faq.question.replace(/\{city\}/g, name),

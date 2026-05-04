@@ -66,7 +66,9 @@ export default async function CitySEOPage({ params }: Props) {
                 '@type': 'Service',
                 '@id': `${SEO_BASE_URL}/cordiste-${citySlug}#service`,
                 serviceType: 'Travaux sur cordes',
+                category: 'Travail en hauteur — accès difficile',
                 name: `Cordistes à ${name}`,
+                description: `Réseau de cordistes certifiés CQP/IRATA à ${name} et dans un rayon de 30 km. Devis gratuit sous 48h pour nettoyage de façade, ravalement, toiture-zinguerie, anti-pigeons, ITE et travaux industriels en accès difficile.`,
                 url: `${SEO_BASE_URL}/cordiste-${citySlug}`,
                 areaServed: {
                     '@type': 'City',

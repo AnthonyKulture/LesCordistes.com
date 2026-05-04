@@ -5,6 +5,7 @@ import { TrustSignals } from '@/components/landing/TrustSignals'
 import { HowItWorks } from '@/components/landing/HowItWorks'
 import { ProfessionalsNetwork } from '@/components/landing/ProfessionalsNetwork'
 import { SEOContent } from '@/components/landing/SEOContent'
+import { CityLinks } from '@/components/landing/CityLinks'
 import { FAQ } from '@/components/landing/FAQ'
 import { CTA } from '@/components/landing/CTA'
 
@@ -28,6 +29,14 @@ const jsonLd = {
             '@id': `${SEO_BASE_URL}/#website`,
             name: SEO_BRAND_NAME,
             url: `${SEO_BASE_URL}/`,
+            potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                    '@type': 'EntryPoint',
+                    urlTemplate: `${SEO_BASE_URL}/jobs?q={search_term_string}`,
+                },
+                'query-input': 'required name=search_term_string',
+            },
         },
         {
             '@type': ['Organization', 'ProfessionalService'],
@@ -43,6 +52,14 @@ const jsonLd = {
             telephone: SEO_PHONE,
             email: SEO_EMAIL,
             address: SEO_POSTAL_ADDRESS,
+            contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: SEO_PHONE,
+                email: SEO_EMAIL,
+                contactType: 'customer service',
+                areaServed: 'FR',
+                availableLanguage: 'French',
+            },
             description: "Marketplace française spécialisée dans les travaux en accès difficile. Mise en relation entre cordistes certifiés CQP/IRATA et clients professionnels ou particuliers dans toute la France.",
             areaServed: { '@type': 'Country', name: 'France' },
             openingHoursSpecification: SEO_OPENING_HOURS,
@@ -97,6 +114,7 @@ export default function HomePage() {
                 <TrustSignals />
                 <ProfessionalsNetwork />
                 <SEOContent />
+                <CityLinks />
                 <FAQ />
                 <CTA />
             </div>
