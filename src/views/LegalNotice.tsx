@@ -40,9 +40,9 @@ export const LegalNotice: React.FC = () => {
                 <div className="space-y-2">
                     <p>Le site est hébergé par :</p>
                     <ul className="space-y-1 text-slate-600">
-                        <li><strong>Hébergeur :</strong> O2SWITCH</li>
-                        <li><strong>Adresse :</strong> 222-224 Boulevard Gustave Flaubert, 63000 Clermont-Ferrand</li>
-                        <li><strong>Site :</strong> <a href="https://www.o2switch.fr" className="text-brand-blue hover:underline">www.o2switch.fr</a></li>
+                        <li><strong>Hébergeur :</strong> Vercel Inc.</li>
+                        <li><strong>Adresse :</strong> 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis</li>
+                        <li><strong>Site :</strong> <a href="https://vercel.com" className="text-brand-blue hover:underline" target="_blank" rel="noopener noreferrer">vercel.com</a></li>
                     </ul>
                 </div>
             )
@@ -55,6 +55,37 @@ export const LegalNotice: React.FC = () => {
                     <p>LesCordistes.com est une plateforme de mise en relation dédiée aux travaux sur cordes et en hauteur.</p>
                     <p><strong>Objet :</strong> La plateforme permet le dépôt de missions par les clients, la validation interne, et la mise en relation avec des professionnels via un système de crédits payants.</p>
                     <p><strong>Rôle :</strong> Agit en tant que simple intermédiaire technique entre les Clients (particuliers, syndics, industriels) et les Professionnels.</p>
+                </div>
+            )
+        },
+        {
+            title: "Cadre professionnel et conformité métier",
+            icon: <Shield className="text-brand-blue" />,
+            content: (
+                <div className="space-y-3">
+                    <p>LesCordistes.com s'inscrit dans le cadre réglementaire français du travail sur cordes :</p>
+                    <ul className="space-y-1 text-slate-600">
+                        <li><strong>Code du travail :</strong> articles L6314-1 (qualification professionnelle) et R.4323-58 (travail en hauteur sur cordes)</li>
+                        <li><strong>Arrêté du 4 août 2005</strong> relatif à la prévention des risques de chute lors d'opérations sur cordes</li>
+                        <li><strong>Diplôme de référence :</strong> CQP Cordiste — Certificat de Qualification Professionnelle inscrit au RNCP, délivré par France Compétences</li>
+                        <li><strong>Norme internationale :</strong> IRATA International (Industrial Rope Access Trade Association)</li>
+                    </ul>
+                    <p className="text-sm">Organismes de référence du secteur consultés pour nos contenus techniques : <strong>OPPBTP</strong> (Organisme Professionnel de Prévention du Bâtiment et des Travaux Publics), <strong>SFETH</strong> (Syndicat Français des Entreprises de Travaux en Hauteur), <strong>INRS</strong> (Institut National de Recherche et de Sécurité — recommandation R408).</p>
+                </div>
+            )
+        },
+        {
+            title: "Assurance Responsabilité Civile Professionnelle",
+            icon: <Shield className="text-brand-blue" />,
+            content: (
+                <div className="space-y-2">
+                    <p>L'éditeur du site est couvert par une assurance Responsabilité Civile Professionnelle conforme à l'activité d'intermédiation technique :</p>
+                    <ul className="space-y-1 text-slate-600">
+                        <li><strong>Compagnie :</strong> à compléter par l'éditeur</li>
+                        <li><strong>Numéro de police :</strong> à compléter par l'éditeur</li>
+                        <li><strong>Garantie territoriale :</strong> France métropolitaine</li>
+                    </ul>
+                    <p className="text-xs italic text-slate-500">L'activité de la plateforme est une mise en relation technique, sans intervention sur les chantiers. La RC Pro de chaque cordiste publié est vérifiée par notre équipe avant activation de son profil (cf. <a href="/verification-pros" className="text-brand-blue hover:underline">processus de vérification</a>).</p>
                 </div>
             )
         },
