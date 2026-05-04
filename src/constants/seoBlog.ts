@@ -1085,6 +1085,109 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
         ],
     },
+    {
+        slug: 'trouver-cordiste-bordeaux',
+        title: 'Trouver un cordiste à Bordeaux : tarifs, zones et guide 2026',
+        shortTitle: 'Trouver un cordiste à Bordeaux',
+        description:
+            'Trouvez un cordiste certifié à Bordeaux pour vos travaux en hauteur. Tarifs 2026, zones couvertes, contraintes patrimoine UNESCO et pierres calcaires — le guide pratique.',
+        category: 'Guide achat',
+        readTime: 7,
+        datePublished: '2026-05-04',
+        dateModified: '2026-05-04',
+        intro:
+            'Trouver un cordiste à Bordeaux, c\'est naviguer dans l\'une des villes les plus exigeantes de France pour les travaux en hauteur. Avec 18 km² de centre historique classés au Patrimoine mondial de l\'UNESCO depuis 2007 — le plus grand ensemble urbanistique du XVIIIe siècle au monde —, chaque intervention sur une façade impose de connaître la pierre calcaire à astéries, les contraintes des Architectes des Bâtiments de France et les ruelles du quartier Saint-Pierre où une nacelle ne peut tout simplement pas circuler. Loin du centre, les zones industrielles de Bassens et le Port de Bordeaux génèrent une demande continue en techniciens certifiés IRATA. Ce guide vous donne les clés pour identifier, évaluer et mandater le bon prestataire en 2026.',
+        sections: [
+            {
+                heading: 'Bordeaux : pourquoi les travaux cordistes y sont-ils spécifiques ?',
+                body: 'La "Port de la Lune" concentre des contraintes architecturales et logistiques que rares villes françaises réunissent au même degré. Le centre historique classé UNESCO rassemble plus de 350 édifices remarquables en pierre calcaire à astéries — une roche dorée et microforée qui absorbe les polluants et l\'humidité de l\'estuaire, et qui exige des techniques de nettoyage millimétrées pour ne pas éclater les alvéoles en surface.\n\nDans les quartiers Saint-Pierre, Saint-Éloi, Chartrons et Capucins, les rues médiévales atteignent parfois 4 à 6 mètres de largeur. Une nacelle articulée y est souvent impossible à déployer sans autorisation de voirie exceptionnelle, sans occulter la circulation et sans endommager les pavés protégés. L\'accès sur cordes (TAC) résout ce problème structurellement : le cordiste descend depuis la toiture, élimine les arrêtés de circulation et réduit le délai de démarrage à 48-72 heures contre 2 à 3 semaines pour un montage d\'échafaudage.\n\nPar ailleurs, le climat océanique de la Gironde — humidité chronique, précipitations fréquentes, vent d\'ouest chargé d\'embruns — accélère la colonisation biologique des façades (mousses, lichens, algues) et impose un traitement hydrofuge régulier tous les 8 à 12 ans. Cette spécificité climatique génère une demande constante en nettoyage et protection de façades, toute l\'année, même en dehors de la haute saison.',
+            },
+            {
+                heading: 'Quels travaux un cordiste peut-il réaliser à Bordeaux ?',
+                body: 'Les cordistes bordelais interviennent sur un spectre très large, du résidentiel classé au bâtiment industriel. Dès lors qu\'un point d\'ancrage solide existe en toiture — ou peut être posé temporairement sans dénaturer la couverture — la quasi-totalité des travaux en hauteur est réalisable en suspension. La productivité est comparable à celle sur échafaudage pour les interventions ciblées, avec un avantage de rapidité de mobilisation décisif dans le centre historique.',
+                listIntro: 'Les interventions les plus fréquentes à Bordeaux et en Gironde :',
+                list: [
+                    'Nettoyage de pierres calcaires à astéries (centre historique) — biocide doux + eau à basse pression, produits homologués ABF',
+                    'Application d\'hydrofuge et de consolidants sur façades poreuses (protection anti-infiltrations, 8-12 ans d\'efficacité)',
+                    'Ravalement et réfection d\'enduits sur immeubles néoclassiques XVIIIe — Chartrons, Victoire, Saint-Michel',
+                    'Lavage de vitres en hauteur : Cité du Vin, immeubles Euratlantique, tours Mériadeck',
+                    'Démoussage et traitement anti-lichen sur toitures tuiles plates (climat humide atlantique)',
+                    'Traitement anti-pigeons (filets, pics, câbles) sur corniches et ornements classiques',
+                    'Inspection et diagnostic de façade après tempête ou épisode de submersion (estuaire Gironde)',
+                    'Travaux industriels (cheminées, réservoirs, pylônes) dans la zone pétrochimique de Bassens et le Port de Bordeaux',
+                ],
+                cta: {
+                    text: 'Décrire mes travaux en 2 minutes',
+                    href: '/post-job',
+                    description: 'Pierre calcaire, immeuble haussmannien ou installation industrielle — publiez votre besoin gratuitement.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Centre historique classé : les contraintes ABF à anticiper',
+                body: 'Bordeaux dispose depuis 2013 d\'un Plan de Sauvegarde et de Mise en Valeur (PSMV) qui définit précisément ce qui est autorisé sur les bâtiments du périmètre UNESCO. Au-delà, l\'intégralité de la commune est couverte par une Zone de Protection du Patrimoine Architectural, Urbain et Paysager (ZPPAUP) convertie en Aire de mise en Valeur de l\'Architecture et du Patrimoine (AVAP). En pratique, cela signifie :\n\n**Produits de nettoyage stricts** — La pierre calcaire à astéries est sensible aux acides forts et à la vapeur haute pression : un nettoyage mal exécuté peut pulvériser la surface en quelques secondes. Seuls les produits neutres à légèrement alcalins, validés par les ABF, peuvent être employés. Un cordiste expérimenté à Bordeaux les connaît et les référence dans son devis.\n\n**Ancrages non destructifs** — Percer la pierre de taille d\'une façade classée pour poser un ancrage permanent requiert une autorisation préalable de travaux. Pour les interventions ponctuelles, les cordistes utilisent des systèmes provisoires : poids lestés en toiture, cadres posés sur le faîtage ou crochets sur éléments de charpente existants. Aucun marquage, aucune dégradation.\n\n**Délais administratifs** — Dans le périmètre PSMV, une demande d\'autorisation de travaux (AT) peut prendre 4 à 6 semaines pour obtenir l\'accord formel des ABF. Intégrez ce délai dans votre planning. Hors périmètre UNESCO, dans les quartiers périphériques comme Bacalan, Bastide, Floirac ou Mérignac, les contraintes patrimoniales ne s\'appliquent généralement pas — un plan de prévention et une RC Pro suffisent pour démarrer.',
+            },
+            {
+                heading: 'Tarifs d\'un cordiste à Bordeaux en 2026',
+                body: 'Le marché bordelais se situe dans une fourchette légèrement inférieure à celle de Lyon, avec des coûts de déplacement modérés et un vivier de prestataires qualifiés en croissance depuis la vague de rénovation thermique (MaPrimeRénov\') et la dynamique Euratlantique. Les chantiers patrimoniaux commandent en revanche une prime de spécialité par rapport aux façades standard : un cordiste habitué à la pierre calcaire à astéries facture 10 à 15 % de plus qu\'un généraliste, ce qui reste bien en dessous du surcoût d\'un montage d\'échafaudage sur rue étroite.',
+                listIntro: 'Fourchette indicative à Bordeaux (HT, 2026) :',
+                list: [
+                    'Journée cordiste (8h, 1 technicien) : 350 € à 600 € selon spécialité et type de chantier',
+                    'Nettoyage de façade pierre calcaire au m² : 7 € à 15 € selon encrassement et produits requis',
+                    'Application d\'hydrofuge en hauteur : 4 € à 8 € au m²',
+                    'Lavage de vitres en hauteur : 3 € à 5 € par m²',
+                    'Inspection technique avec rapport écrit : 450 € à 900 € la demi-journée',
+                    'Chantier industriel Bassens / Port (IRATA niveau 2 ou 3) : 580 € à 850 € HT/j par technicien',
+                ],
+                cta: {
+                    text: 'Comparer des devis sans engagement',
+                    href: '/post-job',
+                    description: 'Obtenez plusieurs offres de cordistes certifiés sur Bordeaux pour votre budget réel.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Bien choisir son cordiste à Bordeaux : 5 critères décisifs',
+                body: 'Bordeaux dispose d\'un marché de cordistes actif, mais la spécificité du patrimoine local et la diversité des chantiers — du centre classé à la zone pétrochimique — appellent une sélection rigoureuse. Voici les cinq critères à examiner avant de signer.\n\n**1. La certification adaptée au chantier** — Pour un bâtiment résidentiel ou patrimonial, le CQP TPS niveau 2 est la référence française : il atteste de la capacité à encadrer une équipe et à gérer les équipements de protection individuelle (EPI). Pour les installations industrielles de Bassens ou du Port, un IRATA niveau 2 ou 3 est souvent exigé contractuellement. Vérifiez systématiquement la date d\'expiration des certificats : CQP et IRATA sont valables 3 ans.\n\n**2. La connaissance de la pierre calcaire bordelaise** — Un cordiste habitué au centre de Bordeaux saura immédiatement si votre bâtiment est en secteur PSMV, quels produits de nettoyage sont autorisés, et comment poser un ancrage temporaire sans percer la pierre. Cette expertise locale épargne des erreurs coûteuses et des délais de refus ABF.\n\n**3. La RC Pro couvrant les TAC et le patrimoine classé** — Vérifiez que l\'attestation d\'assurance mentionne explicitement les techniques d\'accès sur cordes (TAC) et les interventions sur bâtiments classés ou en secteur protégé. Certaines polices excluent les chantiers patrimoniaux ou les interventions à moins d\'un mètre de la façade.\n\n**4. Le plan de prévention systématique** — Les travaux en hauteur figurent sur la liste des travaux dangereux (arrêté du 19 mars 1993). Un plan de prévention écrit, rédigé après inspection commune du site, est une obligation légale. Un prestataire sérieux — qu\'il soit membre de la SFETH ou non — le propose avant de chiffrer.\n\n**5. Les références sur des chantiers bordelais comparables** — Un nettoyage de façade classée à Saint-Pierre n\'a rien à voir avec une inspection de réservoir à Bassens. Demandez des références vérifiables : adresses, photos ou noms d\'entreprises clientes sur des chantiers récents dans votre type de bâtiment.',
+                cta: {
+                    text: 'Trouver mon cordiste à Bordeaux',
+                    href: '/post-job',
+                    description: 'Des cordistes habitués au patrimoine bordelais reçoivent votre demande et répondent sous 48h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Zones couvertes : Bordeaux Métropole et département de la Gironde',
+                body: 'Les cordistes basés en Gironde couvrent l\'ensemble des 28 communes de Bordeaux Métropole : Bordeaux intra-muros, Mérignac, Pessac, Talence, Gradignan, Bègles, Floirac, Lormont, Cenon, Bruges, Eysines, Le Bouscat, Blanquefort, Parempuyre, Ambarès-et-Lagrave, Bassens et Ambès. Ce périmètre est généralement couvert sans frais kilométriques supplémentaires par la majorité des prestataires actifs sur la métropole.\n\nAu-delà, les cordistes bordelais acceptent des missions dans l\'ensemble de la Gironde : Arcachon et le Bassin (résidences secondaires, maisons de bois sur pilotis, balcons en hauteur), Libourne et Saint-Émilion (toitures de châteaux viticoles, clochers classés), Langon (Sauternes, structures agricoles), et la zone de Pauillac (chais de grande hauteur, cuves inox). Des frais kilométriques s\'appliquent généralement à partir de 40 à 60 km de Bordeaux — comptez 0,40 € à 0,65 € HT par kilomètre.\n\nCertains prestataires girondins couvrent également les départements voisins : Dordogne (Périgueux, Bergerac, Sarlat), Lot-et-Garonne (Agen, Marmande) et Charente-Maritime (Saintes, Rochefort, Royan). La coordination avec un cordiste régional évite souvent les déplacements longue distance, pour un résultat identique et un délai plus court.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste à Bordeaux ?',
+                a: 'Comptez entre 350 € et 600 € HT par journée à Bordeaux selon la spécialité. Le nettoyage de façade calcaire oscille entre 7 € et 15 € HT au m². Un chantier industriel (IRATA) atteint 580 à 850 € HT/j par technicien.',
+            },
+            {
+                q: 'Ai-je besoin d\'une autorisation ABF pour nettoyer ma façade dans le centre de Bordeaux ?',
+                a: 'Oui, si votre bâtiment est situé dans le périmètre PSMV (Plan de Sauvegarde et de Mise en Valeur) ou à proximité d\'un monument historique. Un nettoyage modifiant l\'aspect extérieur requiert l\'accord des Architectes des Bâtiments de France. Un cordiste expérimenté sur Bordeaux centre vous indique le régime applicable à votre adresse, les produits validés et le délai administratif à prévoir (4 à 6 semaines).',
+            },
+            {
+                q: 'Quel délai pour trouver un cordiste disponible à Bordeaux ?',
+                a: 'En basse saison (novembre à février), comptez 1 à 2 semaines entre la demande et le démarrage. Au printemps et en été (mars à octobre), les cordistes bordelais sont souvent complets 3 à 6 semaines à l\'avance pour les façades. Pour une urgence après tempête ou sinistre, certains prestataires interviennent sous 24 à 72 heures avec une majoration tarifaire.',
+            },
+            {
+                q: 'Un cordiste bordelais peut-il intervenir hors de la Gironde ?',
+                a: 'Oui. La plupart des prestataires acceptent des missions dans les départements limitrophes — Dordogne, Lot-et-Garonne, Charente-Maritime, Landes — avec des frais kilométriques proportionnels à la distance. Au-delà de 80 à 100 km, il est souvent plus économique de solliciter un cordiste local via LesCordistes.',
+            },
+        ],
+        ctaText: 'Trouver mon cordiste à Bordeaux',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Cordistes certifiés à Bordeaux', href: '/cordiste-bordeaux' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
+            { label: 'Trouver un cordiste à Lyon', href: '/blog/trouver-cordiste-lyon' },
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
