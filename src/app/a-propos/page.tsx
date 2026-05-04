@@ -482,7 +482,7 @@ export default function AboutPage() {
                     <div className="container max-w-3xl text-center">
                         <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">Nous contacter</h2>
                         <address className="not-italic text-slate-700 leading-relaxed mb-6">
-                            LesCordistes.com — 2 rue Pierre Pietri, 06000 Nice
+                            LesCordistes.com — basé à Nice (Alpes-Maritimes)
                             <br />
                             <a href={`mailto:${SEO_EMAIL}`} className="text-brand-blue hover:underline">
                                 {SEO_EMAIL}
