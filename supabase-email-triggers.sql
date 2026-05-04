@@ -319,45 +319,18 @@ CREATE TRIGGER on_lead_unlocked_email
 -- ------------------------------------------------------------
 -- 🎨 TRIGGER 5 : Alerte Match Mission (Localisation / Dept)
 -- ------------------------------------------------------------
-
-CREATE OR REPLACE FUNCTION private.trigger_on_job_live_match()
-RETURNS TRIGGER
-LANGUAGE plpgsql
-SECURITY DEFINER
-AS $$
-DECLARE
-    v_pro RECORD;
-BEGIN
-    -- On ne déclenche que si la mission passe à 'live'
-    IF (OLD.status = 'pending') AND (NEW.status = 'live') THEN
-        -- Rechercher tous les Pros dont le département de la mission est dans les zones d'intervention
-        -- et qui ont accepté de recevoir des notifications (si on ajoute un flag plus tard)
-        FOR v_pro IN 
-            SELECT email, full_name, id 
-            FROM profiles 
-            WHERE role = 'pro' 
-            AND (NEW.location_department = ANY(intervention_zones))
-        LOOP
-            PERFORM private.invoke_send_email(
-                v_pro.email,
-                '🔔 Nouvelle mission à ' || NEW.location_city || ' : ' || NEW.title,
-                'match-job',
-                jsonb_build_object(
-                    'proName', COALESCE(v_pro.full_name, 'Pro'),
-                    'jobTitle', NEW.title,
-                    'location', NEW.location_city,
-                    'jobSlug', COALESCE(NEW.slug, NEW.id::text),
-                    'isRenfort', (NEW.type = 'renfort_pro')
-                )
-            );
-        END LOOP;
-    END IF;
-    RETURN NEW;
-END;
-$$;
-
-DROP TRIGGER IF EXISTS on_job_live_match_email ON jobs;
-CREATE TRIGGER on_job_live_match_email
-    AFTER UPDATE OF status ON jobs
-    FOR EACH ROW
-    EXECUTE FUNCTION private.trigger_on_job_live_match();
+--
+-- ⚠️ DEPRECATED — supprimé le 2026-05-04.
+-- Source unique = pro-alerts-cron (supabase/functions/pro-alerts-cron/).
+-- Voir migration 20260504-drop-job-live-match-trigger.sql pour le rationale.
+-- Le cron couvre :
+--   - les souscriptions explicites via le bouton sur /jobs (pro_alert_subscriptions)
+--   - les pros inscrits avec intervention_zones (auto-souscription via
+--     20260504-pro-alerts-auto-from-profile-zones.sql)
+-- avec dédup (pro_alert_sends), batch (12 missions max par email) et unsub RGPD.
+--
+-- Si tu re-runnes ce fichier, le trigger ne sera PAS recréé : on garde juste
+-- ce commentaire pour documenter la décision.
+--
+-- DROP TRIGGER IF EXISTS on_job_live_match_email ON jobs;
+-- DROP FUNCTION IF EXISTS private.trigger_on_job_live_match();
