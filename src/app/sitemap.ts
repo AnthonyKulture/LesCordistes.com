@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { PRIORITY_CITIES, SEO_SERVICES, hasUniqueServiceCityContext } from '@/constants/seoData'
 import { SEO_GLOSSARY } from '@/constants/seoGlossary'
 import { SEO_BLOG } from '@/constants/seoBlog'
+import { AUTHORS } from '@/constants/seoAuthors'
 import { SEO_BASE_URL as BASE_URL } from '@/constants/seoConfig'
 
 // Google ignore <changefreq> et <priority> depuis 2023 → on ne les émet plus.
@@ -63,11 +64,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(article.dateModified),
     }))
 
+    // Pages auteur : /auteur/{slug} → signal d'autorité E-E-A-T (Person + ProfilePage)
+    const authorPages: MetadataRoute.Sitemap = Object.keys(AUTHORS).map((slug) => ({
+        url: `${BASE_URL}/auteur/${slug}`,
+        lastModified: SITEMAP_LASTMOD,
+    }))
+
     return [
         ...STATIC_PAGES,
         ...cityPages,
         ...cityServicePages,
         ...glossaryPages,
         ...blogPages,
+        ...authorPages,
     ]
 }

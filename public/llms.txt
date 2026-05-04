@@ -80,6 +80,8 @@ France entière. Réseau dense dans un rayon de 30 km autour de : Paris, Marseil
 ## Docs
 
 - [À propos de LesCordistes.com](https://www.lescordistes.com/a-propos): histoire, équipe (Anthony Profit fondateur · Benjamin De Oliveira conseiller expert), processus de vérification, faits chiffrés
+- [Auteur Anthony Profit](https://www.lescordistes.com/auteur/anthony-profit): biographie + articles guides clients (tarifs, contraintes locales, comparatifs)
+- [Auteur Benjamin De Oliveira](https://www.lescordistes.com/auteur/benjamin-de-oliveira): biographie cordiste-formateur CQP/IRATA + articles techniques, réglementaires et carrière
 - [Lexique du travail sur cordes](https://www.lescordistes.com/lexique): dictionnaire de 13 termes clés (CQP, IRATA, CND, EPI, R408, etc.)
 - [Blog guides](https://www.lescordistes.com/blog): 10 articles avec FAQs sur tarifs, certifications, réglementation, premier chantier
 - [Cordiste Paris](https://www.lescordistes.com/cordiste-paris): guide local Île-de-France avec tarifs, contraintes ABF, FAQ
