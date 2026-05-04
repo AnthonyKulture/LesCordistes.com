@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
             category,
             type,
             client_type,
+            credit_cost,
             location_city,
             location_address,
             location_department,
@@ -80,6 +81,11 @@ export async function POST(req: NextRequest) {
             status === 'pending' || status === 'live' || status === 'rejected'
                 ? status
                 : 'live'
+        const parsedCredit = Number(credit_cost)
+        const cleanCreditCost =
+            parsedCredit === 1 || parsedCredit === 3 || parsedCredit === 5
+                ? parsedCredit
+                : 1
 
         // Generate slug + id
         const jobId = crypto.randomUUID()
@@ -106,6 +112,7 @@ export async function POST(req: NextRequest) {
             category,
             type: cleanType,
             client_type: client_type || null,
+            credit_cost: cleanCreditCost,
             location_city: String(location_city).trim(),
             location_address: location_address || null,
             location_department: location_department || null,

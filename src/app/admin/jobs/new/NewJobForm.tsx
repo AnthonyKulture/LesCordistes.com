@@ -6,6 +6,26 @@ import { CATEGORY_LABELS } from '@/constants/categories'
 import { FRENCH_DEPARTMENTS } from '@/constants/departments'
 import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react'
 
+const CLIENT_TYPE_OPTS: Array<[string, string]> = [
+    ['', '— Auto —'],
+    ['particulier', 'Particulier'],
+    ['copropriete_syndic', 'Copropriété / Syndic'],
+    ['entreprise_tertiaire', 'Entreprise tertiaire'],
+    ['industrie_energie', 'Industrie / Énergie'],
+    ['collectivite_public', 'Collectivité / Public'],
+    ['association_evenementiel', 'Association / Événementiel'],
+    ['entreprise_travaux_hauteur', 'Entreprise travaux en hauteur'],
+    ['entreprise_btp', 'Entreprise BTP'],
+    ['agence_interim', "Agence d'intérim"],
+    ['autre_pro', 'Autre pro'],
+]
+
+const CREDIT_COST_OPTS: Array<[number, string]> = [
+    [1, '1 crédit — Standard'],
+    [3, '3 crédits — Potentiel important'],
+    [5, '5 crédits — Gros chantier'],
+]
+
 interface InitialData {
     contact_first_name?: string
     contact_last_name?: string
@@ -39,7 +59,8 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
     const [contactCompanyName, setContactCompanyName] = useState(
         initial?.contact_company_name ?? ''
     )
-    const [clientType, setClientType] = useState<'particulier' | 'professionnel' | ''>('')
+    const [clientType, setClientType] = useState<string>('')
+    const [creditCost, setCreditCost] = useState<1 | 3 | 5>(1)
 
     const [type, setType] = useState<'standard' | 'renfort_pro'>('standard')
     const [category, setCategory] = useState(initial?.category ?? '')
@@ -79,6 +100,7 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
                     type,
                     category,
                     client_type: clientType || null,
+                    credit_cost: creditCost,
                     title: title.trim() || null,
                     description: description.trim(),
                     location_city: city.trim(),
@@ -176,15 +198,34 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
                     <Field label="Type client">
                         <select
                             value={clientType}
-                            onChange={(e) => setClientType(e.target.value as typeof clientType)}
+                            onChange={(e) => setClientType(e.target.value)}
                             className={inputCls}
                         >
-                            <option value="">— Auto —</option>
-                            <option value="particulier">Particulier</option>
-                            <option value="professionnel">Professionnel</option>
+                            {CLIENT_TYPE_OPTS.map(([v, l]) => (
+                                <option key={v} value={v}>
+                                    {l}
+                                </option>
+                            ))}
                         </select>
                     </Field>
                 </Row>
+
+                <Field
+                    label="Coût en crédits *"
+                    hint="1 = lead standard · 3 = potentiel important · 5 = gros chantier."
+                >
+                    <select
+                        value={creditCost}
+                        onChange={(e) => setCreditCost(Number(e.target.value) as 1 | 3 | 5)}
+                        className={inputCls}
+                    >
+                        {CREDIT_COST_OPTS.map(([v, l]) => (
+                            <option key={v} value={v}>
+                                {l}
+                            </option>
+                        ))}
+                    </select>
+                </Field>
 
                 <Field label="Titre" hint="Auto-généré si vide.">
                     <input
