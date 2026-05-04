@@ -30,6 +30,14 @@ export interface BlogArticle {
     datePublished: string
     dateModified: string
     /**
+     * Auteur de l'article. Slug d'AUTHORS (cf seoAuthors.ts).
+     * Si absent, fallback sur DEFAULT_AUTHOR_SLUG.
+     * Convention LesCordistes :
+     * - 'benjamin-de-oliveira' pour articles techniques, réglementaires, métier/carrière
+     * - 'anthony-profit' pour guides clients (achat, comparatifs, contraintes locales)
+     */
+    authorSlug?: 'anthony-profit' | 'benjamin-de-oliveira'
+    /**
      * URL absolue ou relative d'une image hero/thumbnail (ratio 16:10 conseillé,
      * 1200×750 minimum pour Discover). Si absente, fallback automatique sur
      * l'image OG dynamique générée par /og?title=…&kicker=….
@@ -57,6 +65,7 @@ export interface BlogArticle {
 export const SEO_BLOG: BlogArticle[] = [
     {
         slug: 'habilitations-cordiste-cqp-irata-sprat',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Habilitations cordiste 2025 : CQP, IRATA, SPRAT — tout comprendre',
         shortTitle: 'CQP, IRATA, SPRAT : les habilitations cordiste expliquées',
         description:
@@ -147,6 +156,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'comment-choisir-son-cordiste',
+        authorSlug: 'anthony-profit',
         title: '7 critères pour bien choisir son cordiste — guide 2025',
         shortTitle: 'Comment choisir son cordiste : 7 critères essentiels',
         description:
@@ -215,6 +225,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'travaux-facade-sans-echafaudage',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Travaux de façade sans échafaudage : quand choisir le cordiste ?',
         shortTitle: 'Travaux façade sans échafaudage : le guide complet',
         description:
@@ -320,6 +331,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'trouver-cordiste-paris',
+        authorSlug: 'anthony-profit',
         title: 'Trouver un cordiste à Paris : guide complet 2026',
         shortTitle: 'Trouver un cordiste à Paris',
         description:
@@ -420,6 +432,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'responsabilite-maitre-ouvrage-chantier-cordiste',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Responsabilité du maître d\'ouvrage sur un chantier cordiste : ce que la loi impose',
         shortTitle: 'Responsabilité maître d\'ouvrage : chantier cordiste',
         description:
@@ -516,6 +529,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'trouver-cordiste-lyon',
+        authorSlug: 'anthony-profit',
         title: 'Trouver un cordiste à Lyon : tarifs, zones et guide 2026',
         shortTitle: 'Trouver un cordiste à Lyon',
         description:
@@ -621,6 +635,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'premier-chantier-cordiste-apres-cqp',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Premier chantier cordiste après le CQP : trouver et facturer',
         shortTitle: 'Premier chantier après le CQP',
         description:
@@ -741,6 +756,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'missions-cordiste-independant',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Missions cordiste indépendant : trouver du travail toute l\'année',
         shortTitle: 'Missions cordiste indépendant',
         description:
@@ -848,6 +864,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'trouver-cordiste-marseille',
+        authorSlug: 'anthony-profit',
         title: 'Trouver un cordiste à Marseille : tarifs, zones et guide 2026',
         shortTitle: 'Trouver un cordiste à Marseille',
         description:
@@ -953,6 +970,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'elagage-abattage-grande-hauteur-cordiste',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Élagage et abattage de grande hauteur : quand le cordiste s\'impose',
         shortTitle: 'Élagage et abattage grande hauteur',
         description:
