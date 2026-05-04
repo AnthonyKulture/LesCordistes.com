@@ -38,6 +38,12 @@ export const metadata: Metadata = {
         index: true,
         follow: true,
     },
+    // Validation Google Search Console (méthode balise HTML, indépendante du timing JS).
+    // Préférée à la validation via Google Analytics qui peut casser quand gtag.js
+    // est chargé en `lazyOnload` (Googlebot peut re-valider avant chargement).
+    verification: {
+        google: 'KRkP-tNPm0uBjMP1knYwEqme6I89YPPCDIMLaNZbktE',
+    },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
