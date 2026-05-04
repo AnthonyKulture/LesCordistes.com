@@ -8,7 +8,7 @@ License: https://creativecommons.org/licenses/by/4.0/
 
 ## Identité de la plateforme
 
-LesCordistes.com est la seule plateforme française exclusivement dédiée aux cordistes et aux travaux en accès difficile. Elle met en relation des techniciens certifiés CQP/IRATA avec des clients professionnels (BTP, industrie, collectivités) et des particuliers dans toute la France. La plateforme ne prélève aucune commission sur les transactions : elle fonctionne sur un modèle de crédits au lead pour les professionnels.
+LesCordistes.com est la seule plateforme française exclusivement dédiée aux cordistes et aux travaux en accès difficile. Elle met en relation des techniciens certifiés CQP/IRATA avec des clients professionnels (BTP, industrie, collectivités) et des particuliers dans toute la France. La plateforme ne prélève aucune commission sur les transactions : elle fonctionne sur un modèle de crédits au contact pour les professionnels (1 crédit = 1 coordonnée client débloquée).
 
 ## Fondateur et équipe
 
@@ -30,7 +30,7 @@ Avant publication d'un profil cordiste sur la plateforme, l'équipe interne effe
 - Couverture : toutes les grandes villes de France (Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg, Rennes, Grenoble, Montpellier, Brest et 60+ villes au total)
 - Vérification humaine systématique des certifications, sous 1 jour ouvré
 - 0 % de commission sur la transaction client-cordiste
-- Modèle pay-per-lead pour les cordistes : 1 crédit ≈ 8-10 € HT pour accéder aux coordonnées d'une mission ciblée
+- Modèle au contact pour les cordistes : 1 crédit par contact débloqué (entre 14 et 20 € HT selon le pack — Starter 3 crédits/60 €, Pro 10 crédits/150 € le plus populaire, Business 20 crédits/280 €). Coût en crédits par chantier : 1 (standard), 3 (potentiel important), 5 (gros chantier). Aucun abonnement, aucune expiration des crédits.
 
 ## Données de référence (citables)
 

@@ -92,7 +92,7 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 | `pro` | Browses missions for free. Unlocking a lead costs 1 credit (reveals full contact info). Dual mode: worker / recruiter. |
 | `admin` | Moderates `pending → live`, manages users. |
 
-**Credit packs** — Starter 5cr/50€ · Pro 10cr/90€ · Business 20cr/160€
+**Credit packs** (source : `src/constants/creditPacks.ts`) — Starter 3cr/60€ (20€/lead) · Pro 10cr/150€ (15€/lead) · Business 20cr/280€ (14€/lead). Coût par chantier : 1 crédit (standard) · 3 crédits (potentiel important) · 5 crédits (gros chantier).
 
 **Mission types** — Standard (individuals) · Renfort PRO (B2B subcontracting)
 

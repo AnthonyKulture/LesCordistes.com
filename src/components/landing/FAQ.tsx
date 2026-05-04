@@ -23,15 +23,15 @@ const faqData = {
     pros: [
         {
             q: "Pourquoi payer pour accéder à une mission ?",
-            a: "Modèle au lead via crédits. Vous ne dépensez que pour les missions qui vous correspondent réellement."
+            a: "Modèle au contact via crédits. Vous ne dépensez que pour les missions qui vous correspondent réellement, sans abonnement ni commission sur le chantier."
         },
         {
             q: "Suis-je engagé par un abonnement mensuel ?",
-            a: "Non, modèle flexible basé sur des packs de crédits sans engagement."
+            a: "Non, modèle flexible basé sur des packs de crédits sans engagement et sans expiration."
         },
         {
-            q: "Comment sont calculés les prix des leads ?",
-            a: "Un lead standard coûte 1 crédit (env. 8-10€ HT). Projets à fort potentiel : 2 crédits."
+            q: "Combien coûte un contact débloqué ?",
+            a: "Entre 14 et 20 € HT par contact selon le pack : Starter 3 crédits/60 € (20 €/contact), Pro 10 crédits/150 € (15 €/contact, le plus populaire), Business 20 crédits/280 € (14 €/contact). Coût en crédits par chantier : 1 (standard), 3 (potentiel important) ou 5 (gros chantier)."
         },
         {
             q: "Comment puis-je me démarquer des autres cordistes ?",
