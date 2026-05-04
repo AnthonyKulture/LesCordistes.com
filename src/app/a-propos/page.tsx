@@ -211,21 +211,21 @@ export default function AboutPage() {
 
                 {/* Photo équipe */}
                 <section className="py-12 md:py-16">
-                    <div className="container max-w-5xl">
-                        <div className="relative rounded-3xl overflow-hidden shadow-xl">
+                    <div className="container max-w-md">
+                        <div className="relative rounded-3xl overflow-hidden shadow-xl bg-slate-100">
                             <Image
                                 src="/equipe-anthony-benjamin.jpg"
                                 alt="Anthony Profit (fondateur) et Benjamin De Oliveira (conseiller expert métier cordiste CQP/IRATA), basés à Nice"
-                                width={1600}
-                                height={900}
+                                width={810}
+                                height={791}
                                 priority={false}
-                                sizes="(max-width: 1024px) 100vw, 1024px"
-                                quality={80}
-                                className="w-full h-auto object-cover"
+                                sizes="(max-width: 768px) 90vw, 448px"
+                                quality={85}
+                                className="w-full h-auto"
                             />
                         </div>
                         <p className="text-center text-sm text-slate-500 mt-4">
-                            Anthony Profit (gauche) et Benjamin De Oliveira (droite) — Nice, 2026
+                            Benjamin De Oliveira (gauche) et Anthony Profit (droite) — Nice, 2026
                         </p>
                     </div>
                 </section>
