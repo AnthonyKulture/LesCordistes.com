@@ -43,6 +43,11 @@ export const Footer: React.FC = () => {
                                 </Link>
                             </li>
                             <li>
+                                <Link href="/cordiste-copropriete" className="hover:text-brand-blue transition-colors">
+                                    Pour copropriétés &amp; syndics
+                                </Link>
+                            </li>
+                            <li>
                                 <Link href="/a-propos" className="hover:text-brand-blue transition-colors">
                                     À propos
                                 </Link>
