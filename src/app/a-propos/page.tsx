@@ -364,6 +364,14 @@ export default function AboutPage() {
                             accompagnons les cordistes à compléter leur dossier dès lors que les certifications sont
                             effectivement en cours d'obtention ou de renouvellement.
                         </p>
+                        <p className="mt-6">
+                            <Link
+                                href="/verification-pros"
+                                className="inline-flex items-center gap-2 text-brand-blue font-semibold hover:underline"
+                            >
+                                Voir le processus complet de vérification →
+                            </Link>
+                        </p>
                     </div>
                 </section>
 

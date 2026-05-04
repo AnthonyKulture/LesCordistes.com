@@ -47,6 +47,11 @@ export const Footer: React.FC = () => {
                                     À propos
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/verification-pros" className="hover:text-brand-blue transition-colors">
+                                    Vérification des cordistes
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 
