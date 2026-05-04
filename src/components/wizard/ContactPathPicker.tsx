@@ -162,7 +162,9 @@ function Card({
 
 function QuickMessageForm({ onClose }: { onClose: () => void }) {
     const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [city, setCity] = useState('')
     const [category, setCategory] = useState('')
     const [message, setMessage] = useState('')
@@ -172,7 +174,9 @@ function QuickMessageForm({ onClose }: { onClose: () => void }) {
 
     const valid =
         firstName.trim().length >= 2 &&
+        lastName.trim().length >= 2 &&
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
+        /^[+]?[\d\s().-]{6,20}$/.test(phone) &&
         message.trim().length >= 5
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -188,7 +192,9 @@ function QuickMessageForm({ onClose }: { onClose: () => void }) {
                 body: JSON.stringify({
                     request_type: 'quick_message',
                     first_name: firstName.trim(),
+                    last_name: lastName.trim(),
                     email: email.trim().toLowerCase(),
+                    phone: phone.trim(),
                     city: city.trim() || null,
                     category: category || null,
                     message: message.trim(),
@@ -224,7 +230,7 @@ function QuickMessageForm({ onClose }: { onClose: () => void }) {
             <p className="text-sm text-slate-500 mb-5">Quelques mots suffisent.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                <Field label="Prénom">
+                <Field label="Prénom *">
                     <input
                         type="text"
                         value={firstName}
@@ -234,13 +240,36 @@ function QuickMessageForm({ onClose }: { onClose: () => void }) {
                         className={inputCls}
                     />
                 </Field>
-                <Field label="Email">
+                <Field label="Nom *">
+                    <input
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                        placeholder="Dupont"
+                        className={inputCls}
+                    />
+                </Field>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <Field label="Email *">
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                         placeholder="vous@email.fr"
+                        className={inputCls}
+                    />
+                </Field>
+                <Field label="Téléphone *">
+                    <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        required
+                        placeholder="06 12 34 56 78"
                         className={inputCls}
                     />
                 </Field>
