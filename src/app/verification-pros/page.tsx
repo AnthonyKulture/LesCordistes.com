@@ -296,7 +296,7 @@ export default function VerificationProsPage() {
                             L'inscription est gratuite et prend environ 15 minutes (5 minutes pour le compte + 10 minutes pour le téléversement des 4 pièces). Notre équipe vérifie votre dossier sous 1 jour ouvré et vous activez immédiatement après validation.
                         </p>
                         <p className="text-slate-700 leading-relaxed mb-8 text-base md:text-lg">
-                            Une fois publié, vous payez uniquement pour les missions qui vous intéressent (1 crédit ≈ 8-10 € HT pour accéder aux coordonnées d'une mission ciblée). Pas d'abonnement, pas de commission sur le chantier.
+                            Une fois publié, vous payez uniquement pour les contacts que vous débloquez sur les missions qui vous intéressent : 1 crédit par contact, entre 14 et 20 € HT selon le pack choisi (Starter 3 cr/60 €, Pro 10 cr/150 €, Business 20 cr/280 €). Pas d'abonnement, pas de commission sur le chantier. <Link href="/credits" className="text-brand-blue underline hover:no-underline">Voir les packs de crédits →</Link>
                         </p>
                         <div className="flex flex-col sm:flex-row gap-3">
                             <Link

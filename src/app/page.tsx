@@ -112,7 +112,7 @@ const jsonLd = {
                 {
                     '@type': 'Question',
                     name: "Pourquoi les pros paient-ils pour accéder aux missions ?",
-                    acceptedAnswer: { '@type': 'Answer', text: "La plateforme fonctionne au lead par crédits, sans commission sur le chantier. Un cordiste débourse 1 crédit (~8–10 € HT) uniquement pour les missions qui correspondent à son profil et sa zone. Ce modèle filtre les leads non pertinents et garantit au client de recevoir des devis de professionnels réellement intéressés — pas de démarchage automatique." },
+                    acceptedAnswer: { '@type': 'Answer', text: "La plateforme fonctionne au contact par crédits, sans commission sur le chantier. Un cordiste débourse 1 crédit par contact débloqué (entre 14 et 20 € HT selon le pack choisi : Starter 3 cr/60 €, Pro 10 cr/150 €, Business 20 cr/280 €) uniquement pour les missions qui correspondent à son profil et sa zone. Ce modèle filtre les demandes non pertinentes et garantit au client de recevoir des devis de professionnels réellement intéressés — pas de démarchage automatique." },
                 },
             ],
         },

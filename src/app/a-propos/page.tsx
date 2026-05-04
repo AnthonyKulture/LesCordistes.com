@@ -166,7 +166,7 @@ const jsonLd = {
                     name: 'Quel est le modèle économique ?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: "0 % de commission sur la transaction client-cordiste. Les clients déposent leur mission gratuitement et reçoivent des devis sous 48h. Les cordistes utilisent un système de crédits (1 crédit ≈ 8-10 € HT) uniquement pour accéder aux coordonnées d'une mission ciblée correspondant à leur profil et leur zone d'intervention.",
+                        text: "0 % de commission sur la transaction client-cordiste. Les clients déposent leur mission gratuitement et reçoivent des devis sous 48 h. Les cordistes utilisent un système de crédits pour accéder aux coordonnées d'une mission ciblée correspondant à leur profil et leur zone : 1 crédit par contact débloqué, soit entre 14 et 20 € HT selon le pack choisi (Starter 3 crédits/60 €, Pro 10 crédits/150 €, Business 20 crédits/280 €). Les chantiers à fort potentiel coûtent 3 ou 5 crédits.",
                     },
                 },
             ],
@@ -411,7 +411,7 @@ export default function AboutPage() {
                             <li>
                                 <MapPin className="inline text-brand-blue-light mr-2" size={16} />
                                 <strong>Modèle économique</strong> : 0 % de commission sur la transaction client-cordiste.
-                                Pay-per-lead pour les cordistes (1 crédit ≈ 8-10 € HT pour accéder à une mission ciblée).
+                                Au contact pour les cordistes : 1 crédit par contact débloqué, entre 14 et 20 € HT selon le pack (Starter 3 cr/60 €, Pro 10 cr/150 €, Business 20 cr/280 €).
                             </li>
                             <li>
                                 <MapPin className="inline text-brand-blue-light mr-2" size={16} />
@@ -457,9 +457,9 @@ export default function AboutPage() {
                                 </h3>
                                 <ol className="space-y-4 text-slate-700 leading-relaxed list-decimal list-inside">
                                     <li>
-                                        <strong>Pay-per-lead transparent</strong> — Pas d'abonnement, pas de pourcentage
-                                        prélevé. 1 crédit (≈ 8-10 € HT) = accès à une mission ciblée correspondant à votre
-                                        profil et votre zone géographique.
+                                        <strong>Au contact, sans abonnement</strong> — Pas d'engagement, pas de pourcentage
+                                        prélevé. 1 crédit = 1 contact débloqué (entre 14 et 20 € HT selon le pack), uniquement
+                                        sur les missions qui correspondent à votre profil et votre zone géographique.
                                     </li>
                                     <li>
                                         <strong>Filtres précis</strong> — Vous ne voyez que les missions dans votre rayon
