@@ -23,6 +23,7 @@ const STATIC_PAGES: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}/lexique`,                 lastModified: SITEMAP_LASTMOD },
     { url: `${BASE_URL}/a-propos`,                lastModified: SITEMAP_LASTMOD },
     { url: `${BASE_URL}/verification-pros`,       lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/faq`,                     lastModified: SITEMAP_LASTMOD },
     { url: `${BASE_URL}/prix-cordiste`,           lastModified: SITEMAP_LASTMOD },
     { url: `${BASE_URL}/cordiste-vs-echafaudage`, lastModified: SITEMAP_LASTMOD },
     { url: `${BASE_URL}/mentions-legales`,        lastModified: SITEMAP_LASTMOD },
