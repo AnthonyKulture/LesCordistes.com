@@ -236,6 +236,19 @@ export interface LeadQuality {
 }
 
 export function getLeadQuality(job: Job): LeadQuality {
+    // Mission postée par l'admin (suite à un appel/mail client confirmé) → 100% qualifiée
+    if (job.admin_created) {
+        return {
+            score: 100,
+            tier: 'premium',
+            label: 'Lead Premium',
+            color: 'text-emerald-700',
+            bg: 'bg-emerald-50',
+            border: 'border-emerald-200',
+            signals: ['Vérifié par notre équipe', 'Client contacté en direct', 'Brief enrichi manuellement'],
+        };
+    }
+
     let score = BASELINE_SCORE;
     const signals: string[] = ['Mission pré-qualifiée'];
 

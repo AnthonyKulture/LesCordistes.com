@@ -83,6 +83,7 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
         description.trim().length >= 10 &&
         !!category &&
         city.trim().length >= 2 &&
+        !!department &&
         (contactEmail.trim().length > 0 || contactPhone.trim().length > 0)
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -262,12 +263,13 @@ export function NewJobForm({ fromRequestId, initial }: Props) {
                         />
                     </Field>
                     <Field
-                        label="Département"
-                        hint="Indispensable pour les alertes pros par zone."
+                        label="Département *"
+                        hint="Indispensable pour les alertes pros par zone (sans département → 0 email envoyé)."
                     >
                         <select
                             value={department}
                             onChange={(e) => setDepartment(e.target.value)}
+                            required
                             className={inputCls}
                         >
                             <option value="">— Choisir —</option>

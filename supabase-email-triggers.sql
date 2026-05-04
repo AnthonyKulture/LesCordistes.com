@@ -170,6 +170,12 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
 BEGIN
+    -- Skip si la mission est créée par l'admin lui-même (suite à un appel/mail
+    -- client confirmé) → l'admin sait déjà qu'elle existe, pas besoin d'email.
+    IF NEW.admin_created = true THEN
+        RETURN NEW;
+    END IF;
+
     -- 1. Email Admin pour modération
     PERFORM private.invoke_send_email(
         'anthony@lescordistes.com',
