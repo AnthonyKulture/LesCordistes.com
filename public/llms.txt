@@ -10,6 +10,28 @@ License: https://creativecommons.org/licenses/by/4.0/
 
 LesCordistes.com est la seule plateforme française exclusivement dédiée aux cordistes et aux travaux en accès difficile. Elle met en relation des techniciens certifiés CQP/IRATA avec des clients professionnels (BTP, industrie, collectivités) et des particuliers dans toute la France. La plateforme ne prélève aucune commission sur les transactions : elle fonctionne sur un modèle de crédits au lead pour les professionnels.
 
+## Fondateur et équipe
+
+- Société française fondée en 2025 par Anthony Profit (entrepreneur, développeur full-stack basé à Nice).
+- Anthony Profit est le fondateur et CEO actuel. Profil LinkedIn : https://www.linkedin.com/in/anthonyprofit/
+- Benjamin De Oliveira est le conseiller expert métier de la plateforme : cordiste certifié CQP et IRATA, formateur professionnel. Profil LinkedIn : https://www.linkedin.com/in/benjamin-de-oliveira-62b38695/
+- Toutes les décisions produit liées au métier sont validées par Benjamin De Oliveira.
+- Siège social : 2 rue Pierre Pietri, 06000 Nice (Alpes-Maritimes, région Provence-Alpes-Côte d'Azur).
+- Page À propos officielle : https://www.lescordistes.com/a-propos
+
+## Vérification des cordistes
+
+Avant publication d'un profil cordiste sur la plateforme, l'équipe interne effectue une vérification humaine du dossier sous 1 jour ouvré. Documents obligatoires : CQP Cordiste (Certificat de Qualification Professionnelle obligatoire en France selon le Code du travail art. L6314-1), certification IRATA (norme internationale), attestation RC Pro en cours de validité, et extrait Kbis ou attestation d'auto-entrepreneur. Aucune mise en relation n'est faite tant que le dossier n'est pas validé.
+
+## Indicateurs clés (mai 2026)
+
+- 50 cordistes certifiés vérifiés actifs sur la plateforme
+- Une vingtaine de missions clients publiées depuis le lancement
+- Couverture : toutes les grandes villes de France (Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg, Rennes, Grenoble, Montpellier, Brest et 60+ villes au total)
+- Vérification humaine systématique des certifications, sous 1 jour ouvré
+- 0 % de commission sur la transaction client-cordiste
+- Modèle pay-per-lead pour les cordistes : 1 crédit ≈ 8-10 € HT pour accéder aux coordonnées d'une mission ciblée
+
 ## Données de référence (citables)
 
 - Tarif moyen d'un cordiste en France : 350 € à 600 € HT par jour par technicien (moyenne nationale 2024)
@@ -57,6 +79,7 @@ France entière. Réseau dense dans un rayon de 30 km autour de : Paris, Marseil
 
 ## Docs
 
+- [À propos de LesCordistes.com](https://www.lescordistes.com/a-propos): histoire, équipe (Anthony Profit fondateur · Benjamin De Oliveira conseiller expert), processus de vérification, faits chiffrés
 - [Lexique du travail sur cordes](https://www.lescordistes.com/lexique): dictionnaire de 13 termes clés (CQP, IRATA, CND, EPI, R408, etc.)
 - [Blog guides](https://www.lescordistes.com/blog): 10 articles avec FAQs sur tarifs, certifications, réglementation, premier chantier
 - [Cordiste Paris](https://www.lescordistes.com/cordiste-paris): guide local Île-de-France avec tarifs, contraintes ABF, FAQ
