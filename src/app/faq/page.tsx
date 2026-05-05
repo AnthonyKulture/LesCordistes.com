@@ -62,32 +62,46 @@ const jsonLd = {
                 { '@type': 'ListItem', position: 2, name: 'FAQ', item: PAGE_URL },
             ],
         },
-        ...SEO_FAQ.map((f) => ({
-            '@type': 'QAPage',
-            '@id': `${PAGE_URL}#${f.slug}`,
-            url: `${PAGE_URL}#${f.slug}`,
-            inLanguage: 'fr',
-            isPartOf: { '@id': `${PAGE_URL}#collectionpage` },
-            dateModified: f.updated,
-            mainEntity: {
-                '@type': 'Question',
-                '@id': `${PAGE_URL}#${f.slug}-question`,
-                name: f.q,
-                text: f.q,
-                answerCount: 1,
-                dateCreated: f.updated,
-                author: { '@id': `${SEO_BASE_URL}/#organization` },
-                acceptedAnswer: {
-                    '@type': 'Answer',
-                    '@id': `${PAGE_URL}#${f.slug}-answer`,
-                    text: f.a,
-                    dateCreated: f.updated,
-                    upvoteCount: 0,
-                    author: { '@id': `${SEO_BASE_URL}/#organization` },
-                    url: `${PAGE_URL}#${f.slug}`,
+        ...SEO_FAQ.map((f) => {
+            // Google exige ISO 8601 avec timezone explicite. f.updated est 'YYYY-MM-DD'
+            // → on suffixe T00:00:00Z (UTC) pour être strict-compliant et
+            //   éviter les warnings GSC "Il manque le fuseau horaire".
+            const dateIso = `${f.updated}T00:00:00Z`
+            // Google n'accepte pas un simple { '@id': … } pour `author` sur QAPage.
+            // Il faut inline @type + name (le @id reste valable pour le graph linking).
+            const authorOrg = {
+                '@type': 'Organization',
+                '@id': `${SEO_BASE_URL}/#organization`,
+                name: 'LesCordistes.com',
+                url: SEO_BASE_URL,
+            }
+            return {
+                '@type': 'QAPage',
+                '@id': `${PAGE_URL}#${f.slug}`,
+                url: `${PAGE_URL}#${f.slug}`,
+                inLanguage: 'fr',
+                isPartOf: { '@id': `${PAGE_URL}#collectionpage` },
+                dateModified: dateIso,
+                mainEntity: {
+                    '@type': 'Question',
+                    '@id': `${PAGE_URL}#${f.slug}-question`,
+                    name: f.q,
+                    text: f.q,
+                    answerCount: 1,
+                    dateCreated: dateIso,
+                    author: authorOrg,
+                    acceptedAnswer: {
+                        '@type': 'Answer',
+                        '@id': `${PAGE_URL}#${f.slug}-answer`,
+                        text: f.a,
+                        dateCreated: dateIso,
+                        upvoteCount: 0,
+                        author: authorOrg,
+                        url: `${PAGE_URL}#${f.slug}`,
+                    },
                 },
-            },
-        })),
+            }
+        }),
     ],
 }
 
