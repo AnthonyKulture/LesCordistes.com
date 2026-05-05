@@ -61,33 +61,32 @@ export const PostJob: React.FC = () => {
     // Keep formDataRef in sync for use inside stable closures
     formDataRef.current = formData;
 
-    // Exit-intent: fire once if email not yet captured et si user encore au step 1
+    // Exit-intent: fire once si email pas encore capté.
+    // Skip si :
+    //   - user déjà connecté ou ayant saisi son email
+    //   - user pas dans le wizard (ContactPathPicker affiché → on n'interrompt
+    //     PAS les formulaires inline "Message rapide" / "Être recontacté")
+    //   - user déjà passé le step 1 (il est engagé)
+    // Mouse-leave désactivé : trop agressif. Seul l'idle timer fire, et passe
+    // de 4 min → 10 min pour laisser au user le temps de réfléchir.
     useEffect(() => {
         const shouldSkip = () =>
             exitFired.current ||
             !!authUser ||
             !!formDataRef.current.contact_email ||
+            !wizardActive ||
             currentStep > 1;
-
-        const handleMouseLeave = (e: MouseEvent) => {
-            if (e.clientY > 10) return;
-            if (shouldSkip()) return;
-            exitFired.current = true;
-            setShowExitIntent(true);
-        };
 
         const idleTimer = setTimeout(() => {
             if (shouldSkip()) return;
             exitFired.current = true;
             setShowExitIntent(true);
-        }, 240_000);
+        }, 600_000);
 
-        document.addEventListener('mouseleave', handleMouseLeave);
         return () => {
-            document.removeEventListener('mouseleave', handleMouseLeave);
             clearTimeout(idleTimer);
         };
-    }, [currentStep, authUser]);
+    }, [currentStep, authUser, wizardActive]);
 
     // Load draft on mount
     useEffect(() => {
