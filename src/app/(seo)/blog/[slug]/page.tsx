@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArrowLeft, ArrowRight, Calendar, Clock, RefreshCw } from 'lucide-react'
 import { SEO_BLOG, SEO_BLOG_BASE, getBlogArticle, getBlogImage, BLOG_CATEGORIES, type BlogSectionCta } from '@/constants/seoBlog'
 import { SEO_BASE_URL, SEO_BRAND_NAME } from '@/constants/seoConfig'
+import { getAuthor, authorPersonId, authorUrl } from '@/constants/seoAuthors'
 import { BlogLeadForm } from '@/components/seo/BlogLeadForm'
 
 interface Props {
@@ -52,6 +53,8 @@ export default async function BlogArticlePage({ params }: Props) {
         ? (article.image.startsWith('http') ? article.image : `${SEO_BASE_URL}${article.image}`)
         : `${SEO_BASE_URL}/og?title=${encodeURIComponent(article.shortTitle)}&kicker=${encodeURIComponent(article.category)}&v=3`
 
+    const author = getAuthor(article.authorSlug)
+
     const otherArticles = SEO_BLOG
         .filter((a) => a.slug !== slug)
         .sort((a, b) => b.datePublished.localeCompare(a.datePublished))
@@ -76,14 +79,23 @@ export default async function BlogArticlePage({ params }: Props) {
                 datePublished: article.datePublished,
                 dateModified: article.dateModified,
                 author: {
-                    '@type': 'Organization',
-                    '@id': `${SEO_BASE_URL}/#organization`,
-                    name: SEO_BRAND_NAME,
+                    '@type': 'Person',
+                    '@id': authorPersonId(author),
+                    name: author.name,
+                    url: authorUrl(author),
+                    sameAs: [author.linkedin],
+                    jobTitle: author.role,
                 },
                 publisher: {
                     '@type': 'Organization',
                     '@id': `${SEO_BASE_URL}/#organization`,
                     name: SEO_BRAND_NAME,
+                    logo: {
+                        '@type': 'ImageObject',
+                        url: `${SEO_BASE_URL}/lescordistes.com-3.webp`,
+                        width: 1200,
+                        height: 630,
+                    },
                 },
                 mainEntityOfPage: `${SEO_BLOG_BASE}/${article.slug}`,
                 isPartOf: {
@@ -101,6 +113,8 @@ export default async function BlogArticlePage({ params }: Props) {
             },
             {
                 '@type': 'FAQPage',
+                '@id': `${SEO_BLOG_BASE}/${article.slug}#faq`,
+                mainEntityOfPage: `${SEO_BLOG_BASE}/${article.slug}`,
                 mainEntity: article.faqs.map((faq) => ({
                     '@type': 'Question',
                     name: faq.q,
@@ -183,7 +197,15 @@ export default async function BlogArticlePage({ params }: Props) {
                             </span>
                         )}
                         <span>
-                            Par <strong className="text-white font-semibold">{SEO_BRAND_NAME}</strong>
+                            Par{' '}
+                            <Link
+                                href={`/auteur/${author.slug}`}
+                                rel="author"
+                                className="text-white font-semibold hover:text-brand-blue-light transition-colors"
+                            >
+                                {author.name}
+                            </Link>
+                            <span className="text-slate-500"> · {author.role}</span>
                         </span>
                     </div>
                 </div>

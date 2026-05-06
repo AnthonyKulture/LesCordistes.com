@@ -42,6 +42,26 @@ export const Footer: React.FC = () => {
                                     Publier un projet
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/cordiste-copropriete" className="hover:text-brand-blue transition-colors">
+                                    Pour copropriétés &amp; syndics
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/a-propos" className="hover:text-brand-blue transition-colors">
+                                    À propos
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/verification-pros" className="hover:text-brand-blue transition-colors">
+                                    Vérification des cordistes
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/faq" className="hover:text-brand-blue transition-colors">
+                                    Questions fréquentes
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 

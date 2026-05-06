@@ -30,6 +30,14 @@ export interface BlogArticle {
     datePublished: string
     dateModified: string
     /**
+     * Auteur de l'article. Slug d'AUTHORS (cf seoAuthors.ts).
+     * Si absent, fallback sur DEFAULT_AUTHOR_SLUG.
+     * Convention LesCordistes :
+     * - 'benjamin-de-oliveira' pour articles techniques, réglementaires, métier/carrière
+     * - 'anthony-profit' pour guides clients (achat, comparatifs, contraintes locales)
+     */
+    authorSlug?: 'anthony-profit' | 'benjamin-de-oliveira'
+    /**
      * URL absolue ou relative d'une image hero/thumbnail (ratio 16:10 conseillé,
      * 1200×750 minimum pour Discover). Si absente, fallback automatique sur
      * l'image OG dynamique générée par /og?title=…&kicker=….
@@ -57,6 +65,7 @@ export interface BlogArticle {
 export const SEO_BLOG: BlogArticle[] = [
     {
         slug: 'habilitations-cordiste-cqp-irata-sprat',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Habilitations cordiste 2025 : CQP, IRATA, SPRAT — tout comprendre',
         shortTitle: 'CQP, IRATA, SPRAT : les habilitations cordiste expliquées',
         description:
@@ -147,6 +156,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'comment-choisir-son-cordiste',
+        authorSlug: 'anthony-profit',
         title: '7 critères pour bien choisir son cordiste — guide 2025',
         shortTitle: 'Comment choisir son cordiste : 7 critères essentiels',
         description:
@@ -215,6 +225,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'travaux-facade-sans-echafaudage',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Travaux de façade sans échafaudage : quand choisir le cordiste ?',
         shortTitle: 'Travaux façade sans échafaudage : le guide complet',
         description:
@@ -320,6 +331,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'trouver-cordiste-paris',
+        authorSlug: 'anthony-profit',
         title: 'Trouver un cordiste à Paris : guide complet 2026',
         shortTitle: 'Trouver un cordiste à Paris',
         description:
@@ -420,6 +432,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'responsabilite-maitre-ouvrage-chantier-cordiste',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Responsabilité du maître d\'ouvrage sur un chantier cordiste : ce que la loi impose',
         shortTitle: 'Responsabilité maître d\'ouvrage : chantier cordiste',
         description:
@@ -516,6 +529,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'trouver-cordiste-lyon',
+        authorSlug: 'anthony-profit',
         title: 'Trouver un cordiste à Lyon : tarifs, zones et guide 2026',
         shortTitle: 'Trouver un cordiste à Lyon',
         description:
@@ -621,6 +635,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'premier-chantier-cordiste-apres-cqp',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Premier chantier cordiste après le CQP : trouver et facturer',
         shortTitle: 'Premier chantier après le CQP',
         description:
@@ -741,6 +756,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'missions-cordiste-independant',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Missions cordiste indépendant : trouver du travail toute l\'année',
         shortTitle: 'Missions cordiste indépendant',
         description:
@@ -812,7 +828,7 @@ export const SEO_BLOG: BlogArticle[] = [
             },
             {
                 heading: 'Sur LesCordistes.com : comment les missions arrivent concrètement',
-                body: 'LesCordistes est une marketplace qui connecte des clients ayant un besoin de travaux en hauteur avec des cordistes indépendants ou des entreprises. Le modèle est conçu pour réduire le temps de prospection côté pro.\n\n**Le client décrit son chantier** — localisation, type de travaux, urgence, contraintes de site. La mission est qualifiée avant d\'être publiée : les demandes floues ou hors périmètre ne sont pas diffusées, ce qui garantit la pertinence de ce que tu reçois.\n\n**Tu consultes les missions disponibles** dans ta zone sans frais. Le descriptif, la localisation approximative et le type de travaux sont accessibles librement depuis ton espace pro. Tu évalues si la mission correspond à ton profil et ta disponibilité avant d\'engager quoi que ce soit.\n\n**Tu débloqués les coordonnées du client** pour te positionner sur la mission. Chaque déverrouillage coûte 1 crédit (pack Starter 5 crédits/50 €, Pro 10 crédits/90 €, Business 20 crédits/160 €). L\'accès aux coordonnées complètes te permet de contacter le client directement, sans intermédiaire.\n\nPour un cordiste actif qui convertit 2 prises de contact sur 5 à un TJM moyen de 380 €/j, un crédit à 10 € est rentabilisé sur la première heure de la première mission décrochée. C\'est une logique d\'investissement, pas un abonnement à l\'aveugle.',
+                body: 'LesCordistes est une marketplace qui connecte des clients ayant un besoin de travaux en hauteur avec des cordistes indépendants ou des entreprises. Le modèle est conçu pour réduire le temps de prospection côté pro.\n\n**Le client décrit son chantier** — localisation, type de travaux, urgence, contraintes de site. La mission est qualifiée avant d\'être publiée : les demandes floues ou hors périmètre ne sont pas diffusées, ce qui garantit la pertinence de ce que tu reçois.\n\n**Tu consultes les missions disponibles** dans ta zone sans frais. Le descriptif, la localisation approximative et le type de travaux sont accessibles librement depuis ton espace pro. Tu évalues si la mission correspond à ton profil et ta disponibilité avant d\'engager quoi que ce soit.\n\n**Tu débloques les coordonnées du client** pour te positionner sur la mission. Chaque chantier coûte 1, 3 ou 5 crédits selon son potentiel (standard / important / gros chantier). Les packs : Starter 3 crédits/60 € (20 €/contact), Pro 10 crédits/150 € (15 €/contact, le plus populaire), Business 20 crédits/280 € (14 €/contact). L\'accès aux coordonnées complètes te permet de contacter le client directement, sans intermédiaire.\n\nPour un cordiste actif qui convertit 2 prises de contact sur 5 à un TJM moyen de 380 €/j, un contact à 15 € est rentabilisé sur la première heure de la première mission décrochée. C\'est une logique d\'investissement, pas un abonnement à l\'aveugle.',
             },
         ],
         faqs: [
@@ -848,6 +864,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'trouver-cordiste-marseille',
+        authorSlug: 'anthony-profit',
         title: 'Trouver un cordiste à Marseille : tarifs, zones et guide 2026',
         shortTitle: 'Trouver un cordiste à Marseille',
         description:
@@ -953,6 +970,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'elagage-abattage-grande-hauteur-cordiste',
+        authorSlug: 'benjamin-de-oliveira',
         title: 'Élagage et abattage de grande hauteur : quand le cordiste s\'impose',
         shortTitle: 'Élagage et abattage grande hauteur',
         description:

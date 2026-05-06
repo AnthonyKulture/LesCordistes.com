@@ -5,6 +5,7 @@ import { TrustSignals } from '@/components/landing/TrustSignals'
 import { HowItWorks } from '@/components/landing/HowItWorks'
 import { ProfessionalsNetwork } from '@/components/landing/ProfessionalsNetwork'
 import { SEOContent } from '@/components/landing/SEOContent'
+import { CityLinks } from '@/components/landing/CityLinks'
 import { FAQ } from '@/components/landing/FAQ'
 import { CTA } from '@/components/landing/CTA'
 
@@ -28,6 +29,14 @@ const jsonLd = {
             '@id': `${SEO_BASE_URL}/#website`,
             name: SEO_BRAND_NAME,
             url: `${SEO_BASE_URL}/`,
+            potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                    '@type': 'EntryPoint',
+                    urlTemplate: `${SEO_BASE_URL}/jobs?q={search_term_string}`,
+                },
+                'query-input': 'required name=search_term_string',
+            },
         },
         {
             '@type': ['Organization', 'ProfessionalService'],
@@ -43,6 +52,32 @@ const jsonLd = {
             telephone: SEO_PHONE,
             email: SEO_EMAIL,
             address: SEO_POSTAL_ADDRESS,
+            contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: SEO_PHONE,
+                email: SEO_EMAIL,
+                contactType: 'customer service',
+                areaServed: 'FR',
+                availableLanguage: 'French',
+            },
+            foundingDate: '2025',
+            founder: {
+                '@type': 'Person',
+                '@id': `${SEO_BASE_URL}/a-propos#anthony-profit`,
+                name: 'Anthony Profit',
+                url: `${SEO_BASE_URL}/a-propos`,
+                sameAs: ['https://www.linkedin.com/in/anthonyprofit/'],
+            },
+            numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 5 },
+            knowsAbout: [
+                'Cordiste',
+                'Travail sur cordes',
+                'CQP cordiste',
+                'IRATA',
+                'Travail en hauteur',
+                'Accès difficile',
+                'Marketplace BTP',
+            ],
             description: "Marketplace française spécialisée dans les travaux en accès difficile. Mise en relation entre cordistes certifiés CQP/IRATA et clients professionnels ou particuliers dans toute la France.",
             areaServed: { '@type': 'Country', name: 'France' },
             openingHoursSpecification: SEO_OPENING_HOURS,
@@ -77,7 +112,7 @@ const jsonLd = {
                 {
                     '@type': 'Question',
                     name: "Pourquoi les pros paient-ils pour accéder aux missions ?",
-                    acceptedAnswer: { '@type': 'Answer', text: "La plateforme fonctionne au lead par crédits, sans commission sur le chantier. Un cordiste débourse 1 crédit (~8–10 € HT) uniquement pour les missions qui correspondent à son profil et sa zone. Ce modèle filtre les leads non pertinents et garantit au client de recevoir des devis de professionnels réellement intéressés — pas de démarchage automatique." },
+                    acceptedAnswer: { '@type': 'Answer', text: "La plateforme fonctionne au contact par crédits, sans commission sur le chantier. Un cordiste débourse 1 crédit par contact débloqué (entre 14 et 20 € HT selon le pack choisi : Starter 3 cr/60 €, Pro 10 cr/150 €, Business 20 cr/280 €) uniquement pour les missions qui correspondent à son profil et sa zone. Ce modèle filtre les demandes non pertinentes et garantit au client de recevoir des devis de professionnels réellement intéressés — pas de démarchage automatique." },
                 },
             ],
         },
@@ -97,6 +132,7 @@ export default function HomePage() {
                 <TrustSignals />
                 <ProfessionalsNetwork />
                 <SEOContent />
+                <CityLinks />
                 <FAQ />
                 <CTA />
             </div>

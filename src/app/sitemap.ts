@@ -2,33 +2,42 @@ import type { MetadataRoute } from 'next'
 import { PRIORITY_CITIES, SEO_SERVICES, hasUniqueServiceCityContext } from '@/constants/seoData'
 import { SEO_GLOSSARY } from '@/constants/seoGlossary'
 import { SEO_BLOG } from '@/constants/seoBlog'
+import { AUTHORS } from '@/constants/seoAuthors'
 import { SEO_BASE_URL as BASE_URL } from '@/constants/seoConfig'
 
-// Pages statiques avec leur priorité et fréquence
+// Google ignore <changefreq> et <priority> depuis 2023 → on ne les émet plus.
+// Seul <lastmod> est utilisé. Pour les pages au contenu stable, on bump
+// SITEMAP_LASTMOD manuellement à chaque mise à jour significative du site
+// (refonte design, ajout massif de contextes, etc.). Pour les pages au
+// contenu réellement daté (blog), on conserve la date de l'article.
+const SITEMAP_LASTMOD = new Date('2026-05-02')
+
 const STATIC_PAGES: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}/`,                   lastModified: new Date(), changeFrequency: 'daily',   priority: 1.0 },
-    { url: `${BASE_URL}/jobs`,               lastModified: new Date(), changeFrequency: 'daily',   priority: 0.6 },
-    { url: `${BASE_URL}/post-job`,           lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE_URL}/inscription`,        lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE_URL}/inscription-cordiste`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE_URL}/inscription-client`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE_URL}/blog`,               lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.8 },
-    { url: `${BASE_URL}/lexique`,            lastModified: new Date(), changeFrequency: 'weekly',  priority: 0.7 },
-    { url: `${BASE_URL}/prix-cordiste`,     lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/cordiste-vs-echafaudage`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/mentions-legales`,   lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.2 },
-    { url: `${BASE_URL}/cgu`,                lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.2 },
-    { url: `${BASE_URL}/cgv`,                lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.2 },
-    { url: `${BASE_URL}/confidentialite`,    lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.2 },
+    { url: `${BASE_URL}/`,                        lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/jobs`,                    lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/post-job`,                lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/inscription`,             lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/inscription-cordiste`,    lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/inscription-client`,      lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/blog`,                    lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/lexique`,                 lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/a-propos`,                lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/verification-pros`,       lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/faq`,                     lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/cordiste-copropriete`,    lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/prix-cordiste`,           lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/cordiste-vs-echafaudage`, lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/mentions-legales`,        lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/cgu`,                     lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/cgv`,                     lastModified: SITEMAP_LASTMOD },
+    { url: `${BASE_URL}/confidentialite`,         lastModified: SITEMAP_LASTMOD },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
     // Pages ville : /cordiste-{ville}
     const cityPages: MetadataRoute.Sitemap = PRIORITY_CITIES.map((city) => ({
         url: `${BASE_URL}/cordiste-${city.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly',
-        priority: 0.8,
+        lastModified: SITEMAP_LASTMOD,
     }))
 
     // Pages ville × service : /cordiste-{ville}/{service}
@@ -42,26 +51,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
             .filter((service) => hasUniqueServiceCityContext(service.slug, city.slug))
             .map((service) => ({
                 url: `${BASE_URL}/cordiste-${city.slug}/${service.slug}`,
-                lastModified: new Date(),
-                changeFrequency: 'weekly' as const,
-                priority: 0.7,
+                lastModified: SITEMAP_LASTMOD,
             }))
     )
 
     // Pages lexique : /lexique/{slug}
     const glossaryPages: MetadataRoute.Sitemap = SEO_GLOSSARY.map((term) => ({
         url: `${BASE_URL}/lexique/${term.slug}`,
-        lastModified: new Date(),
-        changeFrequency: 'monthly',
-        priority: 0.6,
+        lastModified: SITEMAP_LASTMOD,
     }))
 
-    // Pages blog : /blog/{slug}
+    // Pages blog : /blog/{slug} → date réelle de l'article (signal de fraîcheur fiable)
     const blogPages: MetadataRoute.Sitemap = SEO_BLOG.map((article) => ({
         url: `${BASE_URL}/blog/${article.slug}`,
         lastModified: new Date(article.dateModified),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
+    }))
+
+    // Pages auteur : /auteur/{slug} → signal d'autorité E-E-A-T (Person + ProfilePage)
+    const authorPages: MetadataRoute.Sitemap = Object.keys(AUTHORS).map((slug) => ({
+        url: `${BASE_URL}/auteur/${slug}`,
+        lastModified: SITEMAP_LASTMOD,
     }))
 
     return [
@@ -70,5 +79,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...cityServicePages,
         ...glossaryPages,
         ...blogPages,
+        ...authorPages,
     ]
 }
