@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
         const {
             request_type,
             first_name,
+            last_name,
             email,
             phone,
             city,
@@ -59,6 +60,7 @@ export async function POST(req: NextRequest) {
         }
 
         const cleanFirstName = first_name?.trim().slice(0, 60) || null
+        const cleanLastName = last_name?.trim().slice(0, 60) || null
         const cleanCity = city?.trim().slice(0, 80) || null
         const cleanCategory = category?.trim().slice(0, 40) || null
         const cleanMessage = message?.trim().slice(0, 1000) || null
@@ -77,6 +79,7 @@ export async function POST(req: NextRequest) {
             .insert({
                 request_type,
                 first_name: cleanFirstName,
+                last_name: cleanLastName,
                 email: cleanEmail,
                 phone: cleanPhone,
                 city: cleanCity,
@@ -108,6 +111,7 @@ export async function POST(req: NextRequest) {
         const tgLines = [
             isCallback ? '📞 <b>Demande de rappel</b>' : '💬 <b>Message rapide</b>',
             cleanFirstName ? `Prénom : ${escapeHtml(cleanFirstName)}` : '',
+            cleanLastName ? `Nom : ${escapeHtml(cleanLastName)}` : '',
             cleanEmail ? `Email : ${escapeHtml(cleanEmail)}` : '',
             cleanPhone ? `Tél. : ${escapeHtml(cleanPhone)}` : '',
             cleanCity ? `Ville : ${escapeHtml(cleanCity)}` : '',
@@ -121,9 +125,10 @@ export async function POST(req: NextRequest) {
         sendTelegram(tgLines.join('\n')).catch(() => {})
 
         // Email admin via send-email + admin-alert
+        const fullDisplayName = [cleanFirstName, cleanLastName].filter(Boolean).join(' ') || 'Anonyme'
         const emailTitle = isCallback
-            ? `Demande de rappel — ${cleanFirstName ?? 'Anonyme'}${cleanCity ? ` (${cleanCity})` : ''}`
-            : `Message rapide — ${cleanFirstName ?? 'Anonyme'}${cleanCity ? ` (${cleanCity})` : ''}`
+            ? `Demande de rappel — ${fullDisplayName}${cleanCity ? ` (${cleanCity})` : ''}`
+            : `Message rapide — ${fullDisplayName}${cleanCity ? ` (${cleanCity})` : ''}`
 
         const emailLines = [
             cleanEmail ? `Email : ${cleanEmail}` : null,

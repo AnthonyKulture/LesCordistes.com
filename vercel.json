@@ -32,6 +32,12 @@
     { "source": "/register/", "destination": "/inscription", "permanent": true }
   ],
   "framework": "nextjs",
+  "crons": [
+    {
+      "path": "/api/cron/indexnow-sitemap",
+      "schedule": "0 8 * * 1"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -39,6 +45,13 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    },
+    {
+      "source": "/c6ec276663dc1d163620ecb9cb16d9b6.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     }
   ]

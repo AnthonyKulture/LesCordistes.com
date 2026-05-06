@@ -62,6 +62,7 @@ export interface Job {
         company_name?: string;
     };
     created_by?: string;
+    admin_created?: boolean;
     unlocked_leads_count?: number;
     creator?: { role: 'client' | 'pro' | 'admin' };
     credit_cost?: number; // Cost to unlock (default 1)

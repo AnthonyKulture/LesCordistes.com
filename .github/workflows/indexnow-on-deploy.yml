@@ -1,0 +1,73 @@
+name: IndexNow ping after Vercel deploy
+
+# Déclenche un ping IndexNow vers Bing/Yandex/Naver après chaque deploy Vercel
+# qui modifie du contenu indexable. Réduit le délai d'indexation Bing de
+# plusieurs semaines à 24-48 h.
+#
+# Path filter : se déclenche uniquement si un fichier SEO/contenu est modifié.
+# Évite les pings inutiles sur les modifs purement techniques (config, lint, etc.).
+#
+# Prérequis : ajouter le secret CRON_SECRET dans GitHub
+# (Repo Settings → Secrets and variables → Actions → New repository secret).
+# Doit être identique à la valeur configurée dans les env vars Vercel.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      # Constants SEO (articles blog, contextes city × service, glossaire, FAQ)
+      - 'src/constants/seoBlog.ts'
+      - 'src/constants/seoData.ts'
+      - 'src/constants/seoGlossary.ts'
+      - 'src/constants/seoFaq.ts'
+      - 'src/constants/seoAuthors.ts'
+      - 'src/constants/seoConfig.ts'
+      # Pages applicatives (toute nouvelle route ou modif page)
+      - 'src/app/**/page.tsx'
+      - 'src/app/**/page.ts'
+      # Sitemap, llms.txt, robots
+      - 'src/app/sitemap.ts'
+      - 'src/app/robots.ts'
+      - 'public/llms.txt'
+      - 'public/robots.txt'
+
+# Évite les pings concurrents si plusieurs commits enchaînés
+concurrency:
+  group: indexnow-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    name: Push sitemap to IndexNow
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Wait for Vercel deploy to propagate
+        # Vercel deploy moyen ~2 min. Marge confort : 4 min avant ping.
+        # Si le sitemap n'est pas encore à jour, le ping pousse l'ancienne
+        # version (acceptable : Bing recrawle de toute façon, et le prochain
+        # cron hebdo lundi rattrape).
+        run: sleep 240
+
+      - name: Ping IndexNow with full sitemap
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "::error::CRON_SECRET secret manquant. Ajoutez-le dans Repo Settings → Secrets → Actions."
+            exit 1
+          fi
+          echo "Ping IndexNow via /api/cron/indexnow-sitemap"
+          response=$(curl -sS -w "\nHTTP_STATUS:%{http_code}" \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            https://www.lescordistes.com/api/cron/indexnow-sitemap)
+          status=$(echo "$response" | grep "HTTP_STATUS:" | cut -d: -f2)
+          body=$(echo "$response" | sed '/HTTP_STATUS:/d')
+          echo "HTTP status: $status"
+          echo "Response body:"
+          echo "$body" | jq . 2>/dev/null || echo "$body"
+          if [ "$status" != "200" ] && [ "$status" != "202" ]; then
+            echo "::error::IndexNow ping failed with HTTP $status"
+            exit 1
+          fi
+          echo "::notice::IndexNow ping OK ($status). Sitemap pushed to Bing/Yandex/Naver."
