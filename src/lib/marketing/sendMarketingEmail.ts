@@ -114,6 +114,7 @@ export async function sendMarketingEmail(
 
     let invokeError: unknown = null
     let resendId: string | null = null
+    let errorBody: string | null = null
 
     try {
         const { data, error } = await admin.functions.invoke('send-email', {
@@ -126,6 +127,16 @@ export async function sendMarketingEmail(
         })
         if (error) {
             invokeError = error
+            // supabase-js masque le body Resend derrière "Edge Function returned a non-2xx status code".
+            // On va chercher la vraie réponse pour pouvoir diagnostiquer (rate-limit, domaine non vérifié, etc.).
+            const ctx = (error as { context?: unknown }).context
+            if (ctx && typeof (ctx as Response).text === 'function') {
+                try {
+                    errorBody = await (ctx as Response).text()
+                } catch {
+                    /* ignore */
+                }
+            }
         } else {
             resendId = (data as { id?: string } | null)?.id ?? null
         }
@@ -133,12 +144,17 @@ export async function sendMarketingEmail(
         invokeError = err
     }
 
-    const errorMessage =
+    const baseMessage =
         invokeError instanceof Error
             ? invokeError.message
             : invokeError
               ? String(invokeError)
               : null
+    const errorMessage = invokeError
+        ? errorBody
+            ? `${baseMessage ?? 'invoke_error'} | body=${errorBody.slice(0, 400)}`
+            : baseMessage
+        : null
 
     if (!input.isTest) {
         await upsertRecipient(admin, input, {

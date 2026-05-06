@@ -1,12 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, Send, Mail, AlertTriangle } from 'lucide-react'
+import { Loader2, Send, Mail, AlertTriangle, Search } from 'lucide-react'
+
+interface PreviewRecipient {
+    contact_id: string
+    email: string
+    first_name: string | null
+    last_name: string | null
+    excluded: boolean
+}
 
 interface PreviewData {
-    recipients_count: number
-    sample: Array<{ email: string; first_name: string | null }>
+    total_in_segment: number
+    recipients: PreviewRecipient[]
 }
 
 export function CampaignDetailActions({
@@ -22,11 +30,25 @@ export function CampaignDetailActions({
     const [testResult, setTestResult] = useState<string | null>(null)
 
     const [preview, setPreview] = useState<PreviewData | null>(null)
+    const [excluded, setExcluded] = useState<Set<string>>(new Set())
+    const [search, setSearch] = useState('')
     const [loadingPreview, setLoadingPreview] = useState(false)
     const [confirmingSend, setConfirmingSend] = useState(false)
     const [sending, setSending] = useState(false)
     const [sendResult, setSendResult] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
+
+    const filtered = useMemo(() => {
+        if (!preview) return []
+        const q = search.trim().toLowerCase()
+        if (!q) return preview.recipients
+        return preview.recipients.filter(r => {
+            const fullName = `${r.first_name ?? ''} ${r.last_name ?? ''}`.trim().toLowerCase()
+            return r.email.toLowerCase().includes(q) || fullName.includes(q)
+        })
+    }, [preview, search])
+
+    const finalCount = preview ? preview.recipients.length - excluded.size : 0
 
     async function sendTest() {
         if (!testEmail) return
@@ -84,16 +106,43 @@ export function CampaignDetailActions({
                 setError(data?.error ?? 'Erreur preview')
                 return
             }
+            const recipients: PreviewRecipient[] = data.recipients ?? []
             setPreview({
-                recipients_count: data.recipients_count,
-                sample: data.sample ?? [],
+                total_in_segment: data.total_in_segment ?? recipients.length,
+                recipients,
             })
+            setExcluded(new Set(recipients.filter(r => r.excluded).map(r => r.contact_id)))
             setConfirmingSend(true)
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Erreur')
         } finally {
             setLoadingPreview(false)
         }
+    }
+
+    function toggleExclude(contactId: string) {
+        setExcluded(prev => {
+            const next = new Set(prev)
+            if (next.has(contactId)) next.delete(contactId)
+            else next.add(contactId)
+            return next
+        })
+    }
+
+    function excludeAllVisible() {
+        setExcluded(prev => {
+            const next = new Set(prev)
+            filtered.forEach(r => next.add(r.contact_id))
+            return next
+        })
+    }
+
+    function includeAllVisible() {
+        setExcluded(prev => {
+            const next = new Set(prev)
+            filtered.forEach(r => next.delete(r.contact_id))
+            return next
+        })
     }
 
     async function realSend() {
@@ -104,7 +153,10 @@ export function CampaignDetailActions({
             const res = await fetch(`/api/admin/marketing/campaigns/${campaignId}/send`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ confirm: 'send' }),
+                body: JSON.stringify({
+                    confirm: 'send',
+                    excluded_contact_ids: Array.from(excluded),
+                }),
             })
             const data = await res.json()
             if (!res.ok) {
@@ -116,6 +168,7 @@ export function CampaignDetailActions({
             )
             setConfirmingSend(false)
             setPreview(null)
+            setExcluded(new Set())
             router.refresh()
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Erreur')
@@ -170,8 +223,9 @@ export function CampaignDetailActions({
                     {!confirmingSend ? (
                         <>
                             <p className="text-xs text-amber-900 mb-3">
-                                Cliquez sur Prévisualiser pour voir le nombre exact de destinataires avant tout envoi.
-                                Aucun email n'est envoyé tant que vous n'avez pas confirmé.
+                                Cliquez sur Prévisualiser pour voir la liste des destinataires et exclure
+                                manuellement certains pros avant l'envoi. Aucun email n'est envoyé tant que vous
+                                n'avez pas confirmé.
                             </p>
                             <button
                                 type="button"
@@ -186,26 +240,112 @@ export function CampaignDetailActions({
                     ) : preview ? (
                         <div className="space-y-3">
                             <div className="rounded-lg bg-white border border-amber-300 p-3 text-sm">
-                                <div className="text-amber-900">
-                                    <strong>{preview.recipients_count.toLocaleString('fr-FR')}</strong>{' '}
-                                    destinataire(s) recevront cet email après filtrage opt-in/désinscrits.
-                                </div>
-                                {preview.sample.length > 0 && (
-                                    <ul className="mt-2 text-xs text-slate-600 font-mono space-y-0.5">
-                                        {preview.sample.slice(0, 5).map(s => (
-                                            <li key={s.email}>{s.email}</li>
-                                        ))}
-                                        {preview.recipients_count > 5 && (
-                                            <li className="text-slate-400 italic">
-                                                … et {preview.recipients_count - 5} autres
-                                            </li>
+                                <div className="flex items-baseline justify-between gap-3">
+                                    <div className="text-amber-900">
+                                        <strong>{finalCount.toLocaleString('fr-FR')}</strong> destinataire(s) recevront cet email
+                                        {excluded.size > 0 && (
+                                            <span className="text-amber-700">
+                                                {' '}
+                                                · <strong>{excluded.size}</strong> exclu(s) manuellement
+                                            </span>
                                         )}
-                                    </ul>
+                                        .
+                                    </div>
+                                    <div className="text-xs text-slate-500 shrink-0">
+                                        {preview.total_in_segment} dans le segment
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Liste cochable */}
+                            <div className="rounded-lg bg-white border border-slate-200 overflow-hidden">
+                                <div className="px-3 py-2 border-b border-slate-200 flex items-center gap-2">
+                                    <Search className="h-3.5 w-3.5 text-slate-400 shrink-0" />
+                                    <input
+                                        type="text"
+                                        value={search}
+                                        onChange={e => setSearch(e.target.value)}
+                                        placeholder="Rechercher par email ou nom"
+                                        className="flex-1 text-xs focus:outline-none"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={excludeAllVisible}
+                                        className="text-[11px] text-red-700 hover:underline shrink-0"
+                                    >
+                                        Tout exclure
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={includeAllVisible}
+                                        className="text-[11px] text-emerald-700 hover:underline shrink-0"
+                                    >
+                                        Tout inclure
+                                    </button>
+                                </div>
+                                <ul className="max-h-72 overflow-y-auto divide-y divide-slate-100 text-xs">
+                                    {filtered.length === 0 && (
+                                        <li className="px-3 py-3 text-slate-400 italic">Aucun résultat.</li>
+                                    )}
+                                    {filtered.map(r => {
+                                        const isExcluded = excluded.has(r.contact_id)
+                                        const fullName = [r.first_name, r.last_name]
+                                            .filter(Boolean)
+                                            .join(' ')
+                                        return (
+                                            <li
+                                                key={r.contact_id}
+                                                className={`px-3 py-2 flex items-center gap-2 ${
+                                                    isExcluded ? 'bg-red-50/50' : 'hover:bg-slate-50'
+                                                }`}
+                                            >
+                                                <input
+                                                    id={`recipient-${r.contact_id}`}
+                                                    type="checkbox"
+                                                    checked={!isExcluded}
+                                                    onChange={() => toggleExclude(r.contact_id)}
+                                                    className="h-3.5 w-3.5 rounded border-slate-300"
+                                                />
+                                                <label
+                                                    htmlFor={`recipient-${r.contact_id}`}
+                                                    className="flex-1 min-w-0 cursor-pointer"
+                                                >
+                                                    <div
+                                                        className={`font-mono text-[11px] truncate ${
+                                                            isExcluded ? 'line-through text-slate-400' : 'text-slate-700'
+                                                        }`}
+                                                    >
+                                                        {r.email}
+                                                    </div>
+                                                    {fullName && (
+                                                        <div
+                                                            className={`text-[11px] truncate ${
+                                                                isExcluded ? 'text-slate-400' : 'text-slate-500'
+                                                            }`}
+                                                        >
+                                                            {fullName}
+                                                        </div>
+                                                    )}
+                                                </label>
+                                                {isExcluded && (
+                                                    <span className="text-[10px] font-semibold text-red-600 shrink-0">
+                                                        EXCLU
+                                                    </span>
+                                                )}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                                {preview.recipients.length >= 1000 && (
+                                    <div className="px-3 py-2 text-[11px] text-amber-700 border-t border-slate-200 bg-amber-50">
+                                        Liste tronquée à 1000 destinataires — affinez le segment si besoin.
+                                    </div>
                                 )}
                             </div>
-                            {preview.recipients_count === 0 ? (
+
+                            {finalCount === 0 ? (
                                 <p className="text-xs text-amber-700">
-                                    Aucun destinataire — l'envoi est bloqué. Vérifiez le segment.
+                                    Aucun destinataire — l'envoi est bloqué. Vérifiez le segment ou réincluez des contacts.
                                 </p>
                             ) : (
                                 <div className="flex gap-2">
@@ -216,13 +356,15 @@ export function CampaignDetailActions({
                                         className="inline-flex items-center gap-1.5 px-4 py-2 text-sm rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50"
                                     >
                                         {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                                        Confirmer l'envoi à {preview.recipients_count.toLocaleString('fr-FR')} contact(s)
+                                        Confirmer l'envoi à {finalCount.toLocaleString('fr-FR')} contact(s)
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => {
                                             setConfirmingSend(false)
                                             setPreview(null)
+                                            setExcluded(new Set())
+                                            setSearch('')
                                         }}
                                         disabled={sending}
                                         className="px-3 py-2 text-sm rounded-lg border border-slate-200 hover:bg-slate-50"
