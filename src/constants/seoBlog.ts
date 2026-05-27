@@ -1551,6 +1551,121 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
         ],
     },
+    {
+        slug: 'devenir-cordiste-2026',
+        authorSlug: 'benjamin-de-oliveira',
+        title: 'Devenir cordiste en 2026 : CQP, formation et premier salaire',
+        shortTitle: 'Devenir cordiste : guide 2026',
+        description:
+            'Devenez cordiste en 2026 : CQP TPS, IRATA, coût de la formation, salaire débutant et parcours. Tout pour se lancer dans les techniques d\'accès sur cordes.',
+        category: 'Métier & Carrière',
+        readTime: 9,
+        datePublished: '2026-05-27',
+        dateModified: '2026-05-27',
+        intro:
+            'Tu veux devenir cordiste — et tu veux savoir, concrètement, ce que ça demande : combien de temps, combien d\'argent, et ce que ça rapporte vraiment les premiers mois. Pas la brochure des organismes de formation. Les chiffres du terrain.\n\nLe métier de technicien d\'accès sur cordes (TAC) attire de plus en plus de reconversions en 2026. La demande progresse : immeubles résidentiels vieillissants, industriels qui programment leurs arrêts techniques, collectivités qui entretiennent leur patrimoine. Les cordistes formés et actifs ne manquent pas de travail — les profils sérieux avec la RC pro et les certifications à jour encore moins.\n\nCe guide couvre le parcours complet : quelle formation choisir, combien ça coûte, quel premier salaire attendre et comment décrocher le premier chantier.',
+        sections: [
+            {
+                heading: 'Qu\'est-ce qu\'un cordiste : le métier en 2026',
+                body: 'Le cordiste — aussi appelé technicien sur cordes, technicien d\'accès difficile ou spécialiste TAC — intervient en suspension sur des structures inaccessibles autrement : façades en hauteur, structures industrielles, ouvrages d\'art, falaises, pylônes, éoliennes. Il utilise deux cordes indépendantes (corde de travail + corde de sécurité), des EPI certifiés CE et des points d\'ancrage fixes ou temporaires installés en toiture ou en structure. C\'est une technique d\'accès réglementée par le Code du travail (articles R. 4323-88 à R. 4323-90).\n\nLe marché est structuré et en croissance. Les donneurs d\'ordre — syndics de copropriété, gestionnaires de patrimoine, industriels, collectivités — cherchent des techniciens formés, assurés et certifiés. Le travailleur non déclaré ou non certifié est de plus en plus exclu : plans de prévention obligatoires, appels d\'offres publics et exigences des assureurs filtrent naturellement les profils sérieux.\n\nEn 2026, deux grandes certifications structurent le métier en France : le CQP TPS (Certificat de Qualification Professionnelle Technicien de la Prévention et Sécurité) pour le marché français, et l\'IRATA (Industrial Rope Access Trade Association) pour les chantiers industriels et l\'international. Le SPRAT, référence nord-américaine, reste marginal en France métropolitaine.\n\nLe profil type en entrée de métier : entre 22 et 35 ans, mais les reconversions à 40-45 ans existent et réussissent. Le métier est physiquement exigeant — bonne condition cardiovasculaire, absence de vertige, résistance à l\'effort en suspension — mais aucun diplôme préalable n\'est requis pour accéder à la formation CQP TPS niveau 1.',
+            },
+            {
+                heading: 'Devenir cordiste en 2026 : CQP TPS ou IRATA, lequel choisir ?',
+                body: 'La question se pose dès l\'inscription en formation : CQP TPS ou IRATA ? Les deux ne s\'opposent pas — ils se complètent — mais ils n\'ont pas le même positionnement ni le même coût.\n\n**CQP TPS — la référence française.** Le Certificat de Qualification Professionnelle Technicien de la Prévention et Sécurité des Travaux sur Cordes est le diplôme national délivré par la branche professionnelle. Il comprend trois niveaux : équipier (N1), technicien (N2) et technicien expert (N3). Le N1 suffit pour démarrer comme équipier sous supervision d\'un N2 ou N3. La formation dure environ 3 semaines (60 heures minimum) et coûte entre 3 500 et 5 500 €. Elle est finançable via le CPF si l\'organisme est référencé Qualiopi.\n\n**IRATA Level 1 — le passeport international.** L\'IRATA est la certification de référence sur les chantiers industriels, pétroliers, offshore et dans plus de 50 pays. La formation L1 dure 1 semaine (environ 35 heures) et coûte entre 1 200 et 1 800 €. Elle ne remplace pas le CQP TPS aux yeux de la réglementation française — mais elle est souvent exigée en sus sur les chantiers industriels.\n\n**Lequel choisir en premier ?** Si ton objectif est de démarrer rapidement sur le marché local — façades résidentielles, syndics, petites ETT — commence par le CQP TPS N1. Il est reconnu dans les conventions collectives françaises et suffit pour la majorité des chantiers. Si tu vises les chantiers industriels (pétrochimie, éoliennes, ouvrages d\'art), fais les deux dès la première année. Le recyclage triennal — CQP et IRATA doivent être renouvelés tous les 3 ans — coûte 600 à 1 200 € : à anticiper dans ton budget.',
+                listIntro: 'Les certifications cordiste en un coup d\'œil :',
+                list: [
+                    'CQP TPS N1 : 3 semaines, 3 500-5 500 €, référence française bâtiment et ETT',
+                    'CQP TPS N2 : habilite à encadrer une équipe et travailler en autonomie complète',
+                    'CQP TPS N3 : technicien expert, formateur — rare sous 5 ans d\'expérience',
+                    'IRATA L1 : 1 semaine, 1 200-1 800 €, indispensable sur chantiers industriels et offshore',
+                    'IRATA L2/L3 : 1 000 heures d\'expérience documentée requises entre chaque niveau',
+                    'Recyclage CQP/IRATA tous les 3 ans : 600-1 200 € — à budgéter dès l\'année 1',
+                ],
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    description: 'Des chantiers cordiste qualifiés, filtrés par région. Accès libre à l\'inscription.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Combien coûte se lancer comme cordiste indépendant ?',
+                body: 'Au-delà de la formation, lancer une activité cordiste indépendante nécessite un investissement initial que beaucoup sous-estiment. Ce n\'est pas prohibitif — c\'est inférieur à la plupart des reconversions artisanales — mais il faut le planifier avant de signer les premiers devis.\n\n**Le kit EPI** est la première dépense. Pour travailler en accès sur cordes, tu as besoin d\'un minimum certifié CE : harnais cuissard, longe double, descendeur autobloquant, bloqueur ventral, cordes de travail et de sécurité (40 m minimum), casque, gants et mousquetons à verrou. Un kit de départ correct coûte entre 1 500 et 2 500 €. N\'achète pas d\'occasion sans carnet de vérification : un EPI sans traçabilité t\'expose à une responsabilité personnelle en cas d\'incident.\n\n**La RC Pro** est non négociable. Une assurance responsabilité civile professionnelle couvrant explicitement les travaux en hauteur par techniques d\'accès sur cordes coûte entre 400 et 900 €/an. Certains assureurs spécialisés proposent des contrats dédiés aux TAC — vérifie que la mention est explicite dans les garanties, pas juste "travaux en bâtiment".\n\n**Les démarches administratives** : immatriculation en micro-entreprise (gratuite, 1 à 2 semaines sur guichet-entreprises.fr), ou EURL si tu prévois un chiffre d\'affaires important dès l\'année 1 (environ 500 à 1 500 € de frais de création). L\'ACRE exonère une partie des charges les 12 premiers mois pour les demandeurs d\'emploi créant leur activité.\n\nTotal estimé pour un démarrage réaliste : entre 6 000 et 10 000 € (formation CQP + kit EPI + RC Pro première année + frais divers). La majorité est finançable via CPF, aides Région et ACRE.',
+                listIntro: 'Budget de lancement cordiste indépendant :',
+                list: [
+                    'Formation CQP TPS N1 : 3 500-5 500 € (finançable CPF si organisme Qualiopi)',
+                    'Formation IRATA L1 (optionnel année 1) : 1 200-1 800 €',
+                    'Kit EPI complet certifié CE (harnais, cordes, bloqueurs, descendeur) : 1 500-2 500 €',
+                    'Assurance RC Pro couvrant les TAC : 400-900 €/an',
+                    'Recyclage triennal CQP ou IRATA : 600-1 200 € tous les 3 ans',
+                    'Immatriculation micro-entreprise : gratuite · EURL : 500-1 500 €',
+                ],
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    description: 'Profil complet, certifications affichées, accès immédiat aux missions de ta région.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Quel est le premier salaire d\'un cordiste en 2026 ?',
+                body: 'C\'est la question derrière la question. Pas "est-ce que je vais aimer le métier" — mais "est-ce que je vais pouvoir en vivre rapidement".\n\nEn micro-entreprise, les charges URSSAF représentent environ 22 % du chiffre d\'affaires. Ce taux est fixe quel que soit le niveau — ce qui change, c\'est le TJM de départ.\n\n**Junior (CQP N1, 0-2 ans) : 280-380 €/j HT** en régions moyennes, 320-450 €/j en Île-de-France et grandes métropoles. Sur 300 €/j facturés, tu encaisses environ 234 € nets avant impôt sur le revenu. Le bas de la fourchette est adapté à un profil sans références — monte dès que tu en as 3 ou 4.\n\n**Confirmé (CQP N2, 2-5 ans) : 380-550 €/j HT.** Accessible après 2-3 ans avec un carnet de références documenté. Ce niveau justifie l\'encadrement d\'un équipier N1 et l\'accès à des chantiers plus techniques.\n\n**Expert (CQP N3 ou IRATA L3) : 550-900 €/j HT** sur chantiers industriels ou missions de formation. Rare sous 5 ans d\'expérience.\n\nLa première année est la plus difficile financièrement — pas par manque de demande, mais parce que tu construis tes références et ton réseau. Compte 3 à 6 mois pour stabiliser un rythme de facturation régulier. Prévois une trésorerie de sécurité équivalente à 3 mois de charges.\n\n**En salarié chez une ETT**, un cordiste CQP N1 touche entre 22 000 et 28 000 € bruts annuels — soit 1 450 à 1 850 € nets/mois. L\'indépendant actif (12 à 16 jours facturés/mois en haute saison) dépasse ces chiffres dès la deuxième année, mais assume la prospection et les creux saisonniers.',
+            },
+            {
+                heading: 'Le parcours pour devenir cordiste : de zéro au premier chantier',
+                body: 'Voici la feuille de route réaliste pour quelqu\'un qui part de zéro — aucune expérience en TAC — et veut décrocher son premier chantier payé.\n\n**Mois 1-2 : choisir l\'organisme et financer la formation.** Cherche les centres agréés CQP TPS via la SFETH (Syndicat Français des Entreprises de Travaux en Hauteur) et l\'OPPBTP. Vérifie que l\'organisme est certifié Qualiopi si tu veux utiliser le CPF. Prépare ton dossier de financement : CPF, France Travail (AIF), OPCO de la branche ou financement personnel.\n\n**Mois 2-4 : formation CQP TPS N1.** Environ 3 semaines en centre, parfois sur plusieurs semaines avec alternance. Prépare-toi physiquement avant : les exercices en suspension sollicitent des muscles que tu n\'utilises peut-être pas au quotidien. Profite de la formation pour nouer des contacts — tes condisciples sont tes futurs partenaires et sources de missions.\n\n**Mois 4-5 : immatriculation et équipement.** Crée ta micro-entreprise sur guichet-entreprises.fr (gratuit, moins de 2 semaines). Achète ton kit EPI neuf avec carnet de vérification. Souscris ta RC Pro avant la première intervention — même en sous-traitance pour une ETT.\n\n**Mois 5-6 : premier chantier.** Les trois voies les plus rapides : sous-traitance pour une ETT locale (tu travailles, tu constitues des références, tu ne portes pas seul la charge du plan de prévention face au client), inscription sur LesCordistes.com pour accéder aux missions qualifiées de ta région, et réseau de l\'organisme de formation. Le premier chantier est rarement le mieux payé — mais il est indispensable pour construire la suite.',
+                listIntro: 'La feuille de route mois par mois :',
+                list: [
+                    'Mois 1-2 : choix de l\'organisme CQP/IRATA, demande de financement CPF ou France Travail',
+                    'Mois 2-4 : formation CQP TPS N1 (3 semaines) ou IRATA L1 (1 semaine) + préparation physique',
+                    'Mois 4-5 : immatriculation micro-entreprise, achat du kit EPI, souscription RC Pro',
+                    'Mois 5-6 : premier chantier — sous-traitance ETT ou mission via plateforme spécialisée',
+                    'Mois 6-12 : montée en cadence, construction du carnet de références, premiers avis clients',
+                    'An 2-3 : préparation CQP N2, hausse du TJM, accès aux chantiers industriels avec IRATA',
+                ],
+                cta: {
+                    text: 'Créer mon profil cordiste maintenant',
+                    href: '/inscription-cordiste',
+                    description: 'Profil visible, certifications affichées, missions en région accessibles dès l\'inscription.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Reconversion cordiste : est-ce réaliste après 35 ou 40 ans ?',
+                body: 'La question revient souvent : peut-on se lancer dans les TAC à 35, 40 ou 45 ans ? La réponse n\'est pas binaire.\n\n**Oui, la reconversion est réaliste — avec lucidité.** Le métier est physiquement exigeant : résistance à l\'effort prolongé en suspension, bonne condition cardiovasculaire, absence de vertige et de claustrophobie, capacité à manipuler des EPI et des outils en hauteur. Ces exigences ne dépendent pas de l\'âge — elles dépendent de la condition physique. Des cordistes actifs de 45 ans et plus exercent sans difficulté, notamment sur des missions d\'inspection ou d\'encadrement moins intensives physiquement.\n\n**Les reconversions qui réussissent** ont souvent trois éléments en commun : une préparation physique sérieuse avant la formation (3 à 6 mois de renforcement musculaire et cardio), une approche réaliste des premiers mois (trésorerie de sécurité de 3 mois, attentes salariales calibrées), et un premier contact avec le milieu avant de s\'engager financièrement — une journée d\'observation sur chantier ou un échange avec un organisme SFETH ou CATEC.\n\n**Les aides disponibles en 2026 :** le CPF couvre tout ou partie du CQP TPS si l\'organisme est certifié Qualiopi. L\'ACRE exonère une partie des charges les 12 premiers mois pour les demandeurs d\'emploi qui créent leur activité. La PRF (Prestation de Retour à l\'Emploi) proposée par certaines Régions peut cofinancer la formation — renseigne-toi auprès de France Travail pour les dispositifs ouverts dans ta région.\n\nLa difficulté réelle des premières années n\'est pas physique — c\'est la gestion de l\'irrégularité du chiffre d\'affaires et la construction d\'un réseau client. Ces compétences s\'acquièrent, indépendamment de l\'âge. Un cordiste à 42 ans avec 3 ans d\'expérience facture autant qu\'un cordiste de 30 ans avec le même bagage.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien de temps dure la formation pour devenir cordiste ?',
+                a: 'Pour devenir cordiste, comptez 3 semaines pour le CQP TPS N1 (3 500-5 500 €) ou 1 semaine pour l\'IRATA L1 (1 200-1 800 €). De la décision au premier chantier, prévoyez 3 à 6 mois : immatriculation, équipement EPI et premières prospections.',
+            },
+            {
+                q: 'Quel est le salaire d\'un cordiste débutant en 2026 ?',
+                a: 'Un cordiste CQP N1 débutant vise un TJM de 280 à 380 €/j HT en indépendant, soit environ 234 à 296 € nets par jour après les 22 % de charges en micro-entreprise. En salarié chez une ETT, comptez 1 450 à 1 850 € nets/mois en début de carrière.',
+            },
+            {
+                q: 'Peut-on financer la formation cordiste avec le CPF ?',
+                a: 'Oui, si l\'organisme est certifié Qualiopi. Le CPF peut couvrir tout ou partie du CQP TPS N1 selon le solde du compte. Les demandeurs d\'emploi peuvent mobiliser l\'AIF (Aide Individuelle à la Formation) auprès de France Travail, ou l\'OPCO de leur branche actuelle.',
+            },
+            {
+                q: 'Faut-il un diplôme préalable pour accéder à la formation CQP TPS ?',
+                a: 'Non. Le CQP TPS niveau 1 ne requiert aucun diplôme préalable. Un extrait de casier judiciaire vierge et une visite médicale d\'aptitude sont généralement demandés par les organismes. La condition physique et l\'absence de vertige sont les prérequis pratiques à vérifier en premier.',
+            },
+            {
+                q: 'Peut-on devenir cordiste après 40 ans ?',
+                a: 'Oui. L\'âge n\'est pas un frein réglementaire. Les reconversions après 40 ans existent et réussissent — la condition physique compte plus que l\'âge. Une préparation physique sérieuse avant la formation et une trésorerie de sécurité de 3 mois permettent d\'aborder le démarrage dans de bonnes conditions.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Premier chantier après le CQP', href: '/blog/premier-chantier-cordiste-apres-cqp' },
+            { label: 'Missions cordiste en indépendant', href: '/blog/missions-cordiste-independant' },
+            { label: 'Habilitations CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Créer mon profil cordiste', href: '/inscription-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
