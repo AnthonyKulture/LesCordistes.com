@@ -1656,6 +1656,118 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Voir les missions disponibles', href: '/jobs' },
         ],
     },
+    {
+        slug: 'cordiste-facade-haussmannienne',
+        authorSlug: 'anthony-profit',
+        title: 'Façade haussmannienne : travaux en hauteur par cordiste 2026',
+        shortTitle: 'Cordiste et façade haussmannienne',
+        description:
+            'Trouvez un cordiste certifié pour votre façade haussmannienne. Contraintes ABF, tarifs 2026, types de travaux — le guide complet pour ne pas se tromper.',
+        category: 'Travaux & technique',
+        readTime: 9,
+        datePublished: '2026-06-01',
+        dateModified: '2026-06-01',
+        intro:
+            'La façade haussmannienne — pierre calcaire blanche ou crème, corniches moulurées, balcons filants en fer forgé, immeubles R+5 à R+8 — est un patrimoine architectural qui concentre toutes les contraintes des travaux en hauteur. Rue étroite, matériau sensible, secteur souvent classé ou protégé par les Architectes des Bâtiments de France (ABF), hauteur qui interdit l\'échafaudage sans autorisation d\'occupation du domaine public : le cordiste n\'est pas simplement une option pour ce type de bâtiment, il est souvent la seule solution économiquement viable. En France, Paris concentre l\'essentiel du parc haussmannien — plus de 40 000 immeubles — mais Lyon, Bordeaux, Lille et Nantes possèdent chacune leur quartier historique aux façades similaires. Ce guide détaille les travaux possibles, les contraintes réglementaires, les tarifs 2026 et les critères pour choisir un technicien sur cordes réellement habitué à intervenir sur ce patrimoine.',
+        sections: [
+            {
+                heading: 'Façade haussmannienne : ce qui la distingue pour tout intervenant en hauteur',
+                body: 'La façade haussmannienne type se distingue par plusieurs caractéristiques architecturales qui conditionnent directement le choix des méthodes et des matériaux d\'intervention.\n\n**La pierre calcaire** : à Paris, il s\'agit quasi exclusivement du calcaire lutétien extrait des carrières de la région parisienne — une pierre tendre, poreuse, qui absorbe les polluants atmosphériques et réagit très mal aux acides forts ou à la vapeur haute pression. À Lyon, le tuffeau et la pierre de Villebois jouent un rôle comparable. À Bordeaux, la pierre calcaire à astéries est encore plus sensible. Un cordiste qui n\'a jamais travaillé sur ce type de matériau peut causer des dommages irréversibles en quelques secondes.\n\n**La hauteur** : les immeubles haussmanniens standard atteignent R+5 à R+7, soit 17 à 25 mètres. Pour une façade sur rue, l\'installation d\'un échafaudage nécessite une autorisation d\'occupation temporaire du domaine public (AOT) — dont le délai à Paris dépasse souvent 3 semaines et le coût 1 500 à 4 000 €. Le cordiste élimine cette contrainte en accédant depuis la toiture.\n\n**Les éléments décoratifs** : corniches, consoles, garde-corps en fer forgé, modillons, faux-balcons, griffes de zinc — autant d\'éléments fragiles qui nécessitent la précision et la mobilité d\'un technicien en suspension, là où une plateforme fixe risque de provoquer des chocs ou des dommages mécaniques.',
+            },
+            {
+                heading: 'Les travaux réalisables par cordiste sur façade haussmannienne',
+                body: 'Un cordiste certifié (CQP TPS niveau 2 minimum, ou IRATA selon le contexte) peut réaliser l\'ensemble des interventions courantes sur une façade haussmannienne, à l\'exception des travaux nécessitant une plateforme stable prolongée — remplacement de corniche entière, maçonnerie structurelle lourde, soudure prolongée. Pour ces chantiers, la combinaison cordiste + nacelle de courte durée est souvent la solution retenue.\n\nPour toutes les interventions ci-dessous, le cordiste est non seulement capable mais souvent plus rapide qu\'un échafaudage pour des durées inférieures à 5 jours : mobilisation sous 48 à 72 heures contre 2 à 3 semaines, empreinte nulle sur la voie publique, et suspension permettant d\'atteindre les éléments les plus inaccessibles — derrière une corniche, sous un balcon filant, sur les lucarnes mansardes.',
+                listIntro: 'Interventions courantes sur façade haussmannienne réalisables par cordiste :',
+                list: [
+                    'Nettoyage de pierre calcaire (lavage basse pression ≤ 80 bars, produits biocides doux homologués ABF)',
+                    'Démoussage, déalguation et traitement hydrofuge sur façades et corniches',
+                    'Rejointoiement et réparation de joints de pierre à la chaux hydraulique',
+                    'Ravalement et application d\'enduit minéral ou de peinture de façade',
+                    'Inspection visuelle et diagnostic avec rapport photographique — avant ravalement ou après sinistre',
+                    'Pose de systèmes anti-pigeons (filets, pics, câbles) sur corniches et ornements',
+                    'Traitement anti-graffiti sur soubassements et parties basses de façade',
+                    'Lavage et dégraissage de garde-corps en fer forgé avant traitement anti-rouille',
+                ],
+                cta: {
+                    text: 'Décrire ma façade en 2 minutes',
+                    href: '/post-job',
+                    description: 'Façade haussmannienne, pierre calcaire ou ornements classés — publiez votre besoin gratuitement.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'ABF et réglementation patrimoniale : ce que tout donneur d\'ordre doit savoir',
+                body: 'La façade haussmannienne se trouve, dans la quasi-totalité des cas, dans une zone de protection d\'un monument historique ou d\'un secteur sauvegardé. Cette réalité conditionne le choix du prestataire autant que la technique retenue.\n\n**L\'avis des Architectes des Bâtiments de France (ABF)** est requis dès lors qu\'une intervention modifie l\'aspect extérieur d\'un bâtiment situé dans un périmètre de protection. À Paris, ce périmètre couvre la quasi-totalité du Paris historique. À Lyon, Bordeaux, Lille et Nantes, les équivalents locaux — PSMV, ZPPAUP, AVAP — jouent le même rôle.\n\nUn cordiste qui travaille régulièrement sur du patrimoine haussmannien connaît ces contraintes d\'emblée : il sait si votre adresse est en secteur protégé, quels produits sont admissibles et quel délai prévoir. Cette connaissance pratique — qui ne s\'acquiert que par l\'expérience de terrain — est l\'une des différences essentielles entre un prestataire habitué du patrimoine et un généraliste itinérant.',
+                listIntro: 'Les 5 règles ABF à connaître avant d\'engager des travaux sur une façade haussmannienne :',
+                list: [
+                    'Nettoyage : les produits acides et la vapeur haute pression sont interdits sur le calcaire lutétien en secteur ABF',
+                    'Ravalement : couleur et texture des enduits doivent correspondre à la palette agréée localement par les ABF',
+                    'Ancrages permanents : toute perforation de la façade classée requiert une autorisation préalable de travaux',
+                    'Ancrages temporaires : les systèmes lestés ou fixés sur le faîtage sont généralement admis sans autorisation',
+                    'Délais ABF : comptez 15 à 30 jours ouvrés pour un avis standard, 4 à 6 semaines pour un dossier complet',
+                ],
+            },
+            {
+                heading: 'Tarifs 2026 : combien coûte un cordiste sur façade haussmannienne ?',
+                body: 'Les tarifs pour une intervention cordiste sur façade haussmannienne sont supérieurs à ceux pratiqués sur des façades standard en béton ou bardage. Cette prime s\'explique par trois facteurs : maîtrise des matériaux patrimoniaux et des produits homologués ABF, expérience des contraintes administratives locales, et surcoût d\'assurance sur les bâtiments classés ou en secteur protégé.\n\nÀ Paris — où se concentre la majorité du parc haussmannien — les tarifs affichent 25 à 35 % au-dessus de la moyenne nationale. Les fourchettes ci-dessous correspondent à des interventions réalisées par un cordiste certifié CQP TPS niveau 2 minimum, avec plan de prévention et RC Pro couvrant explicitement les travaux sur patrimoine.',
+                listIntro: 'Fourchette indicative HT, 2026 :',
+                list: [
+                    'Journée cordiste (8h, 1 technicien) à Paris : 450 à 800 € HT — façade haussmannienne, toutes spécialités',
+                    'Journée cordiste en province (Lyon, Bordeaux, Lille, Nantes) : 380 à 650 € HT',
+                    'Nettoyage de façade calcaire haussmannienne au m² : 10 à 20 € HT selon technique et encrassement',
+                    'Rejointoiement pierre + chaux hydraulique au m² : 18 à 35 € HT',
+                    'Inspection technique avec rapport photographique et préconisations : 600 à 1 200 € la demi-journée',
+                    'Économie vs échafaudage + AOT sur voie publique parisienne : 1 500 à 4 000 € sur les seuls frais administratifs',
+                ],
+                cta: {
+                    text: 'Comparer des devis sans engagement',
+                    href: '/post-job',
+                    description: 'Recevez plusieurs offres de cordistes spécialisés en patrimoine haussmannien pour votre budget réel.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Bien choisir son cordiste pour façade haussmannienne : 5 critères décisifs',
+                body: 'Le marché des cordistes réellement compétents sur façade haussmannienne est plus restreint qu\'on ne le croit. Tous les techniciens certifiés ne maîtrisent pas le calcaire parisien, les contraintes ABF ou les produits de ravalement patrimoniaux. Voici les cinq points de vigilance avant de signer.\n\n**1. Une certification CQP TPS niveau 2 minimum** — Le niveau 1 (équipier) travaille sous supervision et ne peut pas encadrer de chantier en autonomie. Pour une façade haussmannienne avec corniches et ornements fragiles, l\'équipe de deux techniciens est souvent requise — le niveau 2 est indispensable. Demandez la copie du certificat avec sa date d\'expiration : CQP et IRATA sont valables 3 ans.\n\n**2. Une RC Pro couvrant le patrimoine classé** — Vérifiez que l\'attestation mentionne explicitement les techniques d\'accès sur cordes (TAC) et les interventions sur bâtiments classés ou en secteur protégé. Certaines polices excluent les monuments historiques. Sans cette couverture, un dommage sur la pierre vous expose directement.\n\n**3. Des références vérifiables sur des façades haussmanniennes** — Une adresse, une photo avant/après, un nom de syndic client : ce sont les preuves que le prestataire a résolu les problèmes que vous allez lui confier. Un cordiste qui intervient pour la première fois sur du calcaire lutétien n\'est pas le bon choix pour un bâtiment classé.\n\n**4. La maîtrise des contraintes ABF locales** — Un prestataire habitué à votre ville sait si votre adresse est en secteur protégé, quels produits sont admissibles et quel délai d\'autorisation prévoir. Si le cordiste ne pose pas spontanément cette question lors de la visite technique, c\'est un signal d\'alerte.\n\n**5. Un plan de prévention proposé spontanément** — Les travaux en hauteur figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993. Tout prestataire sérieux propose un plan de prévention écrit après inspection du site — sans attendre qu\'on le lui réclame.',
+                cta: {
+                    text: 'Trouver un cordiste spécialisé en façades haussmanniennes',
+                    href: '/post-job',
+                    description: 'Des cordistes habitués aux façades patrimoniales reçoivent votre demande et répondent sous 48h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Façade haussmannienne en copropriété : qui décide, qui paie et qui est responsable ?',
+                body: 'Dans la grande majorité des cas, une façade haussmannienne appartient à une copropriété — c\'est une partie commune, au même titre que la toiture et les murs porteurs. La décision d\'engager des travaux de ravalement ou de nettoyage relève de l\'assemblée générale des copropriétaires, sur proposition du syndic.\n\nDepuis la loi ALUR (2014), un ravalement peut être imposé par la commune si l\'état de la façade menace la sécurité ou nuit à l\'esthétique urbaine. À Paris, le délai légal entre deux ravalements est de 10 ans. Pour les interventions d\'entretien courant — nettoyage, réparation de joints, traitement anti-pigeons — le syndic peut engager un prestataire dans le cadre de sa mission de gestion courante, sans vote en AG au-delà du seuil prévu dans le règlement de copropriété (souvent 15 000 € HT).\n\nLe plan de prévention reste obligatoire dans tous les cas. Le syndic, en tant qu\'entreprise utilisatrice, doit le cosigner avec le prestataire cordiste avant le démarrage des travaux — quel que soit le montant du chantier. Les travaux en hauteur par accès sur cordes figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993 : cette obligation est systématique et incontournable pour dégager sa responsabilité.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte le nettoyage d\'une façade haussmannienne ?',
+                a: 'Pour une façade haussmannienne, comptez 10 à 20 € HT au m² en nettoyage par cordiste selon les produits ABF requis. Une façade de 200 m² revient à 2 000-4 000 € HT, sans les frais d\'AOT parisienne — pouvant atteindre 4 000 € supplémentaires avec un échafaudage.',
+            },
+            {
+                q: 'Faut-il une autorisation ABF pour des travaux sur une façade haussmannienne ?',
+                a: 'Dans la quasi-totalité des cas, oui. Les immeubles haussmanniens sont situés dans un secteur protégé ou à moins de 500 mètres d\'un monument classé. Toute intervention modifiant l\'aspect extérieur requiert l\'avis préalable des ABF — délai de 15 à 30 jours ouvrés. Un cordiste expérimenté intègre cette contrainte dans son planning et connaît les produits admissibles.',
+            },
+            {
+                q: 'Peut-on faire un ravalement complet d\'une façade haussmannienne par cordiste ?',
+                a: 'Oui, dans la plupart des cas. Réparation des joints à la chaux, application d\'enduit minéral, traitement des corniches — tout est réalisable en techniques d\'accès sur cordes (TAC) jusqu\'à R+7. Pour une durée supérieure à 4 semaines ou une maçonnerie structurelle lourde, la combinaison cordiste + échafaudage partiel peut s\'avérer pertinente.',
+            },
+            {
+                q: 'Pourquoi le cordiste est-il souvent préféré à l\'échafaudage pour une façade haussmannienne ?',
+                a: 'Trois raisons principales : absence d\'AOT sur voie publique (économie de 1 500 à 4 000 € à Paris), démarrage sous 48 à 72 heures contre 2 à 3 semaines pour un échafaudage, et capacité d\'atteindre les ornements les plus inaccessibles — sous les corniches, derrière les balcons filants, sur les lucarnes — que les plateformes fixes ne permettent pas.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste pour ma façade',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Cordiste vs échafaudage', href: '/cordiste-vs-echafaudage' },
+            { label: 'Trouver un cordiste à Paris', href: '/blog/trouver-cordiste-paris' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
