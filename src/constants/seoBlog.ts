@@ -1768,6 +1768,102 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
         ],
     },
+    {
+        slug: 'statut-juridique-cordiste-independant',
+        authorSlug: 'benjamin-de-oliveira',
+        title: 'Statut juridique cordiste : auto-entrepreneur, EURL ou portage ?',
+        shortTitle: 'Statut juridique cordiste indépendant',
+        description:
+            'Choisissez le bon statut juridique pour votre activité cordiste : auto-entrepreneur, EURL ou portage salarial — charges, plafonds et pièges à éviter en 2026.',
+        category: 'Métier & Carrière',
+        readTime: 8,
+        datePublished: '2026-06-03',
+        dateModified: '2026-06-03',
+        intro:
+            'Travailler à son compte, c\'est une des grandes libertés du métier. Mais choisir son statut juridique cordiste conditionne tout le reste : vos charges sociales, votre capacité à facturer librement, votre couverture en cas d\'accident, et votre exposition au risque fiscal. Auto-entrepreneur, EURL, SASU ou portage salarial — chaque structure a ses avantages et ses pièges pour un technicien d\'accès difficile. Ce guide démonte les idées reçues et pose les chiffres réels pour décider sans se tromper.',
+        sections: [
+            {
+                heading: 'Statut juridique cordiste : pourquoi ce choix change tout',
+                body: 'En France, un cordiste indépendant peut exercer sous quatre structures principales : la micro-entreprise (auto-entrepreneur), l\'EURL (Entreprise Unipersonnelle à Responsabilité Limitée), la SASU (Société par Actions Simplifiée Unipersonnelle) et le portage salarial. Une cinquième voie — l\'intérim via ETT — peut compléter le tableau pour des missions ponctuelles, mais elle relève d\'un rapport salarié, pas d\'une structure propre.\n\nLe choix du statut n\'est pas cosmétique. Il détermine vos charges sociales réelles (de 22 % en micro à plus de 45 % en EURL/SASU sur la rémunération du gérant), votre plafond de chiffre d\'affaires, votre accès à certaines assurances RC Pro spécialisées TAC, et votre protection personnelle en cas de litige ou d\'accident grave sur chantier.\n\nDeux profils cristallisent souvent la question. Le fraîchement certifié (CQP TPS niveau 1 ou IRATA L1, moins de 18 mois de pratique) qui veut décrocher ses premières missions sans se noyer dans la comptabilité. Et le cordiste confirmé (3 à 7 ans d\'expérience, TJM de 450-650 €) dont le CA annuel approche les 60 000-80 000 € et qui sent que la micro-entreprise commence à rogner ses marges. Ni l\'un ni l\'autre ne raisonnent de la même façon — et les chiffres qui suivent le démontrent.',
+            },
+            {
+                heading: 'Auto-entrepreneur cordiste : la porte d\'entrée, pas la destination',
+                body: 'La micro-entreprise est le statut de démarrage par excellence pour qui veut tester l\'indépendance sans formalités. Création en ligne en 15 minutes sur le site de l\'INPI, zéro capital social à déposer, zéro comptabilité complexe : vous déclarez votre CA chaque mois ou chaque trimestre et payez 22 % de charges sociales sur ce que vous avez encaissé — donc rien si vous n\'avez pas encore facturé.\n\nLes chiffres clés en 2026 : plafond de CA à 77 700 € HT pour les prestations de services, franchise TVA jusqu\'à 36 800 € (au-delà, vous collectez et reversez la TVA), cotisation CFE entre 200 et 800 €/an selon votre commune. À un TJM moyen de 380-420 € pour un junior, ce plafond représente environ 180-200 jours de facturation annuelle — soit l\'équivalent d\'une activité quasi-plein-temps dès la 2e ou 3e année.\n\nLe piège classique : la micro-entreprise ne permet pas de déduire vos frais réels. Que vous ayez dépensé 2 500 € pour renouveler votre kit EPI, 1 200 € pour votre recyclage triennal CQP ou IRATA, ou 8 000 € pour un véhicule utilitaire, rien n\'est déductible. Vous payez 22 % sur votre CA brut, charges réelles non déduites. Ce modèle devient rapidement désavantageux dès que vos dépenses professionnelles dépassent 20 % de votre CA — ce qui est courant en TAC.',
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    description: 'Des chantiers cordiste publiés chaque semaine par des clients vérifiés.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'EURL et SASU : passer à la vitesse supérieure',
+                body: 'Au-delà de 40 000-50 000 € de CA annuel, la micro-entreprise n\'est plus optimale pour la plupart des cordistes. L\'impossibilité de déduire les frais réels conjuguée à des charges calculées sur le brut crée un effet ciseau : plus votre TJM progresse, plus vous payez cher pour le même niveau de protection sociale.\n\nL\'**EURL** (gérant TNS) soumet vos cotisations à votre rémunération déclarée, et non à votre CA. Sur un salaire brut de 40 000 €, les charges TNS représentent environ 45 %, soit 18 000 €. Le bénéfice résiduel dans la société est soumis à l\'IS — taux réduit à 15 % jusqu\'à 42 500 € de bénéfice, puis 25 % au-delà. Vos frais professionnels sont intégralement déductibles : kit EPI (1 500-2 500 €), recyclages CQP/IRATA (600-1 200 €/3 ans), véhicule utilitaire, matériel spécialisé.\n\nLa **SASU** suit une logique similaire mais le président est assimilé salarié : cotisations plus élevées (environ 75 % du salaire net versé), mais une protection sociale plus proche du régime général — accès amélioré à la retraite complémentaire et aux indemnités maladie. C\'est le statut à privilégier si vous envisagez d\'embaucher un technicien, de sous-traiter à grande échelle ou de répondre à des appels d\'offres en groupement. Comptez 200 à 500 € pour l\'immatriculation et 150 à 400 €/mois d\'honoraires comptables selon le volume d\'activité.',
+            },
+            {
+                heading: 'Portage salarial cordiste : le meilleur des deux mondes ?',
+                body: 'Le portage salarial est la formule la plus sous-estimée dans le milieu des techniciens d\'accès difficile. Le principe : vous êtes salarié d\'une société de portage qui transforme votre chiffre d\'affaires en bulletin de salaire et gère l\'ensemble des obligations sociales à votre place. Vous conservez une totale autonomie dans la prospection, la négociation tarifaire et l\'exécution de vos missions.\n\nL\'atout majeur par rapport à la micro-entreprise ou à l\'EURL : l\'accès aux allocations chômage (ARE) en cas de baisse significative d\'activité. Un micro-entrepreneur sans mission pendant deux mois encaisse le vide. Un salarié porté cotise à l\'assurance chômage et peut prétendre à l\'ARE — un filet de sécurité réel, notamment en intersaison hivernale ou lors des premiers mois de lancement.\n\nLe coût : la société de portage prélève une commission de 8 à 15 % sur le CA facturé. Sur un TJM de 500 €, cela représente 40 à 75 € par jour — à mettre en regard d\'une mutuelle et prévoyance incluses, d\'une RC Pro souvent intégrée au contrat (vérifiez qu\'elle couvre explicitement les TAC) et d\'une gestion administrative quasi nulle.\n\nAttention : certaines sociétés de portage excluent les activités à risque comme les techniques d\'accès sur cordes. Vérifiez le périmètre de couverture avant de signer tout contrat. Le portage convient particulièrement aux cordistes en reconversion depuis le salariat ou à ceux qui testent l\'indépendance avant de créer leur structure.',
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    description: 'Accédez aux missions publiées par des clients vérifiés, quel que soit votre statut.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Comparer les charges selon votre statut juridique cordiste',
+                body: 'Pour un cordiste qui facture 60 000 € HT/an (environ 130 jours à 460 €/j), voici ce que chaque statut implique concrètement. Ces estimations partent de l\'hypothèse d\'une rémunération nette cible autour de 38 000-40 000 € après charges et avant impôt sur le revenu. Elles ne remplacent pas une simulation avec un comptable, mais donnent les ordres de grandeur pour comparer.',
+                listIntro: 'Comparatif charges sur une base de 60 000 € de CA annuel :',
+                list: [
+                    'Micro-entrepreneur : 22 % × 60 000 € = 13 200 € de charges. Aucune déduction de frais réels. Revenu avant IR ≈ 46 800 €',
+                    'EURL TNS (salaire brut 40 000 €) : charges TNS ≈ 18 000 €. IS à 15 % sur le bénéfice résiduel ≈ 3 000 €. Total charges + IS ≈ 21 000 €',
+                    'Portage salarial (commission 12 %) : frais de portage 7 200 € + charges salariales sur salaire net ≈ 15 000 €. ARE et mutuelle incluses',
+                    'SASU (salaire net 35 000 €) : cotisations totales ≈ 26 000 €. Protection retraite et maladie renforcées. IS sur bénéfice résiduel',
+                    'Invariants quel que soit le statut : CFE 200-800 €/an, recyclage CQP/IRATA 600-1 200 €/3 ans, renouvellement EPI 200-600 €/an selon utilisation',
+                ],
+            },
+            {
+                heading: 'RC Pro, EPI et assurances : ce que votre statut implique',
+                body: 'La RC Pro est non négociable pour tout cordiste indépendant. Pas parce que la loi l\'impose explicitement pour les indépendants TAC, mais parce qu\'aucun donneur d\'ordre sérieux ne signera un plan de prévention sans attestation valide couvrant les techniques d\'accès sur cordes. Prix moyen en 2026 : 400 à 900 €/an selon le statut juridique, le CA déclaré et les montants de garantie souscrits.\n\nEn **micro-entreprise**, certaines compagnies refusent de couvrir les TAC ou appliquent une surprime. Vérifiez que la police mentionne explicitement "techniques d\'accès sur cordes" ou "TAC" — pas seulement "travaux en hauteur". Les assureurs spécialisés BTP (SMABTP, Axa Pro BTP) sont généralement plus adaptés que les généralistes. Un montant minimum de garantie de 1 M€ par sinistre est recommandé sur les chantiers industriels.\n\nEn **EURL ou SASU**, la RC Pro est souscrite au nom de la société et intégralement déductible du résultat fiscal — ce qui réduit son coût net réel de 15 à 25 % selon votre régime.\n\nEn **portage salarial**, la RC Pro est souvent incluse dans le contrat, mais le plafond de garantie peut être insuffisant pour les chantiers patrimoniaux ou industriels. Lisez les conditions particulières avant d\'accepter une mission sensible.\n\nCôté EPI : votre kit de départ (harnais cuissard, longe double, descendeur autobloquant, bloqueur ventral, cordes) représente 1 500 à 2 500 € à l\'achat. L\'OPPBTP recommande un renouvellement partiel annuel selon l\'état d\'usure. Ce coût, intégralement déductible en EURL ou SASU, justifie à lui seul le passage à une structure fiscalisée dès que votre CA dépasse 40 000 €.',
+            },
+            {
+                heading: 'Quel statut choisir à chaque étape de votre carrière ?',
+                body: 'Il n\'existe pas de statut juridique idéal absolu — il y a le statut adapté à votre situation du moment, à votre CA actuel et à vos objectifs à trois ans.\n\n**Fraîchement certifié (CQP TPS N1 ou IRATA L1, 0-18 mois)** : commencez en micro-entreprise ou en portage salarial. L\'objectif est de décrocher vos premières missions, de construire votre réputation et de sécuriser un carnet client. La complexité d\'une EURL ralentirait votre démarrage sans bénéfice fiscal réel sur de petits volumes. Priorité à la prospection — pas à la comptabilité.\n\n**Cordiste confirmé (2-5 ans, CA entre 40 000 et 70 000 €)** : évaluez un passage en EURL à l\'IS. Un comptable spécialisé BTP peut modéliser le gain fiscal sur votre CA actuel en moins d\'une heure. La déductibilité du kit EPI, du véhicule et des recyclages triennaux rend rapidement le bilan positif.\n\n**Expert ou formateur (5+ ans, CA > 70 000 €, développement envisagé)** : la SASU devient pertinente pour préparer une expansion — embauche d\'un technicien, sous-traitance structurée, appels d\'offres multi-lots. La protection sociale du président est aussi plus solide en cas d\'arrêt prolongé lié à un accident de chantier.\n\nQuel que soit votre stade, une consultation de 2-3 heures avec un expert-comptable spécialisé BTP coûte 200 à 400 € — et peut vous faire économiser plusieurs milliers d\'euros sur trois ans. La SFETH et certains groupements professionnels proposent des sessions collectives de conseil à tarif réduit.',
+                cta: {
+                    text: 'Découvrir les chantiers de cette semaine',
+                    href: '/jobs',
+                    description: 'Des missions cordiste publiées quotidiennement — accès gratuit à toutes les annonces.',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Quel est le meilleur statut pour un cordiste qui débute en indépendant ?',
+                a: 'Pour débuter, la micro-entreprise ou le portage salarial. La micro plafonne à 77 700 € de CA et prélève 22 % sur le brut — idéal jusqu\'à 35 000 € de CA. Au-delà, évaluez un passage en EURL.',
+            },
+            {
+                q: 'Un auto-entrepreneur cordiste peut-il obtenir une RC Pro couvrant les TAC ?',
+                a: 'Oui, mais pas auprès de tous les assureurs. Certaines compagnies refusent de couvrir les techniques d\'accès sur cordes (TAC) sous statut micro-entreprise ou appliquent une surprime. Orientez-vous vers les assureurs spécialisés BTP et vérifiez que la police mentionne explicitement "TAC" ou "accès sur cordes".',
+            },
+            {
+                q: 'À partir de quel chiffre d\'affaires passer en EURL ou SASU ?',
+                a: 'Le seuil de rentabilité d\'un passage en EURL se situe généralement entre 40 000 et 55 000 € de CA annuel pour un cordiste. C\'est à partir de là que la déductibilité des frais réels — EPI, véhicule, recyclages triennaux — compense les frais de gestion comptable et les formalités de création.',
+            },
+            {
+                q: 'Le portage salarial permet-il de toucher le chômage entre deux missions cordiste ?',
+                a: 'Oui. En portage salarial, vous cotisez à l\'assurance chômage et pouvez prétendre aux allocations ARE en cas de baisse significative d\'activité. C\'est son avantage majeur par rapport à la micro-entreprise ou à l\'EURL, où aucune protection chômage n\'existe sans souscription individuelle spécifique.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Tarif journalier cordiste indépendant', href: '/blog/tarif-journalier-cordiste-independant' },
+            { label: 'Premier chantier après le CQP', href: '/blog/premier-chantier-cordiste-apres-cqp' },
+            { label: 'Habilitations CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Voir les missions disponibles', href: '/jobs' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
