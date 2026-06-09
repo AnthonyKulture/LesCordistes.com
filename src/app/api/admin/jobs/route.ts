@@ -170,7 +170,12 @@ export async function POST(req: NextRequest) {
             '',
             `→ ${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lescordistes.com'}/jobs/${slug}`,
         ].filter(Boolean)
-        sendTelegram(tgLines.join('\n')).catch(() => {})
+        
+        try {
+            await sendTelegram(tgLines.join('\n'))
+        } catch (tgErr) {
+            console.error('[admin/jobs] Telegram notification failed:', tgErr)
+        }
 
         return NextResponse.json({ ok: true, id: jobId, slug })
     } catch (err: unknown) {

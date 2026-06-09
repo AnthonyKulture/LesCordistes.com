@@ -122,7 +122,12 @@ export async function POST(req: NextRequest) {
             '',
             `→ ${adminUrl}`,
         ].filter(Boolean)
-        sendTelegram(tgLines.join('\n')).catch(() => {})
+        
+        try {
+            await sendTelegram(tgLines.join('\n'))
+        } catch (tgErr) {
+            console.error('[contact_requests] Telegram notification failed:', tgErr)
+        }
 
         // Email admin via send-email + admin-alert
         const fullDisplayName = [cleanFirstName, cleanLastName].filter(Boolean).join(' ') || 'Anonyme'
@@ -144,8 +149,9 @@ export async function POST(req: NextRequest) {
             .replace(/\n/g, '<br>')
 
         const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'anthony@lescordistes.com'
-        admin.functions
-            .invoke('send-email', {
+        
+        try {
+            const { error: invokeError } = await admin.functions.invoke('send-email', {
                 body: {
                     to: ADMIN_EMAIL,
                     subject: `[LesCordistes] ${emailTitle}`,
@@ -158,9 +164,13 @@ export async function POST(req: NextRequest) {
                     },
                 },
             })
-            .catch((err: unknown) => {
-                console.error('[contact_requests] admin email failed:', err)
-            })
+
+            if (invokeError) {
+                console.error('[contact_requests] admin email invocation error:', invokeError)
+            }
+        } catch (err: unknown) {
+            console.error('[contact_requests] admin email failed:', err)
+        }
 
         return NextResponse.json({ ok: true, id: inserted?.id })
     } catch (err: unknown) {
