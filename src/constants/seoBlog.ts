@@ -1768,6 +1768,119 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
         ],
     },
+    {
+        slug: 'statut-juridique-cordiste-independant',
+        authorSlug: 'benjamin-de-oliveira',
+        title: 'Statut juridique cordiste indépendant : micro, EURL ou portage',
+        shortTitle: 'Statut juridique cordiste indépendant',
+        description:
+            'Choisissez votre statut juridique cordiste : micro-entreprise, EURL ou portage salarial comparés — charges, protection sociale et avantages fiscaux 2026.',
+        category: 'Métier & Carrière',
+        readTime: 9,
+        datePublished: '2026-06-10',
+        dateModified: '2026-06-10',
+        intro:
+            'Micro-entreprise, EURL, portage salarial ou SASU : le choix du statut juridique de cordiste indépendant conditionne tes charges mensuelles, ta protection sociale, ta crédibilité auprès des donneurs d\'ordre — et à terme, la solidité de ton activité. La majorité des techniciens d\'accès sur cordes démarrent en micro-entreprise parce que c\'est le plus simple et le plus rapide. C\'est souvent le bon choix pour les 12 à 24 premiers mois. Mais passé un certain niveau de chiffre d\'affaires — autour de 45 000 à 50 000 € par an — rester en micro peut te coûter plus cher qu\'une structure en EURL. Et pour ceux qui alternent missions de sous-traitance, renfort PRO et périodes de creux ou de formation, le portage salarial propose des avantages que ni la micro ni l\'EURL n\'offrent. Ce guide compare les quatre options avec des chiffres réels, pour que tu choisisses selon ton profil et ton stade.',
+        sections: [
+            {
+                heading: 'La micro-entreprise : premier statut juridique du cordiste qui se lance',
+                body: 'La micro-entreprise est le point de départ de la majorité des cordistes qui se lancent à leur compte. Et pour de bonnes raisons : l\'inscription sur autoentrepreneur.urssaf.fr prend 48 heures, les charges sociales représentent 22 % du chiffre d\'affaires, il n\'y a pas de frais fixe de structure, pas de comptable obligatoire, pas de capital social à déposer. Pour un CQP niveau 1 qui encaisse ses premières missions à 280-320 €/j, c\'est le régime le plus rentable.\n\nLa limite principale est le plafond de chiffre d\'affaires : 77 700 € HT par an pour les activités de services. Pour un cordiste confirmé qui facture 400 €/j et travaille 150 jours par an, c\'est 60 000 € de CA — encore en dessous. Mais à 180 jours facturés à 450 €/j, tu atteins 81 000 € et tu franchis le seuil, ce qui déclenche automatiquement le passage au régime réel.\n\nDeuxième limite : la micro ne permet pas de déduire les charges réelles. Tes EPI (1 500 à 2 500 € pour un kit complet débutant), ta RC Pro (400 à 900 €/an), tes recyclages CQP TPS ou IRATA (600 à 1 200 € tous les 3 ans) et tes déplacements sortent de ta poche sans réduction d\'impôt. L\'abattement forfaitaire est de 34 %, mais tes charges réelles dépassent souvent ce seuil dès que tu travailles sérieusement.',
+                listIntro: 'Ce que tu dois retenir sur la micro-entreprise cordiste :',
+                list: [
+                    'Charges sociales à 22 % du CA — sans cotisation minimum si tu ne travailles pas',
+                    'Inscription en 48h sur autoentrepreneur.urssaf.fr — aucun capital à déposer',
+                    'Plafond CA : 77 700 € HT/an pour les services — au-delà, passage automatique au régime réel',
+                    'Charges réelles (EPI, RC Pro, déplacements) non déductibles — abattement forfaitaire de 34 %',
+                    'Protection sociale minimale — retraite complémentaire et indemnités journalières plus faibles qu\'un salarié',
+                    'Pas de récupération de TVA sous le seuil de franchise en base (91 900 € pour les services)',
+                ],
+            },
+            {
+                heading: 'L\'EURL : la structure qui suit la croissance d\'un cordiste confirmé',
+                body: 'L\'EURL (Entreprise Unipersonnelle à Responsabilité Limitée) est la structure naturelle quand ton activité cordiste dépasse 40 000 à 50 000 € de CA annuel. Contrairement à la micro, elle te permet de déduire toutes tes charges réelles : EPI (1 500 à 2 500 € à l\'installation), recyclage CQP TPS ou IRATA (600 à 1 200 € tous les 3 ans), RC Pro (400 à 900 €/an), frais de déplacement, téléphone, matériel, frais de formation OPPBTP. Sur 60 000 € de CA, ces déductions peuvent réduire le résultat imposable de 8 000 à 12 000 €.\n\nL\'EURL peut être imposée à l\'IR (impôt sur le revenu) ou à l\'IS (impôt sur les sociétés). Dans la grande majorité des cas, les cordistes indépendants choisissent l\'IS : le taux réduit de 15 % s\'applique jusqu\'à 42 500 € de bénéfices, bien en dessous de la tranche marginale d\'imposition de la plupart des techniciens confirmés qui facturent 18 à 20 jours par mois.\n\nLe revers : une EURL nécessite un comptable (1 200 à 1 800 €/an), la tenue d\'une comptabilité formelle et un minimum de gestion administrative. La création coûte 300 à 500 €. En contrepartie, la protection sociale du gérant TNS (Travailleur Non Salarié) est supérieure à celle du micro-entrepreneur pour la retraite complémentaire et la prévoyance décès-invalidité.',
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    description: 'Des chantiers cordiste qualifiés, filtrés par région. Accès libre à l\'inscription.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Le portage salarial cordiste : indépendant avec un filet de sécurité',
+                body: 'Le portage salarial est l\'option la moins connue des cordistes indépendants — et pourtant la plus pertinente pour certains profils. Le principe : tu réalises tes missions en indépendant, mais sous couverture d\'une société de portage qui établit le contrat de travail avec le client, prélève une commission de gestion (7 à 10 % du CA brut) et te verse un salaire mensuel.\n\nAvantage principal : tu bénéficies de tous les droits salariaux — cotisations retraite complètes (base + AGIRC-ARRCO), indemnités journalières maladie, et surtout accès à l\'assurance chômage (ARE) si la mission prend fin ou si une période creuse s\'installe. Pour un cordiste qui alterne missions de renfort PRO, travaux de façade saisonniers et périodes de formation continue CATEC ou SFETH, c\'est une sécurité réelle que ni la micro ni l\'EURL ne peuvent offrir.\n\nLe portage revient plus cher à CA égal — la commission de gestion et les charges sociales représentent 45 à 55 % du CA brut contre 22 % en micro. Mais si tu factures 380 €/j sur 15 jours par mois (5 700 € HT), une commission de 10 % représente 570 € : une prime modeste pour accéder à l\'ensemble des protections du statut salarié.',
+                listIntro: 'Avantages et limites du portage salarial pour un cordiste :',
+                list: [
+                    'Accès à l\'ARE (assurance chômage) si la mission prend fin ou si une période creuse s\'installe',
+                    'Indemnités journalières maladie identiques au salariat — protection en cas d\'arrêt de travail',
+                    'Cotisations retraite complètes : base + AGIRC-ARRCO — bien supérieures à la micro',
+                    'RC Pro souvent incluse dans l\'accord de portage — à vérifier selon la société de portage',
+                    'Commission de gestion : 7 à 10 % du CA brut — à intégrer dans ton TJM lors des négociations',
+                ],
+            },
+            {
+                heading: 'La SASU : pour les projets au-delà du solo',
+                body: 'La SASU (Société par Actions Simplifiée Unipersonnelle) intéresse rarement un cordiste qui démarre seul. Mais elle a des atouts que l\'EURL n\'offre pas, en particulier pour ceux qui envisagent d\'embaucher un équipier ou de s\'associer à terme.\n\nPrincipal avantage par rapport à l\'EURL : le statut social du président de SASU est assimilé salarié. La protection sociale est nettement supérieure à celle du gérant TNS d\'une EURL — notamment pour les indemnités journalières maladie et la prévoyance décès-invalidité. En contrepartie, les cotisations sont plus élevées : 45 à 50 % des revenus bruts contre environ 44 % pour un gérant TNS.\n\nLa SASU est aussi plus facile à faire évoluer vers une SAS multi-actionnaires si tu veux t\'associer avec un second technicien sur cordes. Pour monter une ETT (entreprise de travaux spécialisée) avec deux ou trois cordistes, la SASU est souvent le bon véhicule de départ. Côté coût : comptable 1 800 à 2 500 €/an, et des formalités de création légèrement plus longues qu\'une EURL.',
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    description: 'Profil complet, certifications affichées, accès aux missions de ta région.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Comment choisir son statut juridique de cordiste selon son profil et son CA',
+                body: 'Aucun statut n\'est universel. La bonne structure dépend de ton niveau d\'expérience, de ton CA actuel, de ta situation personnelle et de ton projet à 3-5 ans. Voici comment trancher.\n\n**Si tu démarres (CQP N1 ou IRATA L1, 0-2 ans)** et que ton CA projeté est inférieur à 40 000 €/an, la micro-entreprise est ta meilleure option. Aucun frais fixe, aucune complexité administrative, et les 22 % de charges te laissent 78 % de chaque euro facturé. Tu n\'as pas encore les charges réelles à optimiser fiscalement.\n\n**Si tu es confirmé (CQP N2, 2-5 ans)** et que ton CA dépasse ou approche 50 000 €/an, l\'EURL à l\'IS devient plus avantageuse. La déduction des charges réelles — EPI, déplacements, recyclage CQP ou IRATA, RC Pro — réduit ton résultat imposable et compense largement le coût du comptable.\n\n**Si tu alternes missions et creux structurels** — reconversion récente, activité saisonnière forte, formateur CATEC ou SFETH en activité parallèle — le portage salarial protège ta situation sans t\'astreindre à gérer une structure quand tu n\'as pas de missions.\n\n**Si ton projet est de monter une ETT** (2 à 5 techniciens sur cordes), oriente-toi vers la SASU dès le départ pour bénéficier du statut assimilé-salarié et faciliter l\'évolution vers une SAS multi-actionnaires.',
+                listIntro: 'Tableau de décision rapide selon ton profil :',
+                list: [
+                    'Débutant CQP N1, CA < 40 000 €/an → micro-entreprise : 22 % de charges, zéro frais fixe',
+                    'Confirmé CQP N2, CA 45 000-70 000 €/an → EURL à l\'IS : déduction des charges réelles, TNS',
+                    'Expert CQP N3 / IRATA L3, projet d\'équipe → SASU : statut assimilé-salarié, évolutivité SAS',
+                    'Reconversion, alternance missions/formation, creux saisonniers → portage salarial : ARE + IJ maladie',
+                    'Renfort PRO ponctuel (< 30 000 €/an) → micro-entreprise : souplesse maximale, pas de frais fixe',
+                ],
+                cta: {
+                    text: 'Créer mon compte cordiste',
+                    href: '/inscription-cordiste',
+                    description: 'Profil visible, certifications affichées, accès immédiat aux missions de ta région.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Les charges incompressibles quel que soit le statut',
+                body: 'Quel que soit ton statut juridique, certaines dépenses s\'imposent à tout cordiste indépendant qui exerce en France. Les anticiper évite les mauvaises surprises en fin d\'exercice.\n\nLa **RC Pro cordiste** est non négociable. Elle coûte entre 400 et 900 €/an selon le niveau de couverture — types de chantiers inclus, habilitations nucléaire ou ATEX intégrées ou exclues. En micro-entreprise, elle n\'est pas déductible fiscalement. En EURL ou SASU, elle l\'est intégralement.\n\nTon **kit EPI complet** représente un investissement initial de 1 500 à 2 500 € (harnais cuissard, longe double, descendeur autobloquant, bloqueur ventral, casque, point d\'ancrage mobile). Le matériel doit être vérifié annuellement par un organisme agréé et partiellement renouvelé — prévoir 300 à 600 €/an.\n\nLe **recyclage CQP TPS ou IRATA** est obligatoire tous les 3 ans, entre 600 et 1 200 €. Une certification expirée te met hors jeu sur tout chantier formalisé — aucun donneur d\'ordre sérieux ne prend ce risque. Intègre ces 200 à 400 €/an dans ta trésorerie comme une charge incompressible au même titre que ta RC Pro.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Quel statut juridique choisir pour se lancer comme cordiste indépendant ?',
+                a: 'Pour démarrer, la micro-entreprise est le statut le plus adapté : inscription en 48h, charges à 22 % du CA, aucun frais fixe. Le seuil à surveiller est le plafond de 77 700 € HT/an — au-delà, l\'EURL devient plus avantageuse.',
+            },
+            {
+                q: 'Peut-on rester en micro-entreprise toute sa carrière de cordiste ?',
+                a: 'Oui, tant que ton CA annuel reste sous 77 700 € HT et que tes charges réelles ne justifient pas une déduction. Mais dès que tu atteins régulièrement 50 000 € de CA, une simulation EURL avec un comptable s\'impose. La charge fiscale et sociale peut devenir inférieure malgré les frais de structure.',
+            },
+            {
+                q: 'Quand passer de la micro-entreprise à l\'EURL ?',
+                a: 'Le basculement devient intéressant entre 40 000 et 50 000 € de CA annuel. À ce niveau, les charges réelles (EPI, RC Pro, déplacements, recyclage CQP ou IRATA) dépassent l\'abattement forfaitaire de 34 %, et l\'IS à 15 % sur les premiers 42 500 € de bénéfice est souvent plus favorable que l\'IR. Consultez un comptable pour une simulation sur votre situation réelle.',
+            },
+            {
+                q: 'Le portage salarial est-il compatible avec le statut de cordiste indépendant ?',
+                a: 'Oui, de nombreux cordistes recourent au portage salarial pour sécuriser des périodes creuses ou des missions longues sans créer de structure. La condition est d\'avoir un lien contractuel entre la société de portage et l\'entreprise cliente — le portage ne fonctionne pas avec des particuliers.',
+            },
+            {
+                q: 'Faut-il un comptable en micro-entreprise cordiste ?',
+                a: 'Non, la micro-entreprise n\'y oblige pas juridiquement. Mais un bilan annuel avec un professionnel (100 à 200 €) reste utile pour anticiper le seuil de TVA et simuler la comparaison avec une EURL quand ton CA progresse. Le coût est déductible en EURL, pas en micro.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Premier chantier après le CQP', href: '/blog/premier-chantier-cordiste-apres-cqp' },
+            { label: 'Tarif journalier cordiste indépendant', href: '/blog/tarif-journalier-cordiste-independant' },
+            { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
+            { label: 'Créer mon profil cordiste', href: '/inscription-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
