@@ -1,0 +1,182 @@
+{
+  "https://www.lescordistes.com/|mobile": {
+    "scores": {
+      "performance": 0.63,
+      "seo": 1,
+      "accessibility": 0.86,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 12311.693674004473,
+      "cls": 0,
+      "fcp": 3438.0846837002236,
+      "tbt": 114.5,
+      "si": 5416.470071048595,
+      "tti": 12627.638132947091
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/|desktop": {
+    "scores": {
+      "performance": 0.86,
+      "seo": 1,
+      "accessibility": 0.87,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 2226.4806187504637,
+      "cls": 0.001138,
+      "fcp": 754.7858231402623,
+      "tbt": 127,
+      "si": 1192.6286031865714,
+      "tti": 2381.721299624163
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/cordiste-paris|mobile": {
+    "scores": {
+      "performance": 0.63,
+      "seo": 1,
+      "accessibility": 0.84,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 8569.301560282609,
+      "cls": 0.000412,
+      "fcp": 4319.021931656917,
+      "tbt": 138,
+      "si": 4319.021931656917,
+      "tti": 8584.302108574033
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/cordiste-paris|desktop": {
+    "scores": {
+      "performance": 0.71,
+      "seo": 1,
+      "accessibility": 0.89,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 726.7381292937192,
+      "cls": 0.005066,
+      "fcp": 726.7381292937192,
+      "tbt": 895.5000000000005,
+      "si": 974.1545820210799,
+      "tti": 2863.948939020571
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/cordiste-paris/lavage-vitres|mobile": {
+    "scores": {
+      "performance": 0.8,
+      "seo": 1,
+      "accessibility": 0.84,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 2751.371627937272,
+      "cls": 0.001015,
+      "fcp": 2751.371627937272,
+      "tbt": 420.9999999999991,
+      "si": 3820.181297184355,
+      "tti": 8609.793149404459
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/cordiste-paris/lavage-vitres|desktop": {
+    "scores": {
+      "performance": 0.89,
+      "seo": 1,
+      "accessibility": 0.89,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 758.2968562044637,
+      "cls": 0.00393,
+      "fcp": 758.2968562044637,
+      "tbt": 261,
+      "si": 820.8664911505048,
+      "tti": 2001.3646961842728
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/blog/trouver-cordiste-paris|mobile": {
+    "scores": {
+      "performance": 0.83,
+      "seo": 1,
+      "accessibility": 0.87,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 2738.2981363982553,
+      "cls": 6.5e-05,
+      "fcp": 2738.2981363982553,
+      "tbt": 375,
+      "si": 2738.2981363982553,
+      "tti": 5698.416174704176
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/blog/trouver-cordiste-paris|desktop": {
+    "scores": {
+      "performance": 0.94,
+      "seo": 1,
+      "accessibility": 0.93,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 758.3017983096273,
+      "cls": 0.001193,
+      "fcp": 758.3017983096273,
+      "tbt": 181.60041184236422,
+      "si": 758.3017983096273,
+      "tti": 1380.132133810844
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/jobs|mobile": {
+    "scores": {
+      "performance": 0.71,
+      "seo": 1,
+      "accessibility": 0.86,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 6789.678742377757,
+      "cls": 0,
+      "fcp": 2709.2965952932336,
+      "tbt": 137,
+      "si": 3039.2629385510127,
+      "tti": 6804.768692941427
+    },
+    "crux": {},
+    "crux_overall": null
+  },
+  "https://www.lescordistes.com/jobs|desktop": {
+    "scores": {
+      "performance": 0.77,
+      "seo": 1,
+      "accessibility": 0.91,
+      "best-practices": 1
+    },
+    "lab": {
+      "lcp": 1551.8369034207417,
+      "cls": 0.177613,
+      "fcp": 729.2999674353047,
+      "tbt": 244.5,
+      "si": 1077.7414347390438,
+      "tti": 1673.2353381839812
+    },
+    "crux": {},
+    "crux_overall": null
+  }
+}

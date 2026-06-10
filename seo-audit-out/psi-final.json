@@ -1,0 +1,92 @@
+{
+  "https://www.lescordistes.com/|mobile": {
+    "scores": {
+      "performance": 0.64,
+      "seo": 1,
+      "accessibility": 0.86,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 4924.341826571564,
+      "cls": 0,
+      "fcp": 2705.7407885228085,
+      "tbt": 426,
+      "si": 4841.564170223839
+    }
+  },
+  "https://www.lescordistes.com/|desktop": {
+    "scores": {
+      "performance": 0.74,
+      "seo": 1,
+      "accessibility": 0.87,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 1309.3914725242455,
+      "cls": 0.001138,
+      "fcp": 754.8444716212528,
+      "tbt": 497.49999999999955,
+      "si": 1135.752751928252
+    }
+  },
+  "https://www.lescordistes.com/cordiste-paris|mobile": {
+    "scores": {
+      "performance": 0.67,
+      "seo": 1,
+      "accessibility": 0.84,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 3526.1465534799054,
+      "cls": 0.000412,
+      "fcp": 3006.546173331015,
+      "tbt": 517.5,
+      "si": 5791.029714689066
+    }
+  },
+  "https://www.lescordistes.com/cordiste-paris|desktop": {
+    "scores": {
+      "performance": 0.68,
+      "seo": 1,
+      "accessibility": 0.89,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 755.8357023924214,
+      "cls": 0.005066,
+      "fcp": 755.8357023924214,
+      "tbt": 1241,
+      "si": 1494.9596081018685
+    }
+  },
+  "https://www.lescordistes.com/jobs|mobile": {
+    "scores": {
+      "performance": 0.68,
+      "seo": 1,
+      "accessibility": 0.87,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 2738.294879442644,
+      "cls": 0.000118,
+      "fcp": 2738.294879442644,
+      "tbt": 979.1514826366674,
+      "si": 4071.7749908332007
+    }
+  },
+  "https://www.lescordistes.com/jobs|desktop": {
+    "scores": {
+      "performance": 0.98,
+      "seo": 1,
+      "accessibility": 0.93,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 787.304293305757,
+      "cls": 0.002185,
+      "fcp": 787.304293305757,
+      "tbt": 83,
+      "si": 1157.8422194799075
+    }
+  }
+}

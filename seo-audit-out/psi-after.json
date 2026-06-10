@@ -1,0 +1,92 @@
+{
+  "https://www.lescordistes.com/|mobile": {
+    "scores": {
+      "performance": 0.7,
+      "seo": 1,
+      "accessibility": 0.86,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 10531.598402462792,
+      "cls": 0,
+      "fcp": 2735.734800277831,
+      "tbt": 76,
+      "si": 3398.467732205922
+    }
+  },
+  "https://www.lescordistes.com/|desktop": {
+    "scores": {
+      "performance": 0.82,
+      "seo": 1,
+      "accessibility": 0.87,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 2185.366977035084,
+      "cls": 0.001138,
+      "fcp": 754.7785318278018,
+      "tbt": 202.9999999999999,
+      "si": 1227.180795932772
+    }
+  },
+  "https://www.lescordistes.com/cordiste-paris|mobile": {
+    "scores": {
+      "performance": 0.8,
+      "seo": 1,
+      "accessibility": 0.84,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 2706.3325562029163,
+      "cls": 0.000412,
+      "fcp": 2706.3325562029163,
+      "tbt": 446.5,
+      "si": 3535.7886434981724
+    }
+  },
+  "https://www.lescordistes.com/cordiste-paris|desktop": {
+    "scores": {
+      "performance": 0.99,
+      "seo": 1,
+      "accessibility": 0.89,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 725.7211297327622,
+      "cls": 0.005066,
+      "fcp": 725.7211297327622,
+      "tbt": 34,
+      "si": 1218.911521302339
+    }
+  },
+  "https://www.lescordistes.com/jobs|mobile": {
+    "scores": {
+      "performance": 0.74,
+      "seo": 1,
+      "accessibility": 0.87,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 2739.2986871824687,
+      "cls": 0.000118,
+      "fcp": 2739.2986871824687,
+      "tbt": 676,
+      "si": 3405.0109488696853
+    }
+  },
+  "https://www.lescordistes.com/jobs|desktop": {
+    "scores": {
+      "performance": 0.82,
+      "seo": 1,
+      "accessibility": 0.93,
+      "best-practices": 0.96
+    },
+    "lab": {
+      "lcp": 758.2893838451822,
+      "cls": 0.002185,
+      "fcp": 758.2893838451822,
+      "tbt": 382.9999999999998,
+      "si": 1065.5785067258864
+    }
+  }
+}
