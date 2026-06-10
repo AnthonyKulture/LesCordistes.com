@@ -1,0 +1,8 @@
+{
+  "target": "https://www.lescordistes.com/",
+  "form_factor": "PHONE",
+  "metrics": {},
+  "collection_periods": [],
+  "trends": {},
+  "error": "No CrUX history data for this origin. Insufficient Chrome traffic volume for eligibility."
+}

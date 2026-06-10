@@ -1,0 +1,500 @@
+{
+  "title": "Cordistes & travaux en hauteur \u00b7 LesCordistes",
+  "meta_description": "Trouvez des chantiers ou recrutez des cordistes qualifi\u00e9s. La marketplace n\u00b01 pour les travaux d'acc\u00e8s difficile et les m\u00e9tiers de la corde.",
+  "meta_robots": "index, follow",
+  "canonical": "https://www.lescordistes.com",
+  "h1": [
+    "Trouvez descordistes professionnelspour vos travaux en hauteur"
+  ],
+  "h2": [
+    "Comment \u00e7a marche ?",
+    "Rejoignez le r\u00e9seau d'experts entravaux sur corde",
+    "Les questions que tout le monde se pose avant de r\u00e9server un cordiste",
+    "Cordistes dans lesgrandes villes de France",
+    "Questions fr\u00e9quentes",
+    "Pr\u00eat \u00e0 commencer ?"
+  ],
+  "h3": [
+    "Publiez votre besoin",
+    "Recevez des candidatures",
+    "S\u00e9lectionnez votre expert",
+    "V\u00e9rifi\u00e9s CQP / IRATA",
+    "RC Pro & Kbis contr\u00f4l\u00e9s",
+    "Toutes les grandes villes",
+    "Conforme R.4323-58",
+    "Quel est le prix d'un cordiste en France ?",
+    "Quelles certifications exiger d'un cordiste qualifi\u00e9 ?",
+    "En combien de temps recevoir des devis sur LesCordistes.com ?",
+    "Espace Clients",
+    "Espace Pros",
+    "Pour les Clients",
+    "Pour les Cordistes",
+    "Suivez-nous"
+  ],
+  "images": [
+    {
+      "src": "https://www.lescordistes.com/logo-lescordistes.com.svg",
+      "alt": "LesCordistes Logo",
+      "width": "220",
+      "height": "60",
+      "loading": null
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Flescordistes.com-new-03.webp&w=3840&q=75",
+      "alt": "Cordiste professionnel en pleine intervention",
+      "width": null,
+      "height": null,
+      "loading": null
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Flescordistes.com-new-04.webp&w=3840&q=70",
+      "alt": "Intervention de cordiste pour nettoyage de fa\u00e7ade",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Flescordistes.com-new-10.webp&w=3840&q=70",
+      "alt": "Cordiste en travaux de confortement de falaise",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Fmaconnerie-lescordistes.com.webp&w=3840&q=70",
+      "alt": "Publication de chantier",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Flescordistes.com-visuel-travaux-en-hauteur8.webp&w=3840&q=70",
+      "alt": "Candidatures d'experts",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Flescordistes.com-new-07.webp&w=3840&q=70",
+      "alt": "S\u00e9lection de l'expert",
+      "width": null,
+      "height": null,
+      "loading": "lazy"
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Flescordistes.com-new-01.webp&w=3840&q=70",
+      "alt": "Cordiste professionnel en pleine intervention",
+      "width": "600",
+      "height": "600",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://www.lescordistes.com/_next/image?url=%2Flescordistes.com-new-00.webp&w=3840&q=70",
+      "alt": "Cordiste professionnel r\u00e9alisant un ravalement de fa\u00e7ade",
+      "width": "600",
+      "height": "500",
+      "loading": "lazy"
+    },
+    {
+      "src": "https://www.lescordistes.com/logowhite-lescordistes.com.svg",
+      "alt": "LesCordistes Logo Blanc",
+      "width": "180",
+      "height": "48",
+      "loading": "lazy"
+    }
+  ],
+  "links": {
+    "internal": [
+      {
+        "href": "https://www.lescordistes.com/",
+        "text": "",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/jobs",
+        "text": "Trouver des missions",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/connexion",
+        "text": "S'inscrire / Se connecter",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/post-job",
+        "text": "Publier un projet",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/jobs",
+        "text": "Trouver des missions",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/post-job",
+        "text": "Publier un projet",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/verification-pros",
+        "text": "V\u00e9rifi\u00e9s CQP / IRATA50 cordistes certifi\u00e9s avant publication",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/verification-pros",
+        "text": "RC Pro & Kbis contr\u00f4l\u00e9sDocuments valid\u00e9s en interne sous 1 jour ouvr\u00e9",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/jobs",
+        "text": "Toutes les grandes villesR\u00e9seau actif Paris, Lyon, Marseille\u2026",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/mentions-legales",
+        "text": "Conforme R.4323-58Code du travail \u00b7 arr\u00eat\u00e9 4 ao\u00fbt 2005",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/inscription-cordiste",
+        "text": "S'inscrire comme Pro",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/prix-cordiste",
+        "text": "D\u00e9tail des tarifs cordiste\u2192",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/verification-pros",
+        "text": "Notre processus de v\u00e9rification\u2192",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/post-job",
+        "text": "Publier une mission\u2192",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-paris",
+        "text": "CordisteParisIDF \u00b7 Marais ABF \u00b7 La D\u00e9fense",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-marseille",
+        "text": "CordisteMarseilleCalanques \u00b7 Vieux-Port \u00b7 p\u00e9trochimie",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-lyon",
+        "text": "CordisteLyonVieux-Lyon UNESCO \u00b7 vall\u00e9e chimie",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-toulouse",
+        "text": "CordisteToulouseBrique foraine \u00b7 a\u00e9ronautique Airbus",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-lille",
+        "text": "CordisteLilleZPPAUP \u00b7 sheds filatures",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-bordeaux",
+        "text": "CordisteBordeauxPort de la Lune UNESCO \u00b7 chais",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-nantes",
+        "text": "CordisteNantesTuffeau lig\u00e9rien \u00b7 \u00cele de Nantes",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-nice",
+        "text": "CordisteNiceVieux-Nice ABF \u00b7 Promenade \u00b7 embruns",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-strasbourg",
+        "text": "CordisteStrasbourgPetite France UNESCO \u00b7 Neustadt",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-rennes",
+        "text": "CordisteRennesPans-de-bois \u00b7 ardoise schiste",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-grenoble",
+        "text": "CordisteGrenobleBow-windows zinc \u00b7 contrainte alpine",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-montpellier",
+        "text": "CordisteMontpellier\u00c9cusson ABF \u00b7 Antigone \u00b7 c\u00e9venols",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/jobs",
+        "text": "Voir toutes les missions",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/post-job",
+        "text": "Publier un projet gratuitement",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/inscription-cordiste",
+        "text": "S'inscrire comme Pro",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/post-job",
+        "text": "Publier un projet",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cordiste-copropriete",
+        "text": "Pour copropri\u00e9t\u00e9s & syndics",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/a-propos",
+        "text": "\u00c0 propos",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/verification-pros",
+        "text": "V\u00e9rification des cordistes",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/faq",
+        "text": "Questions fr\u00e9quentes",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/jobs",
+        "text": "Trouver des missions",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/credits",
+        "text": "Tarifs",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/inscription-cordiste",
+        "text": "S'inscrire",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cgu",
+        "text": "CGU",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/cgv",
+        "text": "CGV",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/confidentialite",
+        "text": "Confidentialit\u00e9",
+        "rel": []
+      },
+      {
+        "href": "https://www.lescordistes.com/mentions-legales",
+        "text": "Mentions L\u00e9gales",
+        "rel": []
+      }
+    ],
+    "external": [
+      {
+        "href": "https://www.linkedin.com/company/lescordistes/",
+        "text": "",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      }
+    ]
+  },
+  "schema": [
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://www.lescordistes.com/#website",
+          "name": "LesCordistes.com",
+          "url": "https://www.lescordistes.com/",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.lescordistes.com/jobs?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": [
+            "Organization",
+            "ProfessionalService"
+          ],
+          "@id": "https://www.lescordistes.com/#organization",
+          "name": "LesCordistes.com",
+          "url": "https://www.lescordistes.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.lescordistes.com/lescordistes.com-3.webp",
+            "width": 1200,
+            "height": 630
+          },
+          "telephone": "+33660501682",
+          "email": "anthony@lescordistes.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2 rue Pierre Pietri",
+            "postalCode": "06000",
+            "addressLocality": "Nice",
+            "addressRegion": "Provence-Alpes-C\u00f4te d'Azur",
+            "addressCountry": "FR"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+33660501682",
+            "email": "anthony@lescordistes.com",
+            "contactType": "customer service",
+            "areaServed": "FR",
+            "availableLanguage": "French"
+          },
+          "foundingDate": "2025",
+          "founder": {
+            "@type": "Person",
+            "@id": "https://www.lescordistes.com/a-propos#anthony-profit",
+            "name": "Anthony Profit",
+            "url": "https://www.lescordistes.com/a-propos",
+            "sameAs": [
+              "https://www.linkedin.com/in/anthonyprofit/"
+            ]
+          },
+          "numberOfEmployees": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 5
+          },
+          "knowsAbout": [
+            "Cordiste",
+            "Travail sur cordes",
+            "CQP cordiste",
+            "IRATA",
+            "Travail en hauteur",
+            "Acc\u00e8s difficile",
+            "Marketplace BTP"
+          ],
+          "description": "Marketplace fran\u00e7aise sp\u00e9cialis\u00e9e dans les travaux en acc\u00e8s difficile. Mise en relation entre cordistes certifi\u00e9s CQP/IRATA et clients professionnels ou particuliers dans toute la France.",
+          "areaServed": {
+            "@type": "Country",
+            "name": "France"
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+              ],
+              "opens": "08:00",
+              "closes": "18:00"
+            }
+          ],
+          "serviceType": [
+            "Nettoyage de fa\u00e7ades",
+            "Lavage de vitres",
+            "Ravalement de fa\u00e7ade",
+            "Peinture de fa\u00e7ade",
+            "Toiture et zinguerie",
+            "Isolation thermique ext\u00e9rieure",
+            "Ma\u00e7onnerie en hauteur",
+            "Maintenance \u00e9olienne",
+            "Pyl\u00f4nes t\u00e9l\u00e9com",
+            "Contr\u00f4les non destructifs",
+            "Entretien silos et chemin\u00e9es",
+            "Inspection ponts et viaducs",
+            "Confortement de falaises",
+            "D\u00e9pigeonnage",
+            "Peinture industrielle et anticorrosion"
+          ],
+          "sameAs": [
+            "https://www.google.com/maps?cid=15872124307907753477",
+            "https://www.linkedin.com/company/lescordistes/",
+            "https://www.pagesjaunes.fr/pros/64869308",
+            "https://fr.trustpilot.com/review/lescordistes.com"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntityOfPage": "https://www.lescordistes.com/",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Est-ce gratuit de d\u00e9poser une demande de travaux ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui, totalement gratuit. Le d\u00e9p\u00f4t de mission ne co\u00fbte rien au porteur de projet, particulier ou professionnel. Vous d\u00e9crivez vos besoins en 3 minutes, recevez des devis sous 48h, puis contractez directement avec le cordiste choisi. Aucune commission n'est pr\u00e9lev\u00e9e sur la transaction finale."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quels types de travaux puis-je confier via la plateforme ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tout le spectre des acc\u00e8s difficiles : nettoyage de fa\u00e7ades, lavage de vitres en hauteur, ravalement, peinture industrielle et anticorrosion, toiture et zinguerie, isolation thermique ext\u00e9rieure (ITE), maintenance \u00e9olienne, pyl\u00f4nes t\u00e9l\u00e9com, contr\u00f4les non destructifs (CND), inspection de ponts et viaducs, confortement de falaises et d\u00e9pigeonnage. Si l'acc\u00e8s n\u00e9cessite une corde, nos pros le font."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Les professionnels sont-ils qualifi\u00e9s et assur\u00e9s ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Oui. Chaque professionnel doit soumettre ses certifications CQP Cordiste (obligatoire en France) ou IRATA (norme internationale) ainsi que son attestation RC Pro avant validation de son compte. Notre \u00e9quipe v\u00e9rifie l'authenticit\u00e9 de ces documents. Aucun cordiste non certifi\u00e9 n'est mis en relation avec un client."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Pourquoi les pros paient-ils pour acc\u00e9der aux missions ?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La plateforme fonctionne au contact par cr\u00e9dits, sans commission sur le chantier. Un cordiste d\u00e9bourse 1 cr\u00e9dit par contact d\u00e9bloqu\u00e9 (entre 14 et 20 \u20ac HT selon le pack choisi : Starter 3 cr/60 \u20ac, Pro 10 cr/150 \u20ac, Business 20 cr/280 \u20ac) uniquement pour les missions qui correspondent \u00e0 son profil et sa zone. Ce mod\u00e8le filtre les demandes non pertinentes et garantit au client de recevoir des devis de professionnels r\u00e9ellement int\u00e9ress\u00e9s \u2014 pas de d\u00e9marchage automatique."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "open_graph": {
+    "og:title": "Cordistes & travaux en hauteur \u00b7 LesCordistes",
+    "og:description": "Trouvez des chantiers ou recrutez des cordistes qualifi\u00e9s. La marketplace n\u00b01 pour les travaux d'acc\u00e8s difficile et les m\u00e9tiers de la corde.",
+    "og:url": "https://www.lescordistes.com",
+    "og:image": "https://www.lescordistes.com/lescordistes.com-3.webp",
+    "og:image:width": "1200",
+    "og:image:height": "630"
+  },
+  "twitter_card": {
+    "twitter:card": "summary_large_image",
+    "twitter:site": "@lescordistes",
+    "twitter:title": "Cordistes & travaux en hauteur \u00b7 LesCordistes",
+    "twitter:description": "Trouvez des chantiers ou recrutez des cordistes qualifi\u00e9s. La marketplace n\u00b01 pour les travaux d'acc\u00e8s difficile et les m\u00e9tiers de la corde.",
+    "twitter:image": "https://www.lescordistes.com/lescordistes.com-3.webp"
+  },
+  "word_count": 894,
+  "hreflang": []
+}
