@@ -32,14 +32,17 @@ const ChatView: React.FC<ChatViewProps> = ({ conversation, onBack }) => {
         setInput('');
     }, [conversation.id]);
 
+    const scrolledConversationId = useRef<string | null>(null);
+
     useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTo({
-                top: scrollRef.current.scrollHeight,
-                behavior: 'smooth'
-            });
-        }
-    }, [messages]);
+        if (!scrollRef.current || messages.length === 0) return;
+        const isFirstBatch = scrolledConversationId.current !== conversation.id;
+        scrolledConversationId.current = conversation.id;
+        scrollRef.current.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: isFirstBatch ? 'instant' : 'smooth',
+        });
+    }, [messages, conversation.id]);
 
     const lastMarkedMessageId = useRef<string | null>(null);
     useEffect(() => {
@@ -92,7 +95,7 @@ const ChatView: React.FC<ChatViewProps> = ({ conversation, onBack }) => {
             </div>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-3 bg-slate-50">
                 {loadingMsgs ? (
                     <div className="flex items-center justify-center h-full">
                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue" />

@@ -3,13 +3,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 
 export const ProfessionalsNetwork: React.FC = () => {
     return (
         <section className="py-24 bg-white overflow-hidden">
             <div className="container">
                 <div className="grid md:grid-cols-2 gap-16 items-center">
-                    <div className="order-2 md:order-1 relative">
+                    <Reveal className="order-2 md:order-1 relative">
                         <div className="absolute -inset-4 bg-blue-50/50 rounded-3xl transform -rotate-3 z-0"></div>
                         <Image
                             src="/lescordistes.com-new-01.webp"
@@ -32,9 +33,9 @@ export const ProfessionalsNetwork: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div className="order-1 md:order-2">
+                    <Reveal className="order-1 md:order-2" delay={120}>
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
                             Rejoignez le réseau d'experts en <span className="text-gradient">travaux sur corde</span>
                         </h2>
@@ -66,7 +67,7 @@ export const ProfessionalsNetwork: React.FC = () => {
                                 <ArrowRight size={20} className="ml-2" />
                             </Button>
                         </Link>
-                    </div>
+                    </Reveal>
                 </div>
             </div>
         </section>

@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="fr">
+        <html lang="fr" data-scroll-behavior="smooth">
             <head>
                 {/*
                  * Google Consent Mode v2 — must execute BEFORE gtag.js loads.

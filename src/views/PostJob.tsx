@@ -157,8 +157,7 @@ export const PostJob: React.FC = () => {
 
     // Scroll to top and save step on step change
     useEffect(() => {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         localStorage.setItem('lescordistes_postjob_step', currentStep.toString());
     }, [currentStep]);
 

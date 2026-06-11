@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Shield, Users } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 
 export const HowItWorks: React.FC = () => {
     const [howItWorksTab, setHowItWorksTab] = useState<'client' | 'pro'>('client');
@@ -12,7 +13,7 @@ export const HowItWorks: React.FC = () => {
     return (
         <section id="how-it-works" className="py-24 bg-white">
             <div className="container">
-                <div className="text-center mb-16">
+                <Reveal className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">Comment ça marche ?</h2>
                     <p className="text-xl text-slate-600 max-w-2xl mx-auto font-medium mb-12">
                         Une solution simple et efficace pour tous vos besoins de travaux en hauteur.
@@ -54,9 +55,9 @@ export const HowItWorks: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </Reveal>
 
-                <div className="animate-fade-in">
+                <Reveal className="animate-fade-in">
                     {howItWorksTab === 'client' ? (
                         <div className="space-y-16">
                             <div className="grid md:grid-cols-3 gap-8 md:gap-12 relative">
@@ -183,7 +184,7 @@ export const HowItWorks: React.FC = () => {
                             </div>
                         </div>
                     )}
-                </div>
+                </Reveal>
             </div>
         </section>
     );

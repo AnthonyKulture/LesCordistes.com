@@ -356,7 +356,7 @@ export const Header: React.FC = () => {
                     </div>
 
                     {/* Nav links */}
-                    <div className="flex-1 overflow-y-auto px-5 py-6">
+                    <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6">
                         {!user ? (
                             <nav className="flex flex-col">
                                 <Link

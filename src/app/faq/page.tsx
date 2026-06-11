@@ -165,7 +165,7 @@ export default function FaqHubPage() {
                         <section
                             key={persona}
                             id={`persona-${persona}`}
-                            className="py-12 md:py-16 border-t border-slate-100 scroll-mt-20"
+                            className="py-12 md:py-16 border-t border-slate-100 scroll-mt-28"
                         >
                             <div className="container max-w-4xl">
                                 <div className="mb-8">
@@ -183,7 +183,7 @@ export default function FaqHubPage() {
                                         <article
                                             key={entry.slug}
                                             id={entry.slug}
-                                            className="p-6 md:p-8 rounded-2xl border border-slate-200 bg-white scroll-mt-20"
+                                            className="p-6 md:p-8 rounded-2xl border border-slate-200 bg-white scroll-mt-28"
                                         >
                                             <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-4 leading-snug">
                                                 {entry.q}

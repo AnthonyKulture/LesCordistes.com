@@ -72,7 +72,7 @@ export function BlogLeadForm({
     }
 
     return (
-        <div className="my-10 rounded-2xl bg-white shadow-xl border border-slate-200 p-6 md:p-7 scroll-mt-24">
+        <div className="my-10 rounded-2xl bg-white shadow-xl border border-slate-200 p-6 md:p-7 scroll-mt-28">
             <div className="grid md:grid-cols-2 gap-6 items-start">
                 <div>
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-full text-xs font-medium mb-4">

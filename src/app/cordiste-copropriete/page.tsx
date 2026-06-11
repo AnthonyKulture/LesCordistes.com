@@ -318,7 +318,7 @@ export default function CordisteCoproprietePage() {
                 </section>
 
                 {/* Workflow */}
-                <section id="workflow" className="py-12 md:py-16 scroll-mt-20">
+                <section id="workflow" className="py-12 md:py-16 scroll-mt-28">
                     <div className="container max-w-3xl">
                         <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
                             Comment ça se passe : du besoin à l'AG en 4 étapes
