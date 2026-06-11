@@ -97,13 +97,12 @@ function buildJobPostingSchema(job: Job, slug: string) {
         title: job.title,
         description: job.description,
         datePosted: job.created_at,
-        ...(job.deadline ? { validThrough: job.deadline } : {}),
+        ...(job.deadline ? { validThrough: job.deadline } : job.expired_at ? { validThrough: job.expired_at } : {}),
         employmentType: job.contract_type === 'subcontracting' ? 'CONTRACTOR' : 'OTHER',
         hiringOrganization: {
             '@type': 'Organization',
-            name: 'LesCordistes.com',
-            sameAs: SEO_BASE_URL,
-            logo: `${SEO_BASE_URL}/lescordistes.com-white-logo.png`,
+            name: job.client_contact_info?.company_name || 'Confidentiel',
+            ...(job.client_contact_info?.company_name ? {} : { sameAs: SEO_BASE_URL, logo: `${SEO_BASE_URL}/lescordistes.com-white-logo.png` })
         },
         jobLocation: {
             '@type': 'Place',

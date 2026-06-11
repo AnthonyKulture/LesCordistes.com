@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Briefcase, Users, CreditCard, AlertTriangle, MapPin, KeyRound } from 'lucide-react'
 import type { OpsStats } from '@/lib/types/ops'
+import { SkeletonStatsGrid } from '@/components/admin/SkeletonCard'
 
 type Props = {
     initial?: OpsStats | null
@@ -71,7 +72,7 @@ export function StatsGrid({ initial }: Props) {
         }
     }, [initial])
 
-    if (loading) return <div className="text-sm text-slate-500">Chargement des KPIs…</div>
+    if (loading) return <SkeletonStatsGrid />
     if (!stats) return <div className="text-sm text-red-600">Impossible de charger les stats.</div>
 
     return (

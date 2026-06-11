@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Search } from 'lucide-react'
 import { ProfileCard } from '@/components/admin/ProfileCard'
+import { SkeletonProfileCard } from '@/components/admin/SkeletonCard'
 import type { ProfileWithCredits } from '@/lib/types/ops'
 
 const ROLES = [
@@ -104,7 +105,11 @@ export function ProfilesList() {
                 </div>
             </div>
 
-            {loading && <div className="text-sm text-slate-500">Chargement…</div>}
+            {loading && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {Array.from({ length: 9 }).map((_, i) => <SkeletonProfileCard key={i} />)}
+                </div>
+            )}
             {!loading && filtered.length === 0 && (
                 <div className="text-sm text-slate-500 italic py-8 text-center bg-white border border-slate-200 rounded-xl">
                     Aucun profil dans cette vue.

@@ -46,5 +46,6 @@ export async function GET(req: Request) {
         credits_balance: creditsMap.get(p.id) ?? 0,
     }))
 
-    return Response.json({ users: enriched }, { headers: { 'Cache-Control': 'no-store' } })
+    // ✅ Phase 3: cache 10s — les listes de profils ne changent pas à chaque seconde
+    return Response.json({ users: enriched }, { headers: { 'Cache-Control': 's-maxage=10, stale-while-revalidate=30' } })
 }

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Search } from 'lucide-react'
 import { JobCard } from '@/components/admin/JobCard'
+import { SkeletonJobCard } from '@/components/admin/SkeletonCard'
 import type { Job } from '@/lib/types/ops'
 
 const TABS = [
@@ -95,7 +96,11 @@ export function MissionsList() {
                 </div>
             </div>
 
-            {loading && <div className="text-sm text-slate-500">Chargement…</div>}
+            {loading && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                    {Array.from({ length: 6 }).map((_, i) => <SkeletonJobCard key={i} />)}
+                </div>
+            )}
             {!loading && filtered.length === 0 && (
                 <div className="text-sm text-slate-500 italic py-8 text-center bg-white border border-slate-200 rounded-xl">
                     Aucune mission dans cette vue.
