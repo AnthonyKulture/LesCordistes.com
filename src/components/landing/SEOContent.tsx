@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CheckCircle } from 'lucide-react'
+import { Reveal } from '../ui/Reveal'
 
 const QUESTIONS: Array<{ question: string; answer: React.ReactNode; cta?: { label: string; href: string } }> = [
     {
@@ -77,22 +78,24 @@ export const SEOContent: React.FC = () => {
                         </div>
 
                         {QUESTIONS.map((item, idx) => (
-                            <article key={idx} className="border-l-4 border-brand-blue pl-6 py-2">
-                                <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-3 leading-snug">
-                                    {item.question}
-                                </h3>
-                                <p className="text-base md:text-lg text-slate-700 leading-relaxed">
-                                    {item.answer}
-                                </p>
-                                {item.cta && (
-                                    <Link
-                                        href={item.cta.href}
-                                        className="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-brand-blue-light hover:underline"
-                                    >
-                                        {item.cta.label} →
-                                    </Link>
-                                )}
-                            </article>
+                            <Reveal key={idx}>
+                                <article className="border-l-4 border-brand-blue pl-6 py-2">
+                                    <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-3 leading-snug">
+                                        {item.question}
+                                    </h3>
+                                    <p className="text-base md:text-lg text-slate-700 leading-relaxed">
+                                        {item.answer}
+                                    </p>
+                                    {item.cta && (
+                                        <Link
+                                            href={item.cta.href}
+                                            className="inline-flex items-center gap-1 mt-3 text-sm font-semibold text-brand-blue-light hover:underline"
+                                        >
+                                            {item.cta.label} →
+                                        </Link>
+                                    )}
+                                </article>
+                            </Reveal>
                         ))}
                     </div>
                 </div>

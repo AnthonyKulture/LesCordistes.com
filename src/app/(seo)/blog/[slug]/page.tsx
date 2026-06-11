@@ -240,7 +240,7 @@ export default async function BlogArticlePage({ params }: Props) {
                     <div className="space-y-12">
                         {article.sections.map((section, i) => (
                             <section key={i}>
-                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-5 leading-tight scroll-mt-24">
+                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 mb-5 leading-tight scroll-mt-28">
                                     {section.heading}
                                 </h2>
                                 <div className="space-y-4 text-slate-700 text-base md:text-lg leading-[1.75]">

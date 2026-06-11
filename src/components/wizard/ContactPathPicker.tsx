@@ -64,7 +64,7 @@ export function ContactPathPicker({ onWizardSelected }: Props) {
             </div>
 
             {/* Inline forms (cartes 2 et 3 uniquement) */}
-            <div ref={formRef} className="scroll-mt-4">
+            <div ref={formRef} className="scroll-mt-28">
                 <AnimatePresence mode="wait">
                     {active === 'message' && (
                         <motion.div

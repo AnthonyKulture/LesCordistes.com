@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
+import { Reveal } from '../ui/Reveal';
 import type { User } from '@supabase/supabase-js';
 
 interface CTAProps {
@@ -16,6 +17,7 @@ export const CTA: React.FC<CTAProps> = ({ user }) => {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/50" />
 
             <div className="container relative z-10 text-center">
+                <Reveal>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                     Prêt à commencer ?
                 </h2>
@@ -47,6 +49,7 @@ export const CTA: React.FC<CTAProps> = ({ user }) => {
                         </>
                     )}
                 </div>
+                </Reveal>
             </div>
         </section>
     );

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { MotionConfig } from 'framer-motion'
 import { AuthProvider, useAuth } from '../contexts/AuthContext'
 import { DashboardProvider } from '../contexts/DashboardContext'
 import { ToastProvider } from './ui/Toast'
@@ -69,16 +70,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <PostHogInit />
-            <ToastProvider>
-                <AuthProvider>
-                    <DashboardProvider>
-                        <GoogleRoleGuard>
-                            {children}
-                        </GoogleRoleGuard>
-                    </DashboardProvider>
-                </AuthProvider>
-            </ToastProvider>
+            <MotionConfig reducedMotion="user">
+                <PostHogInit />
+                <ToastProvider>
+                    <AuthProvider>
+                        <DashboardProvider>
+                            <GoogleRoleGuard>
+                                {children}
+                            </GoogleRoleGuard>
+                        </DashboardProvider>
+                    </AuthProvider>
+                </ToastProvider>
+            </MotionConfig>
         </QueryClientProvider>
     )
 }

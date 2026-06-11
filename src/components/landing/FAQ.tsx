@@ -1,5 +1,6 @@
 import React from 'react';
 import { Shield, TrendingUp, ChevronDown } from 'lucide-react';
+import { Reveal } from '../ui/Reveal';
 
 const faqData = {
     clients: [
@@ -44,13 +45,13 @@ export const FAQ: React.FC = () => {
     return (
         <section className="py-24 bg-slate-50 border-t border-slate-100">
             <div className="container max-w-6xl">
-                <div className="text-center mb-16">
+                <Reveal className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 uppercase tracking-tight">Questions fréquentes</h2>
                     <p className="text-xl text-slate-600 font-medium">Tout savoir sur LesCordistes.com</p>
-                </div>
+                </Reveal>
 
                 <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
-                    <div>
+                    <Reveal>
                         <div className="flex items-center gap-3 mb-8">
                             <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-brand-blue shadow-sm">
                                 <Shield size={28} />
@@ -70,9 +71,9 @@ export const FAQ: React.FC = () => {
                                 </details>
                             ))}
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div>
+                    <Reveal delay={100}>
                         <div className="flex items-center gap-3 mb-8">
                             <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 shadow-sm">
                                 <TrendingUp size={28} />
@@ -92,7 +93,7 @@ export const FAQ: React.FC = () => {
                                 </details>
                             ))}
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
             </div>
         </section>

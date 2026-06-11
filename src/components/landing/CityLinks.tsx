@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { MapPin } from 'lucide-react'
+import { Reveal } from '../ui/Reveal'
 
 const FEATURED_CITIES: Array<{ name: string; slug: string; tagline: string }> = [
     { name: 'Paris', slug: 'paris', tagline: 'IDF · Marais ABF · La Défense' },
@@ -21,15 +22,15 @@ export const CityLinks: React.FC = () => {
     return (
         <section className="py-20 bg-white">
             <div className="container">
-                <div className="text-center mb-12">
+                <Reveal className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">
                         Cordistes dans les <span className="text-brand-blue-light">grandes villes de France</span>
                     </h2>
                     <p className="text-slate-600 max-w-2xl mx-auto">
                         Réseau de techniciens certifiés CQP/IRATA avec contextes locaux dédiés (réglementation ABF, climat, bâti). Cliquez sur votre ville pour découvrir nos interventions spécialisées.
                     </p>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                </Reveal>
+                <Reveal delay={80} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                     {FEATURED_CITIES.map((city) => (
                         <Link
                             key={city.slug}
@@ -43,7 +44,7 @@ export const CityLinks: React.FC = () => {
                             <span className="text-xs text-slate-500 leading-snug">{city.tagline}</span>
                         </Link>
                     ))}
-                </div>
+                </Reveal>
                 <p className="mt-8 text-center text-sm text-slate-500">
                     Vous cherchez une autre ville ? Notre réseau couvre 60 villes en France.
                     <Link href="/jobs" className="ml-1 font-medium text-brand-blue-light hover:underline">
