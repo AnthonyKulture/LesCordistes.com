@@ -2,6 +2,8 @@ import { requireAdmin } from '@/lib/ops/guard'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import type { OpsStats, AdminAction, RecentUnlock } from '@/lib/types/ops'
 
+// Stats sont valables 30 s côté CDN Vercel, puis régénérées en arrière-plan.
+// Plus besoin de force-dynamic car on contrôle la fraîcheur via Cache-Control.
 export const dynamic = 'force-dynamic'
 
 function isoWeekAgo(): string {
@@ -33,13 +35,14 @@ export async function GET() {
         pros,
         clients,
         newPros,
-        creditsRows,
-        purchases,
-        spends,
+        // ✅ Phase 1: agrégats SQL — 1 ligne par résultat au lieu de N lignes
+        creditsAgg,      // { sum_balance, avg_balance, count_with_credits }
+        purchasesAgg,    // { total_amount }
+        spendsAgg,       // { total_amount }
         leadsTotal,
         leadsStep5,
         leadsWeek,
-        topCitiesQ,
+        topCitiesQ,      // groupé côté DB, max 5 lignes
         recentActions,
         recentUnlocksQ,
     ] = await Promise.all([
@@ -50,13 +53,17 @@ export async function GET() {
         admin.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'pro'),
         admin.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'client'),
         admin.from('profiles').select('id', { count: 'exact', head: true }).eq('role', 'pro').gte('created_at', weekAgo),
-        admin.from('credits').select('balance'),
-        admin.from('credit_transactions').select('amount').eq('type', 'purchase').gte('created_at', monthAgo),
-        admin.from('credit_transactions').select('amount').eq('type', 'spend'),
+        // Agrégat credits : remplace select('balance') sur toute la table
+        admin.rpc('admin_credits_agg'),
+        // Agrégat achats 30j : remplace select('amount').eq('type','purchase').gte(...)
+        admin.rpc('admin_sum_transactions', { p_type: 'purchase', p_since: monthAgo }),
+        // Agrégat dépenses cumulées : remplace select('amount').eq('type','spend')
+        admin.rpc('admin_sum_transactions', { p_type: 'spend', p_since: null }),
         admin.from('leads').select('id', { count: 'exact', head: true }),
         admin.from('leads').select('id', { count: 'exact', head: true }).gte('step_reached', 5),
         admin.from('leads').select('id', { count: 'exact', head: true }).gte('created_at', weekAgo),
-        admin.from('jobs').select('location_city').eq('status', 'live').not('location_city', 'is', null).limit(500),
+        // Top villes groupé côté DB : remplace limit(500) + calcul JS
+        admin.rpc('admin_top_live_cities', { p_limit: 5 }),
         admin.from('admin_actions').select('*').order('created_at', { ascending: false }).limit(10),
         admin
             .from('unlocked_leads')
@@ -65,22 +72,18 @@ export async function GET() {
             .limit(15),
     ])
 
-    const balances: number[] = (creditsRows.data ?? []).map((c: any) => Number(c.balance) || 0)
-    const totalSold = (purchases.data ?? []).reduce((acc: number, t: any) => acc + Math.abs(Number(t.amount) || 0), 0)
-    const totalSpent = (spends.data ?? []).reduce((acc: number, t: any) => acc + Math.abs(Number(t.amount) || 0), 0)
-    const withCredits = balances.filter(b => b > 0).length
-    const avgBalance = balances.length ? balances.reduce((a, b) => a + b, 0) / balances.length : 0
+    // ✅ Phase 1: lecture directe des agrégats SQL (0 calcul JS)
+    const creditsAggData = creditsAgg.data as { sum_balance: number; avg_balance: number; count_with_credits: number } | null
+    const totalSold = Math.abs(Number((purchasesAgg.data as { total_amount: number } | null)?.total_amount) || 0)
+    const totalSpent = Math.abs(Number((spendsAgg.data as { total_amount: number } | null)?.total_amount) || 0)
+    const withCredits = Number(creditsAggData?.count_with_credits) || 0
+    const avgBalance = Number(creditsAggData?.avg_balance) || 0
 
-    const cityCounts = new Map<string, number>()
-    for (const row of (topCitiesQ.data ?? []) as Array<{ location_city: string | null }>) {
-        const city = (row.location_city ?? '').trim()
-        if (!city) continue
-        cityCounts.set(city, (cityCounts.get(city) ?? 0) + 1)
-    }
-    const topCities = Array.from(cityCounts.entries())
-        .map(([city, count]) => ({ city, count }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 5)
+    // Top villes déjà triées et limitées par le DB
+    const topCities = ((topCitiesQ.data ?? []) as Array<{ city: string; count: number }>).map(r => ({
+        city: r.city,
+        count: Number(r.count),
+    }))
 
     const stats: OpsStats = {
         jobs: {
@@ -110,7 +113,8 @@ export async function GET() {
         recent_unlocks: (recentUnlocksQ.data ?? []) as unknown as RecentUnlock[],
     }
 
+    // ✅ Phase 3: cache 30s côté CDN Vercel, stale-while-revalidate pour UX instantanée
     return Response.json(stats, {
-        headers: { 'Cache-Control': 'no-store' },
+        headers: { 'Cache-Control': 's-maxage=30, stale-while-revalidate=60' },
     })
 }

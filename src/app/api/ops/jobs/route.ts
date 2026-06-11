@@ -32,5 +32,6 @@ export async function GET(req: Request) {
 
     const { data, error } = await query
     if (error) return Response.json({ error: error.message }, { status: 500 })
-    return Response.json({ jobs: data ?? [] }, { headers: { 'Cache-Control': 'no-store' } })
+    // ✅ Phase 3: cache 10s pour éviter de recharger le DB à chaque changement d'onglet
+    return Response.json({ jobs: data ?? [] }, { headers: { 'Cache-Control': 's-maxage=10, stale-while-revalidate=30' } })
 }
