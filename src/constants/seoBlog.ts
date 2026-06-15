@@ -1881,6 +1881,125 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Créer mon profil cordiste', href: '/inscription-cordiste' },
         ],
     },
+    {
+        slug: 'cordiste-copropriete-guide-syndic',
+        authorSlug: 'anthony-profit',
+        title: 'Cordiste en copropriété : guide complet pour syndics 2026',
+        shortTitle: 'Cordiste en copropriété : guide syndic',
+        description:
+            'Trouvez un cordiste pour votre copropriété : vote en AG, budget, documents obligatoires, plan de prévention — le guide pratique pour syndics 2026.',
+        category: 'Guide achat',
+        readTime: 8,
+        datePublished: '2026-06-15',
+        dateModified: '2026-06-15',
+        intro:
+            'En copropriété, les travaux en hauteur — nettoyage de façade, ravalement, traitement de toiture, pose de systèmes anti-pigeons — concentrent les décisions les plus complexes à faire voter en Assemblée Générale. Un cordiste en copropriété représente souvent la solution la plus rapide et la moins contraignante pour le syndicat : pas d\'échafaudage encombrant les parties communes, pas d\'autorisation de voirie, démarrage sous 48 à 72 heures une fois la décision prise. Encore faut-il savoir quand le vote est obligatoire, quel budget provisionner, quels documents exiger du prestataire — et comment éviter les erreurs qui exposent le syndic à une mise en cause personnelle. Ce guide 2026 répond à ces questions dans l\'ordre où elles se posent.',
+        sections: [
+            {
+                heading: 'Copropriété et travaux en hauteur : qui peut décider quoi ?',
+                body: 'En droit de la copropriété, l\'autorité pour engager des dépenses est répartie entre le syndic, le conseil syndical et l\'Assemblée Générale selon la nature et le montant des travaux. La loi du 10 juillet 1965 (modifiée par ALUR, ELAN et l\'ordonnance du 30 octobre 2019) définit trois niveaux de décision, tous applicables aux missions cordiste.\n\n**Le syndic peut agir seul** dans deux situations : les dépenses de gestion courante inférieures au seuil défini par le règlement de copropriété ou par l\'AG, et les travaux d\'urgence (article 18, alinéa 4 de la loi de 1965). Un cordiste mandaté pour sécuriser un élément de façade dangereux — corniche descellée, bardage décollé, morceau de balcon menaçant de tomber — entre dans cette catégorie. Le syndic signe le bon de commande sans vote préalable, sous réserve de ratification à la prochaine AG.\n\n**Au-delà du seuil de mise en concurrence** — généralement 3 000 à 5 000 € HT selon le règlement —, le syndic doit réunir au minimum trois devis comparatifs avant de soumettre le choix au vote. Ce seuil constitue la première protection contre les marchés de gré à gré non compétitifs. Il est défini soit dans le règlement de copropriété, soit par délibération d\'AG.\n\n**Le conseil syndical** n\'a pas de pouvoir de décision directe, mais dispose d\'un droit de consultation sur les marchés importants. Certains règlements lui accordent un pouvoir d\'approbation des devis jusqu\'à un plafond défini. Vérifiez ce point dans votre règlement avant de signer un bon de commande supérieur à 2 000 €.',
+            },
+            {
+                heading: 'Vote en AG : quelle majorité pour des travaux cordiste en copropriété ?',
+                body: 'La nature du vote en Assemblée Générale dépend du type de travaux. Trois régimes de majorité coexistent, et le bon choix évite les contentieux et les remises à l\'ordre du jour.\n\n**Article 24 — majorité simple des voix exprimées** par les copropriétaires présents ou représentés. Elle s\'applique aux travaux d\'entretien et de conservation des parties communes. Un nettoyage de façade, un démoussage de toiture, une inspection technique ou la pose d\'un système anti-pigeons entrent dans cette catégorie. C\'est le seuil le plus facile à atteindre et la voie naturelle pour 90 % des missions cordiste en copropriété.\n\n**Article 25 — majorité absolue de tous les copropriétaires** (présents, représentés ou absents — les tantièmes comptent entièrement). Elle s\'applique aux travaux d\'amélioration, aux ravalements structurels imposés par la mairie, ou à l\'installation d\'équipements collectifs nouveaux comme des lignes de vie permanentes en toiture. Si le vote échoue à l\'article 25 mais rassemble plus du tiers des voix, une deuxième session peut se prononcer à la majorité de l\'article 24 — mécanisme souvent méconnu mais très utile pour débloquer un ravalement bloqué.\n\n**Article 26 — double majorité** (majorité des copropriétaires représentant au moins les deux tiers des tantièmes). Elle concerne les travaux qui affectent la structure ou la consistance de l\'immeuble. Rarissime pour une intervention cordiste standard.\n\nRègle pratique : **nettoyage, inspection, anti-pigeons, joints de façade** → article 24. **Ravalement complet avec mise aux normes DTU ou pose de lignes de vie permanentes** → article 25.',
+            },
+            {
+                heading: 'Les travaux en hauteur les plus courants en copropriété',
+                body: 'Les cordistes en copropriété interviennent sur un spectre très large de parties communes. L\'immeuble R+5 ou plus est le cas de figure le plus favorable à la technique d\'accès sur cordes (TAC) : à cette hauteur, un échafaudage cumule 3 000 à 6 000 € de montage et démontage pour un chantier de quelques jours, une autorisation de voirie si le trottoir est occupé — délai 10 à 21 jours en mairie —, et une gêne pour les occupants et riverains pendant toute la durée. Le cordiste élimine ces trois contraintes en descendant depuis la toiture, sans toucher la voie publique.',
+                listIntro: 'Les interventions les plus fréquemment commandées par les syndics :',
+                list: [
+                    'Nettoyage de façade (haute pression, chimique, laser) : 8 à 18 €/m² HT selon matériau',
+                    'Démoussage et traitement hydrofuge de toiture et de façade',
+                    'Lavage de vitres sur parties communes en hauteur : 3 à 7 €/m² HT',
+                    'Inspection de façade avec rapport technique écrit (préalable obligatoire avant ravalement)',
+                    'Traitement anti-pigeons : filets, pics, câbles sur corniches et garde-corps',
+                    'Réparation de fissures et réfection de joints de façade',
+                    'Pose ou vérification de lignes de vie sur toiture accessible aux occupants',
+                    'Sécurisation d\'urgence après chute de morceaux de façade ou de corniche',
+                ],
+                cta: {
+                    text: 'Décrire mes travaux en 2 minutes',
+                    href: '/post-job',
+                    description: 'Nettoyage, inspection ou urgence — publiez votre besoin gratuitement et recevez des devis sous 48h.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Budget et répartition des charges : ce que le syndic doit provisionner',
+                body: 'Depuis la loi ALUR de 2014, tout syndicat de copropriétaires est tenu de constituer un **fonds de travaux** alimenté à hauteur d\'au minimum 5 % du budget prévisionnel annuel. Ce fonds, logé sur un compte bancaire séparé au nom du syndicat, est précisément destiné à financer des travaux non couverts par le budget courant — dont les interventions de maintenance et de rénovation de façade réalisées par cordiste.\n\nLes travaux portant sur les parties communes (façades, toitures, cage d\'escalier) sont répartis entre copropriétaires proportionnellement à leurs tantièmes. Les travaux sur des parties spéciales attribuées individuellement — balcons privatifs, loggias — peuvent être imputés aux seuls copropriétaires concernés si le règlement de copropriété le prévoit expressément.',
+                listIntro: 'Fourchettes indicatives 2026 pour un immeuble R+6 de 20 logements (HT) :',
+                list: [
+                    'Nettoyage de façade complète : 5 000 à 18 000 € selon surface et matériau',
+                    'Inspection technique de façade avec rapport écrit : 800 à 2 000 €',
+                    'Traitement anti-pigeons (filets sur 4 façades) : 2 000 à 6 000 €',
+                    'Réfection de joints de façade par cordiste : 3 500 à 12 000 € selon linéaire',
+                    'Lavage de vitres parties communes (trimestriel) : 300 à 800 € par passage',
+                    'Sécurisation d\'urgence après sinistre : majoration de 30 à 60 % sur tarif de base',
+                ],
+                cta: {
+                    text: 'Comparer plusieurs devis pour ma copropriété',
+                    href: '/post-job',
+                    description: 'Décrivez vos travaux en 5 minutes, recevez des offres comparables de cordistes certifiés.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Les 5 documents à exiger avant l\'intervention d\'un cordiste',
+                body: 'Les travaux par techniques d\'accès sur cordes (TAC) figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993. En tant que donneur d\'ordre — syndic professionnel ou syndicat bénévole —, vous avez l\'obligation légale de vérifier les qualifications et les assurances du prestataire avant le premier jour de chantier (articles R. 8254-1 et suivants du Code du travail). L\'absence d\'un de ces documents, constatée lors d\'un contrôle ou en cas d\'accident, peut entraîner une mise en cause personnelle du syndic et invalider partiellement la couverture de l\'assurance de l\'immeuble. Constituez ce dossier systématiquement, même pour un chantier ponctuel d\'une demi-journée.',
+                list: [
+                    'Plan de prévention signé par les deux parties — obligatoire pour tout chantier cordiste, quelle que soit la durée',
+                    'Attestation d\'assurance RC Pro mentionnant explicitement les techniques d\'accès sur cordes (TAC) — vérifiez la date de validité',
+                    'Certifications CQP TPS ou IRATA de chaque technicien intervenant, avec date d\'expiration (valables 3 ans)',
+                    'Attestation de vigilance URSSAF datant de moins de 6 mois (téléchargeable sur urssaf.fr)',
+                    'Kbis ou extrait d\'immatriculation de l\'entreprise, datant de moins de 3 mois',
+                ],
+            },
+            {
+                heading: 'Bien choisir son cordiste pour une copropriété : 4 critères décisifs',
+                body: 'Le marché des travaux cordiste en copropriété attire aussi des prestataires peu structurés. Ces quatre critères permettent à un syndic — professionnel ou bénévole — de distinguer rapidement les intervenants sérieux.\n\n**1. Certification CQP TPS ou IRATA valide.** Pour un immeuble résidentiel, le CQP TPS niveau 2 (encadrement d\'équipe) est la référence française. Pour des installations techniques — toiture-terrasse avec équipements, locaux industriels en pied d\'immeuble —, l\'IRATA peut être exigé. Demandez la copie des certificats avec leur date d\'expiration. Les membres de la **SFETH** (Syndicat Français des Entreprises de Travaux en Hauteur) sont astreints à des obligations de certification et d\'assurance vérifiées annuellement.\n\n**2. RC Pro couvrant explicitement les TAC.** Une attestation RC Pro générale ne suffit pas. Exigez la mention \"travaux en hauteur par techniques d\'accès sur cordes\" dans les garanties. Sans cette mention, la couverture en cas de dommage à la façade ou de chute d\'objet sur un véhicule de copropriétaire peut être refusée par l\'assureur du prestataire.\n\n**3. Visite de site systématique avant devis.** Un prestataire sérieux effectue toujours une inspection préalable du toit, des points d\'ancrage existants et de l\'accessibilité avant de remettre son devis — et avant de rédiger le plan de prévention avec votre concours. Un devis envoyé sans visite est un signal d\'alarme.\n\n**4. Références vérifiables en copropriété.** Demandez les noms ou adresses de deux ou trois copropriétés récentes où le prestataire est intervenu. Une entreprise habituée aux syndics sera en mesure de les fournir immédiatement. Elle maîtrisera aussi la communication aux résidents — affichage préalable en cage d\'escalier, périmètre de sécurité au sol, gestion des questions d\'occupants — qui fait partie des usages professionnels en immeuble habité.',
+                cta: {
+                    text: 'Trouver mon cordiste pour ma copropriété',
+                    href: '/post-job',
+                    description: 'Des cordistes habitués à travailler pour les syndics reçoivent votre demande sous 48h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Cas pratique : nettoyage de façade en copropriété R+6',
+                body: 'Pour illustrer la séquence complète d\'une mission cordiste en copropriété, voici le déroulement type d\'un nettoyage de façade dans un immeuble résidentiel de 6 étages géré par un syndic professionnel.\n\n**Étape 1 — Identification du besoin.** Lors de l\'inspection annuelle des parties communes, le gardien signale une façade noircie avec colonisation biologique (mousses, lichens, traces de calcaire). Le conseil syndical valide la mise en concurrence.\n\n**Étape 2 — Consultation de 3 prestataires.** Le syndic sollicite trois cordistes qualifiés, dont deux référencés sur LesCordistes.com. Chacun effectue une visite de site en moins d\'une semaine : toiture, ancrages, accessibilité des façades. Les devis arrivent en 3 à 5 jours. L\'écart de prix est de 22 % entre le moins cher (8 900 € HT) et le plus élevé (10 900 € HT) — différence expliquée par le nombre de techniciens engagés et le produit de traitement proposé.\n\n**Étape 3 — Vote à l\'AG.** L\'ordre du jour mentionne \"nettoyage de façade par accès sur cordes\" avec les 3 devis annexés. Vote à l\'article 24 : 71 % des voix présentes et représentées approuvent le devis intermédiaire à 9 600 € HT.\n\n**Étape 4 — Démarrage du chantier.** Plan de prévention cosigné la veille, périmètre de sécurité posé en pied d\'immeuble, résidents informés par affichage en cage d\'escalier 72 heures avant. Durée effective : 2,5 jours pour 1 400 m² de façade nettoyés, sans interruption de la circulation sur la voie publique.\n\n**Étape 5 — Clôture.** Rapport d\'intervention avec photos avant/après transmis au syndic pour le dossier de gestion. Règlement à 30 jours date de facture. Le rapport recommande un traitement hydrofuge complémentaire dans les 24 mois : affaire à inscrire à l\'ordre du jour de la prochaine AG.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Un syndic peut-il commander un cordiste sans vote en AG ?',
+                a: 'Oui dans deux cas : les dépenses sous le seuil du règlement de copropriété, et les travaux d\'urgence (art. 18 al. 4). Corniche descellée, bardage menaçant — le syndic signe, informe l\'AG ensuite. Sinon, un vote est obligatoire.',
+            },
+            {
+                q: 'Quelle majorité en AG pour voter un nettoyage de façade par cordiste ?',
+                a: 'La majorité de l\'article 24 (majorité simple des copropriétaires présents ou représentés) suffit pour les travaux d\'entretien et de conservation des parties communes : nettoyage, inspection, anti-pigeons, réfection de joints. L\'article 25 (majorité absolue) ne s\'applique qu\'aux travaux d\'amélioration ou aux ravalements structurels imposés.',
+            },
+            {
+                q: 'Le plan de prévention est-il obligatoire pour des travaux cordiste en copropriété ?',
+                a: 'Oui, sans exception. Les travaux par techniques d\'accès sur cordes figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993. Cette obligation s\'applique quelle que soit la durée, même pour un nettoyage d\'une demi-journée. Le syndic, en tant qu\'entreprise utilisatrice, doit cosigner le document.',
+            },
+            {
+                q: 'Comment sont réparties les charges de travaux cordiste entre copropriétaires ?',
+                a: 'Les travaux sur parties communes (façades, toitures) sont répartis proportionnellement aux tantièmes de chaque copropriétaire. Les travaux sur parties spéciales (balcons privatifs, loggias) peuvent être imputés aux seuls copropriétaires concernés si le règlement de copropriété le prévoit expressément.',
+            },
+            {
+                q: 'Quel délai prévoir pour organiser une AG et démarrer des travaux cordiste ?',
+                a: 'Comptez 6 à 10 semaines : 3 semaines de délai légal de convocation minimum, 1 à 2 semaines pour les devis comparatifs, 1 à 2 semaines entre le vote et la planification du chantier. En urgence (corniche descellée, balcon dangereux), le syndic peut mandater un cordiste sans vote préalable et intervenir en 48 à 72 heures.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste pour ma copropriété',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Responsabilité du maître d\'ouvrage sur un chantier cordiste', href: '/blog/responsabilite-maitre-ouvrage-chantier-cordiste' },
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
