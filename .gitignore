@@ -37,4 +37,8 @@ out/
 # Graphify
 .venv-tools/
 graphify-out/cache/
-.env.local
+
+# Env / secrets (everything except the placeholder example)
+.env
+.env.*
+!.env.example
