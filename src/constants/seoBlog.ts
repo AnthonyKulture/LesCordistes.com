@@ -2116,6 +2116,113 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'nacelle-vs-cordiste-immeuble',
+        authorSlug: 'anthony-profit',
+        title: 'Nacelle ou cordiste pour un immeuble R+6 ? Le vrai comparatif 2026',
+        shortTitle: 'Nacelle vs cordiste : le comparatif pratique',
+        description:
+            'Nacelle ou cordiste pour votre immeuble R+6 ? Comparez coûts réels, délais, contraintes d\'accès et types de travaux — le guide chiffré pour décider sans erreur en 2026.',
+        category: 'Guide achat',
+        readTime: 8,
+        datePublished: '2026-06-22',
+        dateModified: '2026-06-22',
+        intro:
+            'Nacelle ou cordiste : la question se pose sur presque tous les immeubles de moyenne et grande hauteur. Pour un R+6, les deux solutions sont techniquement faisables — mais leurs coûts, délais et contraintes divergent radicalement selon le contexte. Un syndic qui commande une nacelle élévatrice sans avoir vérifié l\'accessibilité du site peut se retrouver avec 1 500 € de surcoût et une semaine de retard. Ce guide compare les deux options chiffre par chiffre, pour un immeuble de six étages en situation réelle : voie publique, façade sur cour, site industriel, bâtiment historique. L\'objectif : vous donner les bons réflexes avant de signer un devis.',
+        sections: [
+            {
+                heading: 'Nacelle élévatrice sur un R+6 : ce que ça implique vraiment',
+                body: 'Une nacelle télescopique ou articulée capable d\'atteindre un 6e étage doit offrir une hauteur de travail d\'environ **22 à 26 mètres**. Ce type de matériel — nacelle sur camion ou automotrice tout-terrain — pèse entre 8 et 18 tonnes selon le modèle. C\'est le premier paramètre qui détermine si la solution est seulement possible.\n\nSur un immeuble de centre-ville, la voie publique devant la façade doit être suffisamment large pour positionner le stabilisateur : **5 à 7 mètres de dégagement minimum** selon l\'engin. Dans les rues parisiennes, lyonnaises ou dans les quartiers haussmanniens des grandes villes, cette condition n\'est pas remplie dans 30 à 40 % des cas.\n\nSi la nacelle peut accéder, il faut encore obtenir une **autorisation d\'occupation temporaire du domaine public (AOT)** auprès de la mairie — délai moyen de 10 à 21 jours selon la commune — et payer les droits de voirie : entre **80 et 300 € par jour** à Paris, moins en province. À cela s\'ajoute la location de la nacelle elle-même : **350 à 800 €/jour** pour une machine 22 m, livraison comprise, hors carburant et opérateur.\n\nPour une façade sur cour intérieure, la nacelle est généralement exclue d\'emblée : la surface libre est insuffisante pour déployer les stabilisateurs et garantir la sécurité. Le cordiste devient alors la seule option technique.',
+                listIntro: 'Ce qu\'il faut vérifier avant de commander une nacelle sur un R+6 :',
+                list: [
+                    'Largeur de la voie ou de l\'espace au pied de la façade : minimum 5 m pour une nacelle 22 m',
+                    'Capacité portante du sol (parking souterrain en dessous = risque d\'effondrement des stabilisateurs)',
+                    'Délai d\'obtention de l\'AOT auprès de la mairie (10 à 21 jours)',
+                    'Contraintes de circulation : arrêté de neutralisation de voie, signalisation, gardiennage',
+                    'Présence d\'obstacles aériens : câbles électriques, branches, auvents',
+                    'Accès pour la livraison du camion-nacelle (pont, tunnel, hauteur libre)',
+                ],
+                cta: {
+                    text: 'Évaluer mon chantier avec un cordiste',
+                    href: '/post-job',
+                    description: 'Décrivez votre immeuble en 3 minutes — un technicien qualifié vous répond sous 24 h.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Cordiste sur un immeuble R+6 : comment ça fonctionne concrètement ?',
+                body: 'Un **technicien sur cordes** (ou spécialiste TAC — techniques d\'accès difficile) travaille en suspension à partir d\'un système à deux cordes indépendantes ancrées en toiture : une **corde de travail** sur laquelle il se déplace, une **corde de sécurité** reliée à un antichute autonome. Les points d\'ancrage sont posés sur la toiture ou sur des dispositifs d\'ancrage fixes certifiés. Cette configuration permet d\'atteindre n\'importe quel niveau de la façade, y compris les cours intérieures, les puits de lumière et les façades sur rue étroite.\n\nPour un R+6 (hauteur de chéneau ou d\'attique typiquement entre 18 et 22 m), la mise en place prend **2 à 4 heures** pour une équipe de deux techniciens. Le matériel transporté tient dans un véhicule utilitaire léger. Il n\'y a pas de restrictions liées à la largeur de la rue, pas d\'autorisation de voirie à obtenir (sauf pour le périmètre de sécurité au sol, plus simple à mettre en place), et pas de délai administratif incompressible.\n\nLe cordiste certifié **CQP TPS** ou **IRATA** peut intervenir sur tous les types de façades : pierre de taille, béton, brique, enduit, bardage métallique, mur-rideau vitré. Il est couvert par une assurance RC pro spécifique aux techniques d\'accès sur cordes — un point à vérifier systématiquement avant de signer.\n\nLa contrainte principale du cordiste est météorologique : au-delà de **45 km/h de vent en rafales**, l\'intervention est suspendue pour des raisons réglementaires (OPPBTP). Sur un chantier de façade exposée, il est raisonnable de prévoir une marge de 10 à 20 % sur le planning pour absorber les aléas météo.',
+            },
+            {
+                heading: 'Comparatif de coûts nacelle vs cordiste : les chiffres réels sur un R+6',
+                body: 'Voici une comparaison structurée pour trois scénarios types sur un immeuble R+6 de 15 mètres de façade à traiter.\n\n**Scénario 1 — Nettoyage haute pression de la façade (surface : 400 m²)**\n\nAvec nacelle : location 3 jours à 550 €/j = 1 650 €, AOT Paris 3 jours à 180 €/j = 540 €, main-d\'œuvre opérateur 3 jours à 400 €/j = 1 200 €. Total approché : **3 400 à 4 200 €** selon commune et opérateur.\n\nAvec cordiste : équipe de 2 techniciens sur 3 jours à 500 €/j/technicien = 3 000 €, matériel inclus. Pas de frais de voirie. Total approché : **2 800 à 3 500 €**. Avantage cordiste : **15 à 25 %**.\n\n**Scénario 2 — Réparation de fissures sur 2 points localisés (intervention ponctuelle)**\n\nAvec nacelle : déplacement + 1 demi-journée minimum facturée = 800 à 1 200 €. Délai : 1 à 2 semaines (AOT + disponibilité machine).\n\nAvec cordiste : 1 technicien sur 4 à 6 heures à **55 à 80 €/h** = 220 à 480 €. Déplacement en sus selon distance. Délai : 48 à 72 h. Avantage cordiste : **temps et coût**.\n\n**Scénario 3 — Ravalement complet par bandes verticales (chantier de 3 semaines)**\n\nIci, la nacelle peut redevenir compétitive si l\'accès est dégagé : la productivité horaire d\'un peintre-façadier sur plateforme stable est supérieure à celle d\'un cordiste en suspension. Pour un ravalement de 800 m² sur 15 jours ouvrés, l\'échafaudage ou la nacelle gagnent souvent en rendement — mais perdent sur les coûts de voirie et de délai de mise en place. Le cordiste reste compétitif si la façade présente des retraits, des balcons ou des éléments architecturaux qui rallongent le montage de plateforme.',
+                listIntro: 'Synthèse des coûts journaliers comparés (2026) :',
+                list: [
+                    'Nacelle 22 m (location seule) : 350 à 800 €/j selon type de machine',
+                    'AOT voirie Paris : 80 à 300 €/j — provinces : 30 à 120 €/j',
+                    'Opérateur nacelle certifié CACES R486 : 350 à 500 €/j',
+                    'Technicien cordiste CQP TPS N1 : 45 à 80 €/h — 360 à 640 €/j',
+                    'Équipe cordiste 2 techniciens : 700 à 1 300 €/j tout compris',
+                    'Délai de mobilisation nacelle : 5 à 21 jours (AOT + planning loueur)',
+                    'Délai de mobilisation cordiste : 48 à 72 h en standard, 24 h en urgence',
+                ],
+                cta: {
+                    text: 'Comparer des devis sans engagement',
+                    href: '/post-job',
+                    description: 'Décrivez votre immeuble — recevez plusieurs offres de cordistes certifiés sous 48 h.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Quand la nacelle est clairement préférable',
+                body: 'Il serait malhonnête de présenter le cordiste comme la solution universelle. La nacelle élévatrice garde des avantages décisifs dans plusieurs situations.\n\n**Travaux nécessitant une stabilité prolongée.** Un technicien qui pose une menuiserie lourde, effectue une soudure structurelle ou assemble des éléments de bardage a besoin d\'une plateforme fixe. En suspension sur cordes, les deux mains du cordiste sont contraintes par les mouvements de balancement et par la gestion permanente de son équipement de sécurité. Pour ce type de travaux, la nacelle offre une **productivité 30 à 50 % supérieure** sur des postes fixes.\n\n**Chantiers de grande surface sur bâtiment accessible.** Lorsque la façade est longue, dégagée, et que la nacelle peut se déplacer librement en longueur au pied du bâtiment, le rapport temps/coût penche en faveur de la machine. Un façadier sur nacelle couvre environ **60 à 80 m² de nettoyage par jour** contre 40 à 60 m² pour un cordiste sur le même type de surface plane.\n\n**Interventions intérieures en hauteur.** Dans les grandes halles industrielles, les entrepôts logistiques ou les galeries commerciales, les nacelles ciseaux ou les nacelles automotrices électriques sont souvent la solution la plus rapide et la plus économique — à condition que le sol soit porteur et dégagé.\n\n**Conditions météo défavorables fréquentes.** En hiver ou sur des sites très exposés au vent, le cordiste est plus souvent contraint d\'interrompre son intervention. Si la météo est un facteur de risque majeur sur votre chantier (côte atlantique, couloir rhodanien), anticipez des délais plus longs avec la solution cordiste et incluez une clause de report dans le devis.',
+            },
+            {
+                heading: 'Nacelle vs cordiste : les cas où le cordiste s\'impose',
+                body: 'Pour un immeuble R+6 en centre-ville ou dans des configurations d\'accès contraintes, le cordiste est souvent la seule option viable — pas un choix par défaut, mais la solution techniquement et économiquement supérieure.\n\n**Façade sur rue étroite ou voie piétonne.** Dans les centres historiques, les rues commerçantes ou les zones touristiques, l\'espace au pied de la façade est souvent inférieur à 4 mètres. Aucune nacelle de 22 m ne peut y opérer en sécurité. Le cordiste installe son périmètre de sécurité au sol (balisage léger, rubalise, cônes) et intervient sans bloquer la circulation plus de quelques minutes.\n\n**Façade sur cour intérieure.** C\'est le cas le plus fréquent dans les copropriétés parisiennes et les immeubles haussmanniens : les cages d\'escalier, les puits de lumière et les façades sur cour sont inaccessibles à toute machine élévatrice. Le cordiste descend depuis la toiture et traite ces surfaces verticales sans aucune contrainte d\'accès au sol.\n\n**Accès toiture disponible, voirie complexe.** Dès lors que la toiture est accessible (trappe, terrasse, combles), et que la voirie est complexe à neutraliser, le cordiste est plus rapide à mettre en place et à démonter. L\'administration des autorisations de voirie peut représenter **3 à 5 semaines de délai** dans les grandes agglomérations — un cordiste peut être sur site en 48 heures.\n\n**Bâtiments avec contraintes ABF ou monuments historiques.** Les Architectes des Bâtiments de France interdisent fréquemment les fixations de structure sur les façades patrimoniales. Le cordiste utilise des points d\'ancrage non destructifs posés en toiture, sans contact avec la façade. Cette discrétion technique est souvent exigée dans les périmètres de protection des monuments historiques.',
+                cta: {
+                    text: 'Trouver un cordiste disponible cette semaine',
+                    href: '/post-job',
+                    description: 'Décrivez votre chantier — mise en relation gratuite avec des techniciens certifiés.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Comment trancher ? La grille de décision en 5 questions',
+                body: 'Avant de commander une nacelle ou de contacter un cordiste pour votre R+6, posez-vous ces cinq questions. Les réponses orientent naturellement vers la bonne solution.\n\n**1. L\'espace au pied de la façade est-il supérieur à 5 mètres ?**\nOui → nacelle possible. Non → cordiste obligatoire.\n\n**2. La toiture est-elle accessible (trappe, terrasse, combles) ?**\nOui → cordiste opérationnel immédiatement. Non → vérifier la faisabilité d\'ancrage en façade avant de conclure.\n\n**3. Le délai est-il inférieur à 2 semaines ?**\nOui → cordiste (mobilisation 48-72 h). Non → les deux options sont comparables en délai.\n\n**4. Les travaux impliquent-ils de la soudure, de l\'assemblage lourd ou une stabilité prolongée ?**\nOui → nacelle ou échafaudage préférable. Non → cordiste adapté.\n\n**5. Le bâtiment est-il en périmètre ABF ou patrimoine classé ?**\nOui → cordiste privilégié (ancrage non destructif). Non → les deux options restent ouvertes.\n\nSi vous répondez **nacelle possible** à la question 1 mais **cordiste** à au moins deux autres, le cordiste reste l\'option à étudier en priorité — surtout pour des interventions ponctuelles ou des travaux de moins de cinq jours. La règle empirique sur un R+6 en centre-ville : **en dessous de 3 jours de travaux, le cordiste est presque toujours moins cher et plus rapide**. Au-delà, comparez les devis chiffres en main.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Nacelle ou cordiste pour un immeuble R+6 : lequel est moins cher ?',
+                a: 'Pour un R+6 en centre-ville, comptez 700 à 1 300 €/j pour une équipe cordiste contre 800 à 1 600 €/j (nacelle + opérateur + voirie). Le cordiste est généralement moins cher sur des interventions de moins de 5 jours, surtout en zone urbaine avec contraintes d\'accès.',
+            },
+            {
+                q: 'Un cordiste peut-il intervenir sur une façade sans espace au sol ?',
+                a: 'Oui. C\'est précisément l\'avantage du cordiste : il descend depuis la toiture et n\'a besoin que d\'un périmètre de sécurité balisé au sol, de quelques mètres carrés. Les façades sur cour intérieure, rues piétonnes ou passages couverts lui sont accessibles là où toute nacelle est impossible.',
+            },
+            {
+                q: 'Quel délai prévoir pour mobiliser une nacelle vs un cordiste sur un R+6 ?',
+                a: 'Une nacelle nécessite 5 à 21 jours de délai en ville (AOT + disponibilité du loueur + signalisation). Un cordiste certifié est mobilisable en 48 à 72 heures en standard, 24 heures pour une urgence. Sur un planning contraint, le cordiste est systématiquement plus rapide.',
+            },
+            {
+                q: 'Le cordiste est-il adapté au ravalement complet d\'un R+6 ?',
+                a: 'Oui pour les façades complexes ou contraintes. Sur une façade plane et dégagée de grande superficie (> 600 m²), la nacelle peut offrir une meilleure productivité journalière. Pour un R+6 avec balcons, retraits ou voirie complexe, le cordiste reste compétitif sur l\'ensemble coût total du chantier.',
+            },
+            {
+                q: 'Faut-il une autorisation pour faire intervenir un cordiste sur un immeuble en copropriété ?',
+                a: 'L\'accord du syndic ou du conseil syndical est nécessaire pour tout travail sur les parties communes. Côté voirie, le cordiste ne nécessite pas d\'AOT mais peut avoir besoin d\'un arrêté de chantier léger si le balisage au sol empiète sur la voie publique — une démarche nettement plus simple et rapide que pour une nacelle.',
+            },
+        ],
+        ctaText: 'Décrire mon chantier et recevoir des devis',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Cordiste vs échafaudage — comparatif complet', href: '/cordiste-vs-echafaudage' },
+            { label: 'Travaux de façade sans échafaudage : le guide', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
