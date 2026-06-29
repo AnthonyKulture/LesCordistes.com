@@ -2116,6 +2116,104 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'cordiste-urgence-sinistre-tempete',
+        authorSlug: 'anthony-profit',
+        title: 'Après une tempête : quand appeler un cordiste en urgence ?',
+        shortTitle: 'Cordiste urgence sinistre : ce qu\'il faut savoir',
+        description:
+            'Après une tempête, quand faut-il appeler un cordiste en urgence ? Toiture endommagée, façade fragilisée, délais et coûts réels — le guide pour syndics et propriétaires en 2026.',
+        category: 'Travaux & technique',
+        readTime: 8,
+        datePublished: '2026-06-29',
+        dateModified: '2026-06-29',
+        intro:
+            'Une tempête passe. Le lendemain matin, des ardoises manquent en toiture, une gouttière pend dans le vide au 5e étage, ou une corniche semble désolidarisée de la façade. Ce type de situation — fréquent après un épisode de vent violent, de grêle ou de neige lourde — exige une réponse rapide. Pas pour rassurer les voisins : pour sécuriser les personnes et le bâtiment avant que la situation s\'aggrave. Le cordiste d\'urgence est souvent la seule solution d\'intervention dans les 24 à 48 heures, sans montage d\'échafaudage ni délai de voirie. Ce guide explique quand l\'appeler, ce qu\'il peut faire, et comment gérer l\'interface avec l\'assureur.',
+        sections: [
+            {
+                heading: 'Quels dommages après une tempête nécessitent un cordiste en urgence ?',
+                body: 'Tous les dégâts en hauteur ne nécessitent pas une intervention immédiate. Mais certains créent un **risque immédiat pour les personnes** — passants, occupants, véhicules — et engagent la responsabilité du propriétaire ou du syndic si aucune mesure de mise en sécurité n\'est prise dans les heures qui suivent.\n\nUne **corniche fissurée ou désolidarisée** sur un immeuble haussmannien est le cas le plus courant et le plus dangereux. Un bloc de pierre de taille peut peser plusieurs dizaines de kilos. S\'il est encore accroché mais instable, il menace de tomber à tout moment sur la voie publique. La mise en sécurité d\'urgence — soit par consolidation provisoire, soit par dépose — doit intervenir dans les **12 à 24 heures**.\n\nUne **gouttière arrachée** ou un **chéneau en zinc décollé** représente un risque moindre immédiatement, mais peut devenir critique si la pluie suit la tempête : l\'eau s\'infiltre dans la maçonnerie, dans les murs, dans les combles. Une intervention sous **48 à 72 heures** est alors recommandée pour éviter des dommages secondaires importants.\n\nDes **ardoises ou tuiles manquantes** sur une surface de plus de 3 à 4 m² exposent la charpente et l\'isolation à l\'humidité. Une bâche provisoire posée par un cordiste dans les 48 heures peut éviter plusieurs milliers d\'euros de dégâts intérieurs.\n\nUn **garde-corps ou un acrotère endommagé** en toiture-terrasse représente un danger pour les occupants et doit être sécurisé avant toute nouvelle montée en toiture, y compris pour l\'expert d\'assurance.',
+                listIntro: 'Signes qui déclenchent une intervention cordiste d\'urgence :',
+                list: [
+                    'Corniche, balcon ou encorbellement partiellement détaché ou fissuré en façade',
+                    'Gouttière, chéneau ou descente d\'eaux pluviales arrachés en hauteur inaccessible sans engin',
+                    'Ardoises, tuiles ou zinc manquants sur plus de 3 m² de toiture',
+                    'Antenne, VMC ou équipement de toiture renversé menaçant la façade ou les occupants',
+                    'Garde-corps de toiture-terrasse affaissé ou désolidarisé',
+                    'Vitre de verrière ou lanterneau brisé laissant le bâtiment à l\'air libre',
+                    'Panneau publicitaire ou enseigne en façade partiellement désolidarisé',
+                ],
+                cta: {
+                    text: 'Signaler mon sinistre et trouver un cordiste disponible',
+                    href: '/post-job',
+                    description: 'Décrivez la situation en 3 minutes — des cordistes certifiés en région répondent sous 24 h.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Cordiste d\'urgence après tempête : délais réels d\'intervention',
+                body: 'La rapidité est le premier critère de choix après un sinistre. Mais les délais réels varient selon plusieurs facteurs que tout syndic ou propriétaire doit anticiper.\n\n**Délai standard :** Un cordiste indépendant ou une entreprise TAC (techniques d\'accès difficile) bien structurée peut intervenir en **24 à 48 heures** sur une mise en sécurité d\'urgence. Ce délai couvre la prise de contact, la reconnaissance rapide du chantier (souvent par photos transmises la veille), la préparation du matériel et le déplacement sur site.\n\n**Délai post-tempête nationale :** Après un épisode météorologique touchant une large région — tempêtes à fort vent sur l\'axe Atlantique ou un fort épisode cévenol — les entreprises de couverture et les cordistes sont saturés. Les délais peuvent monter à **3 à 5 jours** pour les interventions non prioritaires. Les sinistres avec risque avéré pour les personnes restent traités en priorité, mais il faut s\'y prendre tôt.\n\n**Facteur géographique :** En Île-de-France, la densité de cordistes permet des délais courts même en période de saturation. Dans les zones rurales ou les villes moyennes, la disponibilité est plus contrainte — prévoir 48 à 96 heures dans le pire cas.\n\n**Ce qui accélère l\'intervention :**\n\nAvoir pris des photos claires du dommage avant d\'appeler. Pouvoir donner l\'accès immédiat à la toiture (clé de trappe, accès par les combles). Confirmer que le gestionnaire d\'immeuble ou le propriétaire peut être sur place. Mentionner explicitement le caractère urgent lors de la prise de contact — et décrire si des tiers sont exposés au risque (voie publique, cour d\'école, parking).',
+            },
+            {
+                heading: 'Que peut faire concrètement un cordiste en urgence post-sinistre ?',
+                body: 'L\'intervention d\'urgence post-sinistre est différente d\'un chantier planifié. L\'objectif n\'est pas de livrer un travail fini mais de **neutraliser le danger** dans les meilleurs délais, avec les moyens disponibles sur le moment.\n\n**Mise en sécurité provisoire.** Le technicien sur cordes peut consolider une corniche ou un balcon fragilisé à l\'aide de sangles, d\'étaiement léger ou d\'un filet de sécurité posé depuis la toiture. Cette mesure conservatoire tient le temps que l\'expert d\'assurance réalise son évaluation et que les travaux de réparation définitifs soient planifiés.\n\n**Bâchage de toiture.** En cas d\'ardoises manquantes ou de zinc décollé, le cordiste pose une **bâche imperméable fixée par sangles ou lests** sur les zones exposées. Ce n\'est pas une réparation — c\'est une protection qui évite à l\'eau de s\'infiltrer. Une bâche correctement posée sur les points d\'ancrage en toiture peut tenir plusieurs semaines.\n\n**Dépose des éléments dangereux.** Une gouttière qui pend dans le vide, une enseigne partiellement détachée ou un élément de bardage désolidarisé sont plus sûrs à l\'état déposé qu\'à l\'état instable. Le spécialiste en accès difficile peut descendre ces éléments dans les conditions de sécurité requises, sans exposer personne depuis le sol.\n\n**Rapport photographique daté.** Avant toute intervention de réparation, le cordiste peut réaliser un **diagnostic visuel exhaustif de la façade et de la toiture** depuis la corde, et produire un rapport photographique numéroté. Ce document est précieux pour l\'assureur et pour le maître d\'ouvrage dans la phase de chiffrage des travaux.\n\n**Ce qu\'il ne peut pas faire en urgence :** des travaux de maçonnerie structurelle (reprise de linteau, reconstruction de balcon), des soudures complexes ou des réfections complètes de couverture — ces travaux nécessitent un chantier préparé avec les matériaux adéquats et ne relèvent pas de l\'urgence sur cordes.',
+                cta: {
+                    text: 'Trouver un cordiste pour une urgence sinistre',
+                    href: '/post-job',
+                    description: 'Publication gratuite — précisez "urgence" pour être prioritaire dans les résultats.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Coût d\'une intervention cordiste en urgence : fourchettes et ce que l\'assurance couvre',
+                body: 'Une intervention urgente coûte plus cher qu\'une intervention planifiée — c\'est une réalité à anticiper et à intégrer dans la déclaration de sinistre.\n\n**Tarif horaire d\'urgence :** Un cordiste qualifié (CQP TPS ou IRATA) facture entre **55 et 90 €/h** en urgence, contre 45 à 70 €/h en planifié. La majoration d\'urgence — généralement 20 à 30 % — couvre la mobilisation rapide, la disponibilité de week-end ou de soirée, et le réajustement de planning sur d\'autres chantiers.\n\n**Tarif à la journée :** Pour une journée complète d\'urgence (8 heures effectives), comptez **500 à 750 €/j** pour un technicien, **900 à 1 400 €/j** pour une équipe de deux. À ces montants s\'ajoutent les frais de déplacement et les matériaux provisoires (bâche, sangles, fixations : 80 à 250 € selon la surface).\n\n**Exemples de coûts totaux :**\n\n- Bâchage d\'urgence d\'une toiture zinc sur 15 m² : **600 à 950 €** (une journée d\'équipe + matériaux)\n- Mise en sécurité d\'une corniche menaçante en façade R+5 : **450 à 700 €** (demi-journée cordiste + matériel de fixation provisoire)\n- Dépose d\'une gouttière arrachée sur 12 mètres linéaires : **350 à 550 €** (3 à 5 heures)\n- Diagnostic toiture + rapport photographique post-tempête : **250 à 450 €** selon surface et complexité\n\n**Prise en charge par l\'assurance :** Les coûts de mise en sécurité d\'urgence sont en principe couverts par la **garantie tempête** de la plupart des contrats multirisque habitation et copropriété. Conservez scrupuleusement la facture détaillée du cordiste, avec description des travaux réalisés et photos avant/après. L\'assureur peut demander un devis de réparation définitive séparé pour les travaux permanents.',
+            },
+            {
+                heading: 'Gestion du sinistre avec l\'assureur : le rôle du cordiste dans le dossier',
+                body: 'Après une tempête, l\'articulation entre l\'intervention d\'urgence et le dossier d\'assurance est souvent mal comprise. Voici comment éviter les erreurs qui ralentissent l\'indemnisation.\n\n**Déclarez le sinistre avant de tout réparer.** La plupart des contrats d\'assurance imposent un délai de déclaration de **5 jours ouvrés** après la découverte du dommage. Au-delà, l\'assureur peut contester la prise en charge. L\'intervention d\'urgence du cordiste — bâchage, mise en sécurité provisoire — est distincte des travaux de réparation définitive et ne nécessite pas d\'accord préalable de l\'assureur dans la quasi-totalité des contrats.\n\n**Faites produire un rapport par le cordiste.** Un document daté, avec photos numérotées et description des zones endommagées, constitue une **pièce justificative de première valeur** pour l\'expert mandaté par l\'assureur. Demandez ce rapport systématiquement, même si le dommage semble mineur. Il ancre la réalité des dégâts dans le temps et prévient les contestations lors du chiffrage.\n\n**Attendez le passage de l\'expert avant les réparations définitives.** Pour les dommages importants (toiture à refaire, balcon à reconstruire), l\'expert d\'assurance doit constater les dégâts avant réparation. Si le cordiste a réalisé une mise en sécurité provisoire, précisez-le à l\'expert : cela n\'efface pas les traces des dommages initiaux.\n\n**En copropriété**, la gestion du sinistre implique le syndic, qui doit informer le conseil syndical et déclencher la déclaration auprès de l\'assureur de l\'immeuble. Le syndic peut faire intervenir un cordiste en urgence sans attendre l\'assemblée générale si le risque pour les personnes est avéré — c\'est une décision conservatoire couverte par ses pouvoirs de gestion courante.',
+                cta: {
+                    text: 'Publier mon urgence et recevoir des réponses aujourd\'hui',
+                    href: '/post-job',
+                    description: 'Gratuit, sans engagement — des cordistes disponibles en région vous contactent directement.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Comment choisir un cordiste d\'urgence sérieux : 4 points à vérifier',
+                body: 'En situation d\'urgence, on a tendance à appeler le premier numéro disponible. Quelques vérifications rapides évitent de confier la sécurité de votre immeuble à quelqu\'un qui n\'est pas qualifié pour travailler en hauteur sur cordes.\n\n**1. La certification CQP TPS ou IRATA.** C\'est le minimum non négociable. Le CQP TPS est la certification nationale française. L\'IRATA est la référence internationale. Un cordiste doit pouvoir vous envoyer une copie de sa certification en cours de validité (recyclage triennal obligatoire). Sans certification, il s\'agit d\'un travailleur en hauteur non qualifié pour les techniques sur cordes — ni lui ni son assureur ne couvrira un incident.\n\n**2. L\'assurance RC pro spécifique TAC.** La Responsabilité Civile Professionnelle doit mentionner explicitement les **techniques d\'accès sur cordes** dans les activités couvertes. Une RC pro générale ne couvre pas les TAC. Demandez une attestation d\'assurance en vigueur avant que le cordiste monte en toiture.\n\n**3. La règle des deux techniciens.** Pour tout chantier de plusieurs heures ou présentant un risque, la réglementation française (OPPBTP) impose qu\'un second technicien soit présent et en mesure d\'intervenir en cas d\'incident. Une entreprise sérieuse ne dépêche pas un cordiste seul sur un chantier d\'urgence risqué.\n\n**4. La transparence sur le devis.** Un cordiste d\'urgence sérieux donne une fourchette de prix ferme avant d\'intervenir, même par téléphone sur la base de vos photos. Une facture "à l\'heure, on verra" sans plafond est un signal d\'alerte — particulièrement en situation de tension post-sinistre.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste en urgence après une tempête ?',
+                a: 'Comptez 55 à 90 €/h en tarif d\'urgence, soit 500 à 750 €/j pour un technicien. Une équipe de deux revient à 900 à 1 400 €/j. Les matériaux provisoires (bâche, sangles) s\'ajoutent : 80 à 250 €. Ces coûts sont couverts par la garantie tempête de la plupart des assurances copropriété et habitation.',
+            },
+            {
+                q: 'Peut-on appeler un cordiste le week-end après un dommage de tempête ?',
+                a: 'Oui. De nombreuses entreprises de cordistes proposent une astreinte week-end pour les sinistres urgents. Les tarifs sont majorés de 20 à 40 % par rapport aux interventions en semaine. Sur LesCordistes.com, les demandes urgentes sont visibles dès la publication, y compris le samedi et le dimanche.',
+            },
+            {
+                q: 'L\'assurance couvre-t-elle l\'intervention d\'urgence du cordiste ?',
+                a: 'Dans la grande majorité des contrats multirisque habitation et copropriété, la garantie tempête couvre les frais de mise en sécurité d\'urgence — y compris le cordiste. Conservez la facture détaillée et les photos avant/après. Déclarez le sinistre dans les 5 jours ouvrés suivant sa découverte.',
+            },
+            {
+                q: 'Faut-il attendre l\'expert d\'assurance avant de faire intervenir le cordiste ?',
+                a: 'Non, pas pour la mise en sécurité provisoire. Si un élément menace de tomber ou d\'endommager le bâtiment, faites intervenir un cordiste sans attendre l\'expert. Gardez la facture et les photos — l\'expert constatera les dommages résiduels lors de son passage ultérieur.',
+            },
+            {
+                q: 'Un cordiste peut-il réparer définitivement une toiture après une tempête ?',
+                a: 'Partiellement. Un cordiste peut poser une bâche provisoire, déposer des éléments dangereux et réaliser de petites réparations en zinc ou ardoise accessibles depuis les cordes. Pour une réfection complète de couverture, une entreprise de couverture avec échafaudage ou nacelle est généralement plus adaptée.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste disponible pour mon urgence',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Nacelle ou cordiste : le comparatif pratique', href: '/blog/nacelle-vs-cordiste-immeuble' },
+            { label: 'Guide syndic : cordiste en copropriété', href: '/blog/cordiste-copropriete-guide-syndic' },
+            { label: 'Prix d\'un cordiste : tarifs 2026', href: '/prix-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
