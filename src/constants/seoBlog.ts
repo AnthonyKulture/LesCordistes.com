@@ -2116,6 +2116,111 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'cordiste-immeuble-beton-annees-70',
+        authorSlug: 'anthony-profit',
+        title: 'Cordiste pour immeuble béton des années 70 : guide pratique 2026',
+        shortTitle: 'Cordiste immeuble béton années 70',
+        description:
+            'Trouvez un cordiste certifié pour votre immeuble béton des années 70. ITE, ravalement, joints — tarifs 2026 et critères de choix pour bien choisir.',
+        category: 'Travaux & technique',
+        readTime: 8,
+        datePublished: '2026-07-06',
+        dateModified: '2026-07-06',
+        intro:
+            'Les immeubles en béton banché construits entre 1965 et 1985 — ces barres et tours qui composent une grande partie du parc collectif français — entrent aujourd\'hui dans leur deuxième cycle de rénovation majeure. Carbonatation du béton, fissures en façade, joints de dilatation dégradés, encrassement des bandeaux horizontaux, salissures biologiques sur parois poreuses : ces pathologies, cumulées après cinquante ans d\'exposition aux intempéries, nécessitent des interventions régulières en hauteur. Pour un immeuble béton des années 70 de type R+6 à R+15 — morphologie dominante de ce parc —, la nacelle ou l\'échafaudage représentent souvent des coûts disproportionnés pour des diagnostics, des réparations ponctuelles ou des nettoyages périodiques. Le cordiste immeuble béton s\'impose alors comme la solution la plus agile : mobilisation en 48 heures, accès à l\'ensemble de l\'enveloppe sans empreinte sur la voie publique ni perturbation des parties communes. Ce guide détaille les pathologies concernées, les travaux réalisables en techniques d\'accès sur cordes (TAC), les tarifs 2026 et les critères pour choisir un prestataire réellement formé aux spécificités du béton vieillissant.',
+        sections: [
+            {
+                heading: 'Béton banché des années 70 : les pathologies qui imposent une intervention en hauteur',
+                body: 'Le béton banché — obtenu par coulage entre des coffrages métalliques réutilisés — présente une porosité plus élevée que le béton armé traditionnel. Après cinquante ans d\'exposition aux cycles gel/dégel, aux pluies acides et aux variations thermiques, quatre pathologies majeures se manifestent régulièrement sur les façades de ce parc.\n\n**La carbonatation** est le phénomène le plus insidieux : le CO₂ atmosphérique pénètre dans le béton poreux et dégrade la zone de protection des armatures métalliques. Les premières manifestations visibles — auréoles rouille sur la paroi, fissures longitudinales suivant les armatures, éclatement du béton de couverture — nécessitent un diagnostic en hauteur avant tout projet de ravalement. Un cordiste équipé d\'un test à la phénophtaléine peut cartographier les zones de carbonatation sur l\'ensemble de la façade sans équipement lourd, en une à deux journées.\n\n**Les joints de dilatation** entre travées sont souvent les premiers à se dégrader : le mastic s\'oxyde, se rétracte et perd son étanchéité, créant des infiltrations dans les parties communes. À R+6, la réfection de ces joints — fréquente et répétitive — coûte 40 à 60 % moins cher en techniques d\'accès sur cordes qu\'en nacelle hélicoïdale ou en échafaudage tubulaire.\n\n**Les bandeaux horizontaux** et les sous-faces de balcons accumulent les salissures biologiques et les dépôts calcaires. La géométrie typique de l\'immeuble années 70 — balcons débordants, allèges vitrées, bandeaux saillants — crée des zones d\'ombre permanentes propices aux mousses, lichens et algues. Ces surfaces, difficilement accessibles depuis une nacelle classique, sont la spécialité du cordiste qui travaille en suspension sous les débords.',
+            },
+            {
+                heading: 'Travaux réalisables par cordiste sur un immeuble béton : le panorama complet',
+                body: 'Un technicien sur cordes certifié CQP TPS niveau 2 peut intervenir sur l\'ensemble de l\'enveloppe d\'un immeuble béton des années 70, du soubassement jusqu\'à l\'acrotère. La seule contrainte est la durée : pour un ravalement complet d\'une barre de 100 mètres linéaires, la combinaison cordiste + nacelle est souvent plus efficace que l\'accès sur cordes seul. Pour toutes les interventions ponctuelles, périodiques ou diagnostiques, le cordiste est systématiquement plus rapide et moins coûteux.\n\nEn pratique, les immeubles en béton des années 70 requièrent des interventions cordiste tous les 5 à 8 ans selon leur état : un nettoyage haute pression ou biocide, puis un traitement hydrofuge, puis une réfection des joints au cycle suivant. Ce rythme d\'entretien préventif évite les ravalements complets — plus lourds et plus coûteux — qui deviennent nécessaires lorsque la carbonatation atteint les armatures ou que les infiltrations ont dégradé les parties communes en profondeur.',
+                listIntro: 'Interventions courantes réalisables par cordiste sur immeuble béton années 70 :',
+                list: [
+                    'Nettoyage haute pression (60-100 bars, eau froide) pour décolmatage des pores sur béton banché',
+                    'Démoussage et traitement biocide sur bandeaux, sous-faces de balcons et allèges',
+                    'Application d\'hydrofuge de surface sur façades poreuses (protection 5 à 8 ans)',
+                    'Diagnostic carbonatation : test phénophtaléine, cartographie des zones à risque avec rapport photographique',
+                    'Réfection des joints de dilatation et joints de fractionnement (dépose mastic dégradé + fond de joint + mastic polyuréthane)',
+                    'Traitement des épaufrures et zones d\'éclatement béton (mortier de réparation ou béton projeté)',
+                    'Injection de résine époxy dans les fissures structurelles après diagnostic ingénieur',
+                    'Pose d\'ancrage pour garde-corps ou main courante sur acrotère',
+                ],
+                cta: {
+                    text: 'Décrire mon immeuble en 2 minutes',
+                    href: '/post-job',
+                    description: 'Immeuble béton, R+6 ou plus — publiez votre besoin gratuitement et recevez des offres de cordistes certifiés.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'ITE sur immeuble collectif : le rôle du cordiste dans la rénovation énergétique',
+                body: 'La loi Climat et Résilience impose aux copropriétés classées F ou G de rénover avant 2028 pour les plus énergivores. Pour les immeubles béton des années 70 — classés F ou G dans plus de 40 % des cas selon l\'ANAH —, l\'isolation thermique par l\'extérieur (ITE) est la solution la plus efficace techniquement et souvent la plus accessible économiquement. Sur un immeuble de R+6 à R+10, le cordiste intervient à plusieurs stades du chantier ITE.\n\n**Phase de diagnostic et préparation** : avant la pose de l\'isolant, un cordiste réalise l\'inspection complète du support — adhérence du béton existant, zones de carbonatation avancée, état des acrotères et des bavettes de raccord. Un rapport de 2 à 3 jours en accès sur cordes remplace une plateforme de levage mobilisée 2 semaines pour une surface équivalente.\n\n**Phase de réception** : après la pose des panneaux isolants, une inspection cordiste permet de contrôler l\'alignement, les joints entre panneaux, les raccords aux baies et l\'étanchéité des relevés en toiture. Ce contrôle qualité avant les finitions évite les reprises sur plateforme — beaucoup plus coûteuses une fois le chantier de peinture achevé.\n\nLes aides disponibles en 2026 — MaPrimeRénov\' Copropriété, CEE, éco-prêt collectif — couvrent jusqu\'à 45 % du coût HT d\'une ITE. La prestation cordiste pour le diagnostic préalable est éligible dans le poste « ingénierie » lorsqu\'elle est réalisée en accompagnement d\'un bureau d\'études ou d\'un maître d\'œuvre certifié RGE.',
+            },
+            {
+                heading: 'Nacelle ou cordiste pour un immeuble R+6 béton : lequel choisir ?',
+                body: 'La question revient dans chaque appel d\'offres pour un immeuble collectif des années 70. Le réflexe est souvent d\'aller vers la nacelle — process connu, devis rapides. Pourtant, pour des immeubles R+6 à R+15 avec balcons débordants et sous-faces inaccessibles, le cordiste est généralement plus adapté sur au moins 60 % des interventions courantes.\n\n**La nacelle** reste pertinente quand : la façade est continue et plane sans obstacle en surplomb, l\'accès au sol est dégagé sur toute la longueur, les travaux durent moins de 5 jours sur une même zone, et la hauteur est inférieure à 45 mètres.\n\n**Le cordiste** est plus adapté quand : la façade présente des balcons débordants, des loggias ou des allèges qui forment des creux inaccessibles depuis une plateforme ; l\'accès au sol est contraint par une voie étroite, un parking souterrain ou des haies ; le chantier est ponctuel (diagnostic, réfection de joints, réparation localisée) ; ou l\'immeuble se trouve en zone protégée où la nacelle nécessite une autorisation de voirie.\n\nSur un R+6 béton standard, une journée cordiste à 2 techniciens (800 à 1 200 € HT à Paris, 600 à 900 € HT en province) couvre typiquement 80 à 120 m² de nettoyage ou 40 à 60 mètres linéaires de joints. La nacelle télescopique à 45 mètres se loue 600 à 900 € HT/jour hors opérateur — sans pouvoir accéder aux sous-faces ni aux loggias profondes.',
+                cta: {
+                    text: 'Comparer des devis cordiste sans engagement',
+                    href: '/post-job',
+                    description: 'Recevez plusieurs offres de cordistes certifiés pour votre immeuble béton.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Tarifs 2026 : combien coûte un cordiste sur immeuble béton ?',
+                body: 'Les tarifs d\'un cordiste pour un immeuble béton des années 70 varient selon le type d\'intervention, le nombre de techniciens et la région. Les fourchettes ci-dessous correspondent à un prestataire certifié CQP TPS niveau 2, avec plan de prévention et RC Pro couvrant explicitement les techniques d\'accès sur cordes (TAC). Elles sont exprimées hors taxes et excluent les éventuels frais de matériaux.\n\nEn règle générale, le coût global d\'une intervention cordiste sur un immeuble R+6 reste inférieur de 20 à 35 % à celui d\'une nacelle télescopique avec opérateur pour les mêmes surfaces traitées — sans compter les zones de sous-faces et loggias inaccessibles à la nacelle. La compétitivité du cordiste s\'affirme encore davantage lorsque l\'accès au sol est contraint ou que l\'intervention doit se dérouler sans perturber les parties communes.',
+                listIntro: 'Tarifs indicatifs HT, cordiste sur immeuble béton, 2026 :',
+                list: [
+                    'Journée cordiste (8h, 1 technicien) à Paris et IDF : 450 à 800 € HT',
+                    'Journée cordiste en province : 350 à 600 € HT',
+                    'Nettoyage façade béton (haute pression + biocide) au m² : 8 à 15 € HT',
+                    'Application hydrofuge façade béton au m² : 5 à 9 € HT',
+                    'Réfection joints de dilatation au ml : 25 à 55 € HT (dépose + repose mastic polyuréthane + fond de joint)',
+                    'Diagnostic carbonatation avec rapport : 800 à 1 800 € HT selon surface et nombre de sondages',
+                    'Traitement épaufrures béton au m² : 60 à 150 € HT selon profondeur et technique de réparation',
+                ],
+                cta: {
+                    text: 'Obtenir des devis pour mon immeuble',
+                    href: '/post-job',
+                    description: 'Publiez votre chantier et recevez des offres de cordistes certifiés pour votre immeuble béton.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Choisir son cordiste pour un immeuble béton des années 70 : 4 critères décisifs',
+                body: 'Tous les techniciens sur cordes ne maîtrisent pas les spécificités du béton vieillissant. Le diagnostic de la carbonatation, le choix du bon mastic polyuréthane pour un joint de dilatation ou le dosage d\'un hydrofuge sur un béton déjà traité sont des compétences qui s\'acquièrent sur le terrain. Voici les quatre points de vigilance avant de signer un devis.\n\n**1. Une certification CQP TPS niveau 2 minimum** — Pour un immeuble R+6 ou plus, l\'équipe de deux techniciens est recommandée (un en suspension, un en surveillance). Le niveau 2 est indispensable pour piloter ce type de chantier en autonomie. Demandez les copies des certificats avec leur date d\'expiration : CQP TPS et IRATA sont valables 3 ans.\n\n**2. Une expérience spécifique sur béton** — Un cordiste habitué aux façades en pierre ou aux charpentes métalliques ne maîtrise pas nécessairement les mortiers de réparation époxy, les mastics polyuréthane de façade ou les techniques de traitement du béton carbonaté. Demandez une référence précise sur un immeuble en béton des années 70 — une adresse, une photo avant/après, un nom de syndic ou de gestionnaire.\n\n**3. Un plan de prévention rédigé avant le démarrage** — Les travaux en hauteur par accès sur cordes figurent sur la liste des travaux dangereux de l\'arrêté du 19 mars 1993. Le plan de prévention est obligatoire, cosigné par l\'entreprise utilisatrice (syndic ou gestionnaire) avant le premier jour. Un prestataire qui démarre sans ce document vous expose à une responsabilité solidaire en cas d\'accident.\n\n**4. Une RC Pro mentionnant explicitement les TAC** — Certaines polices excluent les techniques d\'accès sur cordes ou les plafonnent à des hauteurs inférieures à la réalité. Vérifiez que l\'attestation mentionne « accès sur cordes » ou « techniques d\'accès difficile (TAC) » et que le plafond de garantie est cohérent avec l\'ampleur du chantier — minimum 1 million d\'euros par sinistre pour un immeuble collectif.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste pour un immeuble béton des années 70 ?',
+                a: 'Pour un immeuble béton des années 70, comptez 350 à 800 € HT par journée technicien selon la région. Un nettoyage façade revient à 8-15 € HT au m², une réfection de joints à 25-55 € HT le mètre linéaire.',
+            },
+            {
+                q: 'Un cordiste peut-il intervenir sur une ITE déjà posée ?',
+                a: 'Oui, à condition que les points d\'ancrage en toiture soient fixés sur la structure porteuse et non sur l\'isolant. Un cordiste expérimenté évalue la solidité des ancrages et les zones de passage des cordes pour ne pas endommager le parement. La plupart des systèmes ITE (laine de roche + enduit, PSE, bardage ventilé) permettent le travail en suspension si les ancrages traversent l\'isolant.',
+            },
+            {
+                q: 'À quelle fréquence entretenir la façade d\'un immeuble béton des années 70 ?',
+                a: 'Un entretien cordiste tous les 5 à 8 ans est recommandé pour un immeuble béton en bon état structural : nettoyage biocide suivi d\'un traitement hydrofuge à chaque cycle. Sans entretien régulier, la carbonatation progresse d\'environ 1 à 2 mm par an et peut atteindre les armatures en 20 à 30 ans sur un béton de couverture standard de 3 cm.',
+            },
+            {
+                q: 'Nacelle ou cordiste pour un R+6 béton avec balcons ?',
+                a: 'Pour un R+6 avec balcons débordants et loggias, le cordiste est généralement plus adapté : il accède aux sous-faces inaccessibles depuis une nacelle, sans contrainte d\'accès au sol ni de voirie. La nacelle reste pertinente sur un pignon nu et continu. Pour des diagnostics ou des interventions ponctuelles, l\'accès sur cordes est systématiquement moins coûteux.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste pour mon immeuble',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Cordiste vs échafaudage', href: '/cordiste-vs-echafaudage' },
+            { label: 'Façade haussmannienne et cordiste', href: '/blog/cordiste-facade-haussmannienne' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
