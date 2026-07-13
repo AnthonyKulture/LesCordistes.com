@@ -2116,6 +2116,105 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'cordiste-immeuble-annees-70',
+        authorSlug: 'anthony-profit',
+        title: 'Cordiste pour immeuble des années 70 : façades béton et ITE',
+        shortTitle: 'Cordiste immeuble années 70',
+        description:
+            'Découvrez comment un cordiste traite les façades béton des années 70 : joints, amiante, ITE. Tarifs 2026 et guide pratique pour syndics et copropriétaires.',
+        category: 'Travaux & technique',
+        readTime: 8,
+        datePublished: '2026-07-13',
+        dateModified: '2026-07-13',
+        intro:
+            'Les immeubles des années 70 — construits en béton préfabriqué, façades en grands panneaux, joints souples entre dalles — représentent près de 30 % du parc résidentiel français. Leur vieillissement est prévisible : les joints se fissurent, l\'étanchéité se dégrade, des infiltrations apparaissent. Pour ce type de bâtiment, le cordiste s\'impose souvent comme la solution la plus rapide et la plus économique — sans échafaudage, sans perturber le pied de l\'immeuble, parfois en quelques jours là où un chantier classique prendrait des semaines.',
+        sections: [
+            {
+                heading: 'Pourquoi les façades des années 70 vieillissent-elles si vite ?',
+                body: 'Les immeubles issus de la période des grands ensembles (1960-1980) partagent des caractéristiques constructives qui accélèrent leur dégradation.\n\n**Le béton préfabriqué en grands panneaux** était la norme des chantiers industrialisés de l\'époque. Ces panneaux sont assemblés à joints souples — mastic élastomère ou polysulfure — censés compenser les mouvements thermiques. Ces joints ont une durée de vie de 20 à 30 ans maximum. Au-delà, ils se craquèlent, perdent leur élasticité et laissent passer l\'eau : première cause d\'infiltration dans ces immeubles.\n\n**Les revêtements de façade** des années 70 oscillent entre enduit projeté (Tyrolean, gouttelettes), carrelage extérieur collé et peinture minérale. Ces finitions absorbent l\'humidité, favorisent mousses et lichens, et se décollent progressivement. Une façade carrelée de 15 étages sans entretien peut présenter des risques de chute de matériaux sur la voie publique — une responsabilité qui engage directement le syndicat de copropriétaires.\n\n**L\'amiante** est présente dans nombre de ces bâtiments : joints de dilatation, enduits fibrés, colles de carrelage. Pour tout immeuble dont le permis de construire est antérieur au 1er juillet 1997, un diagnostic amiante (DTA ou RAAT) est obligatoire avant toute intervention. Ce n\'est pas une formalité — c\'est une obligation légale dont le non-respect expose le maître d\'ouvrage à des sanctions pénales.\n\n**La performance thermique** est le troisième défi. Ces bâtiments figurent parmi les plus énergivores du parc : étiquette F ou G est fréquente. L\'ITE (isolation thermique par l\'extérieur) est souvent envisagée conjointement à la réfection de façade, ce qui modifie l\'organisation et le phasage du chantier.',
+                cta: {
+                    text: 'Obtenir des devis de cordistes certifiés',
+                    href: '/post-job',
+                    description: 'Décrivez votre immeuble et recevez des propositions adaptées sous 48 h.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Quels travaux un cordiste réalise-t-il sur un immeuble des années 70 ?',
+                body: 'La technique d\'accès sur cordes (TAC) est particulièrement adaptée aux façades planes des immeubles de grande hauteur. Le technicien descend depuis la toiture, se déplace latéralement à l\'aide de systèmes de progression horizontaux, et accède à chaque zone de façade avec une précision centimétrique — sans nacelle, sans encombrement au sol, sans autorisation d\'occupation du domaine public.',
+                listIntro: 'Interventions les plus courantes sur immeuble béton des années 1960-1980 :',
+                list: [
+                    'Diagnostic visuel de façade : cartographie des fissures, joints défaillants et zones d\'infiltration — 200 à 400 € la journée',
+                    'Prélèvements amiante (certification SS4 obligatoire) : carottage, mise en sachet étanche, traçabilité réglementaire — sur devis',
+                    'Remplacement de joints inter-panneaux : dépose de l\'ancien mastic, fond de joint, application de polysulfure ou silicone bicomposant — 18 à 40 € / ml',
+                    'Nettoyage haute pression du béton : démoussage, dégraissage des surfaces poreuses — 8 à 18 € / m²',
+                    'Hydrofugation et traitement imperméabilisant : protège le béton 8 à 12 ans — 12 à 25 € / m²',
+                    'Réparation ponctuelle d\'enduit décollé ou de carrelage en péril : sécurisation immédiate avant ravalement global',
+                    'Pose de filet de protection provisoire sous une zone dégradée en attente d\'intervention',
+                    'Inspection de garde-corps, balcons et éléments métalliques : corrosion, descellements, fixations',
+                ],
+            },
+            {
+                heading: 'Cordiste ou échafaudage pour un immeuble des années 70 ?',
+                body: 'La question revient à chaque assemblée générale de copropriété. La réponse dépend de l\'ampleur des travaux et de la hauteur du bâtiment.\n\n**Pour les interventions ponctuelles** — réfection de joints sur une ou deux files de panneaux, diagnostic, prélèvements amiante, traitement localisé — le cordiste s\'impose presque toujours. Mobilisation en 2 à 5 jours, aucun impact sur la circulation au pied de l\'immeuble, coût divisé par 3 à 5 par rapport à un échafaudage de pied complet.\n\n**Pour un ravalement global** — reprise complète de la façade, ITE, peinture ou ravalement sur l\'ensemble de la surface — l\'échafaudage reste souvent incontournable quand les surfaces dépassent 800 à 1 000 m². Il offre une plateforme stable pour des équipes plus larges et des matériaux lourds (panneaux isolants, mortier de rebouchage).\n\n**La solution hybride est de plus en plus courante** : un cordiste réalise le diagnostic initial et les réparations urgentes (délai 0 à 6 mois), puis un échafaudage est monté pour le ravalement complet (horizon 1 à 3 ans selon le vote en AG). Cette séquence protège le bâtiment immédiatement sans bloquer les finances de la copropriété.\n\nÀ titre indicatif, pour un immeuble R+8 avec 600 m² de façade :\n- Diagnostic cordiste seul : 800 à 1 500 €\n- Réfection des joints sur cordes : 15 000 à 25 000 €\n- Ravalement complet avec échafaudage : 80 000 à 160 000 €',
+                cta: {
+                    text: 'Comparer cordiste et échafaudage',
+                    href: '/cordiste-vs-echafaudage',
+                    description: 'Guide comparatif détaillé selon la hauteur et la nature du chantier.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Amiante dans les immeubles des années 70 : ce que doit vérifier le syndic',
+                body: 'Pour tout immeuble dont le permis de construire est antérieur au 1er juillet 1997, la réglementation est sans ambiguïté : aucun travail sur la façade ne peut débuter sans vérification préalable de l\'état des matériaux susceptibles de contenir de l\'amiante (MSCA).\n\n**Le Dossier Technique Amiante (DTA)** doit être accessible à tout intervenant avant le démarrage du chantier. Si des matériaux amiantés sont identifiés, deux voies s\'ouvrent selon leur état :\n- **Conservation sous surveillance** : si les matériaux sont en bon état et ne seront pas perturbés par les travaux\n- **Retrait ou confinement** : obligatoire dès lors que les travaux impliquent de percer, découper ou déposer les matériaux concernés\n\n**Les cordistes certifiés SS4** (sous-section 4 du décret amiante) sont habilités à intervenir sur des matériaux amiantés dégradés — joints de dilatation, colles de carrelage, enduit fibré. Cette certification est délivrée par un organisme agréé et impose une formation spécifique : EPI amiante adaptés (combinaison jetable, demi-masque FFP3), gestion des déchets dangereux et procédures d\'emballage étanche.\n\n**Pour le syndic, le contrôle porte sur trois points :**\n1. Certification SS4 du cordiste si de l\'amiante est suspecté — exiger l\'attestation en original\n2. Plan de retrait ou de travaux transmis avant tout démarrage\n3. Bordereaux de suivi de déchets dangereux (BSDA) conservés dans le dossier de copropriété\n\nSur LesCordistes.com, les profils des techniciens mentionnent leurs certifications — filtrez sur SS4 avant de publier un chantier concernant un immeuble antérieur à 1997.',
+            },
+            {
+                heading: 'Quel budget prévoir pour la rénovation d\'une façade béton des années 70 ?',
+                body: 'Les fourchettes ci-dessous concernent des immeubles standards de 6 à 12 étages avec façades en béton préfabriqué. Les prix varient selon la région, l\'accessibilité de la toiture et l\'état réel des matériaux.\n\n**Diagnostic de façade par cordiste**\n- Visite terrain + rapport photographique + cartographie des désordres : 500 à 1 200 €\n- Avec prélèvements amiante : 1 000 à 2 500 € selon le nombre de zones\n\n**Réfection de joints inter-panneaux**\n- Joint polyuréthane ou silicone standard : 18 à 28 € / ml\n- Joint bicomposant polysulfure haute performance : 28 à 40 € / ml\n- Exemple pour un R+8 avec 4 travées (environ 800 ml de joints) : 14 400 à 32 000 €\n\n**Nettoyage et traitement de surface**\n- Nettoyage haute pression seul : 8 à 14 € / m²\n- Hydrofugation + peinture imperméabilisante : 18 à 35 € / m²\n\n**Sécurisation d\'urgence**\n- Intervention sur un élément de carrelage ou béton décollé : 150 à 500 € par élément\n- Pose de filet de protection provisoire : 2 000 à 8 000 € selon la surface et la hauteur\n\n**Règle de financement en copropriété :** les travaux d\'entretien courant (joints, nettoyage) relèvent du budget de fonctionnement — le syndic peut les engager sans vote AG avec accord du conseil syndical. Les travaux d\'amélioration (ITE, ravalement global) nécessitent un vote à la majorité absolue (article 25 de la loi du 10 juillet 1965). Un cordiste peut donc souvent agir en urgence sans attendre une assemblée.',
+                cta: {
+                    text: 'Demander un devis pour mon immeuble',
+                    href: '/post-job',
+                    description: 'Décrivez la surface et l\'état de votre façade — réponse sous 48 h.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Comment choisir un cordiste qualifié pour un immeuble béton des années 70 ?',
+                body: 'Tous les techniciens sur cordes ne sont pas équipés pour les spécificités des bâtiments en béton des années 1960-1980. Voici les critères déterminants.\n\n**Certifications à vérifier :**\n- **CQP TPS** (Certificat de Qualification Professionnelle Technicien de Prévention et Sécurité) ou **IRATA** niveau 1 minimum : valide la formation aux techniques d\'accès sur cordes (TAC)\n- **SS4** : indispensable si le permis de construire est antérieur à 1997 et que de l\'amiante est suspecté\n- **Qualibat 4312** ou équivalente : pour les travaux d\'étanchéité, de joints et de traitement de surface\n\n**Questions à poser avant de signer :**\n- Avez-vous accès au DTA ou faut-il commander un diagnostic préalable ?\n- Quelle est votre expérience sur les façades en grands panneaux béton ?\n- Quels produits utilisez-vous pour les joints — conformes à la norme NF EN 15651-4 ?\n- Pouvez-vous fournir une attestation d\'assurance RC Pro et décennale à jour ?\n\n**Documents à exiger avant démarrage :**\nLe cordiste doit remettre au syndic un Plan de Prévention (PP) listant les risques identifiés, les équipements collectifs de protection (EPC) utilisés et la qualification de chaque intervenant. Ce document est obligatoire dès lors que le chantier présente des risques particuliers : hauteur supérieure à 3 m, présence d\'amiante, surplomb sur voie publique ou présence d\'occupants. Un professionnel sérieux l\'aura préparé avant même que vous le demandiez.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte l\'intervention d\'un cordiste sur un immeuble des années 70 ?',
+                a: 'Pour un immeuble des années 70, comptez 500 à 1 200 € pour un diagnostic initial et 18 à 40 € par mètre linéaire pour la réfection de joints. Le tarif journalier d\'un technicien sur cordes est de 450 à 800 € selon la région et la spécialité.',
+            },
+            {
+                q: 'Un cordiste peut-il intervenir sur une façade contenant de l\'amiante ?',
+                a: 'Oui, à condition qu\'il soit certifié SS4 (sous-section 4 du décret amiante). Cette certification autorise l\'intervention sur des matériaux amiantés dégradés — joints de dilatation, colles de carrelage, enduits fibrés. Elle est obligatoire pour tout immeuble dont le permis de construire est antérieur au 1er juillet 1997.',
+            },
+            {
+                q: 'Faut-il un vote en AG pour faire intervenir un cordiste sur la façade ?',
+                a: 'Pas nécessairement. Les travaux d\'entretien courant — réfection de joints, nettoyage, sécurisation d\'un élément décollé — relèvent du budget de fonctionnement. Seuls les travaux d\'amélioration comme l\'ITE ou un ravalement global nécessitent un vote en AG à la majorité absolue (article 25 de la loi de 1965).',
+            },
+            {
+                q: 'Combien de temps dure une intervention de cordiste sur les joints d\'un R+10 ?',
+                a: 'Pour un immeuble de 10 étages avec 4 travées (environ 800 ml de joints), une équipe de 2 cordistes travaille 5 à 10 jours selon l\'état des supports et la complexité des détails d\'angle. Le diagnostic préalable représente 1 journée supplémentaire.',
+            },
+            {
+                q: 'Peut-on combiner ITE et intervention de cordiste sur un immeuble des années 70 ?',
+                a: 'Oui, de manière séquencée. Le cordiste intervient idéalement en amont de l\'ITE : diagnostic, réfection des joints et traitement de surface préparent la façade avant la pose des panneaux isolants. Après l\'ITE, le cordiste peut revenir pour les reprises ponctuelles et les finitions inaccessibles depuis l\'échafaudage.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste pour mon immeuble',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Cordiste et façade haussmannienne', href: '/blog/cordiste-facade-haussmannienne' },
+            { label: 'Cordiste ou échafaudage : le comparatif', href: '/cordiste-vs-echafaudage' },
+            { label: 'Guide copropriété et syndic', href: '/blog/cordiste-copropriete-guide-syndic' },
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
