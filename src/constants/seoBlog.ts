@@ -2116,6 +2116,112 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'cordiste-immeuble-annees-70-facade-beton',
+        authorSlug: 'anthony-profit',
+        title: 'Cordiste pour immeuble des années 70 : façade béton 2026',
+        shortTitle: 'Cordiste et immeuble des années 70',
+        description:
+            'Trouvez un cordiste pour votre immeuble des années 70 : inspection béton, remplacement de joints de façade, ravalement sans nacelle. Guide et tarifs 2026.',
+        category: 'Travaux & technique',
+        readTime: 9,
+        datePublished: '2026-07-20',
+        dateModified: '2026-07-20',
+        intro:
+            'Les immeubles construits entre 1960 et 1980 représentent près de 30 % du parc résidentiel collectif français. Béton banché, panneaux préfabriqués, bardages en aluminium, joints en polysulfure : ces façades ont vieilli, et elles concentrent aujourd\'hui une part croissante des demandes d\'intervention en hauteur. Le cordiste est souvent la solution la plus rapide et la moins coûteuse pour y intervenir. Pas d\'échafaudage à monter sur 12 étages, pas d\'autorisation d\'occupation du domaine public à négocier, pas d\'attente de 3 semaines : un technicien certifié accède depuis la toiture en moins de 48 heures. Ce guide explique quels travaux sont possibles sur une façade béton des années 70, à quels tarifs, et comment préparer l\'intervention pour votre copropriété ou votre immeuble de bureaux.',
+        sections: [
+            {
+                heading: 'Façade béton des années 70 : ce qui la distingue des bâtiments plus récents',
+                body: 'Les immeubles des Trente Glorieuses — construits entre 1960 et 1980 — présentent des caractéristiques communes qui déterminent directement le type d\'intervention possible en hauteur.\n\n**Béton banché et panneaux préfabriqués** : la construction industrialisée de l\'époque a privilégié le béton coulé en place ou les panneaux sandwich préfabriqués. Ces matériaux durent, mais ils fléchissent avec le temps : fissuration en surface, carbonatation progressive, infiltrations par les joints de raccord entre panneaux. Plus de 40 % des immeubles construits avant 1980 présentent des signes de dégradation de façade selon les bilans réalisés par les bureaux d\'études en pathologie du bâtiment.\n\n**Hauteur et accès** : un R+8 standard en béton brut ne peut pas recevoir un échafaudage sans mobiliser 3 à 5 semaines de montage et 6 000 à 12 000 € de location sur la durée du chantier. La nacelle de façade résout en partie ce problème, mais reste inefficace sur les façades avec débords importants, balcons en saillie ou en site urbain dense. Le cordiste accède depuis la toiture sans aucune de ces contraintes, avec une mobilisation sous 48 à 72 heures.\n\n**Joints de dilatation vieillissants** : les joints en polysulfure ou thiokol posés avant 1980 ont une durée de vie estimée entre 15 et 25 ans selon l\'exposition. Les façades R+6 à R+15 des années 70 cumulent souvent des centaines de mètres linéaires de joint à remplacer — un chantier typiquement adapté à l\'accès sur cordes (TAC).\n\n**Bardages aluminium et panneaux sandwich** : les résidences de standing des années 70 ont adopté le bardage aluminium anodisé ou les panneaux sandwich métalliques. Ces éléments vieillissent différemment du béton brut, mais partagent le même problème d\'accès : pour une intervention ciblée sur 2 ou 3 panneaux défectueux sur une façade de R+10, mobiliser un échafaudage complet n\'a aucun sens économique.',
+            },
+            {
+                heading: 'Quels travaux un cordiste peut-il réaliser sur un immeuble des années 70 ?',
+                body: 'Un cordiste certifié CQP TPS niveau 2 ou IRATA Level 2 peut intervenir sur la quasi-totalité des prestations d\'entretien et de réhabilitation légère d\'une façade béton ou bardée. Seuls les travaux nécessitant une plateforme stable prolongée — reprise de structure lourde, soudure continue sur bardage, maçonnerie structurelle — sortent du périmètre des techniques d\'accès difficile (TAC). Pour tout le reste, le cordiste est plus rapide, moins encombrant et souvent moins coûteux que toute alternative avec structure porteuse.\n\nLa mobilisation est typiquement sous 48 à 72 heures après signature du plan de prévention. Le cordiste apporte ses points d\'ancrage temporaires si l\'immeuble n\'en dispose pas — systèmes certifiés EN 795 posés sur acrotère ou faîtage, sans perçage de la structure porteuse. Pour les chantiers de plus de 3 jours ou les façades supérieures à R+12, une ligne de vie permanente (norme NF EN 795 classe C) peut être installée en même temps que les travaux, amortissant l\'investissement sur les prochaines interventions.',
+                listIntro: 'Travaux réalisables en accès sur cordes sur une façade béton des années 70 :',
+                list: [
+                    'Diagnostic et inspection visuelle avec rapport photographique et préconisations chiffrées',
+                    'Nettoyage haute pression (20 à 120 bars selon l\'état du béton) et démoussage chimique',
+                    'Hydrofugation et traitement imperméabilisant sur béton poreux ou fissuré',
+                    'Remplacement de joints de façade et de dilatation (polysulfure, silicone MS, polyuréthane)',
+                    'Ragréage de fissures et injection de résine époxy sur fissures actives',
+                    'Traitement anti-carbonatation et application de revêtement de protection béton',
+                    'Remplacement de panneaux de bardage aluminium ou tôle acier défectueux',
+                    'Installation de lignes de vie permanentes EN 795 et points d\'ancrage certifiés',
+                ],
+                cta: {
+                    text: 'Décrire ma façade en 2 minutes',
+                    href: '/post-job',
+                    description: 'Immeuble des années 70, béton, bardage ou joints dégradés — publiez votre besoin gratuitement.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Joints de façade des années 70 : pourquoi c\'est le chantier cordiste idéal',
+                body: 'Les joints de dilatation et de calfeutrement posés sur les immeubles construits entre 1965 et 1980 approchent ou ont dépassé leur durée de vie prévisionnelle. Thiokol, polysulfure bichimique, mastiques à base de bitume : ces produits vieillissent en se rigidifiant, en se décollant du support ou en se fragmentant sous les cycles thermiques. Sur un immeuble R+8 exposé plein sud, un joint travaille en extension et en compression plusieurs dizaines de fois par an.\n\n**Les signes d\'alarme** sont souvent visibles depuis le sol : joints brunis ou noircis avec des craquelures transversales, décollements locaux aux angles, taches d\'humidité aux encadrements de fenêtres ou aux angles des dalles de balcon, infiltrations en appartement après une pluie prolongée.\n\n**La technique de remplacement** suit un protocole précis : purge de l\'ancien joint à la disqueuse ou au couteau rotatif, nettoyage et dépoussiérage du fond de joint, application d\'un primaire d\'accrochage, pose d\'un fond de joint mousse polyéthylène calibré (backer-rod) pour limiter la consommation de produit, puis application du joint neuf — silicone MS ou polyuréthane selon l\'amplitude de mouvement attendue entre les panneaux.\n\nUn cordiste expérimenté traite 50 à 70 mètres linéaires de joint par journée de travail en façade continue, car il descend en rappel sans interruption sur toute la hauteur de l\'immeuble — soit 3 à 5 fois plus productif qu\'un maçon opérant depuis un échafaudage qui doit démonter et remonter ses niveaux.\n\nLe coût en accès sur cordes : **12 à 22 € HT/ml** de joint refait, main-d\'œuvre et matériaux inclus. Sur un immeuble de 4 façades avec 600 ml de joint total, comptez entre 7 200 et 13 200 € HT — soit 40 à 60 % moins cher qu\'une intervention en nacelle ou en échafaudage complet.',
+            },
+            {
+                heading: 'Béton carbonaté et amiante : les contraintes réglementaires à anticiper',
+                body: 'Deux risques techniques dominent les chantiers de façade sur immeuble des années 70 : la carbonatation du béton et la présence potentielle d\'amiante dans les matériaux de construction. Ces deux risques sont gérables — à condition de les identifier avant de démarrer les travaux.\n\n**Carbonatation du béton** : avec le temps, le CO₂ atmosphérique réagit avec la chaux libre du béton et abaisse son pH de 12 à moins de 9. En dessous de ce seuil, les armatures en acier perdent leur protection passive et commencent à corroder — ce qui se traduit en façade par des épaufrures (éclats de béton), des gonflements en surface et l\'exposition des armatures rouillées. Le diagnostic se réalise par projection de phénolphtaléine sur une carotte de béton : la zone carbonatée reste incolore, la zone saine vire au violet. Le traitement implique la dépose du béton dégradé, un traitement passivateur sur les armatures (gel à base de silane-siloxane), puis un ragréage structural R4 suivi d\'un revêtement de protection élastique anti-carbonatation.\n\n**Amiante** : tout matériau de construction posé avant le 1ᵉʳ juillet 1997 peut contenir des fibres d\'amiante. Sur les immeubles des années 70, les zones à risque prioritaires sont les joints de dilatation en thiokol (selon la formulation exacte), les enduits projetés de façade (flocages), et les colles de carrelage des balcons. La réglementation est sans ambiguïté : avant tout travaux susceptibles de libérer des fibres, un dossier technique amiante (DTA) est obligatoire (article L. 1334-13 du Code de la santé publique). Si le DTA identifie des matériaux amiantés, les travaux doivent être confiés à une entreprise certifiée SS3 — et le cordiste doit disposer de cette certification spécifique pour intervenir sur ces zones.\n\nDemandez systématiquement le DTA au syndic avant de solliciter des devis. Cette précaution protège les résidents, protège le technicien sur cordes et évite les arrêts de chantier coûteux qui surviennent lorsque l\'amiante est découverte en cours d\'intervention.',
+            },
+            {
+                heading: 'Tarifs 2026 : combien coûte un cordiste sur immeuble des années 70 ?',
+                body: 'Le coût d\'une intervention cordiste sur un immeuble des années 70 dépend de la superficie traitée, de la hauteur du bâtiment et du type de prestation. Les fourchettes ci-dessous sont indicatives HT pour des interventions en région parisienne — comptez 15 à 25 % de moins en province.\n\nComparé à un échafaudage ou à une nacelle de façade, le cordiste présente un avantage économique systématique pour les interventions ciblées ou les façades hautes. Sur un R+10, la seule location d\'une nacelle araignée de façade atteint 4 000 à 7 000 € par semaine hors opérateur. Le même chantier traité en accès sur cordes revient à 30 à 50 % du coût d\'une nacelle pour des travaux inférieurs à 5 jours.',
+                listIntro: 'Fourchettes indicatives HT, Île-de-France 2026 :',
+                list: [
+                    'Journée cordiste (1 technicien, 8h) à Paris et petite couronne : 550 à 900 € HT',
+                    'Journée cordiste en province : 420 à 700 € HT',
+                    'Nettoyage façade béton (haute pression + traitement) : 8 à 15 € HT/m²',
+                    'Remplacement de joint de façade : 12 à 22 € HT/ml, matériaux inclus',
+                    'Ragréage béton et traitement anti-carbonatation : 40 à 80 € HT/m²',
+                    'Inspection technique avec rapport et préconisations : 800 à 1 500 € HT',
+                    'Installation de ligne de vie permanente EN 795 : 600 à 1 200 € HT par ancrage posé',
+                    'Diagnostic de carbonatation avec rapport : 400 à 800 € HT selon la superficie',
+                ],
+                cta: {
+                    text: 'Comparer des devis pour ma façade béton',
+                    href: '/post-job',
+                    description: 'Recevez des offres de cordistes certifiés spécialisés sur les façades béton des années 70.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Préparer l\'intervention : ce que votre syndic doit anticiper',
+                body: 'Une intervention cordiste sur un immeuble des années 70 se prépare en cinq étapes. Plus le syndic anticipe, plus le démarrage est rapide — et moins les coûts imprévus s\'accumulent en cours de chantier.\n\n**1. Rassembler les documents techniques** : carnet d\'entretien de l\'immeuble, dossier technique amiante (DTA), rapports d\'inspection façade antérieurs, plans de toiture avec localisation des acrotères et des sorties de gaines. Ces documents permettent au cordiste de chiffrer précisément sans visite préalable longue.\n\n**2. Identifier les points d\'ancrage existants** : si l\'immeuble dispose déjà de points d\'ancrage certifiés EN 795 ou d\'une ligne de vie permanente en toiture, le chantier peut démarrer sous 24 à 48 heures. Sinon, une pose préalable est nécessaire — comptez 1 à 2 jours supplémentaires.\n\n**3. Commanditer le DTA avant toute demande de devis** : aucun prestataire sérieux ne démarrera des travaux sur du béton des années 70 sans avoir pris connaissance du DTA. Si vous ne l\'avez pas, faites-le réaliser en priorité — 150 à 400 € chez un diagnostiqueur certifié COFRAC.\n\n**4. Informer les résidents** : affichage en parties communes au minimum 48 heures avant le démarrage — bruit de chantier, restriction d\'accès aux balcons, chutes potentielles de matériaux. Pour une intervention qui surplombe la voie publique, un arrêté de voirie est requis auprès de la mairie.\n\n**5. Vérifier les documents du prestataire** : attestation RC Pro à jour mentionnant les techniques d\'accès sur cordes (TAC), certificat CQP TPS ou IRATA avec date de validité (renouvellement tous les 3 ans), attestation d\'aptitude médicale de chaque technicien, et plan de prévention cosigné avant le démarrage — obligatoire pour les travaux en hauteur listés dans l\'arrêté du 19 mars 1993.',
+                cta: {
+                    text: 'Trouver un cordiste pour mon immeuble',
+                    href: '/post-job',
+                    description: 'Des cordistes certifiés intervenant sur les façades béton des années 70 reçoivent votre demande et répondent sous 48h.',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Peut-on faire des travaux de façade sur un immeuble des années 70 sans nacelle ni échafaudage ?',
+                a: 'Oui, pour la quasi-totalité des travaux ponctuels — nettoyage, joints, ragréage, inspection. Un cordiste certifié travaille en accès sur cordes jusqu\'à 60 mètres de hauteur sans structure porteuse. La seule condition : des points d\'ancrage adaptés ou posables sur la toiture.',
+            },
+            {
+                q: 'Comment savoir si les joints de ma façade béton doivent être remplacés ?',
+                a: 'Plusieurs signes sont visibles depuis le sol : joints brunis ou noircis avec des craquelures transversales, décollements aux angles, taches d\'humidité aux encadrements de fenêtres, infiltrations en appartement après la pluie. Un diagnostic visuel par un cordiste suffit pour qualifier l\'état — comptez 400 à 800 € HT pour une inspection de façade complète avec rapport.',
+            },
+            {
+                q: 'Le dossier technique amiante (DTA) est-il obligatoire avant de faire intervenir un cordiste sur un immeuble des années 70 ?',
+                a: 'Oui, pour tout immeuble dont les matériaux sont antérieurs au 1ᵉʳ juillet 1997. Le DTA est obligatoire avant tout travaux susceptibles de libérer des fibres (article L. 1334-13 du Code de la santé publique). Si des matériaux amiantés sont identifiés, les travaux doivent être confiés à une entreprise certifiée SS3.',
+            },
+            {
+                q: 'Combien coûte la réfection complète des joints d\'un immeuble R+8 ?',
+                a: 'Pour un R+8 de 4 façades avec environ 600 ml de joints à remplacer, comptez entre 7 200 et 13 200 € HT en accès sur cordes, matériaux inclus. C\'est 40 à 60 % moins cher qu\'une intervention en nacelle (location 4 000 à 7 000 €/semaine hors opérateur) ou en échafaudage complet.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste pour mon immeuble',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Façade haussmannienne et cordiste', href: '/blog/cordiste-facade-haussmannienne' },
+            { label: 'Cordiste en copropriété : guide syndic', href: '/blog/cordiste-copropriete-guide-syndic' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
