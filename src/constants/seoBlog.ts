@@ -2116,6 +2116,124 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'cordiste-immeuble-annees-70-beton',
+        authorSlug: 'anthony-profit',
+        title: 'Cordiste immeuble années 70 : béton, bardage, ITE — guide 2026',
+        shortTitle: 'Cordiste immeuble années 70',
+        description:
+            'Trouvez un cordiste qualifié pour votre immeuble années 70 : façade béton, bardage vieillissant, ITE — tarifs 2026, délais et travaux sans échafaudage.',
+        category: 'Guide achat',
+        readTime: 8,
+        datePublished: '2026-08-03',
+        dateModified: '2026-08-03',
+        intro:
+            'En France, le cordiste spécialisé sur immeuble années 70 est devenu un recours régulier pour les syndics de copropriété et les bailleurs sociaux. Béton brut, barres HLM, grands ensembles de R+6 à R+15 : ces bâtiments cumulent des contraintes techniques précises — cours étroites, absence de points d\'ancrage structurels en toiture, hauteurs importantes — qui rendent l\'échafaudage classique disproportionné et la nacelle souvent impossible à positionner. Un technicien d\'accès sur cordes qualifié peut intervenir là où les autres techniques échouent : inspection de façade en béton carbonaté, remplacement de panneaux de bardage vieillissants, diagnostic de fissures ou traitement hydrofuge à 40 mètres de hauteur. Ce guide détaille les travaux réalisables, les tarifs 2026 et ce que vous devez préparer avant de confier votre immeuble à un cordiste.',
+        sections: [
+            {
+                heading: 'Pourquoi les immeubles années 70 posent des défis techniques en hauteur',
+                body: 'La France compte plus de 500 000 immeubles construits entre 1955 et 1980, en pleine période des grands ensembles. Béton brut apparent, façades préfabriquées, niveaux multiples allant de R+6 à R+20 : ce patrimoine vieillissant exige un entretien soutenu, mais ses caractéristiques architecturales compliquent l\'accès pour les intervenants classiques.\n\nLa première contrainte est l\'espace au sol. Les cours intérieures de ces barres et tours mesurent souvent moins de 6 mètres. Une nacelle articulée de 30 mètres exige un rayon de manœuvre de 8 à 10 mètres — impossible dans un grand ensemble type ZUP. L\'échafaudage traditionnel coûte entre 15 et 25 €/m² à la semaine sur un bâtiment de 15 niveaux, sans compter les autorisations de voirie et la gestion des circulations piétonnes pendant les travaux.\n\nLe béton de ces bâtiments présente par ailleurs des pathologies liées à l\'âge : **carbonatation** (perte d\'alcalinité exposant les armatures à la corrosion), **fissures de retrait**, **épaufrures** en façade, décollements sur les parements peints. Ces désordres exigent une inspection rapprochée façade par façade, à la hauteur précise de chaque anomalie — exactement ce que permet l\'accès sur cordes. Là où une nacelle doit se repositionner toutes les 30 secondes, un cordiste maintient sa position sur un point précis le temps nécessaire pour diagnostiquer, injecter ou traiter.',
+            },
+            {
+                heading: 'Quels travaux un cordiste peut-il réaliser sur façade béton ?',
+                body: 'Un technicien d\'accès sur cordes (TAC) peut intervenir sur l\'ensemble des prestations de façade qui ne requièrent pas de démolition lourde ou de soudure prolongée. Sur un immeuble années 70 en béton, les missions les plus courantes couvrent l\'inspection, le traitement et l\'entretien de l\'enveloppe.\n\nL\'inspection est souvent le premier chantier : le cordiste descend en rappel le long de la façade, marquant et photographiant chaque désordre — fissures, épaufrures, traces d\'humidité, joints dégradés entre préfabriqués. Un rapport cartographié par niveau est remis au maître d\'ouvrage sous 48 heures. Sur un R+12, une telle inspection coûte entre 800 et 1 800 € selon la surface à couvrir.\n\nLe traitement suit directement l\'inspection dans la majorité des chantiers : **injection de fissures** à la résine époxy ou polyuréthane, **pontage des joints** dégradés entre préfabriqués, **application d\'hydrofuge** sur surface béton nettoyée, **démoussage haute pression** sur parements encrassés en milieu urbain. Le cordiste travaille avec des EPI adaptés — harnais certifié EN 361, corde de travail + corde de sécurité indépendante, descendeur autobloquant — et des outillages légers : pistolet à injection, lance haute pression, applicateur airless.\n\nLes travaux en suspension restent soumis au Code du travail (articles R. 4323-88 à R. 4323-90). Tout technicien doit justifier d\'une certification valide : CQP TPS, IRATA ou équivalent reconnu par la SFETH (Syndicat Français des Entreprises de Techniques sur Cordes).',
+                listIntro: 'Travaux réalisables par un cordiste sur immeuble années 70 :',
+                list: [
+                    'Inspection diagnostique avec rapport cartographié — 800 à 1 800 € pour un R+12',
+                    'Injection de fissures béton à la résine époxy ou polyuréthane',
+                    'Pontage et rejointoiement des joints entre éléments préfabriqués',
+                    'Application d\'hydrofuge sur béton nettoyé — 12 à 18 €/m²',
+                    'Démoussage et nettoyage haute pression — 8 à 12 €/m²',
+                    'Remplacement de panneaux de bardage ou d\'ITE endommagés',
+                    'Pose de filets anti-pigeons ou de protections provisoires en hauteur',
+                    'Diagnostic de carbonatation (prélèvements et tests à la phénolphtaléine)',
+                ],
+            },
+            {
+                heading: 'Bardage vieillissant et ITE : l\'intervention sur cordes évite le chantier lourd',
+                body: 'À partir des années 2000, une large part des immeubles construits dans les années 70 a bénéficié de programmes de rénovation thermique — notamment sous l\'impulsion de MaPrimeRénov\' et des plans de réhabilitation des bailleurs sociaux. Ces interventions ont ajouté une couche d\'**isolation thermique par l\'extérieur (ITE)** ou remplacé le bardage d\'origine par des panneaux composites (ACM, fibrociment, zinc laqué).\n\nDix à quinze ans plus tard, ces bardages de rénovation montrent leurs premières failles : joints de dilatation décollés, fixations desserrées par cycles thermiques répétés, infiltrations localisées à la jonction entre panneaux, ou simplement des panneaux déformés par le vent au-dessus du 8e niveau. Remplacer 6 panneaux à 30 mètres de hauteur n\'a aucun sens avec un échafaudage complet : le coût de la structure dépasse largement celui de la réparation.\n\nUn cordiste CQP TPS ou IRATA peut accéder à chaque point de fixation individuellement, déposer les panneaux défaillants, inspecter la membrane sous-jacente et reposer des éléments neufs. Le temps d\'intervention sur un lot de 10 panneaux dégradés est généralement de 1 à 2 jours pour un binôme de techniciens — soit 900 à 1 600 € de main-d\'œuvre, contre 3 000 à 5 000 € de location d\'échafaudage pour la même surface. Pour les rénovations ITE récentes sous garantie décennale, l\'intervention d\'un cordiste permet aussi de documenter les défauts avant la mise en jeu de la garantie constructeur.',
+            },
+            {
+                heading: 'Tarifs cordiste immeuble années 70 : ce que ça coûte vraiment en 2026',
+                body: 'Le tarif d\'un cordiste sur un immeuble en béton des années 70 dépend de trois variables : la hauteur du bâtiment, la complexité de l\'accès en toiture, et la nature des travaux (inspection seule, traitement ponctuel ou chantier multi-journées).\n\nEn **prestation horaire**, un technicien d\'accès sur cordes certifié facture entre **45 et 80 €/h** selon la région et le niveau de certification (CQP TPS N1 vs N2, IRATA L2). Un binôme — obligatoire pour tout travail en suspension de plus de 3 mètres — coûte donc entre 90 et 160 €/h de chantier effectif, hors déplacements.\n\nEn **prestation à la journée**, comptez 350 à 500 €/j en région pour un technicien, et 450 à 800 €/j à Paris et en petite couronne pour un binôme tout compris (déplacement, EPI, assurance). Les chantiers de plus de 3 jours bénéficient systématiquement d\'une dégressivité.\n\nPour les **prestations au m²** — nettoyage haute pression, démoussage, hydrofugation — la fourchette est de 8 à 18 €/m² selon la hauteur et l\'état de surface. Un R+8 de 400 m² de façade à nettoyer représente entre 3 200 et 7 200 € de main-d\'œuvre pour 2 à 4 jours d\'intervention.',
+                listIntro: 'Tarifs cordiste 2026 sur immeuble années 70 :',
+                list: [
+                    'Taux horaire technicien TAC certifié : 45 à 80 €/h',
+                    'Binôme obligatoire (sécurité) : 90 à 160 €/h de chantier effectif',
+                    'Journée complète en région : 350 à 500 €/j — déplacements inclus',
+                    'Journée complète Paris / IDF : 450 à 800 €/j — binôme',
+                    'Nettoyage haute pression / démoussage : 8 à 18 €/m²',
+                    'Inspection diagnostique R+12 : 800 à 1 800 € tout compris',
+                    'Remplacement bardage / ITE (10 panneaux) : 900 à 1 600 € main-d\'œuvre',
+                ],
+                cta: {
+                    text: 'Obtenir des devis cordiste pour mon immeuble',
+                    href: '/post-job',
+                    description: 'Décrivez vos travaux en 5 minutes. Recevez des devis de techniciens certifiés dans votre département.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Nacelle, échafaudage ou cordiste : que choisir pour votre grand ensemble ?',
+                body: 'La question revient à chaque assemblée générale de copropriété : quelle technique choisir pour entretenir la façade d\'un immeuble de 10 niveaux sans bloquer la vie de l\'immeuble pendant des semaines ?\n\nL\'**échafaudage** reste la référence pour les ravalements complets sur façade accessible, avec voirie large. Son avantage : la surface de travail permanente permet d\'enchaîner les corps de métier (peinture, maçonnerie, menuiserie). Son inconvénient majeur sur un grand ensemble : la location coûte 15 à 25 €/m²/semaine, le montage prend 1 à 3 jours sur un R+10, et il est techniquement impossible dans les cours inférieures à 6 mètres.\n\nLa **nacelle articulée** est rapide et économique pour les interventions ponctuelles sur façade extérieure dégagée. En dessous de 6 mètres de largeur de cour ou sur les façades intérieures des grandes barres, elle ne peut pas accéder du tout.\n\nLe **cordiste** est la solution par défaut sur toutes les façades inaccessibles aux deux techniques précédentes. Sa flexibilité d\'installation — un câble de descente fixé en toiture — lui permet d\'intervenir sur n\'importe quelle façade, dans n\'importe quelle configuration de cour, sans autorisation de voirie, sans immobiliser les circulations, et avec un délai d\'installation de 30 à 60 minutes.',
+                listIntro: 'Comparatif selon la configuration de l\'immeuble :',
+                list: [
+                    'Façade sur voirie large, R+4 ou moins → nacelle : solution la plus rapide et économique',
+                    'Ravalement complet R+4 à R+8, façade accessible → échafaudage : meilleur coût global',
+                    'Façade intérieure, cour < 6 m, R+6 et plus → cordiste : seule solution réaliste',
+                    'Intervention ponctuelle (10-30 m², 1-2 jours) → cordiste : toujours plus économique',
+                    'Chantier multi-corps de métier simultanés → échafaudage : plateforme partagée',
+                    'Inspection + traitement préventif → cordiste : accès immédiat sans structure fixe',
+                ],
+                cta: {
+                    text: 'Comparer les devis pour mon immeuble',
+                    href: '/post-job',
+                    description: 'Décrivez votre façade et recevez des propositions adaptées à la configuration de votre bâtiment.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Comment préparer l\'intervention d\'un cordiste dans votre copropriété ?',
+                body: 'Faire intervenir un technicien d\'accès sur cordes dans une copropriété demande une organisation minimale de la part du gestionnaire ou du syndic. La bonne préparation réduit les délais, évite les allers-retours administratifs et assure la sécurité de l\'ensemble des résidents.\n\n**Le plan de prévention** est obligatoire dès lors qu\'une entreprise extérieure intervient sur un site avec des risques spécifiques. Sur un immeuble en copropriété, il est co-signé par le syndic et l\'entreprise de cordistes. Il détaille les risques liés à la coactivité : résidents sur les balcons, fenêtres ouvertes pendant la descente, circulations piétonnes sous les zones de travail.\n\n**L\'information des résidents** doit précéder l\'intervention d\'au moins 48 à 72 heures. Un affichage dans les parties communes suffit dans la majorité des cas, en précisant les niveaux concernés et les horaires (généralement 8h-17h). Aucune autorisation individuelle n\'est requise : la copropriété dispose du droit d\'entretien de l\'immeuble.\n\n**L\'accès à la toiture** doit être libéré et sécurisé : trappe déverrouillée, chemin de circulation balisé, et idéalement une vérification préalable des acrotères par le chef d\'équipe cordiste avant la première descente. Prévoir également une prise de courant 220V accessible en toiture pour les outillages électriques.\n\n**Le devis à faire valider en AG** — ou en délégation du conseil syndical si le montant est inférieur au seuil de mise en concurrence — doit mentionner les certifications du prestataire (CQP TPS, IRATA, ou adhésion SFETH), la couverture RC pro TAC, et le détail des surfaces traitées. Un prestataire sérieux fournit ces justificatifs sans qu\'on ait à les demander.',
+                cta: {
+                    text: 'Publier ma demande de travaux',
+                    href: '/post-job',
+                    description: 'Déposez votre besoin en 5 minutes. Les cordistes certifiés de votre département répondent sous 24h.',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste pour un immeuble années 70 ?',
+                a: 'Comptez 45 à 80 €/h par technicien, ou 450 à 800 €/j pour un binôme à Paris. Une inspection diagnostique sur un R+12 revient à 800-1 800 €. Le nettoyage de façade béton est facturé 8 à 18 €/m².',
+            },
+            {
+                q: 'Le béton des immeubles années 70 est-il compatible avec les points d\'ancrage pour cordes ?',
+                a: 'Oui, sous conditions. Le cordiste évalue en amont la résistance des acrotères et des structures de toiture pour valider les points d\'ancrage. Si les acrotères sont dégradés ou insuffisants, il peut utiliser des platines d\'ancrage temporaires boulonnées, des systèmes de lest ou des ancrages sur les éléments porteurs internes. Cette évaluation fait partie de l\'organisation du chantier avant toute descente.',
+            },
+            {
+                q: 'Faut-il un vote en assemblée générale pour faire intervenir un cordiste ?',
+                a: 'Pas nécessairement. En dessous du seuil de mise en concurrence de votre règlement de copropriété (souvent 3 000 à 5 000 €), le conseil syndical peut valider la commande par délégation. Au-delà, un vote en AG ou une consultation écrite s\'impose. Les réparations urgentes peuvent être engagées par le syndic sans vote préalable.',
+            },
+            {
+                q: 'Peut-on rénover une façade béton brut sans échafaudage ?',
+                a: 'Oui, dans la grande majorité des cas d\'entretien courant et de traitement ponctuel. Les cordistes réalisent démoussage, hydrofugation, injection de fissures et pontage de joints sans aucune structure fixe. Un ravalement complet avec reprise de peinture sur grande surface peut en revanche nécessiter un échafaudage pour organiser les passes d\'application successives.',
+            },
+            {
+                q: 'En combien de temps un cordiste peut-il inspecter un immeuble de 12 étages ?',
+                a: 'Un binôme de techniciens TAC inspecte 400 à 600 m² de façade par journée selon la densité des désordres à cartographier. Sur un R+12 de surface standard (600-900 m²), comptez 1 à 2 jours d\'inspection avec remise du rapport dans les 48 heures suivant la fin du chantier.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste pour mon immeuble',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Faire intervenir un cordiste en copropriété', href: '/blog/cordiste-copropriete-guide-syndic' },
+            { label: 'Cordiste vs échafaudage : le comparatif', href: '/cordiste-vs-echafaudage' },
+            { label: 'Prix d\'un cordiste en 2026', href: '/prix-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
