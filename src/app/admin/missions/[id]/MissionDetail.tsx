@@ -9,6 +9,7 @@ import { AiSidebar } from '@/components/admin/AiSidebar'
 import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
 import { MissionEditForm } from '@/components/admin/MissionEditForm'
 import { PhotoManager } from '@/components/admin/PhotoManager'
+import { ZoneMailPanel } from '@/components/admin/ZoneMailPanel'
 import { computeLQS } from '@/lib/types/ops'
 import type { Job } from '@/lib/types/ops'
 
@@ -71,6 +72,26 @@ export function MissionDetail({
 
     const lqs = computeLQS(job)
     const photos = Array.isArray(job.photos_url) ? job.photos_url : []
+
+    // Pré-remplissage de l'email ciblé par zone (déclenché depuis la fiche mission).
+    const seoBase = process.env.NEXT_PUBLIC_SEO_BASE_URL || 'https://www.lescordistes.com'
+    const missionUrl = job.slug ? `${seoBase}/jobs/${job.slug}` : ''
+    const zoneDefaultDepartments = job.location_department ? [job.location_department] : []
+    const zoneLocationLabel = `${job.location_city ?? ''}${job.location_department ? ` (${job.location_department})` : ''}`.trim()
+    const zoneSubject = `Nouvelle mission cordiste à ${job.location_city ?? 'votre région'}${job.location_department ? ` (${job.location_department})` : ''}`
+    const zoneBody = `Bonjour,
+
+Une nouvelle mission vient d'être publiée dans votre zone d'intervention :
+
+📍 ${zoneLocationLabel}
+🔧 ${CATEGORY_LABEL[job.category] ?? job.category}
+
+${job.title}
+
+Retrouvez le détail et débloquez le contact du client directement sur LesCordistes.com.
+
+À bientôt,
+L'équipe LesCordistes`
 
     async function refresh() {
         const r = await fetch(`/api/ops/jobs/${job.id}`, { cache: 'no-store' })
@@ -304,6 +325,21 @@ export function MissionDetail({
                             Supprimer définitivement
                         </button>
                     </div>
+                </div>
+
+                {/* Prévenir les pros de la zone — email ciblé par département */}
+                <div className="bg-white border border-slate-200 rounded-xl p-5">
+                    <h2 className="text-sm font-semibold text-slate-700 mb-1">Prévenir les pros de la zone</h2>
+                    <p className="text-xs text-slate-500 mb-3">
+                        Email aux pros inscrits sur ces départements + abonnés alertes correspondants (union dédupliquée, désinscrits exclus).
+                    </p>
+                    <ZoneMailPanel
+                        jobId={job.id}
+                        defaultDepartments={zoneDefaultDepartments}
+                        defaultSubject={zoneSubject}
+                        defaultBody={zoneBody}
+                        defaultLink={missionUrl || undefined}
+                    />
                 </div>
 
                 {/* Revalidation client (statut email + clic) */}
