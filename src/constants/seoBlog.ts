@@ -2116,6 +2116,101 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'journee-avec-un-cordiste',
+        title: 'Une journée avec un cordiste : le métier de l\'intérieur 2026',
+        shortTitle: 'Une journée avec un cordiste',
+        description: 'Découvrez une journée de travail d\'un cordiste certifié : équipements, tarifs 2026, types de chantiers et réalités physiques d\'un métier exceptionnel.',
+        category: 'Travaux & technique',
+        authorSlug: 'anthony-profit',
+        readTime: 7,
+        datePublished: '2026-08-10',
+        dateModified: '2026-08-10',
+        intro: 'Une journée avec un cordiste, c\'est l\'anti-routine par excellence. À 7 h 30, le cordiste certifié CQP TPS est déjà sur site, sac à dos d\'une vingtaine de kilos sur les épaules, plan de sauvetage en poche. Entre l\'analyse du bâti, l\'installation des ancrages et les heures passées en suspension à rénover une façade ou nettoyer une verrière, chaque chantier est unique. Ce portrait de l\'intérieur révèle ce que les brochures de formation ne montrent pas : les contraintes météo, le travail en binôme, les salaires réels et la réalité physique d\'un métier que moins de 5 000 personnes exercent en France.',
+        sections: [
+            {
+                heading: 'Qu\'est-ce qu\'une journée type pour un cordiste ?',
+                body: 'La journée d\'un cordiste commence bien avant de mettre le premier pied sur la façade. Arrivée sur site entre 7 h 30 et 8 h, le cordiste effectue une reconnaissance terrain : analyse des points d\'ancrage disponibles (acrotères, platines, manchons scellés), vérification de l\'accès en toiture, lecture du plan de prévention remis par le donneur d\'ordre.\n\nLa phase de mise en place dure en moyenne 45 à 90 minutes pour un chantier standard. Le cordiste installe ses cordes de travail et de sécurité sur deux ancrages distincts et indépendants — c\'est une obligation réglementaire issue de la norme EN 363. Son binôme prend position en toiture ou en sécurité au sol, en contact radio permanent.\n\nEn suspension, le rythme de travail est cadencé par les déplacements verticaux et latéraux, la gestuelle des outils et les pauses imposées par la fatigue musculaire. Un cordiste descend rarement plus de 15 à 20 mètres à la fois sans remonter inspecter ses ancrages.\n\nLa journée se termine par le démontage complet du dispositif de cordes, le rangement du matériel et la rédaction du compte rendu de chantier. Un chantier de nettoyage de façade sur un immeuble R+6 représente typiquement une journée complète pour un binôme, soit 7 à 8 heures de travail effectif.',
+            },
+            {
+                heading: 'L\'équipement d\'un cordiste : ce qu\'il emporte sur chaque chantier',
+                body: 'Le kit d\'un cordiste certifié pèse entre 15 et 25 kg selon la nature du chantier. Chaque équipement de protection individuelle (EPI) doit être vérifié annuellement par un organisme agréé et tracé dans un registre nominatif. Un kit EPI neuf complet représente un investissement de 1 500 à 2 500 €. Le renouvellement partiel annuel (cordes, gants, longes) coûte en moyenne 300 à 600 €. Les cordes doivent être retirées du service après tout choc de chute, même en l\'absence de dommages apparents.',
+                listIntro: 'Les équipements incontournables du kit cordiste :',
+                list: [
+                    'Harnais antichute complet (cuissardes + dorsale + sternale) — 500 à 1 200 €',
+                    'Deux cordes semi-statiques : corde de travail Ø 11 mm + corde de sécurité Ø 10,5 mm, 60 m chacune — 200 à 400 €',
+                    'Descendeur bloqueur (type I\'D ou Rig) + bloqueur de poitrine (Croll) — 150 à 350 €',
+                    'Longe de positionnement avec absorbeur d\'énergie — 80 à 150 €',
+                    'Casque de chantier avec jugulaire (EN 397) — 60 à 120 €',
+                    'Gants de travail adaptés au type de surface — 20 à 60 €',
+                    'Sac à dos de cordiste avec fixations matériel et porte-outils — 80 à 200 €',
+                ],
+                cta: {
+                    text: 'Trouver un cordiste équipé',
+                    href: '/post-job',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'En suspension : comment travaille réellement un cordiste ?',
+                body: 'La règle d\'or du travail sur corde : jamais seul. Le cordiste opère obligatoirement avec un binôme qui assure la sécurité, reste en contact permanent et peut déclencher le plan de sauvetage en cas d\'incident. Cette exigence est inscrite dans la réglementation française (Article R4323-88 du Code du travail) et vérifiée lors des inspections DREAL.\n\nEn suspension, le cordiste maintient deux points de contact avec la corde à tout moment. Le travail s\'effectue avec les deux mains libres grâce au système de positionnement : le bloqueur de poitrine remonte automatiquement la corde de travail tandis que le descendeur contrôle la descente. La technique dite de pendulage permet de se déplacer latéralement sur une façade en prenant appui contre la paroi.\n\nLes tâches réalisables en suspension sont nombreuses : ravalement (lasure, peinture, enduit), nettoyage haute pression et traitement hydrofuge, installation ou dépose d\'éléments de façade (bardage, menuiseries), inspection et rédaction de rapport technique, soudure légère ou étanchéité en zones inaccessibles aux nacelles.\n\nLa durée effective en suspension sur une journée de travail varie de 3 à 6 heures selon le chantier. Les périodes hors corde servent à la manutention, au déplacement entre points d\'accès et aux pauses imposées par la fatigue. Un cordiste expérimenté adapte son rythme de descente à la complexité de la surface et à la précision du travail demandé.',
+                cta: {
+                    text: 'Demander un devis cordiste',
+                    href: '/post-job',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Les réalités du métier de cordiste : météo, physique et recertification',
+                body: 'Ce que les plaquettes de formation n\'anticipent pas, c\'est la part du travail perdue à cause de la météo. Le cordiste ne peut pas travailler si le vent dépasse 45 km/h (norme EN 363 et recommandations SFETH) ou par temps de pluie significative sur certaines tâches (peinture, traitement). En pratique, un cordiste indépendant perd entre 15 et 30 % de ses jours potentiels selon la région et la saison — jusqu\'à 40 % en zones côtières exposées.\n\nSur le plan physique, le métier sollicite intensément les épaules, les avant-bras et le gainage abdominal. Un cordiste réalise des milliers de tractions et de maintiens de position isométrique chaque semaine. La visite médicale d\'aptitude est obligatoire tous les deux ans (médecin du travail ou médecin agréé pour les indépendants) et évalue la résistance cardiovasculaire, la vue et l\'absence de troubles vestibulaires.\n\nLa recertification des compétences est exigée tous les trois ans pour le CQP TPS (bilan professionnel + recyclage technique) et selon les niveaux pour IRATA (examen pratique chaque 3 ans). Cette obligation garantit que les cordistes maintiennent leur niveau face à l\'évolution des normes et des équipements.\n\nEnfin, la charge mentale est réelle : gérer un plan de sauvetage, anticiper les risques de chute d\'objet pour les piétons en contrebas (filets, balisage périmétrique), et maintenir une concentration totale pendant des heures en suspension représente une charge cognitive que beaucoup de candidats sous-estiment lors de leur reconversion.',
+            },
+            {
+                heading: 'Ce que gagne un cordiste en 2026',
+                body: 'La rémunération d\'un cordiste varie selon le statut, l\'expérience et la région. Un cordiste indépendant actif facture entre 100 et 180 jours par an selon la saison, la localisation et son réseau. En soustrayant les charges sociales (20-28 % en micro ou EURL) et les frais (assurances, vérification EPI, déplacements), le revenu net annuel se situe entre 25 000 et 55 000 € pour la majorité des indépendants, avec des pointes à 70 000 € pour les experts IRATA très demandés.\n\nLes chantiers les mieux rémunérés ne sont pas toujours les plus spectaculaires : les rapports d\'inspection technique (façades, cheminées industrielles, structures métalliques) sont souvent facturés à des TJM supérieurs aux travaux de nettoyage, car ils engagent la responsabilité professionnelle du rédacteur.',
+                listIntro: 'Fourchettes de rémunération cordiste 2026 :',
+                list: [
+                    'Salarié débutant (CQP TPS N1) : 1 800 à 2 100 € net/mois',
+                    'Salarié confirmé (3-5 ans d\'expérience) : 2 200 à 2 600 € net/mois',
+                    'Salarié expérimenté ou chef de chantier : 2 600 à 3 200 € net/mois',
+                    'Salarié technicien IRATA Level 3 ou responsable technique : 3 000 à 3 800 € net/mois',
+                    'Indépendant TJM standard (N1, régions hors Paris) : 280 à 380 €/jour',
+                    'Indépendant TJM confirmé (N2, Paris/IDF ou compétences spécifiques) : 380 à 500 €/jour',
+                    'Indépendant TJM expert ou chantier complexe : 500 à 650 €/jour',
+                ],
+                cta: {
+                    text: 'Trouver un cordiste certifié',
+                    href: '/post-job',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien gagne un cordiste par jour ?',
+                a: 'Un cordiste indépendant facture entre 280 et 500 € par jour selon son niveau de certification (CQP TPS N1 à N2, IRATA) et la région. Salarié, il perçoit entre 1 800 et 3 200 € net par mois selon l\'expérience.',
+            },
+            {
+                q: 'Un cordiste travaille-t-il seul ou en équipe ?',
+                a: 'Jamais seul. La réglementation française (Article R4323-88 du Code du travail) impose un binôme en permanence : un cordiste en suspension et un coéquipier en sécurité, capable de déclencher le plan de sauvetage en cas d\'incident. Travailler seul sur corde est interdit.',
+            },
+            {
+                q: 'Combien de jours par an travaille un cordiste indépendant ?',
+                a: 'Entre 100 et 180 jours facturables par an en moyenne, selon la région et la saison. Les 15 à 30 % de jours perdus pour cause météo (vent > 45 km/h, pluie) réduisent significativement le nombre de chantiers réalisables, surtout en zones côtières exposées.',
+            },
+            {
+                q: 'Quelles qualités physiques faut-il pour être cordiste ?',
+                a: 'Bonne condition cardiovasculaire, résistance musculaire des épaules et des avant-bras, absence de vertiges en hauteur et bonne acuité visuelle. La visite médicale d\'aptitude obligatoire tous les deux ans valide ces critères auprès d\'un médecin agréé.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste certifié',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Habilitations cordiste : CQP TPS, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Comment choisir son cordiste', href: '/blog/comment-choisir-son-cordiste' },
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Responsabilité du maître d\'ouvrage', href: '/blog/responsabilite-maitre-ouvrage-chantier-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
