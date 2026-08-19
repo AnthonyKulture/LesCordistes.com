@@ -2116,6 +2116,114 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'rc-pro-cordiste-assurance-responsabilite-civile',
+        authorSlug: 'benjamin-de-oliveira',
+        title: 'RC pro cordiste : ce qu\'il faut vérifier avant de signer',
+        shortTitle: 'RC pro cordiste : le guide complet',
+        description:
+            'Choisissez votre RC pro cordiste avec les bons critères : clause TAC obligatoire, plafonds 2026, pièges à éviter — guide complet avant de signer.',
+        category: 'Métier & Carrière',
+        readTime: 9,
+        datePublished: '2026-08-19',
+        dateModified: '2026-08-19',
+        intro:
+            'La RC pro cordiste est le premier document qu\'un donneur d\'ordre sérieux te demandera — avant le devis, parfois avant même de fixer un rendez-vous. Et pourtant, c\'est souvent la ligne de budget sous-estimée, souscrite trop vite, ou confondue avec une assurance générale qui ne couvre pas les techniques d\'accès sur cordes (TAC). Ce guide détaille ce qu\'une RC pro spécialisée doit contenir, combien elle coûte réellement en 2026 — entre 400 et 900 €/an selon le profil — et les pièges classiques qui peuvent te laisser sans couverture au moment où tu en as le plus besoin. Que tu sois fraîchement titulaire du CQP TPS, indépendant établi ou en cours de reconversion, ces éléments de vérification te font gagner du temps — et évitent les mauvaises surprises sur chantier.',
+        sections: [
+            {
+                heading: 'Pourquoi une RC pro spécifique cordiste est indispensable ?',
+                body: 'La Responsabilité Civile Professionnelle couvre les dommages que tu pourrais causer à des tiers — ou à leurs biens — dans le cadre de ton activité. Pour un technicien d\'accès sur cordes, les risques sont réels et spécifiques : chute d\'outil depuis un ouvrage en hauteur, détérioration d\'une façade lors d\'un rappel de descente, blessure d\'un passant sous un chantier de cordes, endommagement d\'une installation technique lors d\'une intervention sur cordiste suspension.\n\nSans RC pro valide, tu es personnellement responsable de ces dommages. Selon la gravité — une fenêtre brisée coûte 300 €, une blessure corporelle grave peut atteindre plusieurs centaines de milliers d\'euros — ta responsabilité peut être engagée sur tes biens personnels si tu travailles en micro-entreprise sans protection patrimoniale spécifique.\n\nMais la raison la plus immédiate pour laquelle tu as besoin d\'une RC pro n\'est pas légale : c\'est commerciale. Un donneur d\'ordre professionnel — syndic de copropriété, bureau d\'études, PME industrielle, collectivité — exige systématiquement une **attestation RC pro à jour** avant de te confier un chantier. Sans elle, tu n\'entres pas en discussion. Le référentiel de l\'OPPBTP sur la prévention des risques de chute de hauteur précise d\'ailleurs que chaque intervenant sur cordes doit pouvoir justifier de son assurance auprès du maître d\'ouvrage.\n\nC\'est différent de l\'assurance décennale (réservée aux travaux de construction) ou de la multirisque professionnelle (locaux, matériel). La RC pro est la protection de base orientée sur ta **responsabilité envers les tiers** lors de l\'exercice de ta mission de technicien d\'accès difficile. Pour un spécialiste TAC, elle est non négociable — même pour la première mission test.',
+            },
+            {
+                heading: 'Que couvre réellement une assurance RC pro cordiste ?',
+                body: 'Une RC pro adaptée aux techniciens d\'accès sur cordes doit couvrir trois grandes catégories de sinistres.\n\n**Dommages corporels aux tiers.** Si une de tes interventions cause une blessure à un tiers — passant, salarié du bâtiment, usager de l\'ouvrage — la police prend en charge les frais médicaux, l\'indemnisation du préjudice et les frais de justice. C\'est le risque le plus coûteux à assumer sans couverture : une incapacité permanente ou une hospitalisation longue durée peut dépasser 500 000 € d\'indemnisation. Aucune épargne personnelle ne tient face à ce type de sinistre.\n\n**Dommages matériels aux biens d\'autrui.** Chute d\'outil, corde qui racle une gouttière en zinc, projection accidentelle sur un véhicule garé sous le chantier — ces accidents du quotidien peuvent générer des réclamations de 500 à 10 000 € selon la nature du bien. La RC pro les couvre jusqu\'au plafond souscrit, sans que tu aies à débourser le montant de ta poche.\n\n**Préjudice immatériel consécutif.** Si ton intervention cause un retard de livraison, la fermeture temporaire d\'un commerce ou une perte d\'exploitation pour ton client, une RC pro avec garantie "dommages immatériels consécutifs" prend en charge cette exposition. Moins fréquent pour un cordiste standard, mais indispensable si tu travailles sur des sites industriels ou commerciaux en activité — entrepôts logistiques, zones commerciales, sites de production.\n\nCe que la RC pro **ne couvre pas** : tes propres dommages corporels (c\'est l\'objet d\'une prévoyance ou d\'une mutuelle TNS), le matériel que tu endommageras toi-même, et les missions exercées en dehors de l\'objet garanti — notamment si tu réalises des travaux d\'une autre nature sans l\'avoir déclaré à l\'assureur. Un travail de nettoyage de panneaux photovoltaïques sur un toit-terrasse, par exemple, peut tomber dans une zone grise si la police ne mentionne pas explicitement cette activité en plus des TAC classiques.',
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    description: 'Accès libre aux chantiers cordiste en région — profil gratuit à l\'inscription.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Les clauses incontournables à vérifier avant de signer',
+                body: 'Toutes les RC pro ne se valent pas pour un cordiste. Une police générale "travaux du bâtiment" ou "prestations de services" peut ne pas mentionner les techniques d\'accès sur cordes — et en cas de sinistre, l\'assureur peut refuser la prise en charge en invoquant l\'absence de couverture explicite pour cette activité. Avant de signer quoi que ce soit, vérifie ces points ligne par ligne dans les conditions particulières, pas dans la plaquette commerciale. C\'est dans ce document technique — parfois en annexe — que les exclusions et les objets garantis sont réellement définis.',
+                listIntro: 'Checklist RC pro cordiste avant signature :',
+                list: [
+                    '"Travaux en hauteur par techniques d\'accès sur cordes" dans l\'objet garanti — sans cette formulation, la police est insuffisante',
+                    'Plafond par sinistre : 1 000 000 € minimum, 2 000 000 € conseillé pour chantiers industriels et tertiaires',
+                    'Plafond annuel : au moins égal au plafond par sinistre pour absorber plusieurs sinistres sur la même année',
+                    'Garantie dommages immatériels consécutifs : utile sur les sites industriels ou commerciaux en activité',
+                    'Clause de sous-traitance : vérifie si la police couvre les missions en renfort PRO ou si une clause d\'exclusion s\'applique',
+                    'Défense recours : prise en charge des frais juridiques si tu es mis en cause par un tiers ou ton client',
+                    'Franchise : montant à ta charge par sinistre — plus la franchise est haute, plus la prime baisse',
+                    'Délai de carence : certaines polices imposent 30 à 90 jours avant la première couverture — anticipe bien avant le premier chantier',
+                ],
+            },
+            {
+                heading: 'Combien coûte une RC pro cordiste en 2026 ?',
+                body: 'Le tarif d\'une RC pro spécialisée technicien accès sur cordes se situe entre **400 et 900 €/an** pour un indépendant en 2026. Cette fourchette est large parce que plusieurs variables entrent en jeu.\n\n**Le chiffre d\'affaires déclaré** est le principal levier de tarification. Un cordiste qui déclare 20 000 € de CA annuel paiera une prime autour de 400 à 500 €. Le même profil à 60 000 € de CA annuel sera plutôt entre 600 et 750 €. L\'assureur raisonne en proportion du volume d\'activité, qui reflète directement l\'exposition au risque.\n\n**Les mentions spéciales** augmentent la prime. Travaux sur sites ATEX (atmosphères explosives), interventions sur monuments historiques classés, chantiers nucléaires : ces contextes nécessitent des extensions de garantie spécifiques et peuvent faire monter la prime de 20 à 40 %. Si tu anticipes ce type de mission — entretien d\'éoliennes, inspection d\'ouvrages d\'art classés — déclare-le dès la souscription.\n\n**Le niveau de plafond** fait varier le tarif. Passer de 1 000 000 € à 2 000 000 € de plafond par sinistre représente généralement un surcoût de 50 à 100 €/an — un rapport coût/protection très favorable pour les chantiers industriels et les grands comptes.\n\n**L\'historique sinistres** joue aussi. Un profil vierge (aucun sinistre déclaré) est moins coûteux à assurer. Une réclamation, même modeste, peut faire grimper la prime de 10 à 25 % à l\'échéance suivante. C\'est une raison supplémentaire de bien documenter chaque chantier : en cas de litige, un dossier complet (plan de prévention signé, rapport d\'intervention, photos) peut suffire à clore le dossier sans déclaration de sinistre.\n\nSur la base d\'une prime annuelle médiane de 600 €, ça revient à **50 €/mois** à intégrer dans ton TJM minimum viable. Pour un cordiste junior à 300 €/j, la RC pro représente moins de 2 € par jour travaillé — un montant négligeable par rapport au risque couvert. La cotisation SFETH (Syndicat Français des Entreprises de Techniques Horizontales) propose également des contrats de groupe à des tarifs négociés pour les membres indépendants, à vérifier selon ta région.\n\nDemande systématiquement un devis à au moins deux ou trois assureurs spécialisés BTP ou prévention-sécurité. Compare les clauses, pas seulement les tarifs. Une police à 400 € sans mention TAC vaut moins qu\'une police à 650 € bien rédigée.',
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    description: 'Profil visible, certifications affichées, accès aux missions en région — sans intermédiaire.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Sous-traitance et portage salarial : qui est couvert ?',
+                body: 'La question de la couverture RC pro devient plus complexe dès que tu travailles en mode renfort PRO — c\'est-à-dire en sous-traitance pour une entreprise de cordistes ou de travaux en hauteur.\n\n**En renfort PRO (sous-traitance directe)**, l\'entreprise utilisatrice dispose en principe de sa propre RC pro qui couvre les activités réalisées sous sa direction sur le chantier concerné. En théorie, tu es donc couvert par sa police pour les dommages liés à l\'exécution du chantier. En pratique, la situation est plus nuancée.\n\nPremier point : si le sinistre survient par ta faute propre — mauvaise technique, EPI non vérifiés, négligence individuelle sur un point d\'ancrage — l\'assureur de l\'entreprise utilisatrice peut se retourner contre toi en recours, après avoir indemnisé le tiers lésé. Sans ta propre RC pro, tu assumes ce recours personnellement.\n\nDeuxième point : certains plans de prévention établis selon les recommandations de l\'OPPBTP exigent que chaque intervenant — y compris les sous-traitants et les renforts — produise sa propre attestation RC pro avant la signature du PPSPS (Plan Particulier de Sécurité et de Protection de la Santé). Ton donneur d\'ordre te demandera le document individuellement, pas celui de l\'entreprise pour laquelle tu travailles.\n\n**En portage salarial**, la société de portage est ton employeur légal pour la mission. Elle dispose généralement d\'une RC pro professionnelle qui couvre tes interventions dans le cadre de son contrat avec le client final. Demande une **attestation nominative** mentionnant ton nom, la nature des travaux couverts et la période de validité avant chaque mission. Un document générique "nos salariés portés" sans précision d\'activité peut être refusé par un donneur d\'ordre rigoureux.\n\n**La règle de fond** : même si tu es régulièrement couvert par la police de l\'entreprise utilisatrice ou de la société de portage, une RC pro personnelle reste recommandée. Elle couvre les missions en direct avec des particuliers ou des PME, les périodes inter-chantiers, et les situations où la chaîne de responsabilité est contestée. Son coût — 50 €/mois en médiane — est marginal par rapport à la sérénité qu\'elle procure sur la durée.',
+            },
+            {
+                heading: 'Les pièges classiques qui laissent un cordiste sans couverture',
+                body: 'Plusieurs erreurs reviennent régulièrement chez les cordistes qui souscrivent leur première RC pro. Les identifier à l\'avance te permet d\'éviter de découvrir un problème de couverture au moment le plus inopportun — quand un client commence à réclamer.\n\n**La RC pro générale sans mention TAC.** C\'est l\'erreur la plus fréquente. Un courtier généraliste propose une police "prestataires de services" ou "BTP toutes activités" sans vérifier si les techniques d\'accès sur cordes sont explicitement mentionnées. En cas de sinistre, l\'assureur argumente que l\'activité TAC n\'était pas dans le périmètre garanti et refuse la prise en charge. Exige toujours la formulation exacte dans les conditions particulières — pas dans la fiche commerciale.\n\n**Le plafond insuffisant.** Une garantie à 150 000 € ou 300 000 € par sinistre peut sembler confortable en début d\'activité, mais elle est largement insuffisante pour un incident grave sur un site tertiaire ou industriel. Un minimum de **1 000 000 € par sinistre** est le standard attendu par la plupart des donneurs d\'ordre professionnels — syndics, bureaux d\'études, grands comptes. En dessous, certains appels d\'offres te disqualifient d\'emblée.\n\n**Oublier de déclarer les chantiers spéciaux.** Si tu réalises une mission sur un site ATEX, nucléaire ou sur un monument historique sans l\'avoir déclaré à l\'assureur au moment de la souscription, la police exclut cette intervention. La déclaration préalable protège les deux parties et peut justifier un avenant ciblé plutôt qu\'une prime générale élevée.\n\n**Laisser expirer l\'attestation.** Un donneur d\'ordre peut bloquer l\'accès au chantier si ton attestation est expirée — même d\'un seul jour. Le renouvellement prend parfois 2 à 3 semaines chez certains assureurs spécialisés. Configure un rappel automatique **60 jours avant l\'échéance** de ta police pour initier le renouvellement sans urgence.',
+                listIntro: 'Résumé des pièges RC pro cordiste à éviter :',
+                list: [
+                    'Police sans mention "techniques d\'accès sur cordes" → refus de prise en charge possible en cas de sinistre',
+                    'Plafond inférieur à 1 000 000 € → insuffisant pour les chantiers professionnels, disqualifiant sur appels d\'offres',
+                    'Chantiers spéciaux non déclarés (ATEX, nucléaire, MH) → exclusion de garantie sur ces interventions',
+                    'Attestation expirée non renouvelée à temps → blocage à l\'entrée du chantier',
+                    'Franchise sous-estimée → reste à charge élevé sur les petits sinistres fréquents',
+                    'Changement de statut non déclaré à l\'assureur → rupture de couverture lors du passage de salarié à indépendant',
+                ],
+                cta: {
+                    text: 'Découvrir les chantiers de cette semaine',
+                    href: '/jobs',
+                    description: 'Missions cordiste sélectionnées par région — inscription gratuite.',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte une RC pro cordiste en 2026 ?',
+                a: 'Une RC pro spécialisée technicien accès sur cordes coûte entre 400 et 900 €/an pour un indépendant. Comptez 500 à 650 € en médiane pour un CA annuel de 30 000 à 50 000 €, avec mention explicite des travaux en hauteur par techniques d\'accès sur cordes.',
+            },
+            {
+                q: 'Une RC pro générale BTP couvre-t-elle les cordistes ?',
+                a: 'Pas automatiquement. Une police générale "BTP" ou "prestataires de services" peut ne pas mentionner les techniques d\'accès sur cordes (TAC). En cas de sinistre, l\'assureur peut refuser la prise en charge si l\'activité TAC n\'est pas explicitement listée dans les conditions particulières. Exige la formulation exacte avant de signer.',
+            },
+            {
+                q: 'En sous-traitance cordiste, ai-je besoin de ma propre RC pro ?',
+                a: 'En renfort PRO, tu es souvent couvert par la police de l\'entreprise utilisatrice pour le chantier en cours. Mais certains plans de prévention exigent une attestation individuelle. Ta propre RC pro reste indispensable pour les missions en direct et si l\'assureur de l\'entreprise se retourne contre toi en recours.',
+            },
+            {
+                q: 'Quel plafond de garantie choisir pour un cordiste indépendant ?',
+                a: '1 000 000 € par sinistre est le minimum attendu par la plupart des donneurs d\'ordre professionnels. Préfère 2 000 000 € pour les chantiers industriels, le tertiaire grand compte ou les ouvrages classés. L\'écart de prime est généralement de 50 à 100 €/an — marginal au regard de la protection.',
+            },
+            {
+                q: 'La RC pro couvre-t-elle mes propres dommages corporels sur chantier ?',
+                a: 'Non. La RC pro couvre uniquement les dommages causés à des tiers. Tes propres blessures relèvent d\'une prévoyance TNS ou d\'une assurance accidents du travail volontaire (disponible à la Sécurité sociale pour les travailleurs indépendants). Ces deux couvertures sont complémentaires, pas substituables.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Tarif journalier cordiste indépendant 2026', href: '/blog/tarif-journalier-cordiste-independant' },
+            { label: 'Coût pour se lancer comme cordiste indépendant', href: '/blog/cout-lancer-cordiste-independant' },
+            { label: 'Statut juridique cordiste : micro, EURL ou portage', href: '/blog/statut-juridique-cordiste-independant' },
+            { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
