@@ -248,7 +248,7 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
                                 structureTypeLabels={structureTypeLabels}
                             />
                             <JobDescription description={job.description} />
-                            <JobPhotos photos={job.photos_url || []} isLocked={!canViewContact} />
+                            <JobPhotos photos={job.photos_url || []} />
                             <TechnicalSpecs
                                 job={job}
                                 levelLabels={levelLabels}
