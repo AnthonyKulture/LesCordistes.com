@@ -9,7 +9,9 @@ import { supabase } from '../lib/supabase';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useCredits } from '../hooks/useCredits';
-import { useMessaging } from '../hooks/useMessaging';
+import { useStartConversation } from '../hooks/useStartConversation';
+import { useJobContact } from '../hooks/useJobContact';
+import { JOB_PUBLIC_COLUMNS } from '../constants/jobColumns';
 import type { Job } from '../types';
 
 // Extracted Components
@@ -101,7 +103,7 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
     const router = useRouter();
     const { user, profile } = useAuth();
     const { isJobUnlocked } = useCredits();
-    const { startConversation } = useMessaging();
+    const startConversation = useStartConversation();
 
     const { data: job, isLoading, error } = useQuery({
         queryKey: ['job', slug],
@@ -109,7 +111,7 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
             if (!slug) throw new Error('No slug');
             const { data, error } = await supabase
                 .from('jobs')
-                .select('*')
+                .select(JOB_PUBLIC_COLUMNS)
                 .eq('slug', slug)
                 .single();
             if (error) throw error;
@@ -118,6 +120,10 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
         enabled: !!slug,
         // Hydrate from server-side fetch — avoids client waterfall for live jobs
         initialData: initialJob ?? undefined,
+        // La page est en ISR (revalidate 60) : `initialJob` peut venir d'un rendu
+        // mis en cache bien plus ancien. On le marque périmé pour que le client
+        // rafraîchisse au montage, au lieu de figer un snapshot indéfiniment.
+        initialDataUpdatedAt: 0,
     });
 
     const { data: unlockCount, refetch: refetchUnlockCount } = useQuery({
@@ -139,6 +145,12 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
     const isOwner = user && job && user.id === job.created_by;
     const isLive = job?.status === 'live';
     const isVisible = isLive || isOwner || isAdmin;
+
+    // Calculé AVANT les early returns : useJobContact est un hook, il ne peut
+    // pas être appelé après un return conditionnel.
+    const isUnlocked = job?.id ? isJobUnlocked(job.id) : false;
+    const canViewContact = !!user && !!(isOwner || isUnlocked || isAdmin);
+    const { data: contact } = useJobContact(job?.id, canViewContact);
 
     if (isLoading) {
         return (
@@ -168,9 +180,6 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
     ].map(c => categoryLabels[c] || c);
     const clientType = job.client_type ? clientTypeLabels[job.client_type] : null;
 
-    // Pro with sub OR credit-unlocked lead
-    const isUnlocked = job.id ? isJobUnlocked(job.id) : false;
-    const canViewContact = user && (isOwner || isUnlocked || isAdmin);
     const isFull = !isUnlocked && (unlockCount ?? 0) >= 5;
 
     return (
@@ -263,7 +272,8 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
                             user={user}
                             profile={profile}
                             isOwner={!!isOwner}
-                            canViewContact={!!canViewContact}
+                            contact={contact ?? null}
+                            canViewContact={canViewContact}
                             isFull={isFull}
                             unlockCount={unlockCount || 0}
                             refetchUnlockCount={refetchUnlockCount}

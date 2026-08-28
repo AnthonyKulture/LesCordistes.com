@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { memo } from 'react'
 import { ArrowRight, Award, MapPin, CreditCard } from 'lucide-react'
 import type { ProfileWithCredits } from '@/lib/types/ops'
 
@@ -18,7 +21,7 @@ const ROLE_COLOR: Record<string, string> = {
     admin: 'bg-purple-100 text-purple-700',
 }
 
-export function ProfileCard({ profile }: Props) {
+function ProfileCardBase({ profile }: Props) {
     const name =
         profile.full_name ||
         [profile.first_name, profile.last_name].filter(Boolean).join(' ') ||
@@ -81,3 +84,6 @@ export function ProfileCard({ profile }: Props) {
         </Link>
     )
 }
+
+/** Mémoïsée : jusqu'à 200 cartes re-rendues à chaque frappe dans la recherche. */
+export const ProfileCard = memo(ProfileCardBase)

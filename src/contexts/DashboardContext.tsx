@@ -40,15 +40,15 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     const toggleMode = () => {
         setIsSwitching(true);
         
-        // Artificial delay for high-end feel and clean state reset
+        // Short transition for clean state reset
         setTimeout(() => {
             setMode(prev => (prev === 'worker' ? 'recruiter' : 'worker'));
-            
+
             // End transition after a bit more time to reveal the new UI
             setTimeout(() => {
                 setIsSwitching(false);
-            }, 800);
-        }, 1200);
+            }, 250);
+        }, 150);
     };
 
     return (

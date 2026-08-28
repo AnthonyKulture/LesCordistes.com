@@ -3,9 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { JOBS_KEY } from '@/app/admin/missions/jobsKeys'
 import { MapPin, Lock, ChevronRight, CheckCircle2, Mail, Trash2, Archive, RotateCcw, FileEdit, Power } from 'lucide-react'
 import { StatusBadge, LqsBadge } from '@/components/admin/StatusBadge'
-import { AiSidebar } from '@/components/admin/AiSidebar'
+import { AiSidebarLazy } from '@/components/admin/AiSidebarLazy'
+import { StorageImage } from '@/components/admin/StorageImage'
 import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
 import { MissionEditForm } from '@/components/admin/MissionEditForm'
 import { PhotoManager } from '@/components/admin/PhotoManager'
@@ -59,6 +62,7 @@ export function MissionDetail({
     unlocks?: UnlockEntry[]
 }) {
     const router = useRouter()
+    const queryClient = useQueryClient()
     const [job, setJob] = useState<Job>(initial)
     const [confirmApprove, setConfirmApprove] = useState(false)
     const [showReject, setShowReject] = useState(false)
@@ -97,6 +101,7 @@ L'équipe LesCordistes`
         const r = await fetch(`/api/ops/jobs/${job.id}`, { cache: 'no-store' })
         const data = await r.json()
         if (data.job) setJob(data.job as Job)
+        queryClient.invalidateQueries({ queryKey: JOBS_KEY })
     }
 
     async function approve() {
@@ -147,6 +152,7 @@ L'équipe LesCordistes`
             const res = await fetch(`/api/ops/jobs/${job.id}`, { method: 'DELETE' })
             if (!res.ok) throw new Error(await res.text())
             // Redirection vers la liste après suppression
+            queryClient.invalidateQueries({ queryKey: JOBS_KEY })
             router.push('/admin/missions')
         } catch (err) {
             setFeedback('Erreur suppression : ' + (err instanceof Error ? err.message : 'inconnue'))
@@ -385,8 +391,13 @@ L'équipe LesCordistes`
                             {unlocks.map(u => (
                                 <li key={u.id} className="py-2.5 flex items-center gap-3">
                                     {u.pro?.avatar_url ? (
-                                        // eslint-disable-next-line @next/next/no-img-element
-                                        <img src={u.pro.avatar_url} alt="" className="h-9 w-9 rounded-full object-cover bg-slate-100" />
+                                        <StorageImage
+                                            src={u.pro.avatar_url}
+                                            width={96}
+                                            quality={70}
+                                            alt=""
+                                            className="h-9 w-9 rounded-full object-cover bg-slate-100"
+                                        />
                                     ) : (
                                         <div className="h-9 w-9 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500">
                                             {(u.pro?.full_name || '?').slice(0, 1).toUpperCase()}
@@ -432,7 +443,7 @@ L'équipe LesCordistes`
             </section>
 
             <aside className="xl:sticky xl:top-6 xl:self-start xl:h-[calc(100vh-3rem)]">
-                <AiSidebar
+                <AiSidebarLazy
                     title="Assistant — Mission"
                     context={{ type: 'job', id: job.id, data: job }}
                     onMutationSuccess={(tool) => {

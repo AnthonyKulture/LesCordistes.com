@@ -2,6 +2,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { useUnreadCount } from './useUnreadCount';
+import { useStartConversation } from './useStartConversation';
 
 export interface Message {
     id: string;
@@ -79,58 +81,8 @@ export function useMessaging(conversationId?: string) {
         enabled: !!conversationId,
     });
 
-    // Global unread messages count
-    const { data: globalUnreadCount } = useQuery({
-        queryKey: ['unread_messages', user?.id],
-        queryFn: async () => {
-            if (!user) return 0;
-
-            // Fetch IDs of conversations where user is a participant
-            const { data: myConvs, error: convError } = await supabase
-                .from('conversations')
-                .select('id')
-                .or(`client_id.eq.${user.id},pro_id.eq.${user.id}`);
-
-            if (convError) throw convError;
-            if (!myConvs || myConvs.length === 0) return 0;
-
-            const convIds = (myConvs as any[]).map(c => c.id);
-
-            // Count unread messages only in those conversations
-            const { count, error } = await supabase
-                .from('messages')
-                .select('*', { count: 'exact', head: true })
-                .in('conversation_id', convIds)
-                .is('read_at', null)
-                .neq('sender_id', user.id);
-
-            if (error) throw error;
-            return count || 0;
-        },
-        enabled: !!user,
-    });
-
-    // === GLOBAL REALTIME : écoute les nouveaux messages partout ===
-    // On ne l'active que si on n'est pas déjà dans une conversation spécifique
-    // pour éviter les doublons de souscription sur le même client
-    useEffect(() => {
-        if (!user || conversationId) return;
-        const channelId = `global_unread_${user.id.replace(/-/g, '_')}`;
-        const channel = supabase.channel(channelId)
-            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, () => {
-                queryClient.invalidateQueries({ queryKey: ['unread_messages'] });
-                queryClient.invalidateQueries({ queryKey: ['conversations'] });
-            })
-            .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages' }, () => {
-                queryClient.invalidateQueries({ queryKey: ['unread_messages'] });
-            })
-            .subscribe((status) => {
-                if (status !== 'SUBSCRIBED' && status !== 'CLOSED') {
-                    console.error(`Realtime ${channelId} failed:`, status);
-                }
-            });
-        return () => { supabase.removeChannel(channel); };
-    }, [user, queryClient, conversationId]);
+    // Compteur global + canal Realtime mutualisé (voir useUnreadCount)
+    const { unreadCount: globalUnreadCount } = useUnreadCount();
 
     // === REALTIME SPECIFIQUE CONVERSATION ===
     useEffect(() => {
@@ -145,12 +97,10 @@ export function useMessaging(conversationId?: string) {
                     event: 'INSERT',
                     schema: 'public',
                     table: 'messages',
+                    filter: `conversation_id=eq.${conversationId}`,
                 },
-                (payload) => {
-                    // Filter manually in the callback
-                    if (payload.new && payload.new.conversation_id === conversationId) {
-                        queryClient.invalidateQueries({ queryKey: ['messages', conversationId] });
-                    }
+                () => {
+                    queryClient.invalidateQueries({ queryKey: ['messages', conversationId] });
                 }
             )
             .subscribe((status) => {
@@ -183,42 +133,7 @@ export function useMessaging(conversationId?: string) {
     });
 
     // Start or get a conversation (between a client and a pro for a specific job)
-    const startConversation = useMutation({
-        mutationFn: async ({ proId, clientId, jobId }: { proId?: string; clientId?: string; jobId?: string }) => {
-            if (!user) throw new Error('Not authenticated');
-
-            const actualClientId = clientId || user.id;
-            const actualProId = proId || user.id;
-
-            // Check if exists
-            let query = (supabase as any)
-                .from('conversations')
-                .select('id')
-                .eq('pro_id', actualProId)
-                .eq('client_id', actualClientId);
-
-            if (jobId) {
-                query = query.eq('job_id', jobId);
-            } else {
-                query = query.is('job_id', null);
-            }
-
-            const { data: existing } = await query.maybeSingle();
-
-            if (existing) return existing.id as string;
-
-            // Create new
-            const { data, error } = await (supabase as any).from('conversations').insert({
-                job_id: jobId || null,
-                client_id: actualClientId,
-                pro_id: actualProId,
-            }).select('id').single();
-
-            if (error) throw error;
-            return data.id as string;
-        },
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['conversations'] }),
-    });
+    const startConversation = useStartConversation();
 
     // Mark messages as read in a conversation
     const markAsRead = useMutation({

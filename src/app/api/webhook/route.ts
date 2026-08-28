@@ -51,10 +51,16 @@ export async function POST(req: NextRequest) {
 
                 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
+                // Le .like() est indispensable : sans lui le planner ne peut pas
+                // prouver que le filtre implique le prédicat de l'index partiel
+                // idx_credit_transactions_description_stripe, qui resterait inerte.
+                // La description reste le critère unique avant comme après la
+                // migration 20260828f, qui backfille stripe_session_id depuis elle.
                 const { data: existingTx } = await supabase
                     .from('credit_transactions')
                     .select('id')
                     .eq('description', `Achat Stripe - Session ${session.id}`)
+                    .like('description', 'Achat Stripe%')
                     .maybeSingle()
 
                 if (!existingTx) {
@@ -78,12 +84,21 @@ export async function POST(req: NextRequest) {
                         throw upsertErr
                     }
 
-                    const { error: txErr } = await supabase.from('credit_transactions').insert({
+                    const txPayload = {
                         pro_id: userId,
                         type: 'purchase',
                         amount,
                         description: `Achat Stripe - Session ${session.id}`,
-                    })
+                        stripe_session_id: session.id,
+                    }
+
+                    let { error: txErr } = await supabase.from('credit_transactions').insert(txPayload)
+
+                    // 42703 = colonne inconnue : migration 20260828f pas encore passée.
+                    if (txErr?.code === '42703') {
+                        const { stripe_session_id: _omit, ...legacyPayload } = txPayload
+                        ;({ error: txErr } = await supabase.from('credit_transactions').insert(legacyPayload))
+                    }
 
                     if (txErr) console.error('❌ Erreur insertion transaction:', txErr)
 

@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient as createSupabaseJsClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import type { Database } from './database.types'
 
@@ -28,6 +29,33 @@ export async function createSupabaseServerClient() {
             },
         }
     )
+}
+
+let publicReadClient: ReturnType<typeof createSupabaseJsClient<Database>> | null = null
+
+/**
+ * Lectures PUBLIQUES uniquement (rôle `anon`, RLS appliquée).
+ *
+ * Ne lit aucun cookie et ne porte donc AUCUNE session utilisateur : c'est ce qui
+ * permet aux pages qui l'utilisent de rester statiques/ISR (`cookies()` bascule
+ * une page en rendu dynamique par requête). Ne jamais l'utiliser là où l'identité
+ * de l'appelant compte (dashboard, déblocage de lead, écriture, admin).
+ */
+export function createSupabasePublicReadClient() {
+    if (!publicReadClient) {
+        publicReadClient = createSupabaseJsClient<Database>(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+            {
+                auth: {
+                    persistSession: false,
+                    autoRefreshToken: false,
+                    detectSessionInUrl: false,
+                },
+            }
+        )
+    }
+    return publicReadClient
 }
 
 // Client admin avec service role — uniquement pour les Route Handlers serveur

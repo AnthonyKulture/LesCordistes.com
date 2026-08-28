@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Coins, TrendingUp, TrendingDown, Clock, X, Zap, ExternalLink } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useCredits } from '../../hooks/useCredits';
+import { useCreditTransactions } from '../../hooks/useCreditTransactions';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { CREDIT_PACKS } from '../../constants/creditPacks';
@@ -120,28 +121,35 @@ interface CreditWidgetProps {
     compact?: boolean;
 }
 
-export const CreditWidget: React.FC<CreditWidgetProps> = ({ compact = false }) => {
-    const { balance, transactions, isLoading } = useCredits();
+// Variante compacte : ne consomme jamais useCreditTransactions (l'historique n'y est pas affiché)
+const CreditWidgetCompact: React.FC = () => {
+    const { balance, isLoading } = useCredits();
+    const [showModal, setShowModal] = useState(false);
+
+    if (isLoading) return null;
+
+    return (
+        <>
+            <button
+                onClick={() => setShowModal(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue/10 rounded-full hover:bg-brand-blue/20 transition-colors"
+            >
+                <Coins size={15} className="text-brand-blue" />
+                <span className="text-sm font-bold text-brand-blue">{balance}</span>
+                <span className="text-xs text-slate-500">crédits</span>
+            </button>
+            <CreditPurchaseModal isOpen={showModal} onClose={() => setShowModal(false)} />
+        </>
+    );
+};
+
+const CreditWidgetFull: React.FC = () => {
+    const { balance, isLoading } = useCredits();
+    const { transactions } = useCreditTransactions();
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
 
     if (isLoading) return null;
-
-    if (compact) {
-        return (
-            <>
-                <button
-                    onClick={() => setShowModal(true)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-blue/10 rounded-full hover:bg-brand-blue/20 transition-colors"
-                >
-                    <Coins size={15} className="text-brand-blue" />
-                    <span className="text-sm font-bold text-brand-blue">{balance}</span>
-                    <span className="text-xs text-slate-500">crédits</span>
-                </button>
-                <CreditPurchaseModal isOpen={showModal} onClose={() => setShowModal(false)} />
-            </>
-        );
-    }
 
     return (
         <>
@@ -207,3 +215,6 @@ export const CreditWidget: React.FC<CreditWidgetProps> = ({ compact = false }) =
         </>
     );
 };
+
+export const CreditWidget: React.FC<CreditWidgetProps> = ({ compact = false }) =>
+    compact ? <CreditWidgetCompact /> : <CreditWidgetFull />;

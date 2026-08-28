@@ -2,11 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "lescordistes-next",
-      "runtimeExecutable": "/bin/bash",
-      "runtimeArgs": ["-c", "export PATH=/Users/anthony/.nvm/versions/node/v22.14.0/bin:$PATH && node_modules/.bin/next dev"],
-      "port": 3000,
-      "cwd": "/Users/anthony/Documents/Anthony/Projet Web/lescordistes"
+      "name": "lescordistes-dev",
+      "runtimeExecutable": "/Users/anthony/.nvm/versions/node/v22.14.0/bin/npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000
     }
   ]
 }

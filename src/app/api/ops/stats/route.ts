@@ -113,8 +113,8 @@ export async function GET() {
         recent_unlocks: (recentUnlocksQ.data ?? []) as unknown as RecentUnlock[],
     }
 
-    // ✅ Phase 3: cache 30s côté CDN Vercel, stale-while-revalidate pour UX instantanée
+    // Données admin authentifiées : jamais de cache partagé (edge/CDN)
     return Response.json(stats, {
-        headers: { 'Cache-Control': 's-maxage=30, stale-while-revalidate=60' },
+        headers: { 'Cache-Control': 'private, no-store' },
     })
 }

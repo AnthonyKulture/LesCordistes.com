@@ -3,7 +3,9 @@ import { Suspense } from 'react'
 import Link from 'next/link'
 import { JobBoard } from '@/views/JobBoard'
 import { SEO_BASE_URL } from '@/constants/seoConfig'
-import { createSupabaseServerClient } from '@/lib/supabase-server'
+import { createSupabasePublicReadClient } from '@/lib/supabase-server'
+import { JOB_CARD_COLUMNS } from '@/constants/jobColumns'
+import type { Job } from '@/types'
 
 export const revalidate = 60 // ISR: re-render au plus toutes les 60 secondes
 
@@ -32,25 +34,52 @@ interface JobLite {
     created_at: string
 }
 
-async function getRecentJobs(): Promise<JobLite[]> {
+// Doit rester aligné sur PAGE_SIZE dans src/views/JobBoard.tsx : c'est la taille
+// de la première page que JobBoard demande, donc celle de son initialData.
+const BOARD_PAGE_SIZE = 50
+
+interface JobsPageData {
+    seoJobs: JobLite[]
+    boardJobs: Job[]
+    fetchedAt: number
+}
+
+async function getJobsPageData(): Promise<JobsPageData> {
     try {
-        const supabase = await createSupabaseServerClient()
-        // SSR : seulement les 'live' pour le JSON-LD ItemList (pas pertinent
-        // d'indexer les expired comme "missions disponibles" pour SEO).
-        const { data } = await supabase
-            .from('jobs')
-            .select('id, slug, title, description, location_city, location_department, category, created_at')
-            .eq('status', 'live')
-            .order('created_at', { ascending: false })
-            .limit(30)
-        return (data ?? []) as JobLite[]
+        // Client anonyme : aucune session, aucun cookie lu → l'ISR reste active.
+        // Les deux requêtes ne portent que des données publiques (RLS `anon`).
+        const supabase = createSupabasePublicReadClient()
+
+        const [seo, board] = await Promise.all([
+            // SSR : seulement les 'live' pour le JSON-LD ItemList (pas pertinent
+            // d'indexer les expired comme "missions disponibles" pour SEO).
+            supabase
+                .from('jobs')
+                .select('id, slug, title, description, location_city, location_department, category, created_at')
+                .eq('status', 'live')
+                .order('created_at', { ascending: false })
+                .limit(30),
+            // Requête identique à celle de JobBoard → sert d'initialData au client.
+            supabase
+                .from('jobs')
+                .select(`${JOB_CARD_COLUMNS}, creator:profiles!created_by(role)`)
+                .in('status', ['live', 'expired', 'completed'])
+                .order('created_at', { ascending: false })
+                .limit(BOARD_PAGE_SIZE),
+        ])
+
+        return {
+            seoJobs: (seo.data ?? []) as JobLite[],
+            boardJobs: (board.data ?? []) as Job[],
+            fetchedAt: Date.now(),
+        }
     } catch {
-        return []
+        return { seoJobs: [], boardJobs: [], fetchedAt: Date.now() }
     }
 }
 
 export default async function JobsPage() {
-    const jobs = await getRecentJobs()
+    const { seoJobs: jobs, boardJobs, fetchedAt } = await getJobsPageData()
 
     const itemList = {
         '@context': 'https://schema.org',
@@ -126,7 +155,13 @@ export default async function JobsPage() {
             </div>
 
             <Suspense fallback={null}>
-                <JobBoard />
+                {/* initialData seulement si le SSR a réellement ramené des lignes :
+                    un tableau vide serait servi comme "aucune mission" pendant tout
+                    le staleTime en cas d'échec de la requête serveur. */}
+                <JobBoard
+                    initialJobs={boardJobs.length > 0 ? boardJobs : undefined}
+                    initialJobsUpdatedAt={fetchedAt}
+                />
             </Suspense>
         </>
     )

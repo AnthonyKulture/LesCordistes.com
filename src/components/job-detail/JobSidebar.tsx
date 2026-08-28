@@ -8,6 +8,8 @@ import { getLeadQuality } from '../../lib/missionEnrichment';
 
 interface JobSidebarProps {
     job: Job;
+    /** Coordonnées client, chargées via le RPC gated `get_job_contact`. */
+    contact: Job['client_contact_info'] | null;
     user: any;
     profile: Profile | null;
     isOwner: boolean;
@@ -20,7 +22,7 @@ interface JobSidebarProps {
 }
 
 export const JobSidebar: React.FC<JobSidebarProps> = ({
-    job, user, profile, isOwner, canViewContact, isFull,
+    job, contact, user, profile, isOwner, canViewContact, isFull,
     unlockCount, refetchUnlockCount, startConversation, navigate
 }) => {
     const isPro = profile?.role === 'pro';
@@ -42,22 +44,32 @@ export const JobSidebar: React.FC<JobSidebarProps> = ({
 
                     {canViewContact ? (
                         <div className="space-y-2.5 text-sm">
+                            {!contact ? (
+                                <div className="space-y-2.5 animate-pulse" aria-label="Chargement des coordonnées">
+                                    <div className="h-10 bg-slate-100 rounded-lg" />
+                                    <div className="h-10 bg-slate-100 rounded-lg" />
+                                    <div className="h-10 bg-slate-100 rounded-lg" />
+                                </div>
+                            ) : (
+                            <>
                             <div className="flex items-center gap-2 p-2.5 bg-slate-50 rounded-lg">
                                 <span className="font-medium text-slate-700 w-16 shrink-0">Nom</span>
-                                <span className="text-slate-900">{job.client_contact_info.name}</span>
+                                <span className="text-slate-900">{contact.name}</span>
                             </div>
                             <a
-                                href={`mailto:${job.client_contact_info.email}`}
+                                href={`mailto:${contact.email}`}
                                 className="flex items-center gap-2 p-2.5 bg-brand-blue/5 text-brand-blue rounded-lg hover:bg-brand-blue/10 transition-colors"
                             >
-                                ✉️ {job.client_contact_info.email}
+                                ✉️ {contact.email}
                             </a>
                             <a
-                                href={`tel:${job.client_contact_info.phone}`}
+                                href={`tel:${contact.phone}`}
                                 className="flex items-center justify-center gap-2 w-full p-2.5 bg-brand-blue text-white rounded-lg font-medium hover:bg-brand-blue/90 transition-colors"
                             >
-                                📞 {job.client_contact_info.phone}
+                                📞 {contact.phone}
                             </a>
+                            </>
+                            )}
                             {user?.id !== job.created_by && (
                                 <Button
                                     variant="outline"

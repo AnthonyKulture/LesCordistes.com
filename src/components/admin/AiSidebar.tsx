@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { Sparkles, Send, Zap, ClipboardCopy, Check, Play, X, Loader2, CheckCircle2, AlertCircle, Search, Eye } from 'lucide-react'
 import { ConfirmDialog } from './ConfirmDialog'
 import {
@@ -363,6 +363,19 @@ export function AiSidebar({ context, quickActions, title, onMutationSuccess }: P
         })
     }
 
+    // Handlers stables : sans eux, memo(MessageBubble) ne sert à rien puisque chaque
+    // delta SSE recrée les callbacks et re-rend toutes les bulles.
+    const rejectToolRef = useRef(rejectTool)
+    useEffect(() => {
+        rejectToolRef.current = rejectTool
+    })
+    const handleExecute = useCallback((msgIdx: number, call: PendingToolCall) => {
+        setConfirmCall({ msgIdx, call })
+    }, [])
+    const handleReject = useCallback((msgIdx: number, call: PendingToolCall) => {
+        rejectToolRef.current(msgIdx, call)
+    }, [])
+
     async function send(text: string) {
         const trimmed = text.trim()
         if (!trimmed || streaming) return
@@ -400,9 +413,10 @@ export function AiSidebar({ context, quickActions, title, onMutationSuccess }: P
                 {history.map((m, i) => (
                     <MessageBubble
                         key={i}
+                        index={i}
                         message={m}
-                        onExecute={(call) => setConfirmCall({ msgIdx: i, call })}
-                        onReject={(call) => rejectTool(i, call)}
+                        onExecute={handleExecute}
+                        onReject={handleReject}
                         executingId={executingId}
                     />
                 ))}
@@ -483,15 +497,22 @@ function formatToolPreview(call: PendingToolCall): string {
     return lines.join('\n')
 }
 
-function MessageBubble({
+/**
+ * Mémoïsée : le stream SSE appelle setHistory à chaque token et ne recrée que
+ * l'objet du message en cours. Sans memo, toutes les bulles précédentes (dont
+ * le parsing des blocs de code) sont re-rendues à chaque delta.
+ */
+const MessageBubble = memo(function MessageBubble({
     message,
+    index,
     onExecute,
     onReject,
     executingId,
 }: {
     message: UiMessage
-    onExecute: (call: PendingToolCall) => void
-    onReject: (call: PendingToolCall) => void
+    index: number
+    onExecute: (msgIdx: number, call: PendingToolCall) => void
+    onReject: (msgIdx: number, call: PendingToolCall) => void
     executingId: string | null
 }) {
     const isUser = message.role === 'user'
@@ -526,8 +547,8 @@ function MessageBubble({
                                     status={status}
                                     result={result}
                                     busy={executingId === b.id}
-                                    onExecute={() => onExecute({ tool_use_id: b.id, name: b.name, input: b.input })}
-                                    onReject={() => onReject({ tool_use_id: b.id, name: b.name, input: b.input })}
+                                    onExecute={() => onExecute(index, { tool_use_id: b.id, name: b.name, input: b.input })}
+                                    onReject={() => onReject(index, { tool_use_id: b.id, name: b.name, input: b.input })}
                                 />
                             )
                         }
@@ -537,7 +558,7 @@ function MessageBubble({
             </div>
         </div>
     )
-}
+})
 
 function TextContent({ text }: { text: string }) {
     const blocks = extractCodeBlocks(text)

@@ -8,7 +8,6 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext'
 import { DashboardProvider } from '../contexts/DashboardContext'
 import { ToastProvider } from './ui/Toast'
 import { RoleSelectionModal } from './RoleSelectionModal'
-import { initPostHog } from '@/lib/posthog-client'
 
 function GoogleRoleGuard({ children }: { children: React.ReactNode }) {
     const { user, profile, loading } = useAuth()
@@ -39,17 +38,23 @@ function GoogleRoleGuard({ children }: { children: React.ReactNode }) {
 
 function PostHogInit() {
     useEffect(() => {
+        let optedOut = false
         try {
-            const raw = localStorage.getItem('lc_consent')
+            const raw = typeof window !== 'undefined' ? localStorage.getItem('lc_consent') : null
             if (raw) {
                 const parsed = JSON.parse(raw)
                 const expired = new Date(parsed.expires) < new Date()
-                if (!expired && parsed.analytics === false) return
+                if (!expired && parsed.analytics === false) optedOut = true
             }
-            initPostHog()
         } catch {
-            initPostHog()
+            optedOut = false
         }
+        if (optedOut) return
+
+        // Import dynamique : posthog-js reste hors du First Load JS partagé
+        void import('@/lib/posthog-client')
+            .then(({ initPostHog }) => initPostHog())
+            .catch(() => {})
     }, [])
     return null
 }

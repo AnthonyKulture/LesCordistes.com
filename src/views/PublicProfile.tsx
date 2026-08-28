@@ -11,16 +11,20 @@ import {
 import { supabase } from '../lib/supabase';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
-import { useMessaging } from '../hooks/useMessaging';
+import { useStartConversation } from '../hooks/useStartConversation';
 import type { Profile, Review } from '../types';
 
-export const PublicProfile: React.FC = () => {
+interface PublicProfileProps {
+    initialPro?: Profile | null;
+}
+
+export const PublicProfile: React.FC<PublicProfileProps> = ({ initialPro }) => {
     const { id } = useParams<{ id: string }>();
     const router = useRouter();
     const { user, profile } = useAuth();
-    const { startConversation } = useMessaging();
+    const startConversation = useStartConversation();
 
-    const { data: pro, isLoading, error } = useQuery({
+    const { data: pro, isLoading } = useQuery({
         queryKey: ['public-profile', id],
         queryFn: async () => {
             if (!id) throw new Error('No id');
@@ -34,6 +38,12 @@ export const PublicProfile: React.FC = () => {
             return data as Profile;
         },
         enabled: !!id,
+        // Hydrate depuis le Server Component — supprime le spinner de LCP
+        initialData: initialPro ?? undefined,
+        // Les données serveur sont volontairement amputées des colonnes privées
+        // (téléphone, email) : on les marque périmées pour que la requête client,
+        // porteuse de la session, les complète immédiatement pour un connecté.
+        initialDataUpdatedAt: 0,
     });
 
     const { data: reviews } = useQuery({
@@ -60,26 +70,19 @@ export const PublicProfile: React.FC = () => {
         queryKey: ['unlocked-by-pro', id, user?.id],
         queryFn: async () => {
             if (!id || !user || profile?.role !== 'client') return false;
-            
-            // Check if this pro has unlocked any lead from this client
+
+            // Une seule requête jointe : existe-t-il un lead débloqué par ce pro
+            // sur une mission appartenant à ce client ? Remplace le waterfall
+            // « tous les job_id du pro » puis « count exact sur jobs ».
             const { data, error } = await supabase
                 .from('unlocked_leads')
-                .select('job_id')
-                .eq('pro_id', id);
-            
-            if (error) throw error;
-            if (!data || data.length === 0) return false;
+                .select('job_id, jobs!inner(created_by)')
+                .eq('pro_id', id)
+                .eq('jobs.created_by', user.id)
+                .limit(1);
 
-            // Check if any of these jobs belong to the client
-            const jobIds = (data as any[]).map(d => d.job_id);
-            const { count, error: countError } = await supabase
-                .from('jobs')
-                .select('*', { count: 'exact', head: true })
-                .in('id', jobIds)
-                .eq('created_by', user.id);
-            
-            if (countError) throw countError;
-            return (count || 0) > 0;
+            if (error) throw error;
+            return (data?.length ?? 0) > 0;
         },
         enabled: !!id && !!user && profile?.role === 'client',
     });
@@ -94,7 +97,9 @@ export const PublicProfile: React.FC = () => {
         );
     }
 
-    if (error || !pro) {
+    // Ne pas basculer sur l'écran d'erreur si `pro` est déjà hydraté par le
+    // Server Component : un refetch de fond en échec ne doit pas effacer la page.
+    if (!pro) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-slate-50">
                 <div className="text-center">
@@ -119,9 +124,6 @@ export const PublicProfile: React.FC = () => {
     );
 
     const displayedReviews = reviews ? (showAllReviews ? reviews : reviews.slice(0, 5)) : [];
-    const mainCity = pro.intervention_zones?.[0] || "France";
-    const seoTitle = `${pro.full_name || 'Cordiste'} | Expert travaux en hauteur à ${mainCity} | LesCordistes`;
-    const seoDesc = `Consultez le profil de ${pro.full_name}, cordiste professionnel à ${mainCity}. ${reviews?.length || 0} avis clients. Spécialités : ${pro.skills?.slice(0, 3).join(', ') || 'Accès difficile'}. Certifié CQP/IRATA.`;
 
     return (
         <div className="min-h-screen bg-slate-50">

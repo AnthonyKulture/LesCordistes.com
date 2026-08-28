@@ -13,7 +13,8 @@ import { StatCard } from '../../components/dashboard/StatCard';
 import { JobListItem } from '../../components/dashboard/JobListItem';
 import { CompleteJobModal } from '../../components/dashboard/CompleteJobModal';
 import { ConfirmDeleteModal } from '../../components/dashboard/ConfirmDeleteModal';
-import { JobUnlockers } from '../../components/dashboard/JobUnlockers';
+import { JobUnlockers, type JobUnlockerPro } from '../../components/dashboard/JobUnlockers';
+import { JOB_PUBLIC_COLUMNS } from '../../constants/jobColumns';
 import { useSearchParams } from 'next/navigation';
 import {
     Briefcase,
@@ -49,15 +50,48 @@ export function ClientDashboard() {
         queryFn: async () => {
             const { data, error } = await (supabase as any)
                 .from('jobs')
-                .select('*')
+                .select(JOB_PUBLIC_COLUMNS)
                 .eq('created_by', user?.id)
                 .neq('status', 'cancelled')
-                .order('created_at', { ascending: false });
+                .order('created_at', { ascending: false })
+                .limit(100);
 
             if (error) throw error;
             return data as Job[];
         },
         enabled: !!user?.id,
+    });
+
+    const jobIds = React.useMemo(() => (jobs ?? []).map(j => j.id), [jobs]);
+
+    // Une seule requête pour toutes les missions affichées (évite le N+1 dans JobUnlockers)
+    const { data: unlockersByJobId, isLoading: isLoadingUnlockers } = useQuery({
+        queryKey: ['client-jobs-unlockers', user?.id, jobIds],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('unlocked_leads')
+                .select('job_id, profiles:pro_id (id, full_name, email, avatar_url)')
+                .in('job_id', jobIds);
+
+            if (error) throw error;
+
+            const rows = (data ?? []) as unknown as Array<{
+                job_id: string;
+                profiles: JobUnlockerPro | JobUnlockerPro[] | null;
+            }>;
+
+            const grouped: Record<string, JobUnlockerPro[]> = {};
+            for (const row of rows) {
+                if (!row.profiles) continue;
+                const pros = Array.isArray(row.profiles) ? row.profiles : [row.profiles];
+                for (const pro of pros) {
+                    if (!pro?.id) continue;
+                    (grouped[row.job_id] ??= []).push(pro);
+                }
+            }
+            return grouped;
+        },
+        enabled: !!user?.id && jobIds.length > 0,
     });
 
     const deleteJob = useMutation({
@@ -252,7 +286,12 @@ export function ClientDashboard() {
                                                 onView={() => job.slug ? router.push(`/jobs/${job.slug}`) : toast.info('Cette mission est en cours de publication.')}
                                                 onDelete={() => setDeletingJobId(job.id)}
                                                 onComplete={() => setCompletingJob(job)}
-                                                showUnlockers={<JobUnlockers jobId={job.id} />}
+                                                showUnlockers={
+                                                    <JobUnlockers
+                                                        pros={unlockersByJobId?.[job.id] ?? []}
+                                                        isLoading={isLoadingUnlockers}
+                                                    />
+                                                }
                                             />
                                         </div>
                                     ))}

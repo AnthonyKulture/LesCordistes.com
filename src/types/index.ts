@@ -53,7 +53,12 @@ export interface Job {
     rejection_reason?: string;
     latitude?: number;
     longitude?: number;
-    client_contact_info: {
+    /**
+     * Révoqué pour anon/authenticated (migration 20260828b) : absent des requêtes
+     * navigateur, présent uniquement via service_role. Passer par le RPC
+     * `get_job_contact` (hooks de src/hooks/useJobContact.ts) côté client.
+     */
+    client_contact_info?: {
         first_name: string;
         last_name: string;
         name: string; // full name (first + last), conservé pour la rétro-compatibilité
@@ -61,6 +66,8 @@ export interface Job {
         phone: string;
         company_name?: string;
     };
+    /** Colonne générée depuis client_contact_info->>company_name, elle publique. */
+    client_has_company?: boolean;
     created_by?: string;
     admin_created?: boolean;
     unlocked_leads_count?: number;

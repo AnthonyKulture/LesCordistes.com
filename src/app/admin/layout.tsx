@@ -17,18 +17,19 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
     if (!user) redirect('/connexion?next=/admin')
 
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('role, full_name, email')
-        .eq('id', user.id)
-        .single()
+    const [{ data: profile }, { count: pendingCount }] = await Promise.all([
+        supabase
+            .from('profiles')
+            .select('role, full_name, email')
+            .eq('id', user.id)
+            .single(),
+        supabase
+            .from('jobs')
+            .select('id', { count: 'exact', head: true })
+            .eq('status', 'pending'),
+    ])
 
     if (profile?.role !== 'admin') redirect('/dashboard')
-
-    const { count: pendingCount } = await supabase
-        .from('jobs')
-        .select('id', { count: 'exact', head: true })
-        .eq('status', 'pending')
 
     return (
         <AdminShell

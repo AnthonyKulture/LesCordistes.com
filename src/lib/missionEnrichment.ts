@@ -212,6 +212,10 @@ const VERIFIED_CLIENT_TYPES: ReadonlyArray<NonNullable<Job['client_type']>> = [
 
 export function isClientVerified(job: Job): boolean {
     if (job.client_type && VERIFIED_CLIENT_TYPES.includes(job.client_type)) return true;
+    // client_contact_info est révoqué pour anon/authenticated : la colonne dérivée
+    // client_has_company porte l'information côté navigateur. Le JSONB reste lisible
+    // via service_role (admin, crons), d'où le repli.
+    if (job.client_has_company) return true;
     if (job.client_contact_info?.company_name) return true;
     return false;
 }

@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
+import { USERS_KEY } from '@/app/admin/profils/profilesKeys'
 import { Mail, Phone, Building2, Award, MapPin, CreditCard, Plus, Minus } from 'lucide-react'
-import { AiSidebar } from '@/components/admin/AiSidebar'
+import { AiSidebarLazy } from '@/components/admin/AiSidebarLazy'
 import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
 import type { Profile, CreditTransaction } from '@/lib/types/ops'
 
@@ -19,6 +21,7 @@ const TX_LABEL: Record<string, string> = {
 }
 
 export function ProfileDetail({ initialProfile, initialBalance, initialTransactions }: Props) {
+    const queryClient = useQueryClient()
     const [profile] = useState<Profile>(initialProfile)
     const [balance, setBalance] = useState(initialBalance)
     const [transactions, setTransactions] = useState<CreditTransaction[]>(initialTransactions)
@@ -54,6 +57,9 @@ export function ProfileDetail({ initialProfile, initialBalance, initialTransacti
             setDelta('')
             setDescription('')
             setFeedback(`Solde mis à jour : ${data.balance} crédits ✓`)
+            // La liste des profils affiche credits_balance et est mise en cache 30 s :
+            // sans cette invalidation, un retour immédiat afficherait l'ancien solde.
+            queryClient.invalidateQueries({ queryKey: USERS_KEY })
 
             // recharger l'historique
             const txRes = await fetch(`/api/ops/users/${profile.id}`, { cache: 'no-store' })
@@ -247,7 +253,7 @@ export function ProfileDetail({ initialProfile, initialBalance, initialTransacti
             </section>
 
             <aside className="xl:sticky xl:top-6 xl:self-start xl:h-[calc(100vh-3rem)]">
-                <AiSidebar
+                <AiSidebarLazy
                     title="Assistant — Profil"
                     context={{ type: 'profile', id: profile.id, data: profile }}
                     onMutationSuccess={async (tool) => {

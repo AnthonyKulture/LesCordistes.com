@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { MapPin, Image as ImageIcon, Calendar, Wallet, ArrowRight, Check, X, CheckCircle2, Mail } from 'lucide-react'
 import { StatusBadge, LqsBadge } from './StatusBadge'
 import { ConfirmDialog } from './ConfirmDialog'
@@ -10,7 +10,8 @@ import type { Job } from '@/lib/types/ops'
 
 type Props = {
     job: Job
-    onChange?: () => void
+    /** Appelé après une modération réussie — la mission quitte l'onglet courant. */
+    onChange?: (jobId: string) => void
 }
 
 const REJECTION_REASONS = [
@@ -39,7 +40,7 @@ const CATEGORY_LABEL: Record<string, string> = {
     other: 'Autre',
 }
 
-export function JobCard({ job, onChange }: Props) {
+function JobCardBase({ job, onChange }: Props) {
     const lqs = computeLQS(job)
     const [busy, setBusy] = useState<'approve' | 'reject' | null>(null)
     const [confirmApprove, setConfirmApprove] = useState(false)
@@ -56,7 +57,7 @@ export function JobCard({ job, onChange }: Props) {
                 body: JSON.stringify({ action: 'approve' }),
             })
             if (!res.ok) throw new Error(await res.text())
-            onChange?.()
+            onChange?.(job.id)
         } catch (err) {
             alert('Erreur : ' + (err instanceof Error ? err.message : 'inconnue'))
         } finally {
@@ -76,7 +77,7 @@ export function JobCard({ job, onChange }: Props) {
                 body: JSON.stringify({ action: 'reject', reason }),
             })
             if (!res.ok) throw new Error(await res.text())
-            onChange?.()
+            onChange?.(job.id)
         } catch (err) {
             alert('Erreur : ' + (err instanceof Error ? err.message : 'inconnue'))
         } finally {
@@ -245,3 +246,10 @@ export function JobCard({ job, onChange }: Props) {
         </article>
     )
 }
+
+/**
+ * Chaque carte monte son propre ConfirmDialog + modale de rejet : sans mémoïsation,
+ * une frappe dans la recherche de MissionsList re-rend les 100 cartes.
+ * `onChange` doit rester référentiellement stable côté parent.
+ */
+export const JobCard = memo(JobCardBase)

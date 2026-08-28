@@ -310,11 +310,24 @@ BEGIN
 END;
 $$;
 
-DROP TRIGGER IF EXISTS on_lead_unlocked_email ON unlocked_leads;
-CREATE TRIGGER on_lead_unlocked_email
-    AFTER INSERT ON unlocked_leads
-    FOR EACH ROW
-    EXECUTE FUNCTION private.trigger_on_lead_unlocked();
+-- ⚠️ DEPRECATED — neutralisé le 2026-08-28 (migration 20260828e).
+-- Ce trigger faisait DOUBLON avec `on_lead_unlocked` (supabase-notify-lead-unlock.sql) :
+-- les deux s'exécutaient sur le même INSERT, dans la transaction du RPC unlock_lead,
+-- APRÈS le SELECT ... FOR UPDATE sur credits — allongeant la détention du verrou et
+-- sérialisant les déblocages d'un même pro.
+-- 20260828e les a fusionnés en un trigger unique `on_lead_unlocked` qui fait UN seul
+-- SELECT jobs+profiles partagé et couvre les DEUX comportements (notification en base
+-- ET envoi d'email client + admin).
+--
+-- Le CREATE est commenté VOLONTAIREMENT : le CLAUDE.md prescrit de re-runner ce fichier
+-- après toute modification, et le laisser actif ressusciterait le doublon — donc
+-- DOUBLERAIT tous les emails de déblocage, silencieusement. Même traitement que TRIGGER 5.
+--
+-- DROP TRIGGER IF EXISTS on_lead_unlocked_email ON unlocked_leads;
+-- CREATE TRIGGER on_lead_unlocked_email
+--     AFTER INSERT ON unlocked_leads
+--     FOR EACH ROW
+--     EXECUTE FUNCTION private.trigger_on_lead_unlocked();
 
 -- ------------------------------------------------------------
 -- 🎨 TRIGGER 5 : Alerte Match Mission (Localisation / Dept)

@@ -1,73 +1,88 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { Search, MapPin, X } from 'lucide-react'
+import { USERS_KEY } from './profilesKeys'
+
+import { useCallback, useDeferredValue, useEffect, useMemo, useState } from 'react'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import { Loader2, Search, MapPin, X } from 'lucide-react'
 import { ProfileCard } from '@/components/admin/ProfileCard'
 import { SkeletonProfileCard } from '@/components/admin/SkeletonCard'
 import { FRENCH_DEPARTMENTS } from '@/constants/departments'
 import type { ProfileWithCredits } from '@/lib/types/ops'
+import type { AdminRole } from './profilesQuery'
 
-const ROLES = [
+const ROLES: { id: AdminRole; label: string }[] = [
     { id: 'pro', label: 'Pros' },
     { id: 'client', label: 'Clients' },
     { id: 'admin', label: 'Admins' },
-] as const
-type RoleId = typeof ROLES[number]['id']
+]
 
-export function ProfilesList() {
-    const params = useSearchParams()
-    const router = useRouter()
-    const initial = (params.get('role') as RoleId) || 'pro'
-    const [role, setRole] = useState<RoleId>(initial)
+
+type Props = {
+    initialRole: AdminRole
+    /** Rendu serveur du premier rôle. `null` = échec côté serveur, le client refetch. */
+    initialProfiles: ProfileWithCredits[] | null
+}
+
+export function ProfilesList({ initialRole, initialProfiles }: Props) {
+    const [role, setRole] = useState<AdminRole>(initialRole)
     const [search, setSearch] = useState('')
-    const [users, setUsers] = useState<ProfileWithCredits[]>([])
-    const [loading, setLoading] = useState(true)
     const [withCredits, setWithCredits] = useState(false)
     const [deptFilter, setDeptFilter] = useState<string[]>([])
     const [showDeptPicker, setShowDeptPicker] = useState(false)
+    const [mountedAt] = useState(() => Date.now())
+
+    // Filtrage local instantané pendant que la requête serveur (debounce) est en vol.
+    const deferredSearch = useDeferredValue(search)
+    // Recherche serveur : élargit au-delà des 200 profils les plus récents.
+    const [serverSearch, setServerSearch] = useState('')
+
+    useEffect(() => {
+        const t = setTimeout(() => setServerSearch(search.trim()), 350)
+        return () => clearTimeout(t)
+    }, [search])
 
     const sortedDepts = useMemo(
         () => [...FRENCH_DEPARTMENTS].sort((a, b) => a.code.localeCompare(b.code)),
         []
     )
 
-    function toggleDept(code: string) {
-        setDeptFilter(prev =>
-            prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]
-        )
-    }
+    const toggleDept = useCallback((code: string) => {
+        setDeptFilter(prev => (prev.includes(code) ? prev.filter(c => c !== code) : [...prev, code]))
+    }, [])
 
+    // Synchro shallow de l'URL. `router.replace()` déclenchait en plus un refetch
+    // du payload RSC du segment à chaque changement d'onglet.
     useEffect(() => {
-        const next = new URLSearchParams(params.toString())
+        if (typeof window === 'undefined') return
+        const next = new URLSearchParams(window.location.search)
+        if (next.get('role') === role) return
         next.set('role', role)
-        router.replace(`/admin/profils?${next.toString()}`, { scroll: false })
-    }, [role, params, router])
-
-    useEffect(() => {
-        let cancelled = false
-        async function load() {
-            setLoading(true)
-            try {
-                const res = await fetch(`/api/ops/users?role=${role}&limit=200`, { cache: 'no-store' })
-                const data = await res.json()
-                if (!cancelled) setUsers(data.users as ProfileWithCredits[])
-            } catch (err) {
-                console.error(err)
-            } finally {
-                if (!cancelled) setLoading(false)
-            }
-        }
-        load()
-        return () => {
-            cancelled = true
-        }
+        window.history.replaceState(null, '', `${window.location.pathname}?${next.toString()}`)
     }, [role])
 
+    const { data: users, isPending, isFetching, isError } = useQuery({
+        queryKey: [...USERS_KEY, role, serverSearch],
+        queryFn: async ({ signal }) => {
+            const qs = new URLSearchParams({ role, limit: '200' })
+            if (serverSearch) qs.set('q', serverSearch)
+            const res = await fetch(`/api/ops/users?${qs.toString()}`, { cache: 'no-store', signal })
+            if (!res.ok) throw new Error(`API ${res.status}`)
+            const data = (await res.json()) as { users?: ProfileWithCredits[] }
+            return data.users ?? []
+        },
+        staleTime: 30_000,
+        placeholderData: keepPreviousData,
+        initialData:
+            role === initialRole && !serverSearch && initialProfiles ? initialProfiles : undefined,
+        initialDataUpdatedAt: mountedAt,
+    })
+
     const filtered = useMemo(() => {
-        const q = search.trim().toLowerCase()
+        const list = users ?? []
+        const q = deferredSearch.trim().toLowerCase()
         const deptActive = role === 'pro' && deptFilter.length > 0
-        return users.filter(u => {
+        return list.filter(u => {
             if (withCredits && (u.credits_balance ?? 0) <= 0) return false
             if (deptActive) {
                 const zones = u.intervention_zones ?? []
@@ -80,7 +95,7 @@ export function ProfilesList() {
                 (u.company_name ?? '').toLowerCase().includes(q)
             )
         })
-    }, [users, search, withCredits, deptFilter, role])
+    }, [users, deferredSearch, withCredits, deptFilter, role])
 
     return (
         <div className="space-y-4">
@@ -129,6 +144,9 @@ export function ProfilesList() {
                                 </span>
                             )}
                         </button>
+                    )}
+                    {isFetching && !isPending && (
+                        <Loader2 className="h-4 w-4 animate-spin text-slate-400" aria-label="Actualisation" />
                     )}
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -192,17 +210,22 @@ export function ProfilesList() {
                 </div>
             )}
 
-            {loading && (
+            {isPending && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {Array.from({ length: 9 }).map((_, i) => <SkeletonProfileCard key={i} />)}
                 </div>
             )}
-            {!loading && filtered.length === 0 && (
+            {!isPending && isError && (
+                <div className="text-sm text-red-600 py-8 text-center bg-white border border-red-100 rounded-xl">
+                    Impossible de charger les profils.
+                </div>
+            )}
+            {!isPending && !isError && filtered.length === 0 && (
                 <div className="text-sm text-slate-500 italic py-8 text-center bg-white border border-slate-200 rounded-xl">
                     Aucun profil dans cette vue.
                 </div>
             )}
-            {!loading && filtered.length > 0 && (
+            {!isPending && filtered.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {filtered.map(u => (
                         <ProfileCard key={u.id} profile={u} />

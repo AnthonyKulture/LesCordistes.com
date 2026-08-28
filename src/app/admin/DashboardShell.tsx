@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { StatsGrid } from '@/components/admin/StatsGrid'
-import { AiSidebar } from '@/components/admin/AiSidebar'
+import { AiSidebarLazy } from '@/components/admin/AiSidebarLazy'
 import { NotifyButton } from '@/components/admin/NotifyButton'
 import type { OpsStats } from '@/lib/types/ops'
 
@@ -12,7 +12,8 @@ type Props = {
 }
 
 export function DashboardShell({ initialStats }: Props) {
-    const [statsKey, setStatsKey] = useState(0)
+    const [statsRefresh, setStatsRefresh] = useState(0)
+    const handleMutationSuccess = useCallback(() => setStatsRefresh(n => n + 1), [])
 
     return (
         <div className="px-4 md:px-8 py-6 max-w-[1600px] mx-auto">
@@ -26,12 +27,12 @@ export function DashboardShell({ initialStats }: Props) {
 
             <div className="grid grid-cols-1 xl:grid-cols-[1fr_360px] gap-6">
                 {/* ✅ Phase 2: initial passe les données SSR, évite le double aller-retour */}
-                <StatsGrid key={statsKey} initial={initialStats} />
+                <StatsGrid initial={initialStats} refreshToken={statsRefresh} />
                 <aside className="xl:sticky xl:top-6 xl:self-start xl:h-[calc(100vh-3rem)]">
-                    <AiSidebar
+                    <AiSidebarLazy
                         context={{ type: 'free' }}
                         title="Assistant Ops"
-                        onMutationSuccess={() => setStatsKey(k => k + 1)}
+                        onMutationSuccess={handleMutationSuccess}
                     />
                 </aside>
             </div>

@@ -317,23 +317,23 @@ const JobRow: React.FC<JobRowProps> = ({ job, onApprove, onReject, onViewLeads, 
                     </div>
                     <div>
                         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider leading-none mb-1">Client</p>
-                        <p className="text-sm font-bold text-slate-900 leading-none">{job.client_contact_info.name}</p>
+                        <p className="text-sm font-bold text-slate-900 leading-none">{job.client_contact_info?.name}</p>
                     </div>
                 </div>
                 <div className="h-8 w-px bg-slate-200 hidden sm:block" />
                 <a 
-                    href={`mailto:${job.client_contact_info.email}`}
+                    href={`mailto:${job.client_contact_info?.email}`}
                     className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border border-slate-200 hover:border-brand-blue group transition-colors"
                 >
                     <Mail size={14} className="text-slate-400 group-hover:text-brand-blue" />
-                    <span className="text-xs text-slate-600 group-hover:text-slate-900">{job.client_contact_info.email}</span>
+                    <span className="text-xs text-slate-600 group-hover:text-slate-900">{job.client_contact_info?.email}</span>
                 </a>
                 <a 
-                    href={`tel:${job.client_contact_info.phone}`}
+                    href={`tel:${job.client_contact_info?.phone}`}
                     className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border border-slate-200 hover:border-brand-blue group transition-colors"
                 >
                     <Phone size={14} className="text-slate-400 group-hover:text-brand-blue" />
-                    <span className="text-xs text-slate-600 group-hover:text-slate-900 font-medium">{job.client_contact_info.phone}</span>
+                    <span className="text-xs text-slate-600 group-hover:text-slate-900 font-medium">{job.client_contact_info?.phone}</span>
                 </a>
             </div>
 

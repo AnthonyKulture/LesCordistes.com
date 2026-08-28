@@ -1,5 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { useEffect, useState, useCallback } from 'react';
+import type { RealtimeChannel } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -12,6 +13,51 @@ export interface Notification {
     link?: string;
     read: boolean;
     created_at: string;
+}
+
+interface SharedNotificationChannel {
+    channel: RealtimeChannel;
+    listeners: Set<() => void>;
+}
+
+// Le Header monte NotificationBell deux fois (desktop + mobile) : sans mutualisation
+// supabase-js lèverait "subscribe can only be called a single time" sur le même topic.
+const sharedNotificationChannels = new Map<string, SharedNotificationChannel>();
+
+function subscribeNotifications(userId: string, onChange: () => void): () => void {
+    let entry = sharedNotificationChannels.get(userId);
+
+    if (!entry) {
+        const listeners = new Set<() => void>();
+        const channel = supabase
+            .channel(`notifications:${userId}`)
+            .on(
+                'postgres_changes',
+                {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'notifications',
+                    filter: `user_id=eq.${userId}`,
+                },
+                () => { listeners.forEach(listener => listener()); }
+            )
+            .subscribe();
+
+        entry = { channel, listeners };
+        sharedNotificationChannels.set(userId, entry);
+    }
+
+    entry.listeners.add(onChange);
+
+    return () => {
+        const current = sharedNotificationChannels.get(userId);
+        if (!current) return;
+        current.listeners.delete(onChange);
+        if (current.listeners.size === 0) {
+            sharedNotificationChannels.delete(userId);
+            supabase.removeChannel(current.channel);
+        }
+    };
 }
 
 export function useNotifications() {
@@ -34,35 +80,20 @@ export function useNotifications() {
             return data as Notification[];
         },
         enabled: !!user,
+        placeholderData: keepPreviousData,
     });
 
     const hasMore = (notifications || []).length >= limit;
     const loadMore = useCallback(() => setLimit(prev => prev + PAGE_SIZE), []);
 
-    // === REALTIME : écoute les nouvelles notifications ===
+    // === REALTIME : écoute les nouvelles notifications (canal mutualisé) ===
+    const userId = user?.id;
     useEffect(() => {
-        if (!user) return;
-
-        const channel = supabase
-            .channel(`notifications:${user.id}`)
-            .on(
-                'postgres_changes',
-                {
-                    event: 'INSERT',
-                    schema: 'public',
-                    table: 'notifications',
-                    filter: `user_id=eq.${user.id}`,
-                },
-                () => {
-                    queryClient.invalidateQueries({ queryKey: ['notifications', user.id] });
-                }
-            )
-            .subscribe();
-
-        return () => {
-            supabase.removeChannel(channel);
-        };
-    }, [user?.id, queryClient]);
+        if (!userId) return;
+        return subscribeNotifications(userId, () => {
+            queryClient.invalidateQueries({ queryKey: ['notifications', userId] });
+        });
+    }, [userId, queryClient]);
 
     const unreadCount = (notifications || []).filter(n => !n.read).length;
 

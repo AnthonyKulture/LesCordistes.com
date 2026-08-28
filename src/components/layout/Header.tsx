@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
-import { useMessaging } from '../../hooks/useMessaging';
+import { useUnreadCount } from '../../hooks/useUnreadCount';
 import { useDashboardMode } from '../../contexts/DashboardContext';
 import { Button } from '../ui/Button';
 import { NotificationBell } from '../notifications/NotificationBell';
@@ -43,7 +43,7 @@ export const Header: React.FC = () => {
     const profileRef = useRef<HTMLDivElement>(null);
     const { user, profile, signOut } = useAuth();
     const { mode, toggleMode, isSwitching } = useDashboardMode();
-    const { globalUnreadCount } = useMessaging();
+    const { unreadCount: globalUnreadCount } = useUnreadCount();
     const router = useRouter();
     const pathname = usePathname();
 

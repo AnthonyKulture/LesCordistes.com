@@ -5,9 +5,16 @@ import Link from 'next/link'
 import { Briefcase, Users, CreditCard, AlertTriangle, MapPin, KeyRound } from 'lucide-react'
 import type { OpsStats } from '@/lib/types/ops'
 import { SkeletonStatsGrid } from '@/components/admin/SkeletonCard'
+import { StorageImage } from '@/components/admin/StorageImage'
 
 type Props = {
     initial?: OpsStats | null
+    /**
+     * Incrémenter ce jeton force un refetch des KPIs sans remonter le composant.
+     * Un remount par `key` ne suffisait pas : `initial` (périmé) était re-fourni
+     * et court-circuitait le fetch, donc les KPIs ne bougeaient jamais.
+     */
+    refreshToken?: number
 }
 
 function MetricCard({
@@ -48,12 +55,13 @@ function MetricCard({
     return href ? <Link href={href}>{card}</Link> : card
 }
 
-export function StatsGrid({ initial }: Props) {
+export function StatsGrid({ initial, refreshToken = 0 }: Props) {
     const [stats, setStats] = useState<OpsStats | null>(initial ?? null)
     const [loading, setLoading] = useState(!initial)
 
     useEffect(() => {
-        if (initial) return
+        // Premier rendu avec des données SSR : rien à refetch.
+        if (refreshToken === 0 && initial) return
         let cancelled = false
         ;(async () => {
             try {
@@ -70,7 +78,7 @@ export function StatsGrid({ initial }: Props) {
         return () => {
             cancelled = true
         }
-    }, [initial])
+    }, [initial, refreshToken])
 
     if (loading) return <SkeletonStatsGrid />
     if (!stats) return <div className="text-sm text-red-600">Impossible de charger les stats.</div>
@@ -145,8 +153,13 @@ export function StatsGrid({ initial }: Props) {
                             <li key={u.id} className="py-2 flex items-center justify-between gap-3 text-sm">
                                 <div className="flex items-center gap-2 min-w-0 flex-1">
                                     {u.pro?.avatar_url ? (
-                                        // eslint-disable-next-line @next/next/no-img-element
-                                        <img src={u.pro.avatar_url} alt="" className="h-6 w-6 rounded-full object-cover bg-slate-100" />
+                                        <StorageImage
+                                            src={u.pro.avatar_url}
+                                            width={64}
+                                            quality={70}
+                                            alt=""
+                                            className="h-6 w-6 rounded-full object-cover bg-slate-100"
+                                        />
                                     ) : (
                                         <span className="h-6 w-6 rounded-full bg-slate-100 inline-flex items-center justify-center text-[10px] font-semibold text-slate-500">
                                             {(u.pro?.full_name ?? '?').slice(0, 1).toUpperCase()}

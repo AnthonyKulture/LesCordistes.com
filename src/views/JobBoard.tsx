@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, Suspense, lazy } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import Link from 'next/link';
 import { Map, LayoutGrid, Plus } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -10,18 +10,28 @@ import { Button } from '../components/ui/Button';
 import { PromoActivation } from '../components/promo/PromoActivation';
 import { ProAlertCTA } from '../components/pro-alerts/ProAlertCTA';
 import { useAuth } from '../contexts/AuthContext';
+import { JOB_CARD_COLUMNS } from '../constants/jobColumns';
 import type { Job } from '../types';
 
 const JobMap = lazy(() => import('../components/map/JobMap').then(m => ({ default: m.JobMap })));
 
 const PAGE_SIZE = 50;
 
-export const JobBoard: React.FC = () => {
+interface JobBoardProps {
+    // Première page rendue côté serveur (même requête, même tri) — évite le
+    // double fetch et le spinner au premier paint.
+    initialJobs?: Job[];
+    initialJobsUpdatedAt?: number;
+}
+
+export const JobBoard: React.FC<JobBoardProps> = ({ initialJobs, initialJobsUpdatedAt }) => {
     const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
     const [limit, setLimit] = useState(PAGE_SIZE);
     const { user, profile } = useAuth();
 
-    const { data: jobs, isLoading, error } = useQuery({
+    const isFirstPage = limit === PAGE_SIZE;
+
+    const { data: jobs, isLoading, isPlaceholderData, error } = useQuery({
         queryKey: ['jobs', 'visible', limit],
         queryFn: async () => {
             // 'live' = active, 'expired' = J+15 sans revalidation, 'completed' =
@@ -29,7 +39,7 @@ export const JobBoard: React.FC = () => {
             // en grisé pour preuve sociale.
             const { data, error } = await supabase
                 .from('jobs')
-                .select('*, creator:profiles!created_by(role)')
+                .select(`${JOB_CARD_COLUMNS}, creator:profiles!created_by(role)`)
                 .in('status', ['live', 'expired', 'completed'])
                 .order('created_at', { ascending: false })
                 .limit(limit);
@@ -37,6 +47,11 @@ export const JobBoard: React.FC = () => {
             if (error) throw error;
             return data as Job[];
         },
+        // 'Charger plus' change la queryKey : sans ça la liste entière serait
+        // remplacée par un spinner le temps du refetch 0→N.
+        placeholderData: keepPreviousData,
+        initialData: isFirstPage ? initialJobs : undefined,
+        initialDataUpdatedAt: isFirstPage ? initialJobsUpdatedAt : undefined,
     });
 
     const filteredJobs = jobs || [];
@@ -200,14 +215,16 @@ export const JobBoard: React.FC = () => {
                     </div>
                 )}
 
-                {/* Load more */}
-                {filteredJobs.length >= limit && viewMode === 'list' && !isLoading && (
+                {/* Load more — isPlaceholderData = page suivante en cours de chargement
+                    (la liste affichée est encore celle de la page précédente). */}
+                {(filteredJobs.length >= limit || isPlaceholderData) && viewMode === 'list' && !isLoading && (
                     <div className="text-center mt-6">
                         <button
                             onClick={() => setLimit(prev => prev + PAGE_SIZE)}
-                            className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:border-brand-blue hover:text-brand-blue transition-colors shadow-sm"
+                            disabled={isPlaceholderData}
+                            className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-700 hover:border-brand-blue hover:text-brand-blue transition-colors shadow-sm disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:text-slate-700"
                         >
-                            Charger plus de missions
+                            {isPlaceholderData ? 'Chargement…' : 'Charger plus de missions'}
                         </button>
                     </div>
                 )}

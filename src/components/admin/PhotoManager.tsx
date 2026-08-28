@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { Camera, Upload, X, Loader2 } from 'lucide-react'
+import { StorageImage } from './StorageImage'
 
 const MAX = 10 * 1024 * 1024 // 10 MB, doit matcher l'API
 
@@ -113,9 +114,15 @@ export function PhotoManager({
                         const isDeleting = deleting === url
                         return (
                             <div key={url} className="relative group aspect-video bg-slate-100 rounded-lg overflow-hidden">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                {/* Le lien pointe sur l'original ; seule la vignette est transformée. */}
                                 <a href={url} target="_blank" rel="noreferrer">
-                                    <img src={url} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
+                                    <StorageImage
+                                        src={url}
+                                        width={480}
+                                        quality={70}
+                                        alt={`Photo ${i + 1}`}
+                                        className="w-full h-full object-cover"
+                                    />
                                 </a>
                                 <button
                                     type="button"

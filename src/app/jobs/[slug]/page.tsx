@@ -1,8 +1,20 @@
 import type { Metadata } from 'next'
-import { createSupabaseServerClient } from '@/lib/supabase-server'
+import { cache } from 'react'
+import { createSupabasePublicReadClient } from '@/lib/supabase-server'
+import { JOB_PUBLIC_COLUMNS } from '@/constants/jobColumns'
 import { JobDetail } from '@/views/JobDetail'
 import { SEO_BASE_URL } from '@/constants/seoConfig'
 import type { Job } from '@/types'
+
+export const revalidate = 60 // ISR: même fenêtre de fraîcheur que /jobs
+
+// Sans generateStaticParams, un segment dynamique reste `ƒ` : rendu à CHAQUE
+// requête, `revalidate` ignoré. Retourner [] ne prérend rien au build (aucune
+// dépendance à la base) mais rend la route éligible à l'ISR : chaque slug est
+// généré au premier hit puis mis en cache pour la fenêtre ci-dessus.
+export async function generateStaticParams() {
+    return []
+}
 
 const categoryLabels: Record<string, string> = {
     cleaning: 'Nettoyage de façade',
@@ -23,14 +35,15 @@ interface Props {
     params: Promise<{ slug: string }>
 }
 
-async function getJob(slug: string): Promise<Job | null> {
+const getJob = cache(async (slug: string): Promise<Job | null> => {
     try {
-        const supabase = await createSupabaseServerClient()
+        // Client anonyme : lecture publique, aucune session → l'ISR reste active.
+        const supabase = createSupabasePublicReadClient()
         // 'live' (active), 'expired' (J+15) et 'completed' (terminée) accessibles publiquement.
         // 'pending', 'rejected', 'cancelled' restent cachés.
         const { data, error } = await supabase
             .from('jobs')
-            .select('*')
+            .select(JOB_PUBLIC_COLUMNS)
             .eq('slug', slug)
             .in('status', ['live', 'expired', 'completed'])
             .single()
@@ -39,7 +52,7 @@ async function getJob(slug: string): Promise<Job | null> {
     } catch {
         return null
     }
-}
+})
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params

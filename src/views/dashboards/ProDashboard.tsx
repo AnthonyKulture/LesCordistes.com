@@ -7,6 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCredits } from '../../hooks/useCredits';
+import { useJobContacts } from '../../hooks/useJobContact';
+import { JOB_PUBLIC_COLUMNS } from '../../constants/jobColumns';
 import { useDashboardMode } from '../../contexts/DashboardContext';
 import { DashboardLayout } from '../../components/DashboardLayout';
 import { CreditWidget } from '../../components/credits/CreditWidget';
@@ -62,9 +64,10 @@ export function ProDashboard() {
             if (!user?.id) return [];
             const { data, error } = await supabase
                 .from('jobs')
-                .select('*')
+                .select(JOB_PUBLIC_COLUMNS)
                 .eq('created_by', user.id)
-                .order('created_at', { ascending: false });
+                .order('created_at', { ascending: false })
+                .limit(50);
             if (error) throw error;
             return data as Job[];
         },
@@ -78,14 +81,18 @@ export function ProDashboard() {
             if (!unlockedJobIds || unlockedJobIds.length === 0) return [];
             const { data, error } = await supabase
                 .from('jobs')
-                .select('*')
+                .select(JOB_PUBLIC_COLUMNS)
                 .in('id', unlockedJobIds)
-                .order('created_at', { ascending: false });
+                .order('created_at', { ascending: false })
+                .limit(100);
             if (error) throw error;
             return data as Job[];
         },
         enabled: !!unlockedJobIds && unlockedJobIds.length > 0,
     });
+
+    // Coordonnées des leads débloqués : hors payload `jobs`, via RPC batch gated
+    const { data: contactsById } = useJobContacts(unlockedJobs?.map(j => j.id));
 
     const profileCompletion = React.useMemo(() => {
         if (!profile) return 0;
@@ -282,18 +289,18 @@ export function ProDashboard() {
                                                     <div className="bg-slate-50 rounded-lg p-3 grid sm:grid-cols-2 gap-3 border border-slate-100 mt-3">
                                                         <div className="flex items-center gap-2 text-[11px]">
                                                             <User size={12} className="text-slate-400" />
-                                                            <span className="font-medium text-slate-700">{job.client_contact_info?.name || 'Client'}</span>
+                                                            <span className="font-medium text-slate-700">{contactsById?.[job.id]?.name || 'Client'}</span>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-[11px]">
                                                             <Phone size={12} className="text-slate-400" />
-                                                            <a href={`tel:${job.client_contact_info?.phone}`} className="font-medium text-brand-blue hover:underline">
-                                                                {job.client_contact_info?.phone || 'Non renseigné'}
+                                                            <a href={contactsById?.[job.id]?.phone ? `tel:${contactsById[job.id]!.phone}` : undefined} className="font-medium text-brand-blue hover:underline">
+                                                                {contactsById?.[job.id]?.phone || 'Non renseigné'}
                                                             </a>
                                                         </div>
                                                         <div className="flex items-center gap-2 text-[11px] sm:col-span-2">
                                                             <Mail size={12} className="text-slate-400" />
-                                                            <a href={`mailto:${job.client_contact_info?.email}`} className="font-medium text-brand-blue hover:underline truncate">
-                                                                {job.client_contact_info?.email || 'Non renseigné'}
+                                                            <a href={contactsById?.[job.id]?.email ? `mailto:${contactsById[job.id]!.email}` : undefined} className="font-medium text-brand-blue hover:underline truncate">
+                                                                {contactsById?.[job.id]?.email || 'Non renseigné'}
                                                             </a>
                                                         </div>
                                                     </div>

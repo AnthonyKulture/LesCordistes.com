@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
-import type { CreditTransaction, UnlockedLead } from '../types';
+import type { UnlockedLead } from '../types';
 
 export function useCredits() {
     const { user } = useAuth();
@@ -38,23 +38,6 @@ export function useCredits() {
         enabled: !!user,
     });
 
-    // Get transaction history
-    const { data: transactions } = useQuery({
-        queryKey: ['credit-transactions', user?.id],
-        queryFn: async () => {
-            if (!user) return [];
-            const { data, error } = await (supabase as any)
-                .from('credit_transactions')
-                .select('*')
-                .eq('pro_id', user.id)
-                .order('created_at', { ascending: false })
-                .limit(20);
-            if (error) throw error;
-            return data as CreditTransaction[];
-        },
-        enabled: !!user,
-    });
-
     // === ATOMIQUE : Déblocage d'un lead via RPC Supabase ===
     // Requiert l'exécution préalable de supabase-rpc-unlock-lead.sql dans Supabase
     const unlockLead = useMutation({
@@ -87,7 +70,6 @@ export function useCredits() {
     return {
         balance: credits?.balance || 0,
         isLoading,
-        transactions: transactions || [],
         unlockedLeads: unlockedLeads || [],
         isJobUnlocked,
         unlockLead,

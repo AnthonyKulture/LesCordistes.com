@@ -6,7 +6,7 @@
 // Idempotent : pas d'unique constraint, l'utilisateur peut soumettre plusieurs fois.
 // Notification Telegram immédiate à l'admin.
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse, after } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import { sendTelegram, escapeHtml } from '@/lib/ops/telegram'
 
@@ -98,7 +98,8 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: error.message }, { status: 500 })
         }
 
-        // Notifications admin (best-effort, non-bloquant) : Telegram + email
+        // Notifications admin (best-effort) : Telegram + email, exécutées après la
+        // réponse HTTP via after() — l'utilisateur n'attend plus les 1-3 s cumulées.
         const slotLabel = cleanSlot
             ? ({ morning: 'matin', afternoon: 'après-midi', evening: 'soir' } as const)[
                   cleanSlot as 'morning' | 'afternoon' | 'evening'
@@ -123,11 +124,7 @@ export async function POST(req: NextRequest) {
             `→ ${adminUrl}`,
         ].filter(Boolean)
         
-        try {
-            await sendTelegram(tgLines.join('\n'))
-        } catch (tgErr) {
-            console.error('[contact_requests] Telegram notification failed:', tgErr)
-        }
+        const telegramMessage = tgLines.join('\n')
 
         // Email admin via send-email + admin-alert
         const fullDisplayName = [cleanFirstName, cleanLastName].filter(Boolean).join(' ') || 'Anonyme'
@@ -149,28 +146,34 @@ export async function POST(req: NextRequest) {
             .replace(/\n/g, '<br>')
 
         const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'anthony@lescordistes.com'
-        
-        try {
-            const { error: invokeError } = await admin.functions.invoke('send-email', {
-                body: {
-                    to: ADMIN_EMAIL,
-                    subject: `[LesCordistes] ${emailTitle}`,
-                    templateId: 'admin-alert',
-                    data: {
-                        title: emailTitle,
-                        message: emailLines || 'Nouvelle demande de contact reçue.',
-                        link: adminUrl,
-                        linkText: 'Voir dans l\'admin',
-                    },
-                },
-            })
 
-            if (invokeError) {
-                console.error('[contact_requests] admin email invocation error:', invokeError)
+        after(async () => {
+            const [telegramResult, emailResult] = await Promise.allSettled([
+                sendTelegram(telegramMessage),
+                admin.functions.invoke('send-email', {
+                    body: {
+                        to: ADMIN_EMAIL,
+                        subject: `[LesCordistes] ${emailTitle}`,
+                        templateId: 'admin-alert',
+                        data: {
+                            title: emailTitle,
+                            message: emailLines || 'Nouvelle demande de contact reçue.',
+                            link: adminUrl,
+                            linkText: 'Voir dans l\'admin',
+                        },
+                    },
+                }),
+            ])
+
+            if (telegramResult.status === 'rejected') {
+                console.error('[contact_requests] Telegram notification failed:', telegramResult.reason)
             }
-        } catch (err: unknown) {
-            console.error('[contact_requests] admin email failed:', err)
-        }
+            if (emailResult.status === 'rejected') {
+                console.error('[contact_requests] admin email failed:', emailResult.reason)
+            } else if (emailResult.value?.error) {
+                console.error('[contact_requests] admin email invocation error:', emailResult.value.error)
+            }
+        })
 
         return NextResponse.json({ ok: true, id: inserted?.id })
     } catch (err: unknown) {

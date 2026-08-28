@@ -2,30 +2,21 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '../../lib/supabase';
 
-interface JobUnlockersProps {
-    jobId: string;
+export interface JobUnlockerPro {
+    id: string;
+    full_name: string | null;
+    email: string | null;
+    avatar_url: string | null;
 }
 
-export const JobUnlockers: React.FC<JobUnlockersProps> = ({ jobId }) => {
+interface JobUnlockersProps {
+    pros: JobUnlockerPro[];
+    isLoading?: boolean;
+}
+
+export const JobUnlockers: React.FC<JobUnlockersProps> = ({ pros, isLoading = false }) => {
     const router = useRouter();
-    const { data: pros, isLoading } = useQuery({
-        queryKey: ['unlocked-pros', jobId],
-        queryFn: async () => {
-            const { data, error } = await supabase
-                .from('unlocked_leads')
-                .select(`
-                    pro_id,
-                    profiles:pro_id (id, full_name, email, avatar_url)
-                `)
-                .eq('job_id', jobId);
-            
-            if (error) throw error;
-            return data.map((d: any) => d.profiles) as any[];
-        }
-    });
 
     if (isLoading) return <div className="mt-4 h-8 w-24 animate-pulse bg-slate-50 rounded-full" />;
     

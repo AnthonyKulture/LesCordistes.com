@@ -22,6 +22,33 @@
 -- rôle, peu importe le flow d'inscription).
 --
 -- À exécuter MANUELLEMENT dans Supabase SQL Editor.
+--
+-- ============================================================================
+-- ⚠️ NE PAS RE-RUNNER CE FICHIER APRÈS LA MIGRATION 20260828e
+-- ============================================================================
+-- L'étape 3 ci-dessous recrée `private.trigger_on_new_profile()` avec la
+-- condition `AND NEW.welcome_email_sent_at IS NULL`. Depuis 20260828e, le flag
+-- est posé par un trigger BEFORE INSERT (`on_new_profile_welcome_flag`) : au
+-- moment où le AFTER INSERT s'exécute, NEW.welcome_email_sent_at est DÉJÀ
+-- renseigné, la condition est donc toujours fausse et l'email de bienvenue
+-- N'EST PLUS JAMAIS ENVOYÉ — silencieusement (aucune erreur, l'admin-alert
+-- part toujours, seul le welcome disparaît).
+--
+-- Le garde-fou ci-dessous bloque l'exécution dans ce cas. Si tu dois vraiment
+-- rejouer ce fichier, rejoue 20260828e juste après pour rétablir l'état correct.
+-- ============================================================================
+DO $guard$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE NOT tgisinternal
+          AND tgname = 'on_new_profile_welcome_flag'
+          AND tgrelid = 'public.profiles'::regclass
+    ) THEN
+        RAISE EXCEPTION
+            'Migration 20260828e déjà appliquée : re-runner ce fichier désactiverait silencieusement l''email de bienvenue. Voir l''en-tête du fichier.';
+    END IF;
+END $guard$;
 
 -- 1. Colonne flag --------------------------------------------------------
 ALTER TABLE public.profiles
