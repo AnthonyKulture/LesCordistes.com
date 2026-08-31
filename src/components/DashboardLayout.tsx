@@ -35,6 +35,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
     const handleSignOut = async () => {
         await signOut();
+        // Purge le Router Cache client : avec staleTimes.dynamic à 30 s, un
+        // payload RSC déjà reçu (dashboard, admin) serait resservi sans contrôle
+        // serveur pendant la fenêtre de cache — y compris après déconnexion.
+        router.refresh();
         router.push('/');
     };
 

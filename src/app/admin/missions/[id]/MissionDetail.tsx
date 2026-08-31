@@ -7,7 +7,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { JOBS_KEY } from '@/app/admin/missions/jobsKeys'
 import { MapPin, Lock, ChevronRight, CheckCircle2, Mail, Trash2, Archive, RotateCcw, FileEdit, Power } from 'lucide-react'
 import { StatusBadge, LqsBadge } from '@/components/admin/StatusBadge'
-import { AiSidebarLazy } from '@/components/admin/AiSidebarLazy'
 import { StorageImage } from '@/components/admin/StorageImage'
 import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
 import { MissionEditForm } from '@/components/admin/MissionEditForm'
@@ -186,7 +185,7 @@ L'équipe LesCordistes`
     }
 
     return (
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_400px] gap-6">
+        <div className="max-w-5xl">
             <section className="space-y-4 min-w-0">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
@@ -442,44 +441,6 @@ L'équipe LesCordistes`
                 </div>
             </section>
 
-            <aside className="xl:sticky xl:top-6 xl:self-start xl:h-[calc(100vh-3rem)]">
-                <AiSidebarLazy
-                    title="Assistant — Mission"
-                    context={{ type: 'job', id: job.id, data: job }}
-                    onMutationSuccess={(tool) => {
-                        if (
-                            tool === 'update_job_fields' ||
-                            tool === 'approve_mission' ||
-                            tool === 'reject_mission' ||
-                            tool === 'archive_mission'
-                        ) {
-                            refresh()
-                            setFeedback(`Action IA exécutée (${tool}) — fiche rechargée.`)
-                            setTimeout(() => setFeedback(null), 4000)
-                        }
-                    }}
-                    quickActions={[
-                        {
-                            label: 'Améliore la description',
-                            prompt:
-                                'Réécris la description de cette mission en conservant absolument toutes les informations techniques. Texte final dans un bloc de code.',
-                        },
-                        {
-                            label: 'Suggère un titre',
-                            prompt: 'Propose 3 titres alternatifs courts et explicites. Mets-les dans un bloc de code, un par ligne.',
-                        },
-                        {
-                            label: 'Détecte les problèmes',
-                            prompt:
-                                'Cette mission est-elle prête à être publiée ? Liste précisément ce qui manque ou pose problème (info, budget, contact, photos).',
-                        },
-                        {
-                            label: 'Résume pour un pro',
-                            prompt: 'Résume cette mission en 2 phrases percutantes qui donnent envie à un cordiste de dépenser 1 crédit pour la débloquer.',
-                        },
-                    ]}
-                />
-            </aside>
 
             <ConfirmDialog
                 open={confirmApprove}

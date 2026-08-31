@@ -4,11 +4,10 @@
 //   - 'callback'      : être recontacté (email OU phone + créneau)
 //
 // Idempotent : pas d'unique constraint, l'utilisateur peut soumettre plusieurs fois.
-// Notification Telegram immédiate à l'admin.
+// Notification e-mail immédiate à l'admin.
 
 import { NextRequest, NextResponse, after } from 'next/server'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
-import { sendTelegram, escapeHtml } from '@/lib/ops/telegram'
 
 export const dynamic = 'force-dynamic'
 
@@ -98,7 +97,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: error.message }, { status: 500 })
         }
 
-        // Notifications admin (best-effort) : Telegram + email, exécutées après la
+        // Notification admin (best-effort) : email, exécutée après la
         // réponse HTTP via after() — l'utilisateur n'attend plus les 1-3 s cumulées.
         const slotLabel = cleanSlot
             ? ({ morning: 'matin', afternoon: 'après-midi', evening: 'soir' } as const)[
@@ -108,23 +107,6 @@ export async function POST(req: NextRequest) {
         const isCallback = request_type === 'callback'
         const adminUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lescordistes.com'}/admin/contact-requests`
 
-        // Telegram
-        const tgLines = [
-            isCallback ? '📞 <b>Demande de rappel</b>' : '💬 <b>Message rapide</b>',
-            cleanFirstName ? `Prénom : ${escapeHtml(cleanFirstName)}` : '',
-            cleanLastName ? `Nom : ${escapeHtml(cleanLastName)}` : '',
-            cleanEmail ? `Email : ${escapeHtml(cleanEmail)}` : '',
-            cleanPhone ? `Tél. : ${escapeHtml(cleanPhone)}` : '',
-            cleanCity ? `Ville : ${escapeHtml(cleanCity)}` : '',
-            cleanCategory ? `Type : ${escapeHtml(cleanCategory)}` : '',
-            slotLabel ? `Créneau : ${slotLabel}` : '',
-            cleanChannel ? `Canal préféré : ${cleanChannel}` : '',
-            cleanMessage ? `\n💬 ${escapeHtml(cleanMessage)}` : '',
-            '',
-            `→ ${adminUrl}`,
-        ].filter(Boolean)
-        
-        const telegramMessage = tgLines.join('\n')
 
         // Email admin via send-email + admin-alert
         const fullDisplayName = [cleanFirstName, cleanLastName].filter(Boolean).join(' ') || 'Anonyme'
@@ -148,8 +130,7 @@ export async function POST(req: NextRequest) {
         const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'anthony@lescordistes.com'
 
         after(async () => {
-            const [telegramResult, emailResult] = await Promise.allSettled([
-                sendTelegram(telegramMessage),
+            const [emailResult] = await Promise.allSettled([
                 admin.functions.invoke('send-email', {
                     body: {
                         to: ADMIN_EMAIL,
@@ -165,9 +146,6 @@ export async function POST(req: NextRequest) {
                 }),
             ])
 
-            if (telegramResult.status === 'rejected') {
-                console.error('[contact_requests] Telegram notification failed:', telegramResult.reason)
-            }
             if (emailResult.status === 'rejected') {
                 console.error('[contact_requests] admin email failed:', emailResult.reason)
             } else if (emailResult.value?.error) {

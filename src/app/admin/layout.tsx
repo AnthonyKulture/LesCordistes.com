@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
-import { createSupabaseServerClient } from '@/lib/supabase-server'
+import { createSupabaseAdminClient } from '@/lib/supabase-server'
+import { getAdminIdentity } from '@/lib/ops/guard'
 import { AdminShell } from '@/components/admin/AdminShell'
 import type { Metadata } from 'next'
 
@@ -11,30 +12,26 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+    // Identité mémoïsée par React.cache() : la page rendue en parallèle réutilise
+    // cette même lecture au lieu d'en refaire une (getUser réseau + profiles).
+    const { userId, role, fullName, email } = await getAdminIdentity()
+
+    if (!userId) redirect('/connexion?next=/admin')
+    if (role !== 'admin') redirect('/dashboard')
+
+    // Rôle vérifié ci-dessus : on peut compter en service_role, ce qui évite
+    // d'évaluer les 3 policies SELECT permissives de `jobs` (dont is_admin()).
     /* eslint-disable @typescript-eslint/no-explicit-any */
-    const supabase = (await createSupabaseServerClient()) as any
-    const { data: { user } } = await supabase.auth.getUser()
-
-    if (!user) redirect('/connexion?next=/admin')
-
-    const [{ data: profile }, { count: pendingCount }] = await Promise.all([
-        supabase
-            .from('profiles')
-            .select('role, full_name, email')
-            .eq('id', user.id)
-            .single(),
-        supabase
-            .from('jobs')
-            .select('id', { count: 'exact', head: true })
-            .eq('status', 'pending'),
-    ])
-
-    if (profile?.role !== 'admin') redirect('/dashboard')
+    const admin = createSupabaseAdminClient() as any
+    const { count: pendingCount } = await admin
+        .from('jobs')
+        .select('id', { count: 'exact', head: true })
+        .eq('status', 'pending')
 
     return (
         <AdminShell
-            adminEmail={profile?.email ?? user.email ?? ''}
-            adminName={profile?.full_name ?? null}
+            adminEmail={email ?? ''}
+            adminName={fullName}
             pendingCount={pendingCount ?? 0}
         >
             {children}

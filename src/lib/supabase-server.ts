@@ -58,12 +58,25 @@ export function createSupabasePublicReadClient() {
     return publicReadClient
 }
 
-// Client admin avec service role — uniquement pour les Route Handlers serveur
+// Client admin avec service role — uniquement côté serveur.
+// Singleton : chaque createClient() instancie un GoTrueClient complet (storage,
+// verrous, timer de rafraîchissement) alors qu'une clé de service n'a pas de
+// session à gérer. Les options auth désactivent cette machinerie inutile.
+let adminClient: ReturnType<typeof createSupabaseJsClient<Database>> | null = null
+
 export function createSupabaseAdminClient() {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { createClient } = require('@supabase/supabase-js') as { createClient: typeof import('@supabase/supabase-js').createClient }
-    return createClient<Database>(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!
-    )
+    if (!adminClient) {
+        adminClient = createSupabaseJsClient<Database>(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!,
+            {
+                auth: {
+                    persistSession: false,
+                    autoRefreshToken: false,
+                    detectSessionInUrl: false,
+                },
+            }
+        )
+    }
+    return adminClient
 }

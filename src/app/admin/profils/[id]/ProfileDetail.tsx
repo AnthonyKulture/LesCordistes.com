@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { USERS_KEY } from '@/app/admin/profils/profilesKeys'
 import { Mail, Phone, Building2, Award, MapPin, CreditCard, Plus, Minus } from 'lucide-react'
-import { AiSidebarLazy } from '@/components/admin/AiSidebarLazy'
 import { ConfirmDialog } from '@/components/admin/ConfirmDialog'
 import type { Profile, CreditTransaction } from '@/lib/types/ops'
 
@@ -75,7 +74,7 @@ export function ProfileDetail({ initialProfile, initialBalance, initialTransacti
     }
 
     return (
-        <div className="grid grid-cols-1 xl:grid-cols-[1fr_400px] gap-6">
+        <div className="max-w-5xl">
             <section className="space-y-4 min-w-0">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
@@ -252,28 +251,6 @@ export function ProfileDetail({ initialProfile, initialBalance, initialTransacti
                 )}
             </section>
 
-            <aside className="xl:sticky xl:top-6 xl:self-start xl:h-[calc(100vh-3rem)]">
-                <AiSidebarLazy
-                    title="Assistant — Profil"
-                    context={{ type: 'profile', id: profile.id, data: profile }}
-                    onMutationSuccess={async (tool) => {
-                        if (tool === 'adjust_credits') {
-                            // Rechargement du solde + transactions
-                            try {
-                                const r = await fetch(`/api/ops/users/${profile.id}`, { cache: 'no-store' })
-                                const data = await r.json()
-                                if (typeof data.credits?.balance === 'number') setBalance(Number(data.credits.balance))
-                                if (Array.isArray(data.transactions)) setTransactions(data.transactions as CreditTransaction[])
-                                setFeedback('Solde mis à jour par l\'IA ✓')
-                                setTimeout(() => setFeedback(null), 4000)
-                            } catch {}
-                        } else if (tool === 'update_profile_fields' || tool === 'notify_user') {
-                            setFeedback(`Action IA exécutée (${tool}).`)
-                            setTimeout(() => setFeedback(null), 4000)
-                        }
-                    }}
-                />
-            </aside>
 
             <ConfirmDialog
                 open={confirmOpen}

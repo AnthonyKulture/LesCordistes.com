@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
     },
     outputFileTracingRoot: path.join(__dirname),
     eslint: { ignoreDuringBuilds: true },
+    // Router Cache client : depuis Next 15 le staleTime est 0 pour les segments
+    // dynamiques, donc aucune navigation admin ne réutilise le payload RSC déjà
+    // reçu. 30 s rend les allers-retours de la sidebar instantanés au 2e passage.
+    experimental: { staleTimes: { dynamic: 30, static: 180 } },
     images: {
         formats: ['image/avif', 'image/webp'],
         remotePatterns: [

@@ -3,6 +3,7 @@
 // connu @supabase/ssr ↔ @supabase/supabase-js v2.87 (cf. autres routes du projet
 // qui utilisent le même pattern `(client as any).from(...)`).
 
+import { cache } from 'react'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import type { User } from '@supabase/supabase-js'
 
@@ -72,6 +73,59 @@ export async function requireAdmin(): Promise<AdminGuardResult> {
  * même. Défense en profondeur, fail-closed.
  */
 export async function isCurrentUserAdmin(): Promise<boolean> {
-    const guard = await requireAdmin()
-    return guard.ok
+    const { role } = await getAdminIdentity()
+    return role === 'admin'
 }
+
+type AdminIdentity = {
+    userId: string | null
+    role: string | null
+    fullName: string | null
+    email: string | null
+}
+
+/**
+ * Identité admin, dédoublonnée à l'échelle d'un rendu par React.cache().
+ *
+ * Sans elle, un affichage de page admin relit la même identité 2 fois côté
+ * serveur : le layout et le garde de la page sont rendus concurremment et
+ * appellent chacun getUser() (aller-retour réseau vers GoTrue, sans raccourci
+ * local) puis `profiles`. React.cache() mémoïse sur la durée du rendu : la
+ * seconde lecture est gratuite.
+ *
+ * `getClaims()` remplace `getUser()` : le `sub` est vérifié cryptographiquement
+ * en local via JWKS (clés ES256 sur ce projet), donc zéro réseau. La décision
+ * d'autorisation reste portée par `profiles.role`, lu en base — c'est lui qui
+ * fait foi, pas le claim.
+ */
+export const getAdminIdentity = cache(async (): Promise<AdminIdentity> => {
+    const empty: AdminIdentity = { userId: null, role: null, fullName: null, email: null }
+    try {
+        const supabase = (await createSupabaseServerClient()) as any
+        const { data: claimsData } = await supabase.auth.getClaims()
+        const userId: string | undefined = claimsData?.claims?.sub
+        if (!userId) return empty
+
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('role, full_name, email')
+            .eq('id', userId)
+            .single()
+        if (error || !data) {
+            // Sans ce log, une erreur transitoire (timeout PostgREST, révocation
+            // de colonne) éjecte un admin légitime vers /dashboard sans trace.
+            console.error('[getAdminIdentity] lecture de profiles échouée :', error?.message ?? 'aucune donnée')
+            return { ...empty, userId }
+        }
+
+        return {
+            userId,
+            role: data.role ?? null,
+            fullName: data.full_name ?? null,
+            email: data.email ?? null,
+        }
+    } catch (e) {
+        console.error('[getAdminIdentity] exception :', e)
+        return empty
+    }
+})

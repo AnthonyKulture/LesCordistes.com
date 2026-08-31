@@ -129,6 +129,14 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 
 ---
 
+## Admin — révocation d'un accès
+
+Le garde admin (`getAdminIdentity` dans `src/lib/ops/guard.ts`) vérifie le JWT **en local** via JWKS (`getClaims`, clés ES256) puis relit `profiles.role` en base à chaque rendu.
+
+- **Révoquer un admin** : `UPDATE profiles SET role = 'client' WHERE id = '<uuid>'` → effet **immédiat**, le rôle est relu à chaque requête.
+- ⚠️ **Bannir via Supabase Auth ne suffit pas** : sans appel réseau à GoTrue, un compte banni conserve son accès jusqu'à expiration de son access token (1 h par défaut). Passer par `profiles.role`.
+- Les Route Handlers (`/api/ops/*`) conservent `requireAdmin()` avec `getUser()`, donc un aller-retour authoritatif.
+
 ## Emails (Edge Function)
 
 - Entry: `supabase/functions/send-email/index.ts`

@@ -1,11 +1,9 @@
 import { requireAdmin } from '@/lib/ops/guard'
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
 import { logAdminAction } from '@/lib/ops/audit'
-import { sendTelegram, escapeHtml } from '@/lib/ops/telegram'
 
 export const dynamic = 'force-dynamic'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lescordistes.com'
 
 // Champs scalaires modifiables par l'admin via `action: 'update'`.
 // Volontairement exclus : id, created_at, updated_at, created_by,
@@ -110,10 +108,6 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
             performed_by: guard.user.id,
         })
 
-        sendTelegram(
-            `<b>✅ Mission approuvée</b>\n${escapeHtml(existing.title)}\n${SITE_URL}/admin/missions/${id}`
-        ).catch(() => {})
-
         return Response.json({ ok: true, status: 'live' })
     }
 
@@ -134,10 +128,6 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
             payload: { before: existing.status, after: 'rejected', reason },
             performed_by: guard.user.id,
         })
-
-        sendTelegram(
-            `<b>❌ Mission rejetée</b>\n${escapeHtml(existing.title)}\nMotif : ${escapeHtml(reason)}`
-        ).catch(() => {})
 
         return Response.json({ ok: true, status: 'rejected' })
     }
@@ -275,10 +265,6 @@ export async function DELETE(_req: Request, { params }: { params: Promise<{ id: 
         payload: { title: existing.title, status_before: existing.status },
         performed_by: guard.user.id,
     })
-
-    sendTelegram(
-        `<b>🗑 Mission supprimée</b>\n${escapeHtml(existing.title)}`
-    ).catch(() => {})
 
     return Response.json({ ok: true })
 }

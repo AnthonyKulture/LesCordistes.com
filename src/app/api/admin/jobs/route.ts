@@ -8,7 +8,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin } from '@/lib/ops/guard'
-import { sendTelegram, escapeHtml } from '@/lib/ops/telegram'
 import { CATEGORY_LABELS } from '@/constants/categories'
 
 export const dynamic = 'force-dynamic'
@@ -158,24 +157,6 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        // Notification Telegram admin (best-effort)
-        const tgLines = [
-            '📝 <b>Mission créée par admin</b>',
-            `Titre : ${escapeHtml(autoTitle)}`,
-            `Ville : ${escapeHtml(String(location_city))}`,
-            `Client : ${escapeHtml(fullName || 'Anonyme')}`,
-            contact_email ? `Email : ${escapeHtml(String(contact_email))}` : '',
-            contact_phone ? `Tél. : ${escapeHtml(String(contact_phone))}` : '',
-            from_request_id ? `Source : contact_request ${from_request_id}` : '',
-            '',
-            `→ ${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.lescordistes.com'}/jobs/${slug}`,
-        ].filter(Boolean)
-        
-        try {
-            await sendTelegram(tgLines.join('\n'))
-        } catch (tgErr) {
-            console.error('[admin/jobs] Telegram notification failed:', tgErr)
-        }
 
         return NextResponse.json({ ok: true, id: jobId, slug })
     } catch (err: unknown) {

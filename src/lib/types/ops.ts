@@ -79,68 +79,6 @@ export type RecentUnlock = {
   } | null
 }
 
-// ---------- Chat (tool use multi-turn) ----------
-export type ToolUseBlock = {
-  type: 'tool_use'
-  id: string
-  name: string
-  input: Record<string, unknown>
-}
-export type ToolResultBlock = {
-  type: 'tool_result'
-  tool_use_id: string
-  content: string
-  is_error?: boolean
-}
-export type TextBlock = { type: 'text'; text: string }
-
-export type ContentBlock = TextBlock | ToolUseBlock | ToolResultBlock
-
-// Format supporté :
-// - legacy : content: string (équivalent à [{type:'text',text}])
-// - tool use : content: ContentBlock[]
-export type ChatMessage = {
-  role: 'user' | 'assistant'
-  content: string | ContentBlock[]
-}
-
-export type ChatContextType = 'job' | 'profile' | 'stats' | 'free'
-
-export type ChatRequest = {
-  // Si présent : un nouveau message utilisateur à ajouter à l'historique
-  message?: string
-  // Si présent : la requête est un tool_result à ré-injecter (multi-turn)
-  tool_results?: Array<{ tool_use_id: string; content: string; is_error?: boolean }>
-  context?: {
-    type: ChatContextType
-    id?: string
-    data?: Job | Profile | OpsStats | Record<string, unknown>
-  }
-  history: ChatMessage[]
-  fast?: boolean // true => haiku, false/undef => sonnet
-  enable_tools?: boolean // true (défaut) sauf raison particulière
-}
-
-// Outils read-only — auto-exécutés sans confirmation admin.
-// Synchronisé avec src/lib/ops/tools.ts (source de vérité serveur).
-export const READ_ONLY_TOOL_NAMES: ReadonlySet<string> = new Set([
-  'search_jobs',
-  'get_job',
-  'search_profiles',
-  'get_profile',
-  'get_stats',
-  'list_pending_missions',
-])
-
-// Outils destructifs — dialog confirm rouge.
-export const DESTRUCTIVE_TOOL_NAMES: ReadonlySet<string> = new Set([
-  'reject_mission',
-  'archive_mission',
-  'adjust_credits',
-  'update_profile_fields', // peut changer un rôle — sensible
-  'send_email', // envoi externe — confirmation obligatoire
-])
-
 // Lead Quality Score — calculé côté client, jamais persisté
 export type JobWithLQS = Job & { lqs: number }
 

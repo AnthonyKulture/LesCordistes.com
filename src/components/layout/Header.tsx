@@ -26,7 +26,7 @@ import { useDashboardMode } from '../../contexts/DashboardContext';
 import { Button } from '../ui/Button';
 import { NotificationBell } from '../notifications/NotificationBell';
 
-export const Header: React.FC = () => {
+const HeaderInner: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [contactInfo, setContactInfo] = useState({ email: '', phone: '', emailHref: '', phoneHref: '' });
@@ -49,7 +49,6 @@ export const Header: React.FC = () => {
 
     // L'admin a son propre shell (sidebar + header). On masque le header public
     // pour éviter le conflit z-index sur sidebar desktop + drawer mobile.
-    const isAdminRoute = pathname?.startsWith('/admin') ?? false;
 
     // Close profile dropdown when clicking outside
     useEffect(() => {
@@ -80,6 +79,10 @@ export const Header: React.FC = () => {
 
     const handleSignOut = async () => {
         await signOut();
+        // Purge le Router Cache client : avec staleTimes.dynamic à 30 s, un
+        // payload RSC déjà reçu (dashboard, admin) serait resservi sans contrôle
+        // serveur pendant la fenêtre de cache — y compris après déconnexion.
+        router.refresh();
         router.push('/');
     };
 
@@ -111,8 +114,6 @@ export const Header: React.FC = () => {
             ctaUrl = '/post-job';
         }
     }
-
-    if (isAdminRoute) return null;
 
     return (
         <>
@@ -489,4 +490,16 @@ export const Header: React.FC = () => {
         </AnimatePresence>
         </>
     );
+};
+
+/**
+ * Le layout racine monte le Header sur toutes les routes, admin comprise.
+ * La garde doit se faire AVANT `HeaderInner`, sinon ses hooks s'exécutent quand
+ * même : `useUnreadCount` lance un COUNT sur `messages` et ouvre un canal
+ * Realtime sur chaque page admin, pour finalement ne rien rendre.
+ */
+export const Header: React.FC = () => {
+    const pathname = usePathname();
+    if (pathname?.startsWith('/admin')) return null;
+    return <HeaderInner />;
 };
