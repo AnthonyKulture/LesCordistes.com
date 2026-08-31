@@ -108,7 +108,9 @@ SELECT jsonb_build_object(
 );
 $$;
 
-REVOKE ALL ON FUNCTION public.admin_dashboard_stats(timestamptz, timestamptz) FROM PUBLIC;
+-- ⚠️ Les DEFAULT PRIVILEGES Supabase accordent EXECUTE à anon/authenticated sur
+-- toute nouvelle fonction : révoquer PUBLIC seul ne suffit PAS (leçon 20260828l).
+REVOKE EXECUTE ON FUNCTION public.admin_dashboard_stats(timestamptz, timestamptz) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.admin_dashboard_stats(timestamptz, timestamptz) TO service_role;
 
 COMMIT;
