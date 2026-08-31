@@ -44,7 +44,8 @@ export async function GET(req: Request) {
     }
 
     // Génère la liste d'URLs depuis la même source que /sitemap.xml
-    const entries = sitemap()
+    // (asynchrone depuis l'ajout des profils pro, qui viennent de la base)
+    const entries = await sitemap()
     const urls = entries.map((e) => e.url)
 
     if (urls.length === 0) {

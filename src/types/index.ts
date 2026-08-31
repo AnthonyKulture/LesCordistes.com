@@ -1,4 +1,6 @@
 export interface Profile {
+    /** Opt-out SEO du pro : false = jamais indexé, quel que soit le contenu. */
+    seo_indexable?: boolean | null;
     id: string;
     email: string;
     role: 'client' | 'pro' | 'admin';

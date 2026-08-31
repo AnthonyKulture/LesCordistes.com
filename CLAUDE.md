@@ -157,7 +157,9 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 ## SEO (sitemap dynamique — pages indexables auto-pilotées)
 
 - `/cordiste-[ville]` — 60 villes (toutes indexables) · `/cordiste-[ville]/[service]` — 1 380 pages générées dont **301 indexables** (contexte unique rédigé) et 1 079 en `noindex` · `/lexique/[slug]` — 13 termes · `/blog/[slug]` — 10 articles · 13 pages institutionnelles
-- Total sitemap : **~398 URLs** (uniquement pages indexables — c'est ce que Google découvre). Pour vérifier le décompte : `curl -s https://www.lescordistes.com/sitemap.xml | grep -c '<loc>'`
+- `/pros/[id]` — profils pro, rendus côté serveur et indexables **sous condition de contenu rédigé** (voir ci-dessous)
+- Total sitemap : **~439 URLs** (uniquement pages indexables — c'est ce que Google découvre). Pour vérifier le décompte : `curl -s https://www.lescordistes.com/sitemap.xml | grep -c '<loc>'`
+- Le sitemap n'est plus purement statique : il interroge Supabase pour les profils pro (`revalidate = 3600`, repli sur liste vide + log en cas d'échec).
 - JSON-LD : Service+provider Organization, FAQPage, BlogPosting (avec `image`), DefinedTerm, DefinedTermSet, BreadcrumbList, Organization, WebSite
 - OG image dynamique : `GET /og?title=…&kicker=…` (edge runtime) — utilisée par blog + fallback layout
 - llms-full.txt dynamique : `/llms-full.txt` concatène llms.txt + lexique complet + FAQs blog (cache 24 h)
@@ -174,6 +176,15 @@ Marketplace connecting clients and rope-access professionals, credit-gated.
 - **Le sitemap ne liste que les pages indexables** : il filtre via `hasUniqueServiceCityContext`. Cohérent avec les `robots`.
 - **Pour réactiver une page (la rendre indexable)** : ajouter une entry `SERVICE_CITY_CONTEXT[service][city] = { intro, useCases }` dans `seoData.ts`. Aucun changement de code requis. Le sitemap et les robots metas se mettent à jour automatiquement au build suivant.
 - **Périmètre actuellement indexable** : 301 couples (sur 1 380 possibles). À élargir au fur et à mesure de la rédaction de contextes uniques.
+
+### Indexation des profils pro — même doctrine, critère rédactionnel
+
+- `/pros/[id]` est **toujours** généré et accessible ; seuls les profils au contenu rédigé entrent dans l'index.
+- Prédicat unique : `isProfileIndexable()` dans `src/lib/profileSeo.ts`, utilisé **à la fois** par le `robots` de la page et par le sitemap — ne jamais en dupliquer la logique.
+- Critères : rôle `pro` · `full_name` renseigné · **bio ≥ 150 caractères** (condition dure) · au moins 2 sections parmi `skills`, `certifications`, `intervention_zones`, `portfolio_photos` · `seo_indexable != false`.
+- **Pourquoi une bio obligatoire** : un premier seuil « 3 champs remplis sur 5 » laissait passer 47 profils sur 59, dont 9 sans aucune bio — le wizard d'inscription remplit mécaniquement certifications et zones. Compter des champs mesure le parcours d'inscription, pas l'effort de présentation. Périmètre actuel : **26 profils sur 59**.
+- `profiles.seo_indexable` (migration `20260828i`, défaut `true`) matérialise le droit d'opposition du pro. **Reste à faire côté produit** : un interrupteur sur la page profil et une mention dans la politique de confidentialité. En attendant, un retrait se traite à la main : `UPDATE profiles SET seo_indexable = false WHERE id = '<uuid>'`.
+- ⚠️ `robots.ts` bloque `/pro/` (la route widget). **Ne jamais raccourcir en `/pro`** : cela désindexerait tous les `/pros/{id}`.
 
 ### Cahier des charges qualité d'un contexte (E-E-A-T) — pour rédiger une nouvelle entry
 

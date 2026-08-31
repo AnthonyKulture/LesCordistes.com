@@ -35,7 +35,11 @@ interface Props {
     params: Promise<{ slug: string }>
 }
 
-async function getJob(slug: string): Promise<Job | null> {
+// Le select ne ramène que 4 colonnes : typer le retour sur leur forme exacte
+// plutôt que sur `Job` entier, sinon le cast est un mensonge que TS refuse.
+type JobOgFields = Pick<Job, 'title' | 'location_city' | 'category' | 'description'>
+
+async function getJob(slug: string): Promise<JobOgFields | null> {
     try {
         const supabase = await createSupabaseServerClient()
         const { data } = await supabase
@@ -44,7 +48,7 @@ async function getJob(slug: string): Promise<Job | null> {
             .eq('slug', slug)
             .eq('status', 'live')
             .single()
-        return (data as Job) ?? null
+        return (data as JobOgFields | null) ?? null
     } catch {
         return null
     }

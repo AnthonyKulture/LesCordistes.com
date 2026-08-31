@@ -187,11 +187,10 @@ export const PostJob: React.FC = () => {
         const googleName = authUser.user_metadata?.full_name || authUser.user_metadata?.name || 'Utilisateur';
 
         const supabase = createSupabaseBrowserClient();
-        supabase
-            .from('profiles')
+        ;(supabase.from('profiles') as any)
             .update({ role: expectedRole, full_name: googleName })
             .eq('id', authUser.id)
-            .then(({ error }) => {
+            .then(({ error }: { error: unknown }) => {
                 if (!error) refreshProfile();
             });
     }, [authUser, profile, formData.type, refreshProfile]);

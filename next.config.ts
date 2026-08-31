@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
     },
     outputFileTracingRoot: path.join(__dirname),
     eslint: { ignoreDuringBuilds: true },
-    typescript: { ignoreBuildErrors: true },
     images: {
         formats: ['image/avif', 'image/webp'],
         remotePatterns: [

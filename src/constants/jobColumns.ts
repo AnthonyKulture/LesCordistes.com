@@ -86,6 +86,7 @@ export const PROFILE_PUBLIC_COLUMNS = [
     'longitude',
     'created_at',
     'updated_at',
+    'seo_indexable',
 ].join(', ')
 
 /**

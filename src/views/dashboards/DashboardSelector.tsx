@@ -40,6 +40,8 @@ export function DashboardSelector() {
         if (proRaw) {
             let data: Record<string, string> | null = null;
             try { data = JSON.parse(proRaw); } catch { localStorage.removeItem(PRO_KEY); setApplying(false); return; }
+            // JSON.parse('null') renvoie null sans lever : la garde couvre ce cas.
+            if (!data) { localStorage.removeItem(PRO_KEY); setApplying(false); return; }
 
             const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ') || null;
             ;(supabase.from('profiles') as any).upsert({
@@ -61,6 +63,8 @@ export function DashboardSelector() {
         } else if (clientRaw) {
             let data: Record<string, string> | null = null;
             try { data = JSON.parse(clientRaw); } catch { localStorage.removeItem(CLIENT_KEY); setApplying(false); return; }
+            // JSON.parse('null') renvoie null sans lever : la garde couvre ce cas.
+            if (!data) { localStorage.removeItem(CLIENT_KEY); setApplying(false); return; }
 
             const fullName = [data.firstName, data.lastName].filter(Boolean).join(' ') || null;
             ;(supabase.from('profiles') as any).upsert({
