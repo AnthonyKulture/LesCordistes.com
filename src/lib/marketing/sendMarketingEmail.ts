@@ -57,11 +57,22 @@ export async function sendMarketingEmail(
 
     // Vérifier opt-in (sauf en test, où l'admin envoie à un email arbitraire de prévisualisation).
     if (!input.isTest) {
-        const { data: contact } = await admin
+        // .eq d'abord (les emails sont normalisés en minuscules par la migration
+        // 20260901a), .ilike en repli tant que des lignes à casse mixte peuvent
+        // subsister (code déployable avant OU après la migration).
+        let { data: contact } = await admin
             .from('marketing_contacts')
             .select('id, marketing_opt_in, unsubscribed_at')
-            .ilike('email', emailLc)
+            .eq('email', emailLc)
             .maybeSingle()
+        if (!contact) {
+            const { data: fallback } = await admin
+                .from('marketing_contacts')
+                .select('id, marketing_opt_in, unsubscribed_at')
+                .ilike('email', emailLc)
+                .maybeSingle()
+            contact = fallback
+        }
 
         if (contact?.unsubscribed_at) {
             await upsertRecipient(admin, input, {
@@ -81,11 +92,12 @@ export async function sendMarketingEmail(
         }
 
         // Anti double-envoi : si un recipient 'sent' existe déjà → skip.
+        // .eq suffit : les recipients sont toujours écrits en minuscules ici.
         const { data: existing } = await admin
             .from('marketing_campaign_recipients')
             .select('id, status')
             .eq('campaign_id', input.campaignId)
-            .ilike('email', emailLc)
+            .eq('email', emailLc)
             .maybeSingle()
 
         if (existing?.status === 'sent') {
@@ -110,6 +122,7 @@ export async function sendMarketingEmail(
         unsubscribeUrl,
         unsubscribe_url: unsubscribeUrl,
         campaignName: input.templateData.campaignName ?? null,
+        previewText: input.templateData.previewText ?? input.previewText ?? null,
     }
 
     let invokeError: unknown = null
@@ -215,7 +228,7 @@ async function upsertRecipient(
         .from('marketing_campaign_recipients')
         .select('id')
         .eq('campaign_id', input.campaignId)
-        .ilike('email', emailLc)
+        .eq('email', emailLc)
         .maybeSingle()
 
     if (existing?.id) {

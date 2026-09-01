@@ -2,13 +2,7 @@
 
 export type AudienceType = 'client' | 'pro' | 'mixed' | 'unknown'
 export type AudienceTypeWritable = 'client' | 'pro' | 'mixed'
-export type CampaignStatus =
-    | 'draft'
-    | 'scheduled'
-    | 'sending'
-    | 'sent'
-    | 'failed'
-    | 'cancelled'
+export type CampaignStatus = 'draft' | 'sending' | 'sent' | 'failed'
 export type RecipientStatus =
     | 'pending'
     | 'sent'
@@ -68,7 +62,6 @@ export interface MarketingCampaignRow {
     audience_type: AudienceTypeWritable
     segment_id: string | null
     status: CampaignStatus
-    scheduled_at: string | null
     sending_started_at: string | null
     sent_at: string | null
     created_by: string | null

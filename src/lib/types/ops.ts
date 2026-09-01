@@ -110,3 +110,76 @@ export type ProfileWithCredits = Profile & {
   credits_balance?: number
   unlocked_count?: number
 }
+
+// Analytics investisseur — sortie des RPC admin_analytics_overview / admin_analytics_series
+// (migration 20260901b). Les ratios valent null quand le dénominateur est 0.
+
+export type AnalyticsLiquidity = {
+  cohort: number
+  pct_unlocked: number | null
+  median_hours_to_first_unlock: number | null
+  avg_unlocks_per_mission: number | null
+  pct_expired_no_unlock: number | null
+}
+
+export type AnalyticsDemand = {
+  jobs_created: number
+  mix_standard: number
+  mix_renfort_pro: number
+  wizard_leads: number
+  wizard_completed: number
+  wizard_completion: number | null
+  moderated_total: number
+  approved: number
+  pct_approved: number | null
+  median_hours_moderation: number | null
+}
+
+export type AnalyticsPeriodMetrics = {
+  revenue_eur: number
+  purchases: number
+  buyers: number
+  arpu_eur: number | null
+  missions_moderated: number
+  revenue_per_mission_eur: number | null
+  liquidity: AnalyticsLiquidity
+  supply: {
+    new_pros: number
+    active_pros: number
+  }
+  demand: AnalyticsDemand
+  engagement: {
+    conversations: number
+    reviews: number
+  }
+}
+
+export type AnalyticsAllTime = {
+  buyers_total: number
+  repeat_buyers: number
+  repeat_rate: number | null
+  total_pros: number
+  complete_profiles: number
+  pct_complete_profiles: number | null
+}
+
+export type AnalyticsOverview = {
+  current: AnalyticsPeriodMetrics
+  previous: AnalyticsPeriodMetrics
+  all_time: AnalyticsAllTime
+}
+
+export type AnalyticsMonthPoint = {
+  month: string
+  revenue_eur: number
+  missions_published: number
+  new_pros: number
+  unlocks: number
+}
+
+export type AnalyticsData = {
+  overview: AnalyticsOverview
+  series: AnalyticsMonthPoint[]
+}
+
+export type AnalyticsRange = '30d' | '90d' | '12m'

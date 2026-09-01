@@ -8,6 +8,14 @@ export const runtime = 'nodejs'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+// Même cadence que /send : Resend limite à 2 req/s, un envoi parallèle
+// fait sauter les emails au-delà du rate-limit.
+const SEND_DELAY_MS = 250
+
+function sleep(ms: number): Promise<void> {
+    return new Promise(r => setTimeout(r, ms))
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export async function POST(
@@ -58,20 +66,24 @@ export async function POST(
         .single()
     if (!tpl) return Response.json({ error: 'template_not_found' }, { status: 400 })
 
-    const results = await Promise.all(
-        tos.map(addr =>
-            sendMarketingEmail({
-                to: addr,
-                subject: `[TEST] ${campaign.subject}`,
-                previewText: campaign.preview_text,
-                edgeTemplateId: tpl.edge_template_id,
-                templateData: { ...(campaign.template_data ?? {}), campaignName: campaign.name },
-                campaignId: 'TEST',
-                isTest: true,
-                performedBy: guard.user.id,
-            }).then(r => ({ to: addr, ...r }))
-        )
-    )
+    const results: Array<{ to: string } & Awaited<ReturnType<typeof sendMarketingEmail>>> = []
+    for (let i = 0; i < tos.length; i++) {
+        const addr = tos[i]
+        const r = await sendMarketingEmail({
+            to: addr,
+            subject: `[TEST] ${campaign.subject}`,
+            previewText: campaign.preview_text,
+            edgeTemplateId: tpl.edge_template_id,
+            templateData: { ...(campaign.template_data ?? {}), campaignName: campaign.name },
+            campaignId: 'TEST',
+            isTest: true,
+            performedBy: guard.user.id,
+        })
+        results.push({ to: addr, ...r })
+        if (i < tos.length - 1) {
+            await sleep(SEND_DELAY_MS)
+        }
+    }
 
     const sent = results.filter(r => r.ok).length
     const failed = results.length - sent

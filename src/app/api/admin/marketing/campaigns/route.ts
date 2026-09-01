@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     let q = admin
         .from('marketing_campaigns')
         .select(
-            'id, name, subject, audience_type, segment_id, template_key, status, scheduled_at, sent_at, stats, created_at, updated_at'
+            'id, name, subject, audience_type, segment_id, template_key, status, sent_at, stats, created_at, updated_at'
         )
         .order('created_at', { ascending: false })
         .limit(limit)

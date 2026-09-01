@@ -130,7 +130,9 @@ export async function POST(
     }
 
     // ENVOI RÉEL — on passe en sending et on persiste la liste finale d'exclusions.
-    const { error: lockErr } = await admin
+    // Le .select('id') rend la garde effective : si une requête concurrente a déjà
+    // pris le verrou (status != campaign.status), 0 ligne est retournée → 409.
+    const { data: lockedRows, error: lockErr } = await admin
         .from('marketing_campaigns')
         .update({
             status: 'sending',
@@ -140,9 +142,13 @@ export async function POST(
         })
         .eq('id', id)
         .eq('status', campaign.status) // garde anti-double-send
+        .select('id')
 
     if (lockErr) {
         return Response.json({ error: 'lock_failed', message: lockErr.message }, { status: 500 })
+    }
+    if (!lockedRows || lockedRows.length === 0) {
+        return Response.json({ error: 'campaign_already_processed' }, { status: 409 })
     }
 
     let sent = 0

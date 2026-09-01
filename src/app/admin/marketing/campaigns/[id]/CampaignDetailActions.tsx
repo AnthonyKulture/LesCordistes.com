@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, Send, Mail, AlertTriangle, Search } from 'lucide-react'
+import { Loader2, Send, Mail, AlertTriangle, Search, Unlock } from 'lucide-react'
 
 interface PreviewRecipient {
     contact_id: string
@@ -37,6 +37,7 @@ export function CampaignDetailActions({
     const [sending, setSending] = useState(false)
     const [sendResult, setSendResult] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
+    const [unlocking, setUnlocking] = useState(false)
 
     const filtered = useMemo(() => {
         if (!preview) return []
@@ -143,6 +144,33 @@ export function CampaignDetailActions({
             filtered.forEach(r => next.delete(r.contact_id))
             return next
         })
+    }
+
+    async function unlockCampaign() {
+        setUnlocking(true)
+        setError(null)
+        try {
+            const res = await fetch(`/api/admin/marketing/campaigns/${campaignId}/unlock`, {
+                method: 'POST',
+            })
+            const data = (await res.json()) as { ok?: boolean; error?: string; retry_in_seconds?: number }
+            if (!res.ok) {
+                if (data?.error === 'still_active') {
+                    setError(
+                        `Envoi encore actif (ou trop récent) — réessayez dans ${Math.ceil((data.retry_in_seconds ?? 0) / 60)} min.`
+                    )
+                } else {
+                    setError(data?.error ?? 'Erreur déblocage')
+                }
+                return
+            }
+            setSendResult('Campagne débloquée — repassée en Échec, vous pouvez relancer l’envoi.')
+            router.refresh()
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Erreur')
+        } finally {
+            setUnlocking(false)
+        }
     }
 
     async function realSend() {
@@ -375,6 +403,30 @@ export function CampaignDetailActions({
                             )}
                         </div>
                     ) : null}
+                </div>
+            )}
+
+            {/* Déblocage d'une campagne coincée en 'sending' (timeout Vercel) */}
+            {status === 'sending' && (
+                <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                        <Unlock className="h-4 w-4 text-red-700" />
+                        <span className="text-sm font-semibold text-red-900">Campagne bloquée ?</span>
+                    </div>
+                    <p className="text-xs text-red-900 mb-3">
+                        Si l&apos;envoi a été interrompu (timeout), la campagne peut rester coincée en
+                        «&nbsp;Envoi en cours&nbsp;». Le déblocage la repasse en Échec pour permettre une
+                        relance — refusé tant que l&apos;envoi montre une activité de moins de 15 minutes.
+                    </p>
+                    <button
+                        type="button"
+                        onClick={unlockCampaign}
+                        disabled={unlocking}
+                        className="inline-flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg bg-white border border-red-300 hover:bg-red-100 text-red-900 disabled:opacity-50"
+                    >
+                        {unlocking ? <Loader2 className="h-4 w-4 animate-spin" /> : <Unlock className="h-4 w-4" />}
+                        Débloquer la campagne
+                    </button>
                 </div>
             )}
 

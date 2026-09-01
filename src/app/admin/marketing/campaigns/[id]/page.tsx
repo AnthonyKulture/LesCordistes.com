@@ -10,19 +10,15 @@ export const metadata = { title: 'Campagne · Marketing · Admin' }
 
 const STATUS_LABEL: Record<string, string> = {
     draft: 'Brouillon',
-    scheduled: 'Planifiée',
     sending: 'Envoi en cours',
     sent: 'Envoyée',
     failed: 'Échec',
-    cancelled: 'Annulée',
 }
 const STATUS_COLOR: Record<string, string> = {
     draft: 'bg-slate-100 text-slate-700',
-    scheduled: 'bg-blue-100 text-blue-700',
     sending: 'bg-amber-100 text-amber-700',
     sent: 'bg-green-100 text-green-700',
     failed: 'bg-red-100 text-red-700',
-    cancelled: 'bg-slate-100 text-slate-500',
 }
 
 export default async function CampaignDetailPage({
@@ -67,7 +63,7 @@ export default async function CampaignDetailPage({
         ])
 
     const stats = (campaign.stats ?? {}) as Record<string, number | string | null>
-    const isLocked = campaign.status === 'sending' || campaign.status === 'sent'
+    const isLocked = campaign.status === 'sent'
 
     return (
         <div className="px-4 md:px-8 py-6 max-w-5xl mx-auto space-y-6">
