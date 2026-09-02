@@ -2116,6 +2116,107 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'rc-pro-cordiste-assurance',
+        authorSlug: 'benjamin-de-oliveira',
+        title: 'RC pro cordiste : ce qu\'il faut savoir avant de signer',
+        shortTitle: 'RC pro cordiste : guide complet',
+        description:
+            'Souscrivez une RC pro cordiste adaptée à votre activité : garanties indispensables, franchises, cas d\'exclusion et fourchettes de prix réelles 2026.',
+        category: 'Métier & Carrière',
+        readTime: 8,
+        datePublished: '2026-06-24',
+        dateModified: '2026-06-24',
+        intro:
+            'La RC pro cordiste est l\'assurance que tu dois souscrire avant ton premier chantier en indépendant — point. Sans elle, un sinistre sur chantier peut te coûter des dizaines de milliers d\'euros en responsabilité civile, et aucun donneur d\'ordre sérieux ne te laissera intervenir sans attestation. Pourtant, beaucoup de techniciens sur cordes fraîchement certifiés signent n\'importe quel contrat sans lire les exclusions, découvrent trop tard que leur police ne couvre pas les travaux en hauteur au-delà de 30 mètres, ou sous-estiment le montant de la franchise. Ce guide te donne les clés pour choisir ta RC pro avec lucidité : ce que doit couvrir un contrat adapté à l\'accès sur cordes, les pièges fréquents, les fourchettes de prix réelles et les questions à poser avant de signer.',
+        sections: [
+            {
+                heading: 'Pourquoi la RC pro est obligatoire pour un cordiste indépendant',
+                body: 'En tant que technicien d\'accès difficile indépendant, tu es juridiquement responsable des dommages causés à des tiers dans le cadre de ton activité. Cela couvre les dommages corporels (une chute de matériel qui blesse un passant), les dommages matériels (un équipement endommagé chez le client) et les dommages immatériels consécutifs (un arrêt de chantier causé par ton intervention).\n\nLa **Responsabilité Civile Professionnelle** (RC pro) est l\'assurance qui prend en charge ces sinistres. Elle n\'est pas imposée par une loi spécifique pour les cordistes indépendants — contrairement au secteur médical ou juridique — mais elle est exigée contractuellement par quasi tous les donneurs d\'ordre, bureaux d\'études et entreprises générales qui font appel à des sous-traitants en accès sur cordes.\n\nConcrètement : si tu travailles en micro-entreprise ou en EURL sans RC pro et qu\'un incident se produit sur chantier, tu engages ton patrimoine personnel. Pour une micro-entreprise, cela signifie que tes biens propres peuvent être saisis. La RC pro est donc autant une protection de ton activité qu\'une exigence commerciale.\n\nUne attestation d\'assurance RC pro en cours de validité est à fournir dès la signature du contrat de sous-traitance ou de la commande client. Sans elle, tu es hors jeu — même avec un CQP TPS niveau 3 ou un IRATA L3 en poche.',
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    description: 'Accède aux missions ouvertes et aux donneurs d\'ordre qui cherchent des cordistes qualifiés.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Quelles garanties sont indispensables dans une RC pro cordiste ?',
+                body: 'Toutes les RC pro ne se valent pas. Un contrat généraliste pour artisan du bâtiment ne suffit pas si l\'activité déclarée n\'inclut pas explicitement les **travaux sur cordes**, le **travail en hauteur** ou les **techniques d\'accès difficile**. Voici les garanties à vérifier ligne par ligne avant de signer.\n\n**Responsabilité civile exploitation** : couvre les dommages causés dans le cadre de ton activité courante — pendant le chantier, lors des déplacements professionnels, lors de la préparation du matériel. C\'est la garantie socle, présente dans tous les contrats.\n\n**Responsabilité civile après livraison** : couvre les dommages qui surviennent après la fin de ton intervention — par exemple, une fixation que tu as posée cède plusieurs semaines plus tard et provoque un dommage. Cette garantie est souvent optionnelle ou mal calibrée dans les contrats bas de gamme.\n\n**Dommages aux biens confiés** : si tu interviens sur l\'équipement d\'un client (une façade, un pylône, du matériel industriel), tu es potentiellement responsable des dommages que tu causes à ces biens. Cette garantie doit être incluse et son plafond doit être cohérent avec la valeur des ouvrages sur lesquels tu travailles.\n\n**Activités en hauteur explicitement couvertes** : c\'est LE point critique. L\'assureur doit avoir déclaré ton activité comme relevant des travaux en hauteur sur cordes. Si ta police dit "travaux de nettoyage" ou "maintenance industrielle" sans préciser la technique d\'accès utilisée, tu risques un refus de prise en charge en cas de sinistre sur cordes.',
+                listIntro: 'Garanties à vérifier avant de signer :',
+                list: [
+                    'RC exploitation : dommages pendant l\'activité — garantie socle obligatoire',
+                    'RC après livraison : dommages post-intervention — vérifier le délai de couverture (minimum 3 ans)',
+                    'Dommages aux biens confiés : plafond cohérent avec la valeur des ouvrages clients',
+                    'Travaux en hauteur sur cordes explicitement mentionnés dans les conditions particulières',
+                    'Couverture des activités d\'encadrement si tu supervises une équipe (niveau CQP 2 ou 3)',
+                    'Garantie défense pénale et recours si un litige aboutit à une mise en cause judiciaire',
+                ],
+            },
+            {
+                heading: 'Les exclusions fréquentes qui piègent les cordistes',
+                body: 'Les assureurs grand public connaissent mal l\'accès sur cordes. Beaucoup appliquent des exclusions standard héritées du BTP classique qui peuvent annuler ta couverture sans que tu t\'en rendes compte. Voici les plus courantes.\n\n**Hauteur maximale** : certains contrats plafonnent la couverture à 20 ou 30 mètres. Un cordiste qui travaille sur un ouvrage d\'art, un viaduc ou une façade de grande hauteur se retrouve hors couverture. Vérifie qu\'aucune limite de hauteur n\'est inscrite dans les conditions particulières — ou qu\'elle est bien au-dessus de tes interventions habituelles.\n\n**Activités subaquatiques ou en espace confiné** : si tu travailles également en CATEC (Certificat d\'aptitude à la conduite en toute sécurité dans les espaces confinés), assure-toi que cette activité est aussi déclarée. Les espaces confinés sont souvent exclus des RC pro standard.\n\n**Sous-traitance en cascade** : si tu sous-traites toi-même une partie d\'un chantier à un autre cordiste, ta RC pro couvre-t-elle les dommages causés par ton sous-traitant ? Rarement, sauf mention explicite.\n\n**Matériel non homologué ou mal entretenu** : un EPI hors délai de vérification périodique (harnais cuissard, longe double, descendeur autobloquant) peut constituer une faute lourde qui annule la couverture en cas de sinistre. L\'OPPBTP recommande une vérification annuelle par un technicien compétent — garde les fiches de contrôle.\n\n**Dommages intentionnels ou faute inexcusable** : évidemment exclus. Mais dans un litige, l\'assureur peut chercher à qualifier un comportement de "faute inexcusable" pour éviter la prise en charge. Les bons contrats limitent cette clause aux actes délibérément malveillants.',
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    description: 'Des chantiers cordiste filtrés par région et par type d\'activité.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Combien coûte une RC pro cordiste en 2026 ?',
+                body: 'Le prix d\'une RC pro pour un technicien sur cordes indépendant dépend principalement de ton chiffre d\'affaires déclaré, de ton statut juridique et du plafond de garantie choisi. Voici les fourchettes réelles observées en 2026.\n\n**Micro-entreprise, CA inférieur à 30 000 €/an** : entre **400 et 600 €/an**. À ce niveau, les assureurs spécialisés proposent des formules packagées adaptées aux indépendants débutants. Le plafond de garantie tourne autour de 1 à 2 millions d\'euros — suffisant pour les chantiers courants.\n\n**Micro-entreprise ou EURL, CA entre 30 000 et 80 000 €/an** : entre **600 et 900 €/an**. C\'est la tranche la plus courante pour un cordiste confirmé qui facture à 450-650 €/j. Le plafond monte à 2 à 5 millions d\'euros selon les contrats.\n\n**EURL ou SASU, CA supérieur à 80 000 €/an** : entre **900 et 1 500 €/an**, parfois plus si l\'activité inclut de l\'encadrement régulier d\'équipes ou des interventions sur des ouvrages à haute valeur (infrastructures ferroviaires, centrales, ouvrages d\'art).\n\nLe **portage salarial** est un cas à part : tu es salarié d\'une société de portage qui dispose de sa propre RC pro. Tu n\'as pas à souscrire ta propre police, ce qui simplifie la gestion — mais vérifie que la couverture de l\'entreprise de portage inclut bien les travaux sur cordes dans son périmètre d\'activité déclaré.\n\nPense à comparer au moins trois devis en décrivant précisément ton activité : techniques d\'accès difficile, TAC, travaux en hauteur sur cordes. Un courtier spécialisé BTP ou risques professionnels fera une meilleure proposition qu\'un comparateur généraliste.',
+            },
+            {
+                heading: 'Franchise, plafond, délai de carence : les détails qui comptent',
+                body: 'Une RC pro ne se résume pas à son prix annuel. Trois paramètres contractuels ont un impact direct sur l\'utilité réelle du contrat.\n\n**La franchise** est la somme qui reste à ta charge lors d\'un sinistre, quelles que soient les circonstances. Une franchise de 500 € sur des sinistres matériels courants est acceptable. Une franchise de 3 000 € sur les dommages corporels est en revanche dangereuse pour un indépendant dont la trésorerie est limitée. Négocie une franchise basse sur les sinistres corporels — les plus graves et les plus coûteux dans notre métier.\n\n**Le plafond de garantie** est le montant maximal que l\'assureur prend en charge par sinistre ou par année. Un plafond de 500 000 € est notoirement insuffisant dans le secteur des travaux en hauteur, où un accident corporel grave peut générer des demandes de réparation à six chiffres. Vise un plafond minimum de **1 500 000 € par sinistre**, idéalement 2 à 3 millions si tu travailles régulièrement sur des ouvrages industriels ou des infrastructures.\n\n**Le délai de carence** est la période après souscription pendant laquelle certaines garanties ne s\'appliquent pas encore. Certains contrats prévoient un délai de carence de 30 à 90 jours sur la garantie après livraison. Si tu démarres une activité et que tu décroches un chantier immédiatement, ce délai peut poser problème. Vérifie que la couverture RC exploitation démarre à la date d\'effet du contrat.\n\nEnfin, **la résiliation annuelle** : depuis 2015 (loi Hamon), tu peux résilier ton contrat RC pro à tout moment après la première année, avec un préavis d\'un mois. Cette flexibilité est utile si ton volume d\'activité évolue ou si tu passes en portage salarial en cours d\'année.',
+                cta: {
+                    text: 'Découvrir les chantiers de cette semaine',
+                    href: '/jobs',
+                    description: 'Missions disponibles par région pour les cordistes qualifiés.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'RC pro et sous-traitance : ce que couvre vraiment le donneur d\'ordre',
+                body: 'Quand tu travailles en renfort PRO ou en sous-traitance pour une entreprise de cordistes ou un bureau d\'études, la question de la couverture assurantielle se complique. Voici comment ça fonctionne dans la réalité.\n\nL\'entreprise donneur d\'ordre dispose de sa propre RC pro professionnelle. Elle couvre les dommages causés à des tiers dans le cadre du chantier qu\'elle pilote. Mais cette couverture ne te protège pas personnellement si tu es en faute dans l\'exécution de ta prestation.\n\nSur un chantier en sous-traitance, **deux assurances coexistent** : celle du donneur d\'ordre (qui couvre le pilotage global du chantier) et la tienne (qui couvre ton intervention spécifique). En cas de sinistre, les assureurs des deux parties déterminent la part de responsabilité respective. Si tu n\'as pas de RC pro, tu es exposé à la totalité des recours.\n\nQuelques donneurs d\'ordre exigent même que ta police soit **cotitulaire** avec la leur, ou qu\'ils soient nommément désignés comme bénéficiaires sur ton attestation. C\'est une clause négociable mais courante sur les marchés industriels. Ton assureur peut l\'ajouter sous forme d\'avenant, parfois sans surcoût.\n\nUne règle pratique : **demande systématiquement l\'attestation RC pro du donneur d\'ordre** avant un chantier en sous-traitance. S\'il rechigne à la fournir, c\'est un signal d\'alerte. Tu as autant intérêt que lui à vérifier que la chaîne assurantielle est complète.',
+            },
+            {
+                heading: 'Comment souscrire une RC pro cordiste : les bons réflexes',
+                body: 'La souscription d\'une RC pro adaptée à l\'accès sur cordes demande quelques précautions que les circuits généralistes (banques, assureurs en ligne) ne respectent pas toujours.\n\n**Déclare ton activité avec précision.** Utilise les termes exacts : "travaux sur cordes", "accès par cordes", "techniques d\'accès difficile", "TAC", "travaux en hauteur par suspension". Évite les formulations vagues comme "travaux de bâtiment" ou "prestation de service" — elles créent un flou contractuel que l\'assureur utilisera en cas de sinistre.\n\n**Mentionne tes certifications.** CQP TPS niveau 1, 2 ou 3, IRATA L1/L2/L3, SPRAT — ces qualifications prouvent à l\'assureur que tu es formé aux risques spécifiques du métier. Elles peuvent aussi jouer en ta faveur sur le prix de la prime.\n\n**Passe par un courtier spécialisé BTP ou travaux en hauteur.** Un courtier qui connaît le secteur connaît aussi les assureurs qui acceptent le risque sans clause limitative excessive. Les grands réseaux généralistes ont souvent des contrats cadres peu adaptés aux cordistes indépendants.\n\n**Conserve tous les documents** : attestation annuelle, conditions générales et particulières, fiches de vérification EPI (harnais cuissard, bloqueur ventral, descendeur, longes). En cas de sinistre, la CARSAT régionale et l\'inspecteur du travail peuvent demander à voir ces documents. Un dossier complet protège ton droit à indemnisation.\n\n**Réévalue ta couverture chaque année.** Si ton CA augmente, si tu prends en charge de l\'encadrement ou si tu démarres une activité de formation cordiste, actualise ta déclaration d\'activité. Un contrat sous-déclaré peut être annulé rétroactivement.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte une RC pro cordiste indépendant en 2026 ?',
+                a: 'Pour un cordiste indépendant, comptez 400 à 600 €/an en micro-entreprise (CA < 30 000 €) et 600 à 900 €/an pour un CA entre 30 000 et 80 000 €. Les EURL avec CA supérieur à 80 000 € paient 900 à 1 500 €/an selon le plafond de garantie.',
+            },
+            {
+                q: 'La RC pro est-elle obligatoire légalement pour un cordiste indépendant ?',
+                a: 'Elle n\'est pas imposée par une loi spécifique aux cordistes, mais elle est exigée contractuellement par quasi tous les donneurs d\'ordre. Sans RC pro, tu ne peux pas signer de contrat de sous-traitance sérieux. Sans elle, tu engages aussi ton patrimoine personnel en cas de sinistre sur chantier.',
+            },
+            {
+                q: 'Ma RC pro couvre-t-elle les travaux à plus de 20 mètres de hauteur ?',
+                a: 'Pas nécessairement. Certains contrats standard plafonnent la couverture à 20 ou 30 mètres. Vérifie les conditions particulières et demande explicitement la suppression de toute limite de hauteur si tu travailles sur des ouvrages de grande élévation — façades hautes, pylônes, viaducs.',
+            },
+            {
+                q: 'En sous-traitance, la RC pro du donneur d\'ordre me couvre-t-elle ?',
+                a: 'Non, pas personnellement. La RC pro du donneur d\'ordre couvre le chantier dans son ensemble, mais pas les fautes qui te sont imputables dans l\'exécution de ta propre prestation. Tu dois disposer de ta propre police, quel que soit le mode d\'intervention.',
+            },
+            {
+                q: 'Faut-il une RC pro spécifique si je suis en portage salarial ?',
+                a: 'Non. En portage salarial, tu es salarié de la société de portage, qui dispose de sa propre RC pro couvrant tes interventions. Vérifie néanmoins que le contrat de portage mentionne explicitement les travaux sur cordes dans le périmètre d\'activité couvert.',
+            },
+        ],
+        ctaText: 'Créer mon profil cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Coût pour se lancer comme cordiste indépendant', href: '/blog/cout-lancer-cordiste-independant' },
+            { label: 'Statut juridique cordiste : micro, EURL ou portage', href: '/blog/statut-juridique-cordiste-independant' },
+            { label: 'Tarif journalier cordiste indépendant 2026', href: '/blog/tarif-journalier-cordiste-independant' },
+            { label: 'Premier chantier après le CQP', href: '/blog/premier-chantier-cordiste-apres-cqp' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
