@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Lock, Eye, Clock, UserCheck, HardDrive, FileText, Mail } from 'lucide-react';
+import { Shield, Lock, Eye, Clock, UserCheck, HardDrive, FileText, Mail, Send, Search } from 'lucide-react';
 
 export const Privacy: React.FC = () => {
     const schemaData = {
@@ -83,6 +83,27 @@ export const Privacy: React.FC = () => {
             title: "6. Vos Droits",
             icon: <FileText className="text-brand-blue" />,
             content: "Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition. Vous pouvez exercer ces droits depuis votre tableau de bord ou en contactant le support."
+        },
+        {
+            title: "7. Prospection et Communications",
+            icon: <Send className="text-brand-blue" />,
+            content: (
+                <div className="space-y-4">
+                    <p>Trois types d'emails peuvent vous être adressés :</p>
+                    <ul className="list-disc pl-5 space-y-2">
+                        <li><strong>Relance de projet :</strong> si vous avez laissé votre email dans un formulaire de demande de devis et coché la case de consentement, nous pouvons vous recontacter au sujet de votre projet. Base légale : votre consentement. Sans cette case cochée, aucune relance n'est envoyée.</li>
+                        <li><strong>Alertes missions :</strong> réservées aux professionnels qui les ont explicitement demandées depuis la page des missions. Chaque alerte contient un lien de désinscription.</li>
+                        <li><strong>Emails de service :</strong> confirmations, notifications de compte et de missions, envoyés aux utilisateurs inscrits. Base légale : notre intérêt légitime à faire fonctionner le service.</li>
+                    </ul>
+                    <p><strong>Durées :</strong> les données issues des formulaires de demande de devis n'ayant pas donné lieu à un consentement à la relance sont supprimées après 3 ans d'inactivité.</p>
+                    <p><strong>Opposition :</strong> vous pouvez vous opposer à ces communications à tout moment — chaque alerte mission contient un lien de désinscription ; pour les relances de projet, il suffit de répondre à l'email ou de contacter le support.</p>
+                </div>
+            )
+        },
+        {
+            title: "8. Référencement des Profils Professionnels",
+            icon: <Search className="text-brand-blue" />,
+            content: "Votre profil professionnel public peut être référencé par les moteurs de recherche. Vous pouvez vous y opposer à tout moment depuis votre page profil (réglage « Profil visible dans les moteurs de recherche »). Le retrait est répercuté sur notre site en une heure environ ; la disparition effective des résultats de recherche dépend ensuite du délai de traitement propre à chaque moteur."
         }
     ];
 
@@ -149,7 +170,7 @@ export const Privacy: React.FC = () => {
                 </section>
 
                 <div className="text-center mt-12 text-slate-400 text-sm">
-                    <p>Dernière mise à jour : 24 mars 2026. Cette politique peut être amenée à évoluer.</p>
+                    <p>Dernière mise à jour : 2 septembre 2026. Cette politique peut être amenée à évoluer.</p>
                 </div>
             </div>
         </div>

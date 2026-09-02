@@ -90,14 +90,23 @@ export async function POST(req: NextRequest) {
                         amount,
                         description: `Achat Stripe - Session ${session.id}`,
                         stripe_session_id: session.id,
+                        amount_cents: session.amount_total,
                     }
 
                     let { error: txErr } = await supabase.from('credit_transactions').insert(txPayload)
 
-                    // 42703 = colonne inconnue : migration 20260828f pas encore passée.
-                    if (txErr?.code === '42703') {
-                        const { stripe_session_id: _omit, ...legacyPayload } = txPayload
-                        ;({ error: txErr } = await supabase.from('credit_transactions').insert(legacyPayload))
+                    // PGRST204 = colonne inconnue du schema cache PostgREST (migration
+                    // 20260901d amount_cents pas encore passée, ou cache pas rechargé) —
+                    // 42703 gardé par ceinture.
+                    if (txErr?.code === 'PGRST204' || txErr?.code === '42703') {
+                        const { amount_cents: _omitCents, ...noCentsPayload } = txPayload
+                        ;({ error: txErr } = await supabase.from('credit_transactions').insert(noCentsPayload))
+
+                        // Idem pour stripe_session_id (migration 20260828f pas encore passée non plus).
+                        if (txErr?.code === 'PGRST204' || txErr?.code === '42703') {
+                            const { stripe_session_id: _omit, ...legacyPayload } = noCentsPayload
+                            ;({ error: txErr } = await supabase.from('credit_transactions').insert(legacyPayload))
+                        }
                     }
 
                     if (txErr) console.error('❌ Erreur insertion transaction:', txErr)

@@ -51,7 +51,7 @@ export const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ isOpen, onClos
                         {sent ? (
                             <div className="text-center py-2">
                                 <p className="text-sm font-semibold text-slate-900">C'est noté.</p>
-                                <p className="text-xs text-slate-500 mt-0.5">Nous vous recontacterons bientôt.</p>
+                                <p className="text-xs text-slate-500 mt-0.5">Votre demande est enregistrée — reprenez-la quand vous voulez.</p>
                             </div>
                         ) : (
                             <>

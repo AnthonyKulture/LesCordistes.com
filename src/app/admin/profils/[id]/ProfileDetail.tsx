@@ -17,6 +17,7 @@ const TX_LABEL: Record<string, string> = {
     purchase: 'Achat / ajout',
     spend: 'Dépense / déblocage',
     refund: 'Remboursement',
+    adjustment: 'Ajustement',
 }
 
 export function ProfileDetail({ initialProfile, initialBalance, initialTransactions }: Props) {

@@ -97,6 +97,7 @@ export const Step5Contact: React.FC<Step5Props> = ({ data, updateData, onSubmit,
                         role: isRenfort ? 'pro' : 'client',
                         phone: data.contact_phone,
                         client_type: data.client_type,
+                        acquisition_source: 'wizard-post-job',
                     },
                 },
             });

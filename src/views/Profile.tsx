@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useCallback } from 'react'
-import { User, Award, Camera, Lock, MapPin } from 'lucide-react'
+import { User, Award, Camera, Lock, MapPin, Globe } from 'lucide-react'
 import { uploadJobPhoto } from '../lib/supabase'
 import { createSupabaseBrowserClient } from '../lib/supabase-browser'
 import { useAuth } from '../contexts/AuthContext'
@@ -91,6 +91,7 @@ export const Profile: React.FC = () => {
     const [editingSection, setEditingSection] = useState<EditableSection | null>(null)
     const [savingSection, setSavingSection] = useState<EditableSection | null>(null)
     const [isUploadingPhoto, setIsUploadingPhoto] = useState(false)
+    const [savingSeoToggle, setSavingSeoToggle] = useState(false)
     const photoInputRef = useRef<HTMLInputElement>(null)
 
     const [formData, setFormData] = useState<ProfileFormData>(emptyDraft())
@@ -228,6 +229,38 @@ export const Profile: React.FC = () => {
         }
     }
 
+    // ---------- Opt-out SEO (auto-save, pas de mode édition) ----------
+
+    const seoIndexable = (profile as any)?.seo_indexable !== false
+
+    const toggleSeoIndexable = async () => {
+        if (!user || savingSeoToggle) return
+        setSavingSeoToggle(true)
+        const next = !seoIndexable
+        try {
+            const client = createSupabaseBrowserClient()
+            const { error } = await (client.from('profiles') as any)
+                .update({ seo_indexable: next })
+                .eq('id', user.id)
+
+            if (error) {
+                // Colonne absente : migration 20260828i pas encore appliquée.
+                // PostgREST renvoie PGRST204 pour une colonne inconnue dans un
+                // payload UPDATE — 42703 gardé par ceinture.
+                if (error.code === 'PGRST204' || error.code === '42703') {
+                    toast.error('Réglage indisponible pour le moment. Réessayez plus tard ou contactez le support.')
+                } else {
+                    toast.error(`Erreur : ${error.message}`)
+                }
+                return
+            }
+            toast.success(next ? 'Profil visible dans les moteurs de recherche' : 'Profil retiré des moteurs de recherche')
+            await refreshProfile()
+        } finally {
+            setSavingSeoToggle(false)
+        }
+    }
+
     const removePhoto = async (url: string) => {
         if (!user || !confirm('Supprimer cette photo ?')) return
         const current = (profile as any)?.portfolio_photos || []
@@ -362,6 +395,42 @@ export const Profile: React.FC = () => {
                                 FRENCH_DEPARTMENTS={FRENCH_DEPARTMENTS}
                             />
                         </SectionCard>
+
+                        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
+                            <div className="flex items-start justify-between gap-4">
+                                <div className="flex items-start gap-3 min-w-0">
+                                    <div className="p-2.5 bg-blue-50 rounded-xl shrink-0">
+                                        <Globe size={18} className="text-brand-blue" />
+                                    </div>
+                                    <div className="min-w-0">
+                                        <p className="font-bold text-slate-900 text-sm">
+                                            Profil visible dans les moteurs de recherche
+                                        </p>
+                                        <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                                            Désactivez pour retirer votre page publique des résultats de recherche.
+                                            Prise d'effet sous 1 h environ côté Google via notre sitemap.
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    type="button"
+                                    role="switch"
+                                    aria-checked={seoIndexable}
+                                    aria-label="Profil visible dans les moteurs de recherche"
+                                    onClick={toggleSeoIndexable}
+                                    disabled={savingSeoToggle}
+                                    className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ${
+                                        seoIndexable ? 'bg-brand-blue' : 'bg-slate-300'
+                                    } ${savingSeoToggle ? 'opacity-60 cursor-wait' : 'cursor-pointer'}`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
+                                            seoIndexable ? 'translate-x-6' : 'translate-x-1'
+                                        }`}
+                                    />
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 

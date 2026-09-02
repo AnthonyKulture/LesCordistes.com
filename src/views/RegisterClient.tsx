@@ -86,6 +86,7 @@ export function RegisterClient() {
                         last_name: formData.lastName,
                         full_name: `${formData.firstName} ${formData.lastName}`.trim(),
                         client_type: formData.client_type,
+                        acquisition_source: 'inscription-client',
                     },
                 },
             });

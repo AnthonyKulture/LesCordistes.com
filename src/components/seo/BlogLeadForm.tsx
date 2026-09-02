@@ -39,6 +39,7 @@ export function BlogLeadForm({
     const [category, setCategory] = useState(defaultCategory)
     const [city, setCity] = useState('')
     const [email, setEmail] = useState('')
+    const [consent, setConsent] = useState(false)
     const [submitting, setSubmitting] = useState(false)
 
     const isValid =
@@ -59,6 +60,8 @@ export function BlogLeadForm({
                 category,
                 step_reached: 1,
                 source,
+                consent,
+                consent_source: 'blog',
             }),
         }).catch(() => {})
 
@@ -152,6 +155,18 @@ export function BlogLeadForm({
                         />
                     </div>
 
+                    <label className="flex items-start gap-2 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={consent}
+                            onChange={(e) => setConsent(e.target.checked)}
+                            className="mt-0.5 accent-brand-blue"
+                        />
+                        <span className="text-xs text-slate-600 leading-snug">
+                            Je souhaite être recontacté·e pour m&apos;aider dans mon projet
+                        </span>
+                    </label>
+
                     <button
                         type="submit"
                         disabled={!isValid || submitting}
@@ -170,7 +185,12 @@ export function BlogLeadForm({
                     </a>
 
                     <p className="text-[11px] text-slate-400 text-center">
-                        En continuant vous acceptez nos CGU. Aucun spam.
+                        Votre email sert uniquement à retrouver votre demande — aucune
+                        relance sans votre accord ci-dessus. Détails dans notre{' '}
+                        <a href="/confidentialite" className="underline hover:text-slate-600">
+                            politique de confidentialité
+                        </a>
+                        .
                     </p>
                 </form>
             </div>

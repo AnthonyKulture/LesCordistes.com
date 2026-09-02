@@ -141,7 +141,7 @@ export interface JobFormData {
 export interface CreditTransaction {
     id: string;
     pro_id: string;
-    type: 'purchase' | 'spend' | 'refund';
+    type: 'purchase' | 'spend' | 'refund' | 'adjustment';
     amount: number;
     job_id?: string;
     description?: string;

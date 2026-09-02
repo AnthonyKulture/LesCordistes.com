@@ -36,6 +36,7 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext, 
 
     const [selected, setSelected] = useState<JobCategory[]>(initialSelected);
     const [emailValue, setEmailValue] = useState(data.contact_email || '');
+    const [consentValue, setConsentValue] = useState(false);
 
     const categories = [
         { value: 'cleaning' as JobCategory, label: 'Nettoyage', icon: Eraser, color: 'text-blue-500', bg: 'bg-blue-50', description: 'Nettoyage de façades, vitres' },
@@ -75,7 +76,7 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext, 
                 fetch('/api/leads', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: emailValue, category: selected[0], step_reached: 1, source: 'wizard_step1' }),
+                    body: JSON.stringify({ email: emailValue, category: selected[0], step_reached: 1, source: 'wizard_step1', consent: consentValue, consent_source: 'wizard' }),
                 }).catch(() => {});
             }
         }
@@ -175,6 +176,25 @@ export const Step2Category: React.FC<Step2Props> = ({ data, updateData, onNext, 
                             className="w-full px-3 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/30 focus:border-brand-blue transition-all"
                         />
                         <p className="text-xs text-slate-400">Facultatif — vous pourrez le renseigner à l'étape suivante.</p>
+                        <label className="flex items-start gap-2 mt-1 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={consentValue}
+                                onChange={(e) => setConsentValue(e.target.checked)}
+                                className="mt-0.5 accent-brand-blue"
+                            />
+                            <span className="text-xs text-slate-600 leading-snug">
+                                Je souhaite être recontacté·e pour m'aider dans mon projet
+                            </span>
+                        </label>
+                        <p className="text-[11px] text-slate-400">
+                            Votre email sert uniquement à retrouver votre demande — aucune relance sans votre accord ci-dessus.
+                            Détails dans notre{' '}
+                            <a href="/confidentialite" className="underline hover:text-slate-600">
+                                politique de confidentialité
+                            </a>
+                            .
+                        </p>
                     </div>
                 </motion.div>
             )}

@@ -29,6 +29,7 @@ export function CityLeadHero({ cityName, citySlug }: Props) {
     const router = useRouter()
     const [category, setCategory] = useState('')
     const [email, setEmail] = useState('')
+    const [consent, setConsent] = useState(false)
     const [submitting, setSubmitting] = useState(false)
 
     const isValid = category && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -48,6 +49,8 @@ export function CityLeadHero({ cityName, citySlug }: Props) {
                 category,
                 step_reached: 1,
                 source: `city_hero_${citySlug}`,
+                consent,
+                consent_source: 'city-hero',
             }),
         }).catch(() => {})
 
@@ -134,8 +137,20 @@ export function CityLeadHero({ cityName, citySlug }: Props) {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             placeholder="votre@email.fr"
-                            className="w-full px-3 py-2.5 mb-4 text-sm bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
+                            className="w-full px-3 py-2.5 mb-3 text-sm bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
                         />
+
+                        <label className="flex items-start gap-2 mb-4 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={consent}
+                                onChange={(e) => setConsent(e.target.checked)}
+                                className="mt-0.5 accent-brand-blue"
+                            />
+                            <span className="text-xs text-slate-600 leading-snug">
+                                Je souhaite être recontacté·e pour m&apos;aider dans mon projet
+                            </span>
+                        </label>
 
                         <button
                             type="submit"
@@ -155,7 +170,11 @@ export function CityLeadHero({ cityName, citySlug }: Props) {
                         </a>
 
                         <p className="text-[11px] text-slate-400 text-center mt-3">
-                            En continuant vous acceptez nos CGU. Aucun spam.
+                            Votre email sert uniquement à retrouver votre demande — aucune relance sans votre accord ci-dessus. Détails dans notre{' '}
+                            <a href="/confidentialite" className="underline hover:text-slate-600">
+                                politique de confidentialité
+                            </a>
+                            .
                         </p>
                     </form>
                 </div>

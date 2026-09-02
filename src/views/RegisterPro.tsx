@@ -94,6 +94,7 @@ export function RegisterPro() {
                         phone: formData.phone,
                         company_name: formData.isAutoEntrepreneur ? null : formData.companyName,
                         is_auto_entrepreneur: formData.isAutoEntrepreneur,
+                        acquisition_source: 'inscription-cordiste',
                     },
                 },
             });

@@ -4,7 +4,9 @@
 //   supabase/migrations/20260430-leads-followup-schedule.sql
 //
 // Logique :
-//   1. SELECT leads créés il y a >= 5 min sans followup_sent_at.
+//   1. SELECT leads créés il y a >= 5 min sans followup_sent_at ET avec
+//      consent_at renseigné (opt-in explicite — décision client 2026-09-01,
+//      migration 20260901c). Sans consentement, aucune relance, jamais.
 //   2. Pour chaque lead : skip si un job avec le même email a été créé depuis
 //      la capture du lead → mark followup_status = 'skipped'.
 //   3. Sinon : envoie email perso "Anthony" via send-email + admin-custom
@@ -60,9 +62,15 @@ serve(async (req) => {
         return new Response('ok', { headers: corsHeaders });
     }
 
-    // Auth check
+    // Auth check — fail-closed : sans CRON_SECRET configuré, on refuse tout.
+    if (!CRON_SECRET) {
+        return new Response(JSON.stringify({ error: 'cron_secret_not_configured' }), {
+            status: 503,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+    }
     const auth = req.headers.get('Authorization') || '';
-    if (!CRON_SECRET || auth !== `Bearer ${CRON_SECRET}`) {
+    if (auth !== `Bearer ${CRON_SECRET}`) {
         return new Response(JSON.stringify({ error: 'unauthorized' }), {
             status: 401,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -73,15 +81,28 @@ serve(async (req) => {
 
     const cutoff = new Date(Date.now() - FOLLOWUP_DELAY_MIN * 60_000).toISOString();
 
+    // Opt-in explicite : seuls les leads avec consent_at renseigné sont relancés.
     const { data: leads, error: selectErr } = await supabase
         .from('leads')
         .select('id, email, city, created_at')
         .lt('created_at', cutoff)
         .is('followup_sent_at', null)
+        .not('consent_at', 'is', null)
         .order('created_at', { ascending: true })
         .limit(MAX_PER_RUN);
 
     if (selectErr) {
+        // 42703 = colonne consent_at absente : migration 20260901c pas encore
+        // passée. Fail-closed : aucune relance sans preuve de consentement.
+        if (selectErr.code === '42703') {
+            console.warn(
+                '[leads-followup] colonne consent_at absente — migration 20260901c à appliquer ; aucune relance envoyée (opt-in requis).'
+            );
+            return new Response(
+                JSON.stringify({ ok: true, processed: 0, skipped_reason: 'consent_column_missing' }),
+                { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            );
+        }
         console.error('[leads-followup] select error:', selectErr.message);
         return new Response(JSON.stringify({ error: selectErr.message }), {
             status: 500,

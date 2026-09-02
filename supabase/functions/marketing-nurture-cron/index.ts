@@ -282,15 +282,20 @@ function sleep(ms: number): Promise<void> {
 
 // ─── HTTP entrypoint ──────────────────────────────────────────────────────────
 serve(async (req: Request) => {
-    if (CRON_SECRET) {
-        const auth = req.headers.get('Authorization') || '';
-        const expected = `Bearer ${CRON_SECRET}`;
-        if (auth !== expected) {
-            return new Response(JSON.stringify({ error: 'unauthorized' }), {
-                status: 401,
-                headers: { 'Content-Type': 'application/json' },
-            });
-        }
+    // Fail-closed : sans CRON_SECRET configuré, on refuse tout au lieu de
+    // sauter la vérification.
+    if (!CRON_SECRET) {
+        return new Response(JSON.stringify({ error: 'cron_secret_not_configured' }), {
+            status: 503,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    }
+    const auth = req.headers.get('Authorization') || '';
+    if (auth !== `Bearer ${CRON_SECRET}`) {
+        return new Response(JSON.stringify({ error: 'unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' },
+        });
     }
 
     const url = new URL(req.url);

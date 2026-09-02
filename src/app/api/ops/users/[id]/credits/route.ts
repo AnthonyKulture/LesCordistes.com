@@ -55,12 +55,19 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         )
     }
 
-    const txInsert = await admin.from('credit_transactions').insert({
+    const txBase = {
         pro_id: id,
-        type: delta > 0 ? 'purchase' : 'spend',
         amount: delta,
         description: `[admin] ${description}`,
-    })
+    }
+    let txInsert = await admin.from('credit_transactions').insert({ ...txBase, type: 'adjustment' })
+
+    // 23514 = contrainte CHECK : migration 20260901d (type 'adjustment') pas encore passée.
+    if (txInsert.error?.code === '23514') {
+        txInsert = await admin
+            .from('credit_transactions')
+            .insert({ ...txBase, type: delta > 0 ? 'purchase' : 'spend' })
+    }
     if (txInsert.error) return Response.json({ error: txInsert.error.message }, { status: 500 })
 
     if (existing) {

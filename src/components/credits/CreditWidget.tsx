@@ -10,6 +10,13 @@ import { useRouter } from 'next/navigation';
 import { CREDIT_PACKS } from '../../constants/creditPacks';
 import type { CreditTransaction } from '../../types';
 
+const TX_LABEL: Record<string, string> = {
+    purchase: 'Achat',
+    spend: 'Déblocage',
+    refund: 'Remboursement',
+    adjustment: 'Ajustement',
+};
+
 interface CreditPurchaseModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -191,7 +198,7 @@ const CreditWidgetFull: React.FC = () => {
                                             <TrendingDown size={14} className="text-red-400" />
                                         )}
                                         <span className="text-slate-600 truncate max-w-[180px]">
-                                            {tx.description || tx.type}
+                                            {tx.description || TX_LABEL[tx.type] || tx.type}
                                         </span>
                                     </div>
                                     <span className={`font-semibold ${tx.amount > 0 ? 'text-green-600' : 'text-red-500'}`}>

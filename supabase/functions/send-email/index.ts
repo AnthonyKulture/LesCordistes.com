@@ -668,6 +668,52 @@ function proMissionAlert(data: Record<string, string>): string {
   `);
 }
 
+// ─── Lead outcome (relance J+15) ──────────────────────────────────────────────
+// « Avez-vous obtenu ce chantier ? » — email de service lié à un achat de lead
+// (déblocage payé en crédits) : purement transactionnel, PAS dans
+// SUBSCRIBABLE_TEMPLATES ni MARKETING_TEMPLATES — un seul envoi par déblocage,
+// pas de lien de désinscription requis.
+// Variables :
+//   - name          : prénom du pro (optionnel)
+//   - jobTitle      : titre de la mission
+//   - city          : ville (optionnel)
+//   - wonUrl / lostUrl / noResponseUrl : liens signés vers /api/lead-outcome
+function leadOutcome(data: Record<string, string>): string {
+  const name = escHtml(data.name || '');
+  const jobTitle = escHtml(data.jobTitle || 'ce chantier');
+  const city = data.city ? ` à ${escHtml(data.city)}` : '';
+  const safeUrl = (u: string) =>
+    /^https?:\/\/[^\s"'<>]+$/i.test((u || '').trim()) ? escHtml((u || '').trim()) : 'https://www.lescordistes.com';
+  const wonUrl = safeUrl(data.wonUrl);
+  const lostUrl = safeUrl(data.lostUrl);
+  const noResponseUrl = safeUrl(data.noResponseUrl);
+
+  const outcomeBtn = (href: string, bg: string, label: string) => `
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 12px;">
+      <tr><td style="background:${bg};border-radius:6px;">
+        <a href="${href}" style="display:block;padding:14px 20px;color:#fff;font-size:15px;font-weight:600;text-decoration:none;text-align:center;">${label}</a>
+      </td></tr>
+    </table>`;
+
+  return base(`Avez-vous obtenu ce chantier ?`, `
+    <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Avez-vous obtenu ce chantier&nbsp;?</h1>
+    <p style="font-size:15px;color:${S5};margin:0 0 24px;">Bonjour ${name || 'cordiste'},</p>
+    <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 24px;">
+      Il y a une quinzaine de jours, vous avez débloqué les coordonnées du client pour cette mission. Dites-nous en un clic ce qu'il en est advenu — cela nous aide à mesurer la qualité des missions et à vous en proposer de meilleures.
+    </p>
+    <div style="background:${S1};border-radius:8px;padding:16px 20px;margin:0 0 28px;">
+      <p style="font-size:12px;color:${S5};margin:0 0 4px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;">Mission concernée</p>
+      <p style="font-size:16px;font-weight:600;color:${B};margin:0;">${jobTitle}${city}</p>
+    </div>
+    ${outcomeBtn(wonUrl, '#16a34a', '✓ Oui, j\'ai obtenu le chantier')}
+    ${outcomeBtn(lostUrl, B, 'Non, je ne l\'ai pas obtenu')}
+    ${outcomeBtn(noResponseUrl, S5, 'Le client n\'a jamais répondu')}
+    <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
+    <p style="font-size:13px;color:${S5};margin:0 0 10px;line-height:20px;">Un seul clic suffit — seule la première réponse est conservée.</p>
+    <p style="font-size:12px;color:${S4};margin:0;line-height:18px;">Email de suivi ponctuel lié à votre déblocage de lead — vous n'en recevrez qu'un par mission débloquée.</p>
+  `);
+}
+
 // ─── Marketing generic ────────────────────────────────────────────────────────
 // Template marketing standard avec footer obligatoire de désinscription.
 // Variables :
@@ -776,6 +822,7 @@ serve(async (req) => {
       case 'guest-job-created': html = guestJobCreated(data); break;
       case 'job-revalidation-request': html = jobRevalidationRequest(data); break;
       case 'pro-credit-offer': html = proCreditOffer(data); break;
+      case 'lead-outcome':     html = leadOutcome(data); break;
       case 'admin-custom':     html = adminCustom(data); break;
       case 'marketing-generic': html = marketingGeneric(data); break;
       case 'pro-mission-alert': html = proMissionAlert(data); break;
