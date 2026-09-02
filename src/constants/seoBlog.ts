@@ -2116,6 +2116,105 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'cordiste-immeuble-annees-70',
+        authorSlug: 'anthony-profit',
+        title: 'Cordiste et immeuble années 70 : façade, ITE et ravalement 2026',
+        shortTitle: 'Cordiste immeuble années 70',
+        description:
+            'Découvrez pourquoi le cordiste est incontournable pour les immeubles années 70 : façade béton, ITE, ravalement sans échafaudage. Tarifs et guide 2026.',
+        category: 'Guide achat',
+        readTime: 7,
+        datePublished: '2026-08-31',
+        dateModified: '2026-08-31',
+        intro:
+            'En France, plus d\'un tiers du parc de logements collectifs a été construit entre 1960 et 1980. Ces immeubles — souvent en béton banché, carreaux de mosaïque ou bardage aluminium — sont entrés dans une phase critique de rénovation. Pour un cordiste, l\'immeuble années 70 est un terrain de prédilection : architectures en porte-à-faux, coursives, loggias et retraits de façade rendent l\'échafaudage traditionnel soit impossible, soit économiquement absurde. Ce guide vous explique en quoi le travail sur cordes s\'impose sur ces chantiers, quels travaux sont concernés et ce que vous pouvez raisonnablement budgéter.',
+        sections: [
+            {
+                heading: 'Pourquoi les immeubles années 70 posent-ils des défis d\'accès uniques ?',
+                body: 'L\'architecture des grands ensembles et des barres résidentielles des années 60-80 a été pensée pour maximiser la surface habitable, pas pour faciliter la maintenance. Résultat : balcons en porte-à-faux sur quatre ou cinq côtés, loggias encaissées, coursives au-dessus du vide, et sous-faces de dalles inaccessibles depuis le sol.\n\nUn échafaudage traditionnel exige une implantation au pied du bâtiment, un espace de stockage et une autorisation de voirie. Sur une barre de 60 mètres de long implantée en cœur de ZAC ou le long d\'une voie étroite, ce n\'est ni simple ni économique. Le coût d\'un échafaudage sur un R+8 dépasse régulièrement **25 000 à 50 000 €** — sans compter les perturbations de circulation et les semaines de montage/dépose.\n\nLe cordiste élimine ce problème à la source. Depuis un point d\'ancrage en toiture (acrotère, ligne de vie fixée, anneau béton scellé), le technicien sur cordes descend le long de la façade avec son harnais, ses EPI certifiés et ses outils. Il accède en moins de 30 minutes à n\'importe quelle zone de la façade — y compris les sous-faces de balcon et les angles rentrants — sans mobiliser ni nacelle ni échafaudage.\n\nEn pratique, **un technicien CQP TPS niveau 2 ou IRATA Level 2** peut couvrir une façade de 500 m² en 3 à 5 journées, contre 2 à 3 semaines pour la seule logistique d\'un échafaudage équivalent.',
+            },
+            {
+                heading: 'Quels travaux un cordiste réalise-t-il sur un immeuble années 70 ?',
+                body: 'L\'immeuble béton des années 70 vieillit de manière prévisible : carbonatation du béton en surface, dégradation des joints de dilatation, décollement des carreaux de mosaïque, développement de mousses et lichens sur les parties horizontales. Ces pathologies s\'aggravent progressivement et, non traitées, conduisent à des désordres structurels coûteux.\n\nLes techniciens d\'accès difficile (TAC) formés CQP TPS ou IRATA interviennent sur l\'ensemble de ces pathologies. Leur équipement — descendeur, bloqueur, corde de travail et corde de sécurité indépendantes — leur permet de stationner précisément face à chaque zone défaillante, outils et matériaux en charge sur le baudrier. L\'intervention est propre, ciblée, sans livraison de matériel lourd au pied du bâtiment.',
+                listIntro: 'Travaux réalisables en techniques d\'accès sur cordes :',
+                list: [
+                    'Nettoyage haute pression et démoussage de façade béton (8 à 14 €/m²)',
+                    'Hydrofugation et traitement anti-carbonatation (12 à 20 €/m²)',
+                    'Peinture de protection ou lasure sur béton brut',
+                    'Remplacement ou rejointoiement de carreaux de mosaïque décollés',
+                    'Pose de panneaux ITE sur zones en hauteur (rails, isolant, finition)',
+                    'Inspection et remplacement des joints de dilatation',
+                    'Réparation et peinture de garde-corps ou de couvertines métalliques',
+                    'Diagnostic photographique et rapport de pathologies de façade',
+                ],
+                cta: {
+                    text: 'Obtenir un devis pour ma façade béton',
+                    href: '/post-job',
+                    description: 'Décrivez vos travaux et recevez des devis de cordistes certifiés sous 48 h.',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'ITE en hauteur : le cordiste au cœur de l\'isolation thermique',
+                body: 'L\'isolation thermique par l\'extérieur (ITE) est devenue le chantier de rénovation phare des immeubles années 70 depuis le décret sur les passoires thermiques. Sur les parties courantes — de 0 à 4 mètres de hauteur — les équipes au sol posent rails, isolant et bardage sans difficulté. Mais **les parties en hauteur, les sous-faces de balcon, les angles de loggia et les zones sous corniche** exigent une approche différente.\n\nUn technicien sur cordes CQP TPS intervient en complément de l\'équipe au sol : il fixe les rails d\'ITE sur la façade haute, pose les panneaux d\'isolant en polystyrène expansé ou en laine de roche, applique la sous-couche et la finition de crépi. Son tarif de pose sur ces zones spécifiques se situe entre **18 et 35 €/m²**, selon la complexité des formes et la hauteur d\'intervention.\n\nPoint crucial pour les copropriétés : l\'entreprise qui associe cordistes et équipes au sol peut être labellisée **RGE (Reconnu Garant de l\'Environnement)**, ouvrant droit à **MaPrimeRénov\' Copropriété** et à l\'éco-PTZ collectif. Sans ce label, aucune aide d\'État n\'est accessible pour les travaux d\'isolation. Exigez toujours le certificat RGE avant signature du devis.',
+            },
+            {
+                heading: 'Diagnostic de façade béton : l\'étape que les syndics oublient',
+                body: 'Avant toute intervention sur un immeuble années 70, un diagnostic de façade s\'impose. Le béton banché des années 60-80 est soumis à deux pathologies principales.\n\n**La carbonatation** : le CO₂ de l\'air pénètre dans le béton et neutralise progressivement son pH alcalin, déclenchant à terme la corrosion des armatures. Elle est invisible à l\'œil nu mais détectable par test à la phénolphtaléine.\n\n**Les chlorures** : en zone littorale (Atlantique, Méditerranée), les embruns marins chargés en sel attaquent les armatures par un mécanisme distinct. Un immeuble à Marseille, Brest ou Bordeaux subit une pression corrosive deux à trois fois supérieure à un immeuble parisien.\n\nLe cordiste peut réaliser ce diagnostic visuel et instrumental pendant sa descente de façade — ce qui économise une mobilisation distincte. Comptez **600 à 1 500 €** pour un diagnostic complet d\'un immeuble R+8, avec rapport photographique et cartographie des zones dégradées. Ce document permet de chiffrer précisément le ravalement et de présenter un dossier solide en assemblée générale.',
+                cta: {
+                    text: 'Planifier un diagnostic de façade',
+                    href: '/post-job',
+                    description: 'Un cordiste certifié évalue l\'état de votre façade et vous remet un rapport avant tout travaux.',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Quel budget prévoir pour un immeuble années 70 : les fourchettes réelles',
+                body: 'Les fourchettes ci-dessous correspondent à des chantiers standard en France métropolitaine, hors zones à contraintes particulières (périmètre ABF, zones sismiques, accès extrêmement complexe). Elles incluent la main-d\'œuvre cordiste mais pas les matériaux pour les poses d\'ITE.\n\n**Nettoyage et démoussage** d\'une façade de 800 m² (immeuble R+8) : **6 000 à 11 000 €** tout compris. Durée : 4 à 6 jours de chantier.\n\n**Hydrofugation et traitement de protection** sur même surface : **9 000 à 15 000 €** selon le produit et l\'état de surface. Le traitement dure 8 à 12 ans.\n\n**Ravalement complet** (nettoyage + réparations localisées + peinture) : **18 000 à 40 000 €** pour un R+8 de 800 m². C\'est 3 à 5 fois moins qu\'un ravalement avec échafaudage sur un bâtiment à accès difficile.\n\n**ITE parties en hauteur** (pose isolant + finition, hors travaux au sol) : **14 000 à 28 000 €** selon la surface et le type d\'isolant.\n\nEn copropriété, MaPrimeRénov\' Copropriété peut couvrir **25 à 45 %** du montant des travaux d\'isolation thermique, sous conditions de revenus des copropriétaires et de gain énergétique démontré.',
+                cta: {
+                    text: 'Recevoir des devis de cordistes',
+                    href: '/post-job',
+                    description: 'Mettez en concurrence plusieurs techniciens certifiés pour votre immeuble années 70.',
+                    variant: 'blue',
+                },
+            },
+            {
+                heading: 'Ce que le cordiste ne peut pas faire seul : les limites à connaître',
+                body: 'Le travail sur cordes est polyvalent, mais certaines limites réelles doivent être intégrées dès la phase de programmation.\n\n**Les travaux de gros œuvre lourd** — reprise de béton fissuré en profondeur, injection de résine sous pression, étaiement de structure — nécessitent des équipements que le cordiste ne peut pas transporter en suspension. Ces opérations se font depuis un plancher bois ou une nacelle de service.\n\n**La soudure prolongée** en hauteur est soumise à des contraintes réglementaires spécifiques (permis de feu, protection anti-projection thermique) qui compliquent l\'intervention en suspension. Elle reste possible pour des points isolés, pas pour plusieurs mètres linéaires de soudure continue.\n\n**Les travaux en espace confiné** — gaines techniques, vides sanitaires — relèvent d\'une réglementation distincte (atmosphère appauvrie en O₂, procédures de sauvetage spécifiques). Certains cordistes sont doublement habilités, mais ce n\'est pas systématique : vérifiez avant de confier ce type de mission.\n\nEnfin, **la météo reste une contrainte opérationnelle** : pas d\'intervention en suspension au-delà de 60 km/h de vent (force 7 Beaufort) ni par pluie forte. Sur une barre de logement orientée plein ouest en Bretagne ou face à la Méditerranée, prévoyez des jours de battement dans le planning.',
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte un cordiste pour un immeuble R+8 ?',
+                a: 'Pour un immeuble R+8, comptez 45 à 80 €/h par technicien. Un ravalement complet de 800 m² revient à 18 000-40 000 €, matériaux compris. C\'est 3 à 5 fois moins qu\'un échafaudage sur un bâtiment à accès difficile.',
+            },
+            {
+                q: 'Le cordiste peut-il poser de l\'ITE sur un immeuble en copropriété ?',
+                a: 'Oui, à condition que l\'entreprise soit certifiée RGE. Le cordiste intervient sur les zones en hauteur (parties hautes, sous-faces de balcon, loggias) en complément des équipes au sol. Cette organisation permet d\'accéder aux aides MaPrimeRénov\' Copropriété, conditionnées au label RGE.',
+            },
+            {
+                q: 'Quelle différence entre un cordiste et un façadier classique ?',
+                a: 'Le façadier travaille depuis un plancher ou un échafaudage. Le cordiste, technicien d\'accès difficile (TAC) formé CQP TPS ou IRATA, travaille en suspension sur corde de travail + corde de sécurité indépendantes. Il intervient là où l\'échafaudage est impossible ou disproportionné : balcons en porte-à-faux, zones hautes, accès par toiture.',
+            },
+            {
+                q: 'Un immeuble années 70 peut-il bénéficier de MaPrimeRénov\' pour son ravalement ?',
+                a: 'Le ravalement seul n\'est pas éligible à MaPrimeRénov\'. En revanche, s\'il est couplé à une ITE (isolation thermique par l\'extérieur), le volet isolation devient éligible aux aides. L\'entreprise doit être RGE et le gain énergétique doit être démontré par un bureau d\'études thermiques avant travaux.',
+            },
+            {
+                q: 'Le cordiste peut-il intervenir en hiver sur une façade béton ?',
+                a: 'Oui, dans les limites météorologiques : pas en dessous de +5°C (les produits de protection et peintures n\'adhèrent pas correctement) ni en cas de vent fort (> 60 km/h). Les descentes de façade pour nettoyage ou inspection sont possibles dès que les conditions le permettent. Les traitements hydrofugants et peintures exigent une température stabilisée sur 24 h.',
+            },
+        ],
+        ctaText: 'Trouver un cordiste pour mon immeuble',
+        ctaHref: '/post-job',
+        relatedLinks: [
+            { label: 'Travaux de façade sans échafaudage', href: '/blog/travaux-facade-sans-echafaudage' },
+            { label: 'Cordiste en immeuble haussmannien', href: '/blog/cordiste-facade-haussmannienne' },
+            { label: 'Cordiste en copropriété : guide syndic', href: '/blog/cordiste-copropriete-guide-syndic' },
+            { label: 'Prix d\'un cordiste : tarifs détaillés', href: '/prix-cordiste' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
