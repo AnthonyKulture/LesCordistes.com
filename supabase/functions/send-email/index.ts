@@ -699,7 +699,7 @@ function leadOutcome(data: Record<string, string>): string {
     <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Avez-vous obtenu ce chantier&nbsp;?</h1>
     <p style="font-size:15px;color:${S5};margin:0 0 24px;">Bonjour ${name || 'cordiste'},</p>
     <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 24px;">
-      Il y a une quinzaine de jours, vous avez débloqué les coordonnées du client pour cette mission. Dites-nous en un clic ce qu'il en est advenu — cela nous aide à mesurer la qualité des missions et à vous en proposer de meilleures.
+      Vous avez débloqué les coordonnées du client pour cette mission. Dites-nous en un clic ce qu'il en est advenu — cela nous aide à mesurer la qualité des missions et à vous en proposer de meilleures.
     </p>
     <div style="background:${S1};border-radius:8px;padding:16px 20px;margin:0 0 28px;">
       <p style="font-size:12px;color:${S5};margin:0 0 4px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;">Mission concernée</p>
