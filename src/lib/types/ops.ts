@@ -163,10 +163,58 @@ export type AnalyticsAllTime = {
   pct_complete_profiles: number | null
 }
 
+// Issues des leads (migration 20260903a). Section CUMULATIVE — ni bornée par la
+// période, ni assortie d'un 'previous'. Elle ne porte QUE des effectifs bruts :
+// aucun pourcentage n'est calculé en base, c'est le rendu qui décide s'il a
+// assez d'effectif pour en afficher un.
+
+export type AnalyticsOutcomeBucket = {
+  label: string
+  solicited: number
+  answered: number
+  won: number
+  lost: number
+  no_response: number
+  resolved: number
+}
+
+export type AnalyticsOutcomes = {
+  delay_days: number
+  funnel: {
+    unlocks_total: number
+    eligible: number
+    solicited: number
+    suppressed: number
+    pending_solicitation: number
+    answered: number
+    awaiting_answer: number
+  }
+  answers: {
+    won: number
+    lost: number
+    no_response: number
+    resolved: number
+  }
+  acquisition: {
+    won: number
+    credits_answered: number
+    credits_resolved: number
+    credits_purchased: number
+    eur_per_credit: number | null
+  }
+  cities_total: number
+  by_city: AnalyticsOutcomeBucket[]
+  by_job_type: AnalyticsOutcomeBucket[]
+}
+
+// outcomes vaut null quand la fonction en base est antérieure à 20260903a :
+// la clef est alors absente du jsonb. Seule cette section se replie, le reste
+// de la page reste servi (fetchAnalytics normalise undefined → null).
 export type AnalyticsOverview = {
   current: AnalyticsPeriodMetrics
   previous: AnalyticsPeriodMetrics
   all_time: AnalyticsAllTime
+  outcomes: AnalyticsOutcomes | null
 }
 
 export type AnalyticsMonthPoint = {

@@ -15,7 +15,19 @@
  */
 
 import { createSupabaseAdminClient } from '@/lib/supabase-server'
-import type { AnalyticsData, AnalyticsOverview, AnalyticsMonthPoint, AnalyticsRange } from '@/lib/types/ops'
+import type {
+  AnalyticsData,
+  AnalyticsOverview,
+  AnalyticsMonthPoint,
+  AnalyticsOutcomes,
+  AnalyticsRange,
+} from '@/lib/types/ops'
+
+// La fonction en base peut précéder 20260903a : la clef 'outcomes' est alors
+// absente du jsonb. On la modélise ici plutôt que de mentir dans le cast.
+type AnalyticsOverviewResponse = Omit<AnalyticsOverview, 'outcomes'> & {
+  outcomes?: AnalyticsOutcomes
+}
 
 const RANGE_DAYS: Record<AnalyticsRange, number> = {
   '30d': 30,
@@ -42,7 +54,7 @@ export async function fetchAnalytics(range: AnalyticsRange): Promise<AnalyticsDa
     admin.rpc('admin_analytics_overview', {
       p_from: from.toISOString(),
       p_to: to.toISOString(),
-    }) as Promise<{ data: AnalyticsOverview | null; error: RpcError }>,
+    }) as Promise<{ data: AnalyticsOverviewResponse | null; error: RpcError }>,
     admin.rpc('admin_analytics_series', {
       p_months: SERIES_MONTHS,
     }) as Promise<{ data: AnalyticsMonthPoint[] | null; error: RpcError }>,
@@ -66,8 +78,15 @@ export async function fetchAnalytics(range: AnalyticsRange): Promise<AnalyticsDa
     return null
   }
 
+  const { outcomes, ...overview } = overviewRes.data
+  if (!outcomes) {
+    console.warn(
+      "[fetchAnalytics] section 'outcomes' absente — migration 20260903a à appliquer ; le reste de la page reste servi."
+    )
+  }
+
   return {
-    overview: overviewRes.data,
+    overview: { ...overview, outcomes: outcomes ?? null },
     series: seriesRes.data,
   }
 }
