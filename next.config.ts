@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
                 destination: 'https://www.lescordistes.com/:path*',
                 permanent: true,
             },
+            // Page auteur retirée (réattribution éditoriale, mars 2026). L'URL était
+            // indexée et listée dans le sitemap : sans 301 elle rendrait un 404 sur une
+            // page que Google connaît. La cible est l'auteur qui reprend ces articles.
+            { source: '/auteur/benjamin-de-oliveira', destination: '/auteur/anthony-profit', permanent: true },
+            { source: '/auteur/benjamin-de-oliveira/', destination: '/auteur/anthony-profit', permanent: true },
             // Redirections depuis l'ancien site WordPress
             { source: '/trouver-des-missions-de-cordiste', destination: '/jobs', permanent: true },
             { source: '/trouver-des-missions-de-cordiste/', destination: '/jobs', permanent: true },

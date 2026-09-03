@@ -32,11 +32,11 @@ export interface BlogArticle {
     /**
      * Auteur de l'article. Slug d'AUTHORS (cf seoAuthors.ts).
      * Si absent, fallback sur DEFAULT_AUTHOR_SLUG.
-     * Convention LesCordistes :
-     * - 'benjamin-de-oliveira' pour articles techniques, réglementaires, métier/carrière
-     * - 'anthony-profit' pour guides clients (achat, comparatifs, contraintes locales)
+     * Auteur unique depuis mars 2026 : 'anthony-profit' couvre aussi bien les guides
+     * clients (achat, comparatifs, contraintes locales) que les contenus techniques,
+     * réglementaires et carrière. L'union est conservée pour rester extensible.
      */
-    authorSlug?: 'anthony-profit' | 'benjamin-de-oliveira'
+    authorSlug?: 'anthony-profit'
     /**
      * URL absolue ou relative d'une image hero/thumbnail (ratio 16:10 conseillé,
      * 1200×750 minimum pour Discover). Si absente, fallback automatique sur
@@ -65,7 +65,7 @@ export interface BlogArticle {
 export const SEO_BLOG: BlogArticle[] = [
     {
         slug: 'habilitations-cordiste-cqp-irata-sprat',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Habilitations cordiste 2025 : CQP, IRATA, SPRAT — tout comprendre',
         shortTitle: 'CQP, IRATA, SPRAT : les habilitations cordiste expliquées',
         description:
@@ -225,7 +225,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'travaux-facade-sans-echafaudage',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Travaux de façade sans échafaudage : quand choisir le cordiste ?',
         shortTitle: 'Travaux façade sans échafaudage : le guide complet',
         description:
@@ -432,7 +432,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'responsabilite-maitre-ouvrage-chantier-cordiste',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Responsabilité du maître d\'ouvrage sur un chantier cordiste : ce que la loi impose',
         shortTitle: 'Responsabilité maître d\'ouvrage : chantier cordiste',
         description:
@@ -635,7 +635,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'premier-chantier-cordiste-apres-cqp',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Premier chantier cordiste après le CQP : trouver et facturer',
         shortTitle: 'Premier chantier après le CQP',
         description:
@@ -756,7 +756,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'missions-cordiste-independant',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Missions cordiste indépendant : trouver du travail toute l\'année',
         shortTitle: 'Missions cordiste indépendant',
         description:
@@ -970,7 +970,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'elagage-abattage-grande-hauteur-cordiste',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Élagage et abattage de grande hauteur : quand le cordiste s\'impose',
         shortTitle: 'Élagage et abattage grande hauteur',
         description:
@@ -1208,7 +1208,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'devenir-cordiste-2026',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Devenir cordiste en 2026 : parcours, formation, premier salaire',
         shortTitle: 'Devenir cordiste : parcours et formation',
         description:
@@ -1553,7 +1553,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'tarif-journalier-cordiste-independant',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Tarif journalier cordiste indépendant : combien facturer en 2026',
         shortTitle: 'TJM cordiste indépendant 2026',
         description:
@@ -1770,7 +1770,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'statut-juridique-cordiste-independant',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Statut juridique cordiste indépendant : micro, EURL ou portage',
         shortTitle: 'Statut juridique cordiste indépendant',
         description:
@@ -2002,7 +2002,7 @@ export const SEO_BLOG: BlogArticle[] = [
     },
     {
         slug: 'cout-lancer-cordiste-independant',
-        authorSlug: 'benjamin-de-oliveira',
+        authorSlug: 'anthony-profit',
         title: 'Coût pour se lancer comme cordiste indépendant en 2026',
         shortTitle: 'Budget lancement cordiste indépendant',
         description:

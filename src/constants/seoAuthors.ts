@@ -24,7 +24,7 @@ export const AUTHORS: Record<string, Author> = {
         givenName: 'Anthony',
         familyName: 'Profit',
         role: 'Fondateur LesCordistes.com',
-        bio: "Anthony Profit est le fondateur et CEO de LesCordistes.com, plateforme française dédiée aux cordistes certifiés. Entrepreneur et développeur full-stack basé à Nice (Alpes-Maritimes), il a fondé la société en 2025 et a repris pleinement la direction du projet en mars 2026 pour refondre la plateforme et structurer le réseau national. Il rédige les guides destinés aux clients particuliers, copropriétés et entreprises qui cherchent à comprendre le marché du travail sur cordes : tarifs, certifications à exiger, contraintes locales par ville et critères de choix d'un professionnel.",
+        bio: "Anthony Profit est le fondateur et CEO de LesCordistes.com, plateforme française dédiée aux cordistes certifiés. Entrepreneur et développeur full-stack basé à Nice (Alpes-Maritimes), il a fondé la société en 2025 et a repris pleinement la direction du projet en mars 2026 pour refondre la plateforme et structurer le réseau national. Il rédige les guides destinés aux clients particuliers, copropriétés et entreprises qui cherchent à comprendre le marché du travail sur cordes : tarifs, certifications à exiger, contraintes locales par ville et critères de choix d'un professionnel. Depuis mars 2026, il assure également la ligne éditoriale des contenus techniques, réglementaires et carrière destinés aux cordistes eux-mêmes, documentés à partir des référentiels officiels du métier — CQP Cordiste, IRATA International, Code du travail et recommandations de l'INRS. Il ne détient pas lui-même ces certifications.",
         expertise: [
             'Marketplace BTP',
             'SEO local',
@@ -34,24 +34,6 @@ export const AUTHORS: Record<string, Author> = {
             'Stratégie produit',
         ],
         linkedin: 'https://www.linkedin.com/in/anthonyprofit/',
-    },
-    'benjamin-de-oliveira': {
-        slug: 'benjamin-de-oliveira',
-        name: 'Benjamin De Oliveira',
-        givenName: 'Benjamin',
-        familyName: 'De Oliveira',
-        role: 'Conseiller expert métier — cordiste CQP/IRATA, formateur',
-        bio: "Benjamin De Oliveira est cordiste depuis plus de dix ans, titulaire des certifications CQP Cordiste et IRATA, et formateur professionnel reconnu du métier. Il accompagne LesCordistes.com en tant que conseiller expert métier : il valide toutes les décisions produit liées au travail sur cordes et rédige les contenus techniques, réglementaires et carrière à destination des cordistes professionnels et de leurs clients. Sur le terrain, il intervient sur des chantiers de façade, d'industrie, d'élagage en grande hauteur et d'inspection d'ouvrages d'art. Sa double casquette praticien-formateur garantit la justesse technique et réglementaire de chaque article publié.",
-        expertise: [
-            'Cordiste CQP',
-            'IRATA International',
-            'Formation travail sur cordes',
-            'Sécurité hauteur',
-            'Réglementation R.4323-58 Code du travail',
-            'Inspection ouvrages d\'art',
-            'Élagage grande hauteur',
-        ],
-        linkedin: 'https://www.linkedin.com/in/benjamin-de-oliveira-62b38695/',
     },
 }
 
