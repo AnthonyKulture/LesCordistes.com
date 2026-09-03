@@ -523,6 +523,11 @@
       "cluster": "pro-formation-financement",
       "persona": "salarie-cordiste",
       "format": "checklist"
+    },
+    "formations-cordiste-centres-france": {
+      "cluster": "pro-formation-financement",
+      "persona": "futur-forme",
+      "format": "donnees"
     }
   }
 }
