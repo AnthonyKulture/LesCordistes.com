@@ -16,9 +16,13 @@ const NAV = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
     { href: '/admin/analytics', label: 'Analytics', icon: BarChart3, exact: false },
     { href: '/admin/missions', label: 'Missions', icon: Briefcase, exact: false },
+    { href: '/admin/contacts', label: 'Contacts', icon: Users, exact: false },
     { href: '/admin/leads', label: 'Leads', icon: Inbox, exact: false },
     { href: '/admin/alerts', label: 'Alertes pros', icon: Bell, exact: false },
-    { href: '/admin/contact-requests', label: 'Contacts', icon: MessageSquare, exact: false },
+    // Renommé : l'entrée s'appelait « Contacts ». Deux libellés identiques dans
+    // la même barre auraient rendu la navigation indécidable le temps de la
+    // transition vers /admin/contacts.
+    { href: '/admin/contact-requests', label: 'Demandes de rappel', icon: MessageSquare, exact: false },
     { href: '/admin/profils', label: 'Profils', icon: Users, exact: false },
     { href: '/admin/marketing', label: 'Marketing', icon: Mail, exact: false },
 ] as const
