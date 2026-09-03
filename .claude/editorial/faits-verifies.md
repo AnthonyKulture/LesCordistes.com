@@ -8,17 +8,48 @@
 
 | Ancien chiffre (FAUX) | Réalité 2026 |
 |---|---|
-| CQP TPS N1 « ≈ 3 500-5 500 €, 3 semaines » | **5 000-8 000 €**, **350-420 h (~10 semaines)**, période en entreprise incluse |
-| Validité CQP « recyclage triennal » | **Validité 5 ans**, **recyclage MAC obligatoire tous les 4 ans** |
+| CQP TPS N1 « ≈ 3 500-5 500 €, 3 semaines » | Format standard **175 h / 5 semaines** (22 j cordes + 2 j SST + 1 j examen), **3 000-4 000 €** ; parcours longs 350-420 h jusqu'à 8 000 € (première version de ce fichier disait à tort « 5 000-8 000 € / 10 semaines » comme norme) |
+| Validité CQP « recyclage triennal » | **Validité 5 ans**, **MAC obligatoire tous les 4 ans** : 2 jours consécutifs dont 1 de secours. Le MAC n'est pas une certification France Compétences |
+| « SFETH » comme organisme de référence | **France Travaux sur Cordes (FTC)** : fusion SFETH + DPMC en 2021. Nomenclature depuis le référentiel du 01/01/2024 : « CQP Travailler sur cordes – niveau initial » (ex-CQP1), « – niveau confirmé » (ex-CQP2), « CQP Organiser les travaux sur cordes » (OTC, ex-CQP3) |
 | CPF « gratuit » | **Reste à charge obligatoire de 150 €** depuis avril 2026 (sauf demandeur d'emploi / cofinancement) |
 
 ## Formation
 
-- **CQP1 (cordiste niveau initial / TPS N1)** : 350-420 h (~10 semaines dont stage entreprise). **5 000-8 000 €** selon le centre.
-- **CQP2 (confirmé)** : ~2-3 semaines, ~2 500-4 000 €.
-- **IRATA L1** : 1 semaine (40 h) + examen. **~1 200-1 800 €**. Reconnaissance internationale.
-- **IRATA L2 / L3** : exige des heures loguées (≥1 000 h et 12 mois entre niveaux). L3 = superviseur.
-- **Recyclage / MAC** : CQP tous les 4 ans (~600-1 200 €) ; IRATA revalidation tous les 3 ans.
+- **Certificateur** : France Travaux sur Cordes (FTC), dépositaire des CQP auprès de la CPNE conjointe du BTP. Seuls les OF **agréés FTC** peuvent présenter au CQP. Liste officielle : francetravauxsurcordes.fr/organismes-de-formation/.
+- **CQP Travailler sur cordes – niveau initial (ex-CQP1)** : format standard **175 h / 5 semaines** (22 j cordes + 2 j SST + 1 j examen), **3 000-4 000 €**. Certains centres proposent 140 h / 3-4 semaines, d'autres des parcours longs 350-420 h avec période en entreprise jusqu'à 8 000 €. Écarts de prix = durée, taille du groupe, prêt ou non des EPI cat. III. Inscrit au RNCP, éligible CPF. Prérequis : certificat médical d'aptitude au travail en hauteur.
+- **CQP – niveau confirmé (ex-CQP2)** : ~2-3 semaines, ~2 500-4 000 €. Accessible après le niveau initial + expérience.
+- **CQP Organiser les travaux sur cordes (OTC, ex-CQP3)** : 105-140 h (15-20 jours). Prérequis : CQP initial ou confirmé, expérience significative, SST à jour, certificat médical. Tarif sur devis.
+- **MAC** : 2 jours consécutifs tous les 4 ans (1 jour de secours), ~600-1 200 €. Validité CQP 5 ans.
+- **IRATA L1** : 5 jours (35-40 h) + examen par évaluateur indépendant. **~1 200-1 800 €**. Validité **3 ans**, revalidation obligatoire. Reconnaissance internationale (éolien, offshore, industrie).
+- **IRATA L2 / L3** : exige des heures loguées (≥1 000 h et 12 mois entre niveaux). L3 = superviseur. Même format 5 jours.
+- **GWO (éolien)** : BST (Basic Safety Training) onshore/offshore (offshore = avec Sea Survival), BTT, ART. Profil recherché 2026 : GWO BST + BTT + ART + habilitation électrique B2V/BR. Obligatoire pour accéder aux parcs offshore (Saint-Nazaire, Fécamp, Saint-Brieuc).
+
+### Centres de formation vérifiés (2026-09, via recherche web — vérifier avant citation nominative)
+
+| Organisme | Sites | Offre |
+|---|---|---|
+| Atout Corde | Villard-de-Lans (38), site Le Cube St-Laurent-en-Royans (26) | CQP initial, confirmé, OTC — agréé FTC |
+| Jarnias Formation | Mirmande (26), Auzat (09), Pierrefitte-Nestalas (65), Maurepas (78), centre Nord, La Réunion | CQP initial, confirmé, OTC — agréé 2016 |
+| Formacan | Mirmande (26), Auzat (09), Mimet (13) | CQP initial, confirmé, OTC + IRATA 1-3 — agréé FTC et IRATA, depuis 2006 |
+| CAIRN Formation | Thiais (94), Pierre-Bénite (69) | CQP initial, confirmé — agréé FTC 2018 |
+| Dimension Corde | Gardanne / Mimet (13), Nice (06), Digne (04), Veynes (05), Toulon (83), Lyon (69) | CQP initial, confirmé, OTC, MAC — agréé 2012 |
+| ATIS School | Salon-de-Provence (13), Osny (95) | CQP initial, confirmé + IRATA 1-3 (35 h) + GWO BST |
+| HTC Techniques Verticales | Peypin (13), Châteaubriant (44), Sin-le-Noble (59) | IRATA 1-3 + GWO BST onshore/offshore |
+| RIG'UP Formation | Nantes (44) | CQP initial, confirmé, MAC + IRATA + CQP accrocheur-rigger (spectacle) |
+| Vertical Formation | Laval (53) | CQP initial, confirmé — agréé avril 2021, partenaire Ouest Acro |
+| Positiv'Formation | Orgères (35), plateau Nantes (44) | CQP initial, confirmé, OTC — centre d'examen CQP, agréé 2016, Qualiopi |
+| CCI Hautes-Alpes Formation (CRET) | Briançon (05) | CQP initial 175 h / 5 semaines |
+| Greta Ardèche-Drôme | Drôme / Ardèche | CQP initial |
+| Maforpro Occitanie | Toulouse et Occitanie | CQP initial (CPF), parcours avec module parc acrobatique |
+| Beal Training Center | près de Lyon (Isère) | IRATA 1-3, 5 jours — ouvert 2025 |
+| CI.DES | Sud-Ouest, ~70 km de Bordeaux | IRATA 1-3, ~1 350 € |
+| Valto | en centre ou intra-entreprise | CQP initial, confirmé, MAC (112-161 h) |
+| Altius | Poisy / Annecy (74) | prépare aux CQP mais **ne délivre pas** la certification |
+| AAF | La Réunion (Plateau Caillou) | seul OF agréé océan Indien |
+| Ifopse | — | formations éolien GWO |
+
+### Financements
+
 - **Financements** :
   - **CPF** : 500 €/an crédités, plafond 5 000 € (salarié à temps plein). **Reste à charge 150 € depuis avril 2026** (décret n° 2026-259). **Exonérés** : demandeurs d'emploi inscrits à France Travail ; salariés avec **cofinancement ≥ 100 €** d'un tiers (employeur, OPCO, Région, Agefiph, C2P…). Formation obligatoirement Qualiopi + RNCP/RS.
   - **AIF France Travail** : demandeur d'emploi inscrit (indemnisé ou non, CSP inclus). Jusqu'à 100 % du coût pédagogique, plafond usuel ~8 000 €, versée directement à l'OF. Conditions : cohérence avec le PPAE, OF Qualiopi, **accord obtenu AVANT l'inscription**. France Travail mobilise le CPF d'abord puis complète.
@@ -39,7 +70,7 @@
 
 - **Charges micro-entreprise** : ≈ 22 % du CA (BNC prestations de services + CFP).
 - **RC pro cordiste** : 400-900 €/an selon CA. La RC pro BTP standard **n'inclut pas** l'accès sur cordes → vérifier la mention explicite TAC.
-- **Cotisation SFETH** : ~250-400 €/an pour un indépendant.
+- **Cotisation syndicale (ex-SFETH, aujourd'hui FTC)** : ~250-400 €/an pour un indépendant — chiffre non revérifié en 2026.
 - **Kit EPI complet débutant** : 1 500-2 500 € (harnais cuissard, longes double, descendeur autobloquant, bloqueurs ventral+poignée, casque, connecteurs, sangles). **Durée de vie textile ≈ 10 ans** (dès fabrication), **contrôle EPI obligatoire au moins tous les 12 mois** par personne compétente.
 
 ## Marché & secteurs (contexte 2026, pour actualité et angles)
@@ -52,7 +83,7 @@
 
 ## Terminologie officielle (à employer, pas de jargon gratuit)
 
-- Organismes : **SFETH** (syndicat), **IRATA** (international), **OPPBTP** (prévention BTP), **CARSAT**, **INRS**, **France Travail**, **Constructys** (OPCO BTP), **Qualiopi** (certif qualité OF).
+- Organismes : **France Travaux sur Cordes / FTC** (certificateur des CQP, ex-SFETH + DPMC), **IRATA** (international), **GWO** (éolien), **OPPBTP** (prévention BTP), **CARSAT**, **INRS**, **France Travail**, **Constructys** (OPCO BTP), **Qualiopi** (certif qualité OF), **France Compétences** (RNCP).
 - Métier : accès sur cordes, TAC (travaux d'accès difficile), technicien cordiste, EPI, point d'ancrage, anti-chute mobile, CATEC (espaces confinés), plan de prévention, PPSPS, double protection (deux cordes).
 - Statuts : micro-entreprise, EURL, SASU, portage salarial, ETT (intérim), sous-traitance / renfort.
 
