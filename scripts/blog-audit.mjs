@@ -99,9 +99,9 @@ function rankClusters(aud) {
             const blockers = []
             if (isFrozen(id)) blockers.push('gelé/saturé')
             if (recentClusters.has(id)) blockers.push(`servi dans les ${RECENT_WINDOW} derniers`)
-            return { id, label: c.label, count: n, blockers, cluster: c }
+            return { id, label: c.label, count: n, blockers, priorite: c.priorite ?? 2, cluster: c }
         })
-        .sort((a, b) => a.blockers.length - b.blockers.length || a.count - b.count || a.id.localeCompare(b.id))
+        .sort((a, b) => a.blockers.length - b.blockers.length || a.count - b.count || b.priorite - a.priorite || a.id.localeCompare(b.id))
 }
 
 function pickNext(aud) {

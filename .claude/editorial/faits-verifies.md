@@ -10,7 +10,7 @@
 |---|---|
 | CQP TPS N1 « ≈ 3 500-5 500 €, 3 semaines » | **5 000-8 000 €**, **350-420 h (~10 semaines)**, période en entreprise incluse |
 | Validité CQP « recyclage triennal » | **Validité 5 ans**, **recyclage MAC obligatoire tous les 4 ans** |
-| CPF « gratuit » | **Reste à charge obligatoire de 150 €** depuis le 02/04/2026 (sauf demandeur d'emploi / cofinancement) |
+| CPF « gratuit » | **Reste à charge obligatoire de 150 €** depuis avril 2026 (sauf demandeur d'emploi / cofinancement) |
 
 ## Formation
 
@@ -19,7 +19,13 @@
 - **IRATA L1** : 1 semaine (40 h) + examen. **~1 200-1 800 €**. Reconnaissance internationale.
 - **IRATA L2 / L3** : exige des heures loguées (≥1 000 h et 12 mois entre niveaux). L3 = superviseur.
 - **Recyclage / MAC** : CQP tous les 4 ans (~600-1 200 €) ; IRATA revalidation tous les 3 ans.
-- **Financements** : CPF (reste à charge 150 € au 02/04/2026), **AIF France Travail** (demandeurs d'emploi, souvent 100 % + AREF), **OPCO Constructys** (salariés BTP, Pro-A / abondement), plan de développement des compétences employeur.
+- **Financements** :
+  - **CPF** : 500 €/an crédités, plafond 5 000 € (salarié à temps plein). **Reste à charge 150 € depuis avril 2026** (décret n° 2026-259). **Exonérés** : demandeurs d'emploi inscrits à France Travail ; salariés avec **cofinancement ≥ 100 €** d'un tiers (employeur, OPCO, Région, Agefiph, C2P…). Formation obligatoirement Qualiopi + RNCP/RS.
+  - **AIF France Travail** : demandeur d'emploi inscrit (indemnisé ou non, CSP inclus). Jusqu'à 100 % du coût pédagogique, plafond usuel ~8 000 €, versée directement à l'OF. Conditions : cohérence avec le PPAE, OF Qualiopi, **accord obtenu AVANT l'inscription**. France Travail mobilise le CPF d'abord puis complète.
+  - **Revenu pendant formation (demandeur d'emploi)** : AREF (= ARE) ; RFF si droits épuisés en cours ; **RFFT jusqu'à 775,65 €/mois depuis le 01/04/2026** si aucun droit ARE.
+  - **Constructys (OPCO BTP)** — plan de développement des compétences : demande déposée par l'employeur sur **eGestion, 15 jours calendaires avant** le début, programme joint. Taux 2026 : **24 € HT/h (< 11 salariés)**, **19 € HT/h (11-49, à partir du 01/06/2026)**, plafond journalier 840 € / 665 € HT. **Abondement CPF employeur** (complète le solde sans avance du salarié) ; TP < 11 salariés : remboursement salaire 15 €/h pour CPF co-construit sur temps de travail.
+  - **Démission** : une démission sèche n'ouvre pas l'ARE (sauf projet validé Transitions Pro / démission-reconversion). Rupture conventionnelle → ARE. Licenciement éco → CSP.
+  - **EPI du salarié** : fournis gratuitement par l'employeur (Code du travail). Jamais couverts par un financement formation.
 
 ## Rémunération (2026)
 
