@@ -9,6 +9,20 @@ export function formatMonthFull(ym: string): string {
   return `${formatMonthShort(ym)} ${ym.slice(0, 4)}`
 }
 
+// Séries hebdomadaires : la clé est un lundi ISO (YYYY-MM-DD). Le formateur
+// mensuel afficherait « sept. » sur quatre points consécutifs.
+export function formatWeekShort(iso: string): string {
+  const day = Number(iso.slice(8, 10))
+  const month = MONTHS_FR[Number(iso.slice(5, 7)) - 1]
+  if (!month || Number.isNaN(day)) return iso
+  return `${day} ${month}`
+}
+
+export function formatWeekFull(iso: string): string {
+  const short = formatWeekShort(iso)
+  return short === iso ? iso : `semaine du ${short} ${iso.slice(0, 4)}`
+}
+
 export function formatNumberFr(value: number): string {
   return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }).format(value)
 }

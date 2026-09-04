@@ -1,7 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { buildScale, formatMonthFull, formatMonthShort, formatNumberFr, SERIES_COLOR } from './chartUtils'
+import {
+  buildScale,
+  formatMonthFull,
+  formatMonthShort,
+  formatNumberFr,
+  formatWeekFull,
+  formatWeekShort,
+  SERIES_COLOR,
+} from './chartUtils'
 
 type Point = { month: string; value: number }
 
@@ -10,6 +18,7 @@ type Props = {
   unit?: string
   ariaLabel: string
   valueLabel: string
+  xFormat?: 'month' | 'week'
 }
 
 const W = 640
@@ -19,7 +28,7 @@ const PAD_RIGHT = 20
 const PAD_TOP = 24
 const PAD_BOTTOM = 28
 
-export function LineChart({ data, unit = '', ariaLabel, valueLabel }: Props) {
+export function LineChart({ data, unit = '', ariaLabel, valueLabel, xFormat = 'month' }: Props) {
   const [hover, setHover] = useState<number | null>(null)
 
   if (data.length === 0) {
@@ -37,8 +46,12 @@ export function LineChart({ data, unit = '', ariaLabel, valueLabel }: Props) {
   const last = data[data.length - 1]
   const lastX = xAt(data.length - 1)
   const lastY = yAt(last.value)
-  const labelEvery = data.length > 8 ? 2 : 1
+  // Au plus 8 libellés d'axe, quel que soit le pas de la série (12 mois → 1 sur 2,
+  // comme auparavant ; 52 semaines → 1 sur 7, au lieu de 26 libellés superposés).
+  const labelEvery = Math.max(1, Math.ceil(data.length / 8))
   const showAxisLabel = (i: number) => i % labelEvery === (data.length - 1) % labelEvery
+  const fmtXShort = xFormat === 'week' ? formatWeekShort : formatMonthShort
+  const fmtXFull = xFormat === 'week' ? formatWeekFull : formatMonthFull
   const bandW = innerW / Math.max(data.length - 1, 1)
   const fmt = (v: number) => `${formatNumberFr(v)}${unit ? ` ${unit}` : ''}`
 
@@ -70,7 +83,7 @@ export function LineChart({ data, unit = '', ariaLabel, valueLabel }: Props) {
           {data.map((d, i) =>
             showAxisLabel(i) ? (
               <text key={d.month} x={xAt(i)} y={H - 8} textAnchor="middle" fontSize={10} fill="#64748b">
-                {formatMonthShort(d.month)}
+                {fmtXShort(d.month)}
               </text>
             ) : null
           )}
@@ -122,7 +135,7 @@ export function LineChart({ data, unit = '', ariaLabel, valueLabel }: Props) {
               transform: 'translate(-50%, -120%)',
             }}
           >
-            <div className="text-slate-500">{formatMonthFull(data[hover].month)}</div>
+            <div className="text-slate-500">{fmtXFull(data[hover].month)}</div>
             <div className="font-semibold text-slate-900 tabular-nums">{fmt(data[hover].value)}</div>
           </div>
         )}
@@ -133,14 +146,14 @@ export function LineChart({ data, unit = '', ariaLabel, valueLabel }: Props) {
           <table className="w-full text-xs">
             <thead>
               <tr className="text-left text-slate-500 border-b border-slate-200">
-                <th className="py-1.5 pr-4 font-medium">Mois</th>
+                <th className="py-1.5 pr-4 font-medium">{xFormat === 'week' ? 'Semaine' : 'Mois'}</th>
                 <th className="py-1.5 text-right font-medium">{valueLabel}</th>
               </tr>
             </thead>
             <tbody>
               {data.map(d => (
                 <tr key={d.month} className="border-b border-slate-100">
-                  <td className="py-1.5 pr-4 text-slate-700">{formatMonthFull(d.month)}</td>
+                  <td className="py-1.5 pr-4 text-slate-700">{fmtXFull(d.month)}</td>
                   <td className="py-1.5 text-right text-slate-900 tabular-nums">{fmt(d.value)}</td>
                 </tr>
               ))}

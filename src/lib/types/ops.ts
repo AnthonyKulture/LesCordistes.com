@@ -293,3 +293,71 @@ export type AcquisitionData = {
   supply: AcquisitionSupplyFunnel
   series: AcquisitionMonthPoint[]
 }
+
+// Trafic — lecture PostHog (sessions + events), cf. src/lib/ops/fetchTraffic.ts.
+//
+// converting_sessions = sessions AU COURS DESQUELLES un événement job_posted a eu
+// lieu. Ce n'est PAS un nombre de missions attribuées à la page ou au canal : une
+// mission publiée lors d'une session ultérieure reste rattachée à cette
+// session-là, pas à la page d'entrée d'origine. Libellé d'écran attendu :
+// « sessions avec mission publiée » — jamais « missions », jamais « conversions ».
+//
+// Chaque bloc est indépendant : null = requête en échec, pas « zéro ».
+
+export type TrafficOverview = {
+  sessions: number
+  visitors: number
+  pageviews: number
+  bounce_sessions: number
+  // PostHog laisse $is_bounce à NULL quand la session n'a aucune page vue : ces
+  // sessions ne comptent ni au numérateur ni au dénominateur, faute de quoi le
+  // taux affiché serait structurellement plus bas que celui de PostHog.
+  bounce_eligible_sessions: number
+  median_duration_s: number | null
+  pages_per_session: number | null
+}
+
+export type TrafficChannelRow = {
+  label: string
+  sessions: number
+  visitors: number
+  converting_sessions: number
+}
+
+export type TrafficEntryPageRow = {
+  pathname: string
+  page_type: AcquisitionPageType
+  sessions: number
+  bounce_sessions: number
+  converting_sessions: number
+}
+
+export type TrafficDeviceRow = {
+  label: string
+  sessions: number
+  converting_sessions: number
+}
+
+export type TrafficGeoRow = {
+  label: string
+  sessions: number
+  converting_sessions: number
+}
+
+// week = lundi de la semaine ISO, au format YYYY-MM-DD, en UTC.
+export type TrafficWeekPoint = {
+  week: string
+  sessions: number
+  converting_sessions: number
+}
+
+export type TrafficData = {
+  range: AnalyticsRange
+  overview: TrafficOverview | null
+  previous: TrafficOverview | null
+  channels: TrafficChannelRow[] | null
+  entry_pages: TrafficEntryPageRow[] | null
+  devices: TrafficDeviceRow[] | null
+  geo: TrafficGeoRow[] | null
+  series: TrafficWeekPoint[] | null
+}
