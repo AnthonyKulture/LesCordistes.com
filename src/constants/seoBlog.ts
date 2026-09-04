@@ -2116,6 +2116,105 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Missions cordiste indépendant', href: '/blog/missions-cordiste-independant' },
         ],
     },
+    {
+        slug: 'financer-formation-cordiste',
+        authorSlug: 'benjamin-de-oliveira',
+        title: 'Financer sa formation cordiste en 2026 : la checklist salarié',
+        shortTitle: 'Financer sa formation cordiste',
+        description:
+            'Financer sa formation cordiste en 2026 sans y laisser son salaire : CPF (reste à charge 150 €), Constructys, AIF France Travail. La checklist en 9 étapes.',
+        category: 'Métier & Carrière',
+        readTime: 8,
+        datePublished: '2026-09-03',
+        dateModified: '2026-09-03',
+        intro:
+            'Financer sa formation cordiste quand on est salarié, c\'est le vrai obstacle — pas la formation elle-même. Un CQP niveau initial coûte 3 000 à 4 000 € pour 175 heures en format standard, et jusqu\'à 8 000 € dans les parcours longs de dix semaines — autant de semaines pendant lesquelles il faut aussi vivre. Et depuis avril 2026, mobiliser son CPF coûte 150 € de reste à charge. Pourtant, un salarié bien organisé peut faire financer 100 % de son CQP ou de son IRATA sans démissionner et sans avancer un euro. Il faut activer les bons leviers dans le bon ordre : l\'employeur, l\'OPCO, le CPF, et en dernier recours France Travail. Voici la checklist, étape par étape, telle qu\'un confrère te la dicterait.',
+        sections: [
+            {
+                heading: 'Avant de chercher un financement : les 3 chiffres à poser sur la table',
+                body: 'Tu ne négocieras rien avec ton employeur ni avec un conseiller si tu arrives sans chiffres. Commence par choisir ta certification. En France, le **CQP Travailler sur cordes – niveau initial** (ex-CQP1) reste la référence sur les chantiers BTP et industrie : 175 heures en format standard (22 jours de cordes, 2 jours de SST, 1 jour d\'examen), 3 000 à 4 000 € dans la plupart des centres agréés France Travaux sur Cordes, jusqu\'à 8 000 € pour les parcours longs de 350 à 420 heures avec période en entreprise. L\'**IRATA niveau 1** tient en une semaine (40 heures) pour 1 200 à 1 800 € et pèse davantage à l\'international, dans l\'éolien et l\'offshore. Beaucoup de salariés font les deux, dans cet ordre.\n\nDeuxième chiffre : la durée réelle d\'absence. Cinq à dix semaines hors de l\'entreprise, ça se planifie plusieurs mois à l\'avance dans une PME de couverture ou de ravalement. Troisième chiffre : ton revenu pendant la formation. Formé sur le plan de développement des compétences, tu gardes **100 % de ton salaire**. Formé en tant que demandeur d\'emploi, tu bascules sur l\'AREF ou la RFFT. C\'est cette différence qui doit orienter toute ta stratégie.\n\nDernier point souvent oublié : le CQP est valable **5 ans**, avec un maintien et actualisation des compétences (MAC) obligatoire **tous les 4 ans**. Le financement ne s\'arrête donc pas au premier diplôme.',
+                listIntro: 'Les 3 chiffres à connaître avant d\'ouvrir la discussion :',
+                list: [
+                    'Coût pédagogique : 3 000-4 000 € pour un CQP niveau initial standard (jusqu\'à 8 000 € en parcours long), 1 200-1 800 € pour un IRATA L1, 600-1 200 € par MAC tous les 4 ans',
+                    'Durée d\'absence : 175 h (5 semaines) pour le CQP niveau initial standard, jusqu\'à 350-420 h (10 semaines) en parcours long, 1 semaine pour l\'IRATA L1',
+                    'Revenu pendant la formation : salaire maintenu si l\'employeur finance, AREF ou RFFT (jusqu\'à 775,65 €/mois depuis le 1er avril 2026) via France Travail',
+                ],
+            },
+            {
+                heading: 'Étapes 1 à 3 : cadrer le projet avec ton employeur',
+                body: '**Étape 1 — Demande un entretien professionnel.** Il est obligatoire tous les deux ans, et c\'est le cadre légal pour parler formation. Prépare l\'argument économique, pas seulement le tien : une entreprise de couverture, d\'étanchéité ou de maintenance industrielle qui sous-traite ses interventions en hauteur paie un cordiste extérieur 450 à 650 € par jour. Un salarié formé en interne, c\'est de la marge récupérée et des chantiers qu\'elle ne refuse plus.\n\n**Étape 2 — Fais inscrire la formation au plan de développement des compétences.** C\'est la voie royale : formation sur temps de travail, salaire maintenu, coût pédagogique porté par l\'entreprise. Tu n\'as rien à avancer et ton CPF reste intact pour plus tard.\n\n**Étape 3 — Fais déposer la demande Constructys.** L\'employeur (pas toi) sollicite l\'OPCO du BTP via la plateforme eGestion, **15 jours calendaires avant le début** de la formation, programme joint. En 2026, Constructys prend en charge jusqu\'à **24 € HT par heure** pour les entreprises de moins de 11 salariés et **19 € HT par heure** pour celles de 11 à 49 salariés (barème applicable à partir du 1er juin 2026). Sur un CQP niveau initial de 175 heures, ça représente jusqu\'à 4 200 € pour une TPE — de quoi couvrir l\'intégralité du coût pédagogique dans la plupart des centres agréés. Le dossier doit être **complet** : un programme manquant et la demande repart à zéro.',
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Étapes 4 à 6 : mobiliser ton CPF sans payer les 150 €',
+                body: 'Si l\'employeur ne veut pas tout porter, le CPF prend le relais — à condition d\'éviter le piège du reste à charge.\n\n**Étape 4 — Vérifie ton solde sur Mon Compte Formation.** Un salarié à temps plein cumule 500 € par an, plafonnés à 5 000 €. Après huit ans de salariat, tu as de quoi payer un CQP niveau initial standard en entier. Le CQP cordiste et l\'IRATA sont éligibles s\'ils sont inscrits au RNCP ou au Répertoire spécifique — vérifie la fiche du centre, pas seulement sa brochure.\n\n**Étape 5 — Obtiens un cofinancement d\'au moins 100 € d\'un tiers.** Depuis avril 2026, le reste à charge CPF est de **150 €** pour un salarié. Mais un cofinancement d\'au moins 100 € par l\'employeur, Constructys, la Région ou l\'Agefiph t\'en exonère totalement. Constructys propose justement un **abondement CPF employeur** : l\'entreprise complète ton solde insuffisant sans que tu avances la différence. Pour les entreprises de travaux publics de moins de 11 salariés, l\'OPCO rembourse même 15 € par heure de salaire pour les heures de CPF co-construit réalisées sur temps de travail. Un employeur qui met 100 €, c\'est 150 € que tu ne paies pas : l\'argument se vend tout seul.\n\n**Étape 6 — Choisis un organisme certifié Qualiopi.** Sans Qualiopi, aucun financement public ni CPF ne passe. Demande l\'attestation, pas une promesse orale.',
+            },
+            {
+                heading: 'Si l\'employeur refuse : la voie France Travail et l\'AIF',
+                body: 'Le scénario existe : ton patron n\'a pas de chantier en hauteur, ou pas de trésorerie. Ne démissionne pas sur un coup de tête. Une **démission sèche n\'ouvre pas de droits à l\'ARE**, sauf projet de reconversion validé en amont par une commission Transitions Pro. Une **rupture conventionnelle**, elle, ouvre l\'ARE. Un licenciement économique ouvre le CSP, qui donne accès à l\'AIF dans de bonnes conditions.\n\nUne fois inscrit à France Travail, tu changes de régime. D\'abord, tu es **totalement dispensé des 150 € de reste à charge CPF**. Ensuite, l\'**Aide individuelle à la formation (AIF)** peut financer jusqu\'à 100 % du coût pédagogique restant, avec un plafond usuel autour de 8 000 €. Trois conditions : la formation doit être cohérente avec ton projet inscrit au PPAE, l\'organisme doit être Qualiopi et la certification au RNCP ou au Répertoire spécifique, et **l\'accord doit être obtenu avant l\'inscription** — jamais après. France Travail mobilise ton CPF en premier, puis complète par l\'AIF. L\'aide est versée directement au centre, tu ne touches rien.\n\nPendant la formation, tu perçois l\'**AREF** (même montant que ton ARE) si tu es indemnisé, la **RFF** si tes droits s\'épuisent en cours de route, ou la **RFFT** — jusqu\'à 775,65 € par mois depuis le 1er avril 2026 — si tu n\'as aucun droit. Le métier étant en tension, avec plus de 140 offres actives en permanence, faire valider le projet auprès d\'un conseiller est rarement un problème.',
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Étapes 7 à 9 : sécuriser le dossier et le calendrier',
+                body: '**Étape 7 — Cale le calendrier avec trois mois de marge.** Les sessions CQP1 des centres reconnus sont complètes deux à trois mois à l\'avance. Ajoute les 15 jours de Constructys, ou le délai d\'instruction de l\'AIF qui doit précéder l\'inscription. Dans le BTP, l\'hiver est la période creuse : c\'est le moment où un employeur accepte le plus facilement de libérer cinq semaines.\n\n**Étape 8 — Constitue les pièces en une seule fois.** Devis nominatif du centre, programme détaillé, attestation Qualiopi, extrait de ton relevé CPF, pièce d\'identité, et surtout le **certificat médical d\'aptitude au travail en hauteur** exigé par tous les centres sérieux avant le premier jour. Un dossier incomplet est la première cause de refus, loin devant le fond du projet.\n\n**Étape 9 — Négocie l\'après dans le même échange.** Le MAC tous les 4 ans (600-1 200 €) se finance très bien au plan de développement des compétences : fais-le inscrire dès maintenant. Et rappelle-toi qu\'aucun financement formation ne couvre le kit EPI (1 500-2 500 €). Pour un salarié, ce n\'est pas un problème : le Code du travail impose à l\'employeur de fournir gratuitement les équipements de protection individuelle. Harnais, longes, descendeur, casque — c\'est l\'entreprise qui achète et qui assure le contrôle périodique.',
+            },
+            {
+                heading: 'Les 5 erreurs qui font capoter un financement',
+                body: 'Sur le terrain, les dossiers qui échouent se ressemblent tous. Ils n\'échouent pas parce que le projet est mauvais, mais parce qu\'une étape a été prise à l\'envers. La plus fréquente : s\'inscrire au centre avant d\'avoir l\'accord de financement, ce qui annule l\'AIF et complique l\'intervention de Constructys. La deuxième : choisir un centre non Qualiopi parce qu\'il est moins cher ou plus proche, et découvrir qu\'aucun financeur ne suivra. La troisième : payer les 150 € de reste à charge CPF alors qu\'un cofinancement de 100 € les aurait effacés.\n\nViennent ensuite la démission sans filet, qui coupe l\'ARE et donc l\'AREF, et l\'oubli du certificat médical, qui bloque l\'entrée en formation le jour J. Chacune de ces erreurs coûte entre quelques centaines et plusieurs milliers d\'euros, ou six mois de décalage. Aucune n\'est difficile à éviter quand on suit les étapes dans l\'ordre.',
+                listIntro: 'À ne jamais faire :',
+                list: [
+                    'S\'inscrire au centre avant d\'avoir l\'accord écrit de financement (AIF ou Constructys)',
+                    'Choisir un organisme sans certification Qualiopi ou une certification hors RNCP',
+                    'Payer les 150 € de reste à charge CPF sans avoir demandé un cofinancement de 100 € à l\'employeur',
+                    'Démissionner sans rupture conventionnelle ni projet validé par Transitions Pro',
+                    'Se présenter sans certificat médical d\'aptitude au travail en hauteur',
+                ],
+                cta: {
+                    text: 'Découvrir les chantiers de cette semaine',
+                    href: '/jobs',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien coûte une formation cordiste et qui peut la payer ?',
+                a: 'Un CQP niveau initial coûte 3 000 à 4 000 € (175 h), un IRATA L1 1 200 à 1 800 €. Trois financeurs : ton employeur via Constructys, ton CPF (reste à charge 150 €, sauf cofinancement d\'au moins 100 €), ou l\'AIF de France Travail si tu es demandeur d\'emploi.',
+            },
+            {
+                q: 'Faut-il démissionner pour se former cordiste ?',
+                a: 'Non, et c\'est même la pire option. Une démission sèche ne donne pas droit à l\'ARE, donc pas d\'AREF pendant la formation. Privilégie le plan de développement des compétences de ton employeur, ou une rupture conventionnelle qui ouvre l\'ARE et l\'accès à l\'AIF.',
+            },
+            {
+                q: 'Le CPF suffit-il à payer un CQP cordiste ?',
+                a: 'Souvent presque. Un salarié cumule 500 €/an plafonnés à 5 000 €, face à un CQP niveau initial à 3 000-4 000 € en format standard. Le solde manque aux jeunes salariés ou sur les parcours longs : on complète par un abondement employeur via Constructys ou par l\'AIF. Le cofinancement a un double effet : il comble l\'écart et supprime le reste à charge de 150 €.',
+            },
+            {
+                q: 'Constructys finance-t-il la formation cordiste ?',
+                a: 'Oui, pour les salariés d\'entreprises du BTP. En 2026, la prise en charge atteint 24 € HT/h pour les entreprises de moins de 11 salariés et 19 € HT/h de 11 à 49 salariés. La demande est déposée par l\'employeur sur eGestion, 15 jours calendaires avant le début de la formation.',
+            },
+            {
+                q: 'Est-ce que je touche un salaire pendant la formation ?',
+                a: 'Si tu es formé sur le plan de développement des compétences, ton salaire est maintenu à 100 %. Si tu es demandeur d\'emploi, tu perçois l\'AREF (équivalent de ton ARE), la RFF si tes droits s\'épuisent, ou la RFFT jusqu\'à 775,65 €/mois depuis le 1er avril 2026.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Devenir cordiste en 2026 : parcours, formation, premier salaire', href: '/blog/devenir-cordiste-2026' },
+            { label: 'Habilitations cordiste : CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Premier chantier après le CQP', href: '/blog/premier-chantier-cordiste-apres-cqp' },
+            { label: 'Coût pour se lancer comme cordiste indépendant', href: '/blog/cout-lancer-cordiste-independant' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {

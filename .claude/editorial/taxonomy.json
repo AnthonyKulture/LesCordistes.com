@@ -1,0 +1,528 @@
+{
+  "_doc": "Matrice éditoriale LesCordistes.com. Source de vérité pour la sélection de sujets. Les agents blog-redacteur et blog-redacteur-pros lisent ce fichier via `node scripts/blog-audit.mjs` et DOIVENT enrichir `articles` après chaque publication. `priorite` (1-3, défaut 2) départage les clusters à égalité de couverture : volume de recherche et intention.",
+  "personas": {
+    "futur-forme": {
+      "audience": "pro",
+      "label": "Futur formé / reconversion",
+      "douleur": "Coût réel de la formation, comment la financer, quels débouchés, salaire honnête"
+    },
+    "frais-diplome": {
+      "audience": "pro",
+      "label": "Fraîchement diplômé (CQP1 / IRATA L1)",
+      "douleur": "Zéro réseau, premiers chantiers, quoi facturer"
+    },
+    "independant-etabli": {
+      "audience": "pro",
+      "label": "Indépendant 2-10 ans",
+      "douleur": "Saisonnalité, dépendance donneurs d'ordre, montée en gamme"
+    },
+    "salarie-cordiste": {
+      "audience": "pro",
+      "label": "Cordiste salarié / intérim",
+      "douleur": "Grille de salaire, ETT vs CDI, évolution, passer indé ou pas"
+    },
+    "formateur": {
+      "audience": "pro",
+      "label": "Formateur / OF",
+      "douleur": "Qualiopi, remplir ses sessions, visibilité"
+    },
+    "chef-equipe": {
+      "audience": "pro",
+      "label": "Chef d'équipe / L3",
+      "douleur": "Encadrement, responsabilité pénale, monter sa boîte"
+    },
+    "syndic": {
+      "audience": "client",
+      "label": "Syndic / gestionnaire de copro",
+      "douleur": "Prestataire fiable et assurable, vote en AG, budget"
+    },
+    "particulier": {
+      "audience": "client",
+      "label": "Propriétaire particulier",
+      "douleur": "Qui appeler, peur de se faire avoir, prix opaque"
+    },
+    "directeur-technique": {
+      "audience": "client",
+      "label": "Directeur technique industrie/logistique",
+      "douleur": "Conformité, arrêt de production, réactivité"
+    },
+    "maitre-ouvrage-public": {
+      "audience": "client",
+      "label": "Collectivité / marché public",
+      "douleur": "Documentation, procédure, budget contraint"
+    },
+    "bailleur-social": {
+      "audience": "client",
+      "label": "Bailleur social",
+      "douleur": "Volume, patrimoine vieillissant, plan pluriannuel"
+    },
+    "hotellerie-retail": {
+      "audience": "client",
+      "label": "Hôtellerie / retail / ERP",
+      "douleur": "Intervention sans fermer, image, sécurité du public"
+    }
+  },
+  "formats": {
+    "guide": {
+      "label": "Guide explicatif",
+      "note": "Le gabarit historique. SATURÉ — max 1 sur 4 publications."
+    },
+    "comparatif": {
+      "label": "Comparatif A vs B",
+      "note": "Tableau de décision, critères, verdict par cas d'usage."
+    },
+    "checklist": {
+      "label": "Checklist actionnable",
+      "note": "Étapes numérotées, à dérouler. Fort taux de complétion."
+    },
+    "donnees": {
+      "label": "Étude chiffrée / barème",
+      "note": "Grille tarifaire, salaires, coûts. Attire les backlinks."
+    },
+    "cas-pratique": {
+      "label": "Cas pratique de chantier",
+      "note": "Un scénario réel de bout en bout, avec chiffres et arbitrages."
+    },
+    "faq-longue": {
+      "label": "FAQ longue (12-15 Q)",
+      "note": "Cible People Also Ask et les moteurs génératifs."
+    },
+    "calendrier": {
+      "label": "Calendrier / saisonnalité",
+      "note": "Quand faire quoi dans l'année."
+    },
+    "erreurs": {
+      "label": "Les N erreurs à éviter",
+      "note": "Angle négatif, fort CTR."
+    }
+  },
+  "clusters": {
+    "pro-formation-financement": {
+      "audience": "pro",
+      "label": "Formation & financement",
+      "personas": [
+        "futur-forme",
+        "salarie-cordiste"
+      ],
+      "requetes": [
+        "formation cordiste prix",
+        "financer formation cordiste",
+        "CQP cordiste CPF",
+        "IRATA L1 financement",
+        "AIF France Travail cordiste",
+        "recyclage MAC cordiste",
+        "choisir centre de formation cordiste",
+        "VAE cordiste"
+      ],
+      "note": "Cluster à plus fort volume et 100 % vierge. Reste à charge CPF 150 € depuis avril 2026 = actualité exploitable.",
+      "priorite": 3
+    },
+    "pro-parcours-debut": {
+      "audience": "pro",
+      "label": "Parcours & démarrage",
+      "personas": [
+        "futur-forme",
+        "frais-diplome"
+      ],
+      "requetes": [
+        "devenir cordiste",
+        "reconversion cordiste",
+        "premier chantier cordiste",
+        "débouchés cordiste"
+      ]
+    },
+    "pro-gestion-business": {
+      "audience": "pro",
+      "label": "Statut, tarifs & gestion",
+      "personas": [
+        "independant-etabli",
+        "frais-diplome"
+      ],
+      "requetes": [
+        "TJM cordiste",
+        "statut juridique cordiste",
+        "RC pro cordiste",
+        "charges auto-entrepreneur cordiste"
+      ],
+      "note": "SATURÉ (4 articles). Gel jusqu'à ce que 4 autres clusters aient au moins 1 article."
+    },
+    "pro-trouver-chantiers": {
+      "audience": "pro",
+      "label": "Trouver des chantiers",
+      "personas": [
+        "independant-etabli",
+        "frais-diplome"
+      ],
+      "requetes": [
+        "missions cordiste",
+        "sous-traitance cordiste",
+        "prospection cordiste",
+        "période creuse cordiste"
+      ]
+    },
+    "pro-secteurs-verticaux": {
+      "audience": "pro",
+      "label": "Secteurs & spécialisations",
+      "personas": [
+        "salarie-cordiste",
+        "independant-etabli",
+        "futur-forme"
+      ],
+      "requetes": [
+        "cordiste éolien",
+        "cordiste pales GWO",
+        "cordiste nucléaire CNPE",
+        "cordiste télécom antenne",
+        "cordiste offshore",
+        "cordiste pétrochimie",
+        "cordiste événementiel rigging"
+      ],
+      "note": "Vierge. Volume élevé et intention professionnelle forte. Éolien offshore (Saint-Nazaire, Fécamp, Saint-Brieuc) et nucléaire recrutent.",
+      "priorite": 3
+    },
+    "pro-technique-terrain": {
+      "audience": "pro",
+      "label": "Technique & sécurité terrain",
+      "personas": [
+        "frais-diplome",
+        "chef-equipe"
+      ],
+      "requetes": [
+        "contrôle annuel EPI cordiste",
+        "durée de vie corde",
+        "point d'ancrage travaux sur cordes",
+        "secours évacuation équipier",
+        "CATEC espace confiné",
+        "plan de prévention hauteur"
+      ],
+      "note": "Vierge. Contenu à haute valeur E-E-A-T — c'est ce qui prouve qu'on connaît le métier.",
+      "priorite": 2
+    },
+    "pro-salariat-carriere": {
+      "audience": "pro",
+      "label": "Salariat & évolution de carrière",
+      "personas": [
+        "salarie-cordiste",
+        "chef-equipe"
+      ],
+      "requetes": [
+        "salaire cordiste",
+        "grille salaire cordiste secteur",
+        "intérim cordiste ETT",
+        "passer IRATA niveau 2",
+        "devenir chef d'équipe cordiste"
+      ],
+      "note": "Vierge. Tous nos contenus supposent l'indépendance — or la majorité des cordistes sont salariés ou intérimaires.",
+      "priorite": 3
+    },
+    "pro-formateur-of": {
+      "audience": "pro",
+      "label": "Formateur & organisme de formation",
+      "personas": [
+        "formateur",
+        "chef-equipe"
+      ],
+      "requetes": [
+        "devenir formateur cordiste",
+        "Qualiopi organisme formation cordes",
+        "IRATA L3 formateur",
+        "ouvrir centre formation travaux hauteur"
+      ],
+      "priorite": 1
+    },
+    "pro-international-mobilite": {
+      "audience": "pro",
+      "label": "International & mobilité",
+      "personas": [
+        "independant-etabli",
+        "salarie-cordiste"
+      ],
+      "requetes": [
+        "travailler cordiste à l'étranger",
+        "IRATA reconnaissance internationale",
+        "cordiste offshore mer du Nord",
+        "GWO certification"
+      ],
+      "priorite": 1
+    },
+    "pro-sante-longevite": {
+      "audience": "pro",
+      "label": "Santé, aptitude & longévité",
+      "personas": [
+        "independant-etabli",
+        "salarie-cordiste"
+      ],
+      "requetes": [
+        "aptitude médicale travail en hauteur",
+        "TMS cordiste",
+        "accident cordiste statistiques",
+        "reconversion après cordiste",
+        "cordiste après 45 ans"
+      ],
+      "note": "Vierge. Sujet que personne ne traite honnêtement — forte différenciation.",
+      "priorite": 2
+    },
+    "client-geo-ville": {
+      "audience": "client",
+      "label": "Guides par ville",
+      "personas": [
+        "particulier",
+        "syndic"
+      ],
+      "requetes": [
+        "cordiste [ville]",
+        "entreprise travaux hauteur [ville]"
+      ],
+      "note": "ULTRA SATURÉ (6 articles quasi jumeaux). GELÉ. Ce besoin est déjà couvert par les 60 pages /cordiste-[ville] du SEO programmatique — le blog n'a pas à le dupliquer."
+    },
+    "client-guide-achat": {
+      "audience": "client",
+      "label": "Guide d'achat & sélection",
+      "personas": [
+        "particulier",
+        "syndic"
+      ],
+      "requetes": [
+        "choisir un cordiste",
+        "devis cordiste",
+        "vérifier assurance cordiste"
+      ]
+    },
+    "client-travaux-type": {
+      "audience": "client",
+      "label": "Par type de travaux",
+      "personas": [
+        "particulier",
+        "syndic",
+        "directeur-technique"
+      ],
+      "requetes": [
+        "nettoyage façade sans échafaudage",
+        "toiture zinc cordiste",
+        "élagage grande hauteur",
+        "vitres en hauteur",
+        "anti-pigeons",
+        "étanchéité toiture-terrasse",
+        "démoussage"
+      ]
+    },
+    "client-reglementation": {
+      "audience": "client",
+      "label": "Réglementation & responsabilité",
+      "personas": [
+        "syndic",
+        "maitre-ouvrage-public",
+        "directeur-technique"
+      ],
+      "requetes": [
+        "responsabilité maître d'ouvrage hauteur",
+        "obligation sécurité chantier",
+        "déclaration préalable travaux façade",
+        "PPSPS"
+      ]
+    },
+    "client-comparatif-solutions": {
+      "audience": "client",
+      "label": "Comparatifs de solutions d'accès",
+      "personas": [
+        "syndic",
+        "directeur-technique",
+        "particulier"
+      ],
+      "requetes": [
+        "nacelle ou cordiste",
+        "échafaudage vs cordes prix",
+        "drone inspection ou cordiste",
+        "plateforme suspendue"
+      ],
+      "note": "Vierge. Intention comparative = très proche de l'achat.",
+      "priorite": 3
+    },
+    "client-segment-b2b": {
+      "audience": "client",
+      "label": "Segments B2B",
+      "personas": [
+        "directeur-technique",
+        "bailleur-social",
+        "maitre-ouvrage-public",
+        "hotellerie-retail"
+      ],
+      "requetes": [
+        "cordiste industrie maintenance",
+        "bailleur social travaux hauteur",
+        "marché public cordiste",
+        "cordiste hôtel ERP"
+      ]
+    },
+    "client-budget-prix": {
+      "audience": "client",
+      "label": "Budget & prix",
+      "personas": [
+        "syndic",
+        "particulier"
+      ],
+      "requetes": [
+        "prix cordiste m2",
+        "coût nettoyage façade immeuble",
+        "budget ravalement cordiste",
+        "financer travaux copropriété"
+      ],
+      "note": "Vierge côté blog. Attention : ne pas cannibaliser /prix-cordiste — angle méthode de calcul et arbitrage budgétaire, pas grille tarifaire.",
+      "priorite": 2
+    },
+    "client-urgence-sinistre": {
+      "audience": "client",
+      "label": "Urgence & sinistre",
+      "personas": [
+        "syndic",
+        "particulier",
+        "directeur-technique"
+      ],
+      "requetes": [
+        "cordiste urgence",
+        "après tempête toiture",
+        "mise en sécurité façade",
+        "péril imminent"
+      ],
+      "note": "Vierge. Requêtes à très forte conversion.",
+      "priorite": 3
+    },
+    "client-entretien-preventif": {
+      "audience": "client",
+      "label": "Entretien préventif & patrimoine",
+      "personas": [
+        "syndic",
+        "bailleur-social",
+        "directeur-technique"
+      ],
+      "requetes": [
+        "fréquence entretien façade",
+        "plan pluriannuel travaux",
+        "inspection façade obligatoire",
+        "diagnostic hauteur"
+      ],
+      "priorite": 2
+    },
+    "client-patrimoine-specifique": {
+      "audience": "client",
+      "label": "Bâti spécifique",
+      "personas": [
+        "syndic",
+        "maitre-ouvrage-public"
+      ],
+      "requetes": [
+        "façade monument historique ABF",
+        "église clocher travaux",
+        "ouvrage d'art inspection",
+        "façade béton années 60"
+      ]
+    }
+  },
+  "articles": {
+    "habilitations-cordiste-cqp-irata-sprat": {
+      "cluster": "client-reglementation",
+      "persona": "syndic",
+      "format": "comparatif"
+    },
+    "comment-choisir-son-cordiste": {
+      "cluster": "client-guide-achat",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "travaux-facade-sans-echafaudage": {
+      "cluster": "client-travaux-type",
+      "persona": "syndic",
+      "format": "guide"
+    },
+    "trouver-cordiste-paris": {
+      "cluster": "client-geo-ville",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "responsabilite-maitre-ouvrage-chantier-cordiste": {
+      "cluster": "client-reglementation",
+      "persona": "maitre-ouvrage-public",
+      "format": "guide"
+    },
+    "trouver-cordiste-lyon": {
+      "cluster": "client-geo-ville",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "premier-chantier-cordiste-apres-cqp": {
+      "cluster": "pro-parcours-debut",
+      "persona": "frais-diplome",
+      "format": "guide"
+    },
+    "missions-cordiste-independant": {
+      "cluster": "pro-trouver-chantiers",
+      "persona": "independant-etabli",
+      "format": "guide"
+    },
+    "trouver-cordiste-marseille": {
+      "cluster": "client-geo-ville",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "elagage-abattage-grande-hauteur-cordiste": {
+      "cluster": "client-travaux-type",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "trouver-cordiste-bordeaux": {
+      "cluster": "client-geo-ville",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "devenir-cordiste-2026": {
+      "cluster": "pro-parcours-debut",
+      "persona": "futur-forme",
+      "format": "guide"
+    },
+    "trouver-cordiste-lille": {
+      "cluster": "client-geo-ville",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "trouver-cordiste-nantes": {
+      "cluster": "client-geo-ville",
+      "persona": "particulier",
+      "format": "guide"
+    },
+    "tarif-journalier-cordiste-independant": {
+      "cluster": "pro-gestion-business",
+      "persona": "independant-etabli",
+      "format": "donnees"
+    },
+    "cordiste-facade-haussmannienne": {
+      "cluster": "client-patrimoine-specifique",
+      "persona": "syndic",
+      "format": "guide"
+    },
+    "statut-juridique-cordiste-independant": {
+      "cluster": "pro-gestion-business",
+      "persona": "independant-etabli",
+      "format": "guide"
+    },
+    "cordiste-copropriete-guide-syndic": {
+      "cluster": "client-segment-b2b",
+      "persona": "syndic",
+      "format": "guide"
+    },
+    "cout-lancer-cordiste-independant": {
+      "cluster": "pro-gestion-business",
+      "persona": "frais-diplome",
+      "format": "donnees"
+    },
+    "rc-pro-cordiste": {
+      "cluster": "pro-gestion-business",
+      "persona": "independant-etabli",
+      "format": "guide"
+    },
+    "financer-formation-cordiste": {
+      "cluster": "pro-formation-financement",
+      "persona": "salarie-cordiste",
+      "format": "checklist"
+    }
+  }
+}
