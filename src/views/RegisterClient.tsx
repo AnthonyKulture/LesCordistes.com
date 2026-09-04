@@ -118,7 +118,7 @@ export function RegisterClient() {
     return (
         <AuthLayout
             seoTitle="Inscription Espace Client BtoB et Particulier | LesCordistes.com"
-            seoDescription="Accédez à des centaines de cordistes qualifiés pour vos missions en hauteur. Inscription 100% gratuite et rapide."
+            seoDescription="Accédez à des cordistes certifiés CQP et IRATA, vérifiés un par un, pour vos missions en hauteur. Inscription 100% gratuite et rapide."
             seoCanonical="https://www.lescordistes.com/inscription-client"
             jsonLd={jsonLd}
             authMode="register"

@@ -8,6 +8,11 @@ import { SEOContent } from '@/components/landing/SEOContent'
 import { CityLinks } from '@/components/landing/CityLinks'
 import { FAQ } from '@/components/landing/FAQ'
 import { CTA } from '@/components/landing/CTA'
+import { fetchPublicStats } from '@/lib/publicStats'
+
+// ISR : la home reste prérendue, les compteurs publics se rafraîchissent toutes
+// les heures. `force-dynamic` coûterait un aller-retour Supabase par visiteur.
+export const revalidate = 3600
 
 export const metadata: Metadata = {
     title: { absolute: 'Cordistes & travaux en hauteur · LesCordistes' },
@@ -119,7 +124,9 @@ const jsonLd = {
     ],
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+    const stats = await fetchPublicStats()
+
     return (
         <>
             <script
@@ -129,12 +136,12 @@ export default function HomePage() {
             <div className="flex flex-col min-h-screen">
                 <Hero />
                 <HowItWorks />
-                <TrustSignals />
-                <ProfessionalsNetwork />
-                <SEOContent />
+                <TrustSignals stats={stats} />
+                <ProfessionalsNetwork stats={stats} />
+                <SEOContent stats={stats} />
                 <CityLinks />
                 <FAQ />
-                <CTA />
+                <CTA stats={stats} />
             </div>
         </>
     )

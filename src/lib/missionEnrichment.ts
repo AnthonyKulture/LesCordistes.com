@@ -221,63 +221,149 @@ export function isClientVerified(job: Job): boolean {
 }
 
 // ─── LEAD QUALITY SCORE ─────────────────────────────────────────────────────
-// Positive-only score (50–100). The baseline of 50 reflects the fact that
-// every live mission has already been moderated and pre-qualified by the
-// LesCordistes team — there is no such thing as a "bad" lead at this stage.
-// Each additional signal lifts the score; a missing field never penalises.
-// Brief length is NOT scored — the team enriches descriptions manually.
+// Le score ne mesure QU'UNE chose : la richesse effective du brief, signal par
+// signal, chacun lu sur la ligne `jobs` et donc vérifiable par le pro lui-même
+// sur la fiche. Aucun point n'est offert au titre de la modération : une mission
+// vide et une mission documentée ne peuvent pas afficher le même chiffre.
+//
+// Ce que le score N'EST PAS : une promesse de rentabilité du lead. Le libellé de
+// chaque critère dit précisément ce qui a été constaté (« Brief détaillé »,
+// « Budget annoncé ») et jamais ce qui aurait été fait en coulisses.
+//
+// Calcul : chaque signal pèse un poids relatif, le score est le ratio
+// points obtenus / points évaluables, ramené sur 100. Un signal NON ÉVALUABLE
+// dans le contexte d'appel (cf. coordonnées client, révoquées côté navigateur)
+// sort des DEUX termes du ratio — il n'est ni supposé acquis, ni compté comme
+// manquant. Un pro et un admin voient donc le même chiffre sur la même mission.
+//
+// Seuils de description — pourquoi 120 / 220 caractères :
+//   · Le wizard n'exige que 20 caractères (Step3Details) : le plancher produit
+//     ne garantit rien, c'est au score de faire la différence.
+//   · < 120 : la fiche ne remplit même pas l'extrait de 120 caractères que la
+//     page mission découpe pour sa meta description (`description.slice(0, 120)`
+//     dans app/jobs/[slug]/page.tsx). Un texte plus court reformule le titre.
+//   · ≥ 220 (~35 mots, 3 phrases) : le minimum pour répondre aux trois questions
+//     qu'un cordiste pose avant de se déplacer — quel support, quel accès, quel
+//     travail. Le score admin (computeLQS, seuil 80) était trop permissif : une
+//     ligne de texte y valait déjà 20 points.
 
-const BASELINE_SCORE = 50; // every moderated mission starts here
+const DESCRIPTION_DETAILED = 220;
+const DESCRIPTION_SUBSTANTIAL = 120;
+
+// Paliers calibrés sur des cas réels : une mission avec budget, brief détaillé,
+// une photo, une échéance et une adresse atteint 78 — c'est un bon lead, pas un
+// lead exceptionnel : elle doit tomber en « Qualifié ». « Premium » exige en plus
+// la géolocalisation ou un jeu de photos, soit un brief que le pro peut chiffrer
+// sans rappeler le client.
+const TIER_PREMIUM = 82;
+const TIER_QUALIFIE = 50;
+
+interface QualitySignal {
+    earned: number;
+    max: number;
+    /** Affiché uniquement quand `earned > 0` — sinon rien n'est annoncé. */
+    label?: string;
+}
 
 export interface LeadQuality {
-    score: number;            // 50–100
+    score: number;            // 0–100
+    /**
+     * Garde-fou : sous le palier « Qualifié », on montre le palier et les signaux
+     * réels, jamais le chiffre. Un score bas dessert la mission sans rien apprendre
+     * au pro que la liste de signaux ne dise déjà.
+     */
+    showScore: boolean;
     tier: 'premium' | 'qualifie' | 'verifie';
     label: string;            // short user-facing label
     color: string;            // tailwind color tokens
     bg: string;
     border: string;
-    signals: string[];        // positive signals to display (max 4)
+    signals: string[];        // signaux réellement constatés (max 5)
+    /** Mission saisie par l'équipe après un échange direct avec le client. */
+    teamSourced: boolean;
 }
 
 export function getLeadQuality(job: Job): LeadQuality {
-    // Mission postée par l'admin (suite à un appel/mail client confirmé) → 100% qualifiée
-    if (job.admin_created) {
-        return {
-            score: 100,
-            tier: 'premium',
-            label: 'Lead Premium',
-            color: 'text-emerald-700',
-            bg: 'bg-emerald-50',
-            border: 'border-emerald-200',
-            signals: ['Vérifié par notre équipe', 'Client contacté en direct', 'Brief enrichi manuellement'],
-        };
-    }
+    // Restreint aux missions encore ouvertes : les 12 chantiers semés par
+    // 20260501-seed-buzz-completed-missions.sql portent admin_created = TRUE et
+    // s'affichent en « Missions déjà réalisées ». Sans ce filtre, des chantiers
+    // fictifs afficheraient « Client contacté en direct ». admin_notes, qui
+    // porterait le marqueur SEED, est volontairement hors des colonnes publiques.
+    const teamSourced = job.admin_created === true && job.status === 'live';
+    const signals: QualitySignal[] = [];
 
-    let score = BASELINE_SCORE;
-    const signals: string[] = ['Mission pré-qualifiée'];
+    const hasBudget = !!(job.budget_min || job.budget_max || job.daily_rate);
+    signals.push({
+        earned: hasBudget ? 22 : 0,
+        max: 22,
+        label: job.daily_rate ? 'Tarif journalier annoncé' : 'Budget annoncé',
+    });
+
+    const briefLength = job.description?.trim().length ?? 0;
+    signals.push({
+        earned: briefLength >= DESCRIPTION_DETAILED ? 22 : briefLength >= DESCRIPTION_SUBSTANTIAL ? 11 : 0,
+        max: 22,
+        label: briefLength >= DESCRIPTION_DETAILED ? 'Brief détaillé' : 'Brief renseigné',
+    });
 
     const photos = job.photos_url?.length ?? 0;
-    if (photos >= 3) { score += 18; signals.push(`${photos} photos`); }
-    else if (photos >= 1) { score += 12; signals.push(`${photos} photo${photos > 1 ? 's' : ''}`); }
+    signals.push({
+        earned: photos >= 3 ? 18 : photos >= 1 ? 11 : 0,
+        max: 18,
+        label: photos > 0 ? `${photos} photo${photos > 1 ? 's' : ''} du chantier` : undefined,
+    });
 
-    if (job.budget_min || job.budget_max || job.daily_rate) {
-        score += 12;
-        signals.push('Budget renseigné');
+    signals.push({
+        earned: job.start_date || job.deadline ? 12 : 0,
+        max: 12,
+        label: job.start_date ? 'Date de démarrage fixée' : 'Échéance fixée',
+    });
+
+    const geolocated = !!(job.latitude && job.longitude);
+    signals.push({
+        earned: geolocated ? 12 : job.location_address ? 6 : 0,
+        max: 12,
+        label: geolocated ? 'Adresse géolocalisée' : 'Adresse renseignée',
+    });
+
+    const clientVerified = isClientVerified(job);
+    signals.push({
+        earned: clientVerified ? 10 : job.client_type ? 5 : 0,
+        max: 10,
+        label: clientVerified ? 'Client professionnel identifié' : 'Type de client renseigné',
+    });
+
+    signals.push({
+        earned: job.height_meters ? 4 : 0,
+        max: 4,
+        label: job.height_meters ? `Hauteur précisée (${job.height_meters} m)` : undefined,
+    });
+
+    // Coordonnées client : `client_contact_info` est révoqué pour anon/authenticated
+    // (migration 20260828b). Absent du navigateur → signal NON évaluable, retiré du
+    // ratio plutôt que supposé acquis. Présent (service_role : admin, crons) → évalué.
+    const contact = job.client_contact_info;
+    if (contact) {
+        const reachable = !!(contact.email && contact.phone);
+        signals.push({
+            earned: reachable ? 10 : 0,
+            max: 10,
+            label: reachable ? 'Coordonnées client complètes' : undefined,
+        });
     }
 
-    if (job.start_date || job.deadline) { score += 8; signals.push('Planning défini'); }
+    // Provenance : la mission a été saisie par l'équipe à partir d'une demande de
+    // rappel, donc après un échange téléphonique réel avec le client. C'est un fait
+    // porté par la ligne (`admin_created`), pas une faveur : il compte quand il est
+    // vrai et sort du ratio quand il est faux — une mission postée par un client
+    // n'est pas pénalisée de ne pas être passée par nous.
+    if (teamSourced) {
+        signals.push({ earned: 15, max: 15 });
+    }
 
-    if (job.latitude && job.longitude) { score += 8; signals.push('Adresse géolocalisée'); }
-    else if (job.location_address) { score += 4; }
-
-    if (job.height_meters) score += 3;
-    if ((job.required_level?.length ?? 0) > 0) score += 3;
-    if ((job.required_habilitations?.length ?? 0) > 0) score += 3;
-
-    if (isClientVerified(job)) { score += 12; signals.push('Client vérifié'); }
-    else if (job.client_type) { score += 4; }
-
-    score = Math.min(100, score);
+    const earned = signals.reduce((sum, s) => sum + s.earned, 0);
+    const total = signals.reduce((sum, s) => sum + s.max, 0);
+    const score = total > 0 ? Math.min(100, Math.round((earned / total) * 100)) : 0;
 
     let tier: LeadQuality['tier'];
     let label: string;
@@ -285,13 +371,13 @@ export function getLeadQuality(job: Job): LeadQuality {
     let bg: string;
     let border: string;
 
-    if (score >= 80) {
+    if (score >= TIER_PREMIUM) {
         tier = 'premium';
         label = 'Lead Premium';
         color = 'text-emerald-700';
         bg = 'bg-emerald-50';
         border = 'border-emerald-200';
-    } else if (score >= 65) {
+    } else if (score >= TIER_QUALIFIE) {
         tier = 'qualifie';
         label = 'Lead Qualifié';
         color = 'text-green-700';
@@ -299,13 +385,34 @@ export function getLeadQuality(job: Job): LeadQuality {
         border = 'border-green-200';
     } else {
         tier = 'verifie';
-        label = 'Lead Vérifié';
+        label = 'Brief à compléter';
         color = 'text-blue-700';
         bg = 'bg-blue-50';
         border = 'border-blue-200';
     }
 
-    return { score, tier, label, color, bg, border, signals: signals.slice(0, 4) };
+    // Les trois mentions de provenance ne sont vraies que d'une mission saisie par
+    // l'équipe après un échange direct. Jamais sur une mission postée par un client :
+    // personne ne l'a appelé, personne n'a réécrit son brief.
+    const provenance = teamSourced
+        ? ['Vérifié par notre équipe', 'Client contacté en direct', 'Brief enrichi manuellement']
+        : [];
+
+    const observed = signals
+        .filter(s => s.earned > 0 && s.label)
+        .map(s => s.label as string);
+
+    return {
+        score,
+        showScore: score >= TIER_QUALIFIE,
+        tier,
+        label,
+        color,
+        bg,
+        border,
+        signals: [...provenance, ...observed].slice(0, 5),
+        teamSourced,
+    };
 }
 
 // ─── FRESHNESS BADGE ────────────────────────────────────────────────────────

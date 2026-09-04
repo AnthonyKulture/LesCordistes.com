@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Linkedin, ShieldCheck, MapPin, Phone } from 'lucide-react'
+import { fetchPublicStats, showableMissions, showablePros } from '@/lib/publicStats'
 import {
     SEO_BASE_URL,
     SEO_BRAND_NAME,
@@ -18,21 +19,26 @@ const ANTHONY_ID = `${ABOUT_URL}#anthony-profit`
 const BENJAMIN_ID = `${ABOUT_URL}#benjamin-de-oliveira`
 const TEAM_PHOTO = `${SEO_BASE_URL}/equipe-anthony-benjamin.jpg`
 
-export const metadata: Metadata = {
-    title: 'À propos · LesCordistes',
-    description:
-        "Plateforme française basée à Nice, fondée en 2025 par Anthony Profit avec l'expertise métier de Benjamin De Oliveira (cordiste-formateur CQP/IRATA). 50 cordistes vérifiés, présence dans toutes les grandes villes de France.",
-    alternates: { canonical: ABOUT_URL },
-    openGraph: {
+export async function generateMetadata(): Promise<Metadata> {
+    const pros = showablePros(await fetchPublicStats())
+
+    return {
         title: 'À propos · LesCordistes',
-        description:
-            "Plateforme française basée à Nice, fondée en 2025 par Anthony Profit avec l'expertise métier de Benjamin De Oliveira.",
-        url: ABOUT_URL,
-        images: [{ url: TEAM_PHOTO, width: 1200, height: 630 }],
-    },
+        description: pros !== null
+            ? `Plateforme française basée à Nice, fondée en 2025 par Anthony Profit avec l'expertise métier de Benjamin De Oliveira (cordiste-formateur CQP/IRATA). ${pros} cordistes vérifiés, présence dans toutes les grandes villes de France.`
+            : "Plateforme française basée à Nice, fondée en 2025 par Anthony Profit avec l'expertise métier de Benjamin De Oliveira (cordiste-formateur CQP/IRATA). Cordistes CQP et IRATA vérifiés un par un, présence dans toutes les grandes villes de France.",
+        alternates: { canonical: ABOUT_URL },
+        openGraph: {
+            title: 'À propos · LesCordistes',
+            description:
+                "Plateforme française basée à Nice, fondée en 2025 par Anthony Profit avec l'expertise métier de Benjamin De Oliveira.",
+            url: ABOUT_URL,
+            images: [{ url: TEAM_PHOTO, width: 1200, height: 630 }],
+        },
+    }
 }
 
-const jsonLd = {
+const buildJsonLd = (pros: number | null) => ({
     '@context': 'https://schema.org',
     '@graph': [
         {
@@ -153,14 +159,16 @@ const jsonLd = {
                         text: "Avant publication, chaque cordiste passe par une vérification humaine en interne sous 1 jour ouvré. Documents exigés : CQP Cordiste (obligatoire France, code du travail art. L6314-1), certification IRATA (norme internationale), attestation RC Pro en cours de validité, et extrait Kbis ou attestation auto-entrepreneur. Aucune mise en relation n'est faite tant que le dossier n'est pas validé.",
                     },
                 },
-                {
+                // Question retirée du balisage plutôt que répondue au jugé : sans
+                // compteur lisible, mieux vaut ne pas poser la question à Google.
+                ...(pros !== null ? [{
                     '@type': 'Question',
                     name: 'Combien de cordistes sont actuellement inscrits ?',
                     acceptedAnswer: {
                         '@type': 'Answer',
-                        text: "À ce jour (mai 2026), 50 cordistes certifiés vérifiés sont actifs sur la plateforme, avec une couverture dans toutes les grandes villes de France : Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg, Rennes, Grenoble, Montpellier, Brest et plus de 60 villes au total.",
+                        text: `${pros} cordistes certifiés vérifiés sont inscrits sur la plateforme — chiffre lu en base et rafraîchi chaque heure. La couverture s'étend à toutes les grandes villes de France : Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg, Rennes, Grenoble, Montpellier, Brest et plus de 60 villes au total.`,
                     },
-                },
+                }] : []),
                 {
                     '@type': 'Question',
                     name: 'Quel est le modèle économique ?',
@@ -172,14 +180,20 @@ const jsonLd = {
             ],
         },
     ],
-}
+})
 
-export default function AboutPage() {
+export const revalidate = 3600
+
+export default async function AboutPage() {
+    const stats = await fetchPublicStats()
+    const pros = showablePros(stats)
+    const missions = showableMissions(stats)
+
     return (
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(pros)) }}
             />
             <main className="bg-white">
                 {/* Hero */}
@@ -381,7 +395,7 @@ export default function AboutPage() {
                         <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6">
                             Faits &amp; chiffres clés
                         </h2>
-                        <p className="text-sm text-slate-500 mb-6">Données à jour mai 2026.</p>
+                        <p className="text-sm text-slate-500 mb-6">Chiffres du réseau lus en base, rafraîchis chaque heure.</p>
                         <ul className="space-y-3 text-slate-700 leading-relaxed text-base">
                             <li>
                                 <MapPin className="inline text-brand-blue-light mr-2" size={16} />
@@ -391,11 +405,19 @@ export default function AboutPage() {
                             </li>
                             <li>
                                 <MapPin className="inline text-brand-blue-light mr-2" size={16} />
-                                <strong>50 cordistes certifiés vérifiés</strong> actifs sur la plateforme.
+                                {pros !== null ? (
+                                    <><strong>{pros} cordistes certifiés vérifiés</strong> inscrits sur la plateforme.</>
+                                ) : (
+                                    <><strong>Cordistes certifiés CQP / IRATA</strong>, vérifiés un par un avant publication.</>
+                                )}
                             </li>
                             <li>
                                 <MapPin className="inline text-brand-blue-light mr-2" size={16} />
-                                <strong>Une vingtaine de missions</strong> publiées par les clients depuis le lancement.
+                                {missions !== null ? (
+                                    <><strong>{missions} missions ouvertes</strong> en ce moment, publiées par les clients.</>
+                                ) : (
+                                    <><strong>Missions publiées par les clients</strong>, modérées une par une avant mise en ligne.</>
+                                )}
                             </li>
                             <li>
                                 <MapPin className="inline text-brand-blue-light mr-2" size={16} />

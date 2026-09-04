@@ -3,8 +3,27 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CheckCircle } from 'lucide-react'
 import { Reveal } from '../ui/Reveal'
+import { showablePros, type PublicStats } from '@/lib/publicStats'
 
-const QUESTIONS: Array<{ question: string; answer: React.ReactNode; cta?: { label: string; href: string } }> = [
+type SeoQuestion = { question: string; answer: React.ReactNode; cta?: { label: string; href: string } }
+
+/**
+ * Le troisième bloc annonce la taille du réseau : il est bâti sur les compteurs
+ * réels, avec repli sans chiffre si le réseau est trop petit pour être un
+ * argument (cf. `publicStats.ts`).
+ */
+const buildQuestions = (stats?: PublicStats | null): SeoQuestion[] => {
+    const pros = showablePros(stats)
+
+    const network: React.ReactNode = pros !== null ? (
+        <>Notre réseau compte <strong>{pros} cordistes certifiés vérifiés</strong>, présents dans les grandes villes de France (Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg…).</>
+    ) : pros !== null ? (
+        <>Notre réseau compte <strong>{pros} cordistes certifiés vérifiés</strong> couvrant les grandes villes de France (Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg…).</>
+    ) : (
+        <>Notre réseau de <strong>cordistes certifiés vérifiés</strong> couvre les grandes villes de France (Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg…).</>
+    )
+
+    return [
     {
         question: "Quel est le prix d'un cordiste en France ?",
         answer: (
@@ -27,14 +46,21 @@ const QUESTIONS: Array<{ question: string; answer: React.ReactNode; cta?: { labe
         question: 'En combien de temps recevoir des devis sur LesCordistes.com ?',
         answer: (
             <>
-                Vous publiez votre besoin en 3 minutes et recevez vos premiers devis sous <strong>48 heures ouvrées</strong> (express 24 h sur demande). Notre réseau compte <strong>50 cordistes certifiés vérifiés</strong> couvrant toutes les grandes villes de France (Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg…). Le dépôt est gratuit, sans commission sur la transaction.
+                Vous publiez votre besoin en 3 minutes et recevez vos premiers devis sous <strong>48 heures ouvrées</strong> (express 24 h sur demande). {network} Le dépôt est gratuit, sans commission sur la transaction.
             </>
         ),
         cta: { label: 'Publier une mission', href: '/post-job' },
     },
-]
+    ]
+}
 
-export const SEOContent: React.FC = () => {
+interface SEOContentProps {
+    stats?: PublicStats | null
+}
+
+export const SEOContent: React.FC<SEOContentProps> = ({ stats }) => {
+    const questions = buildQuestions(stats)
+
     return (
         <section className="py-24 bg-slate-50">
             <div className="container">
@@ -77,7 +103,7 @@ export const SEOContent: React.FC = () => {
                             </h2>
                         </div>
 
-                        {QUESTIONS.map((item, idx) => (
+                        {questions.map((item, idx) => (
                             <Reveal key={idx}>
                                 <article className="border-l-4 border-brand-blue pl-6 py-2">
                                     <h3 className="text-xl md:text-2xl font-black text-slate-900 mb-3 leading-snug">

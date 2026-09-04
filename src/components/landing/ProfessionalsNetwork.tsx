@@ -4,8 +4,15 @@ import Image from 'next/image';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
+import { showableMissions, type PublicStats } from '@/lib/publicStats';
 
-export const ProfessionalsNetwork: React.FC = () => {
+interface ProfessionalsNetworkProps {
+    stats?: PublicStats | null;
+}
+
+export const ProfessionalsNetwork: React.FC<ProfessionalsNetworkProps> = ({ stats }) => {
+    const missions = showableMissions(stats);
+
     return (
         <section className="py-24 bg-white overflow-hidden">
             <div className="container">
@@ -40,7 +47,10 @@ export const ProfessionalsNetwork: React.FC = () => {
                             Rejoignez le réseau d'experts en <span className="text-gradient">travaux sur corde</span>
                         </h2>
                         <p className="text-xl text-slate-600 mb-10 leading-relaxed">
-                            Accédez à des dizaines d'offres de chantiers qualifiés chaque mois. Développez votre entreprise de travaux sur corde en toute indépendance.
+                            {missions !== null
+                                ? `${missions} chantiers qualifiés sont ouverts en ce moment, partout en France.`
+                                : "Des chantiers qualifiés partout en France, et une alerte dès qu'une mission s'ouvre dans vos départements."}{' '}
+                            Développez votre entreprise de travaux sur corde en toute indépendance.
                         </p>
 
                         <div className="space-y-6 mb-10">

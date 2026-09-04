@@ -115,7 +115,7 @@ function welcomePro(data: Record<string, string>): string {
     <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Votre profil pro est actif</h1>
     <p style="font-size:15px;color:${S5};margin:0 0 28px;">Bonjour ${name},</p>
     <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 28px;">
-      Bienvenue sur <strong>LesCordistes.com</strong>, le réseau de référence pour les techniciens en travaux sur cordes. Des centaines de missions sont publiées chaque mois par des clients partout en France.
+      Bienvenue sur <strong>LesCordistes.com</strong>, le réseau de référence pour les techniciens en travaux sur cordes. Les chantiers arrivent au fil de l'eau, partout en France — et dès qu'une mission s'ouvre dans vos départements, vous recevez l'alerte.
     </p>
     <div style="background:${S1};border-radius:8px;padding:24px;margin:0 0 28px;">
       <p style="font-size:13px;font-weight:600;color:${B};margin:0 0 16px;text-transform:uppercase;letter-spacing:0.05em;">Maximisez vos chances</p>
@@ -292,6 +292,88 @@ function jobRevalidationRequest(data: Record<string, string>): string {
     </div>
     <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
     <p style="font-size:13px;color:${S5};margin:0;line-height:20px;">Une question&nbsp;? Répondez directement à cet email, notre équipe vous répond sous 24h.</p>
+  `);
+}
+
+// ─── Mission archivée (J+15) ──────────────────────────────────────────────────
+// Envoyé par jobs-freshness-cron au moment exact du passage en `expired`.
+// Deux variantes selon `unlockCount` (nombre de pros ayant payé pour obtenir
+// les coordonnées) :
+//   0   → on le dit franchement et on donne la suite concrète (republier,
+//         préciser budget/description, se faire rappeler).
+//   ≥ 1 → on rappelle combien de pros ont les coordonnées et on invite à
+//         republier si le chantier n'est pas pourvu.
+// Doctrine chiffres : le nombre n'est affiché QUE lorsqu'il est vrai et non
+// démoralisant (≥ 1). À zéro, la formulation bascule sur une variante sans
+// aucun chiffre — jamais de volume inventé, ici comme ailleurs.
+function jobExpired(data: Record<string, string>): string {
+  const name = escHtml((data.name || '').trim());
+  const title = escHtml((data.title || '').trim() || 'votre mission');
+  const cityRaw = (data.city || '').trim();
+  const city = cityRaw ? ` à ${escHtml(cityRaw)}` : '';
+  const parsed = parseInt(data.unlockCount || '0', 10);
+  const unlockCount = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+  const greeting = name ? `Bonjour ${name},` : 'Bonjour,';
+  const repostUrl = 'https://www.lescordistes.com/post-job';
+
+  const missionBlock = `
+    <div style="background:${S1};border-radius:8px;padding:16px 20px;margin:0 0 24px;">
+      <p style="font-size:12px;color:${S5};margin:0 0 4px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;">Mission concernée</p>
+      <p style="font-size:16px;font-weight:600;color:${B};margin:0;">${title}${city}</p>
+    </div>`;
+
+  if (unlockCount > 0) {
+    const plural = unlockCount > 1;
+    return base(`Votre mission « ${title} » est archivée`, `
+      ${badge(BL, '#eff6ff', BL, 'Mission archivée')}
+      <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Votre mission est archivée</h1>
+      <p style="font-size:15px;color:${S5};margin:0 0 24px;">${greeting}</p>
+      <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 24px;">
+        Votre mission est restée 15 jours en ligne. Sans confirmation de votre part qu'elle était toujours d'actualité, elle vient d'être archivée.
+      </p>
+      ${missionBlock}
+      <div style="background:#eff6ff;border-left:4px solid ${BL};border-radius:0 8px 8px 0;padding:18px 22px;margin:0 0 24px;">
+        <p style="font-size:16px;font-weight:700;color:${B};margin:0 0 6px;line-height:24px;">
+          ${unlockCount} professionnel${plural ? 's' : ''} ${plural ? 'ont' : 'a'} obtenu vos coordonnées
+        </p>
+        <p style="font-size:14px;color:${S7};margin:0;line-height:21px;">
+          ${plural ? 'Ils les ont payées' : 'Il les a payées'} pour vous contacter directement, et ${plural ? 'ils les gardent' : 'il les garde'} : ${plural ? 'ils peuvent' : 'il peut'} encore vous appeler.
+        </p>
+      </div>
+      <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 8px;">
+        Si le chantier est pourvu, vous n'avez rien à faire.
+      </p>
+      <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 4px;">
+        S'il ne l'est pas, republiez-la : elle repart en tête du tableau pour 15 jours, et les cordistes de votre département reçoivent une nouvelle alerte.
+      </p>
+      ${btn(repostUrl, 'Republier ma mission')}
+      <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
+      <p style="font-size:13px;color:${S5};margin:0;line-height:20px;">Une question ? Répondez directement à cet email, notre équipe vous répond sous 24h.</p>
+    `);
+  }
+
+  return base(`Votre mission « ${title} » a été archivée`, `
+    ${badge(S5, S1, S4, 'Mission archivée')}
+    <h1 style="font-size:22px;font-weight:700;color:${B};margin:0 0 8px;line-height:30px;">Votre mission est archivée</h1>
+    <p style="font-size:15px;color:${S5};margin:0 0 24px;">${greeting}</p>
+    <p style="font-size:15px;color:${S7};line-height:24px;margin:0 0 24px;">
+      Votre mission est restée 15 jours en ligne. Aucun cordiste n'a demandé vos coordonnées, et elle vient d'être archivée. On vous le dit sans détour : ça arrive, et ça se corrige.
+    </p>
+    ${missionBlock}
+    <div style="background:${S1};border-radius:8px;padding:24px;margin:0 0 28px;">
+      <p style="font-size:13px;font-weight:600;color:${B};margin:0 0 16px;text-transform:uppercase;letter-spacing:0.05em;">Trois façons de la relancer</p>
+      <p style="font-size:14px;color:${S7};margin:0 0 12px;line-height:21px;"><span style="color:${BL};font-weight:700;">1.</span> <strong>Republier en un clic</strong> — la mission repart en tête du tableau pour 15 jours, et les cordistes de votre département reçoivent une alerte.</p>
+      <p style="font-size:14px;color:${S7};margin:0 0 12px;line-height:21px;"><span style="color:${BL};font-weight:700;">2.</span> <strong>Préciser le budget et le chantier</strong> — hauteur, accès, délai, fourchette de prix : c'est ce qui décide un cordiste à payer pour vous appeler.</p>
+      <p style="font-size:14px;color:${S7};margin:0;line-height:21px;"><span style="color:${BL};font-weight:700;">3.</span> <strong>Vous faire rappeler</strong> — on reprend votre demande au téléphone et on la remet en ligne avec vous.</p>
+    </div>
+    ${btn(repostUrl, 'Republier ma mission')}
+    <div style="background:#eff6ff;border-left:4px solid ${BL};border-radius:0 8px 8px 0;padding:18px 22px;margin:28px 0 0;">
+      <p style="font-size:14px;color:${S7};margin:0;line-height:21px;">
+        <strong style="color:${B};">Vous préférez qu'on vous rappelle&nbsp;?</strong> Choisissez «&nbsp;Être recontacté&nbsp;» sur la page de publication, ou répondez à cet email avec votre numéro : on vous rappelle et on republie la mission pour vous.
+      </p>
+    </div>
+    <hr style="border:none;border-top:1px solid ${S2};margin:28px 0;"/>
+    <p style="font-size:13px;color:${S5};margin:0;line-height:20px;">Une question ? Répondez directement à cet email, notre équipe vous répond sous 24h.</p>
   `);
 }
 
@@ -512,6 +594,7 @@ const SUBSCRIBABLE_TEMPLATES = new Set<string>([
   'match-job',
   'guest-job-created',
   'job-revalidation-request',
+  'job-expired',
   'pro-credit-offer',
   'admin-custom',
   'marketing-generic',
@@ -821,6 +904,7 @@ serve(async (req) => {
       case 'password-reset':   html = passwordReset(data); break;
       case 'guest-job-created': html = guestJobCreated(data); break;
       case 'job-revalidation-request': html = jobRevalidationRequest(data); break;
+      case 'job-expired':      html = jobExpired(data); break;
       case 'pro-credit-offer': html = proCreditOffer(data); break;
       case 'lead-outcome':     html = leadOutcome(data); break;
       case 'admin-custom':     html = adminCustom(data); break;

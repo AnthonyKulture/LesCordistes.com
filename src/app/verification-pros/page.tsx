@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ShieldCheck, FileCheck, Clock, AlertCircle, ArrowRight, RefreshCw } from 'lucide-react'
 import { SEO_BASE_URL, SEO_BRAND_NAME, SEO_EMAIL } from '@/constants/seoConfig'
+import { fetchPublicStats, showablePros } from '@/lib/publicStats'
+
+export const revalidate = 3600
 
 const PAGE_URL = `${SEO_BASE_URL}/verification-pros`
 
@@ -148,7 +151,9 @@ const jsonLd = {
     ],
 }
 
-export default function VerificationProsPage() {
+export default async function VerificationProsPage() {
+    const pros = showablePros(await fetchPublicStats())
+
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -169,7 +174,8 @@ export default function VerificationProsPage() {
                             Comment nous vérifions chaque cordiste avant publication
                         </h1>
                         <p className="text-xl text-brand-blue font-semibold mb-6 max-w-3xl leading-snug">
-                            Vérification humaine en interne sous 1 jour ouvré. CQP, IRATA, RC Pro, Kbis. 50 cordistes vérifiés à ce jour.
+                            Vérification humaine en interne sous 1 jour ouvré. CQP, IRATA, RC Pro, Kbis.{' '}
+                            {pros !== null ? `${pros} cordistes vérifiés à ce jour.` : 'Aucun profil publié sans contrôle.'}
                         </p>
                         <p className="text-base md:text-lg text-slate-700 max-w-3xl leading-relaxed">
                             Sur Pages Jaunes ou Google Maps, n'importe quelle entreprise peut s'afficher comme « cordiste » sans avoir le diplôme requis. Sur LesCordistes.com, chaque cordiste passe par un contrôle humain de ses certifications, de son assurance et de son enregistrement légal — avant qu'il ne soit publié et qu'un seul client ne le contacte.

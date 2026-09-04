@@ -95,6 +95,25 @@ const tradeLabels: Record<string, string> = {
     pruning: '🌳 Élagage',
 };
 
+/**
+ * `get_job_unlock_count` (migration 20260904a) est absente de `database.types.ts`
+ * (fichier généré) : le `.rpc()` typé la rejetterait. On décrit la seule signature
+ * utilisée plutôt que de caster le client entier en `any`.
+ */
+type UnlockCountRpcError = { code?: string; message?: string } | null;
+
+type UnlockCountRpcClient = {
+    rpc: (
+        fn: 'get_job_unlock_count',
+        args: { p_job_id: string }
+    ) => PromiseLike<{ data: number | null; error: UnlockCountRpcError }>;
+};
+
+/** PGRST202 : PostgREST ne connaît pas la fonction · 42883 : Postgres non plus. */
+function isMissingFunction(error: UnlockCountRpcError): boolean {
+    return error?.code === 'PGRST202' || error?.code === '42883';
+}
+
 interface JobDetailProps {
     initialJob?: Job | null;
 }
@@ -129,16 +148,29 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
 
     const { data: unlockCount, refetch: refetchUnlockCount } = useQuery({
         queryKey: ['job-unlock-count', job?.id],
-        queryFn: async () => {
+        queryFn: async (): Promise<number> => {
             if (!job?.id) return 0;
-            const { count, error } = await supabase
+
+            const { data, error } = await (supabase as unknown as UnlockCountRpcClient)
+                .rpc('get_job_unlock_count', { p_job_id: job.id });
+
+            if (!error) return typeof data === 'number' ? data : 0;
+            if (!isMissingFunction(error)) throw error;
+
+            // Repli pré-migration 20260904a : la RLS de `unlocked_leads` ne rend au
+            // pro que ses propres lignes, ce COUNT sous-estime donc le total (0 pour
+            // un prospect). Faux mais borné, et jamais au-dessus du réel : il ne peut
+            // qu'échouer à afficher « Mission saturée », pas l'afficher à tort.
+            const { count, error: countError } = await supabase
                 .from('unlocked_leads')
                 .select('*', { count: 'exact', head: true })
                 .eq('job_id', job.id);
-            if (error) throw error;
+            if (countError) throw countError;
             return count || 0;
         },
-        enabled: !!job?.id,
+        // Fonction réservée à `authenticated` : ne rien appeler pour un visiteur
+        // anonyme, qui n'a de toute façon aucun compteur affiché.
+        enabled: !!job?.id && !!user,
     });
 
     // Determine if the job should be visible to the current user
@@ -293,7 +325,7 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
                             contact={contact ?? null}
                             canViewContact={canViewContact}
                             isFull={isFull}
-                            unlockCount={unlockCount || 0}
+                            unlockCount={unlockCount}
                             refetchUnlockCount={refetchUnlockCount}
                             startConversation={startConversation}
                             navigate={(path: string) => router.push(path)}

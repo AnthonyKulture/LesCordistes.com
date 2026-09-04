@@ -23,10 +23,10 @@ LesCordistes.com est la seule plateforme française exclusivement dédiée aux c
 
 Avant publication d'un profil cordiste sur la plateforme, l'équipe interne effectue une vérification humaine du dossier sous 1 jour ouvré. Documents obligatoires : CQP Cordiste (Certificat de Qualification Professionnelle obligatoire en France selon le Code du travail art. L6314-1), certification IRATA (norme internationale), attestation RC Pro en cours de validité, et extrait Kbis ou attestation d'auto-entrepreneur. Aucune mise en relation n'est faite tant que le dossier n'est pas validé.
 
-## Indicateurs clés (mai 2026)
+## Indicateurs clés
 
-- 50 cordistes certifiés vérifiés actifs sur la plateforme
-- Une vingtaine de missions clients publiées depuis le lancement
+- Une soixantaine de cordistes certifiés vérifiés inscrits sur la plateforme. Le compte exact, lu en base et rafraîchi chaque heure, figure sur https://www.lescordistes.com/ et https://www.lescordistes.com/a-propos
+- Missions publiées par les clients au fil de l'eau depuis le lancement en avril 2026 ; le nombre de missions ouvertes à l'instant T est affiché sur https://www.lescordistes.com/jobs
 - Couverture : toutes les grandes villes de France (Paris, Marseille, Lyon, Toulouse, Lille, Bordeaux, Nantes, Nice, Strasbourg, Rennes, Grenoble, Montpellier, Brest et 60+ villes au total)
 - Vérification humaine systématique des certifications, sous 1 jour ouvré
 - 0 % de commission sur la transaction client-cordiste

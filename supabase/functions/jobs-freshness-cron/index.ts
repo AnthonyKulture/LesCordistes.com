@@ -15,6 +15,9 @@
 //   A. For 'live' jobs older than 10 days with no revalidation email yet → send
 //      revalidation email + mark revalidation_email_sent_at.
 //   B. For 'live' jobs older than 15 days never revalidated → set status='expired'.
+//   C. For jobs freshly expired and never notified → send the 'job-expired'
+//      email (2 variants: zero unlock / at least one) + mark
+//      expiration_email_sent_at. Requires migration 20260904c.
 //
 // Re-revalidation: window resets when last_validated_at is updated; we use
 // coalesce(last_validated_at, created_at) as the freshness anchor.
@@ -29,6 +32,14 @@ const CRON_SECRET = Deno.env.get('CRON_SECRET') || '';
 const SEO_BASE_URL = Deno.env.get('SEO_BASE_URL') || 'https://www.lescordistes.com';
 
 const TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 days
+
+// ─── Étape C — email d'expiration ─────────────────────────────────────────────
+// Fenêtre de fraîcheur : on ne notifie que les missions expirées récemment.
+// Filet contre un envoi rétroactif massif si le cron a été arrêté longtemps ou
+// si la base a été restaurée (la migration 20260904c backfille déjà
+// l'historique, ceci est la seconde ceinture).
+const EXPIRY_NOTICE_WINDOW_DAYS = 7;
+const EXPIRY_NOTICE_MAX_PER_RUN = 50;
 
 // ─── HMAC token signing (Deno Web Crypto) ──────────────────────────────────────
 // Séparateur `~` (synchronisé avec src/lib/revalidation-token.ts) : évite le bug
@@ -95,6 +106,76 @@ async function sendRevalidationEmail(
                 title: job.title,
                 city: job.location_city ?? '',
                 validateUrl,
+            },
+        }),
+    });
+
+    if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        return { ok: false, reason: `send_${res.status}: ${body.slice(0, 300)}` };
+    }
+    return { ok: true };
+}
+
+// ─── Étape C — email « mission archivée » ─────────────────────────────────────
+
+interface ExpiredJobRow {
+    id: string;
+    title: string;
+    location_city: string | null;
+    created_by: string | null;
+    client_contact_info: { name?: string; first_name?: string; email?: string } | null;
+}
+
+interface ClientProfileRow {
+    id: string;
+    email: string | null;
+    first_name: string | null;
+    full_name: string | null;
+}
+
+function firstWord(value: string | null | undefined): string {
+    const trimmed = (value ?? '').trim();
+    if (!trimmed) return '';
+    return trimmed.split(/\s+/)[0];
+}
+
+function looksLikeEmail(value: string | null | undefined): boolean {
+    const trimmed = (value ?? '').trim();
+    return /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(trimmed);
+}
+
+async function sendExpirationEmail(args: {
+    to: string;
+    name: string;
+    title: string;
+    city: string;
+    unlockCount: number;
+}): Promise<{ ok: boolean; reason?: string }> {
+    // Le sujet suit la même règle que le corps : le chiffre n'apparaît que
+    // lorsqu'il est vrai et non démoralisant (≥ 1 pro ayant payé). À zéro,
+    // aucune quantité n'est avancée.
+    const plural = args.unlockCount > 1;
+    const subject =
+        args.unlockCount > 0
+            ? `Votre mission « ${args.title} » est archivée — ${args.unlockCount} professionnel${plural ? 's' : ''} ${plural ? 'ont' : 'a'} vos coordonnées`
+            : `Votre mission « ${args.title} » a été archivée — comment la relancer`;
+
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/send-email`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            to: args.to,
+            subject,
+            templateId: 'job-expired',
+            data: {
+                name: args.name,
+                title: args.title,
+                city: args.city,
+                unlockCount: String(args.unlockCount),
             },
         }),
     });
@@ -198,11 +279,140 @@ serve(async (req: Request) => {
         return new Response(JSON.stringify({ error: errB.message }), { status: 500 });
     }
 
+    // ─── C. Email « mission archivée » ──────────────────────────────────────
+    // Jusqu'ici la mission mourait sans un mot : le client n'apprenait rien, ne
+    // republiait pas, ne revenait pas. On l'informe au moment du passage en
+    // `expired` (les lignes que B vient de basculer), avec rattrapage sur 7
+    // jours si un run précédent a échoué.
+    //
+    // ⚠️ `admin_created` exclu, comme la relance J+5 (étape A) : ces missions
+    // sont saisies par l'admin après un appel, le client ne les a pas postées
+    // lui-même — il est suivi à la main, pas par automate.
+    const expiryNoticeFloor = new Date(
+        now.getTime() - EXPIRY_NOTICE_WINDOW_DAYS * 86_400_000
+    ).toISOString();
+
+    const { data: toNotifyRaw, error: errC } = await supabase
+        .from('jobs')
+        .select('id, title, location_city, created_by, client_contact_info')
+        .eq('status', 'expired')
+        .eq('admin_created', false)
+        .is('expiration_email_sent_at', null)
+        .not('expired_at', 'is', null)
+        .gte('expired_at', expiryNoticeFloor)
+        .order('expired_at', { ascending: true })
+        .limit(EXPIRY_NOTICE_MAX_PER_RUN);
+
+    // Non bloquant : A et B sont déjà écrits. Si la migration 20260904c n'est
+    // pas passée, la colonne manque → on le signale sans faire échouer le run.
+    if (errC) {
+        console.error('[freshness-cron] query C error:', errC);
+    }
+
+    const expiredJobs = (toNotifyRaw ?? []) as unknown as ExpiredJobRow[];
+    const notice = {
+        candidates: expiredJobs.length,
+        sent: 0,
+        skippedNoEmail: 0,
+        failed: 0,
+        aborted: false as boolean,
+    };
+
+    if (!errC && expiredJobs.length > 0) {
+        const jobIds = expiredJobs.map((j) => j.id);
+
+        // Un seul aller-retour pour les déblocages : c'est ce compte qui décide
+        // de la variante. En cas d'échec on n'envoie RIEN — annoncer « aucun
+        // cordiste » alors que la requête a planté serait un mensonge.
+        const { data: unlockRows, error: errUnlocks } = await supabase
+            .from('unlocked_leads')
+            .select('job_id')
+            .in('job_id', jobIds);
+
+        if (errUnlocks) {
+            console.error('[freshness-cron] unlock count error:', errUnlocks);
+            notice.aborted = true;
+        } else {
+            const unlockCounts = new Map<string, number>();
+            for (const row of (unlockRows ?? []) as Array<{ job_id: string }>) {
+                unlockCounts.set(row.job_id, (unlockCounts.get(row.job_id) ?? 0) + 1);
+            }
+
+            // Un seul aller-retour pour les clients titulaires d'un compte.
+            const ownerIds = Array.from(
+                new Set(
+                    expiredJobs
+                        .map((j) => j.created_by)
+                        .filter((v): v is string => typeof v === 'string' && v.length > 0)
+                )
+            );
+            const profilesById = new Map<string, ClientProfileRow>();
+            if (ownerIds.length > 0) {
+                const { data: profileRows, error: errProfiles } = await supabase
+                    .from('profiles')
+                    .select('id, email, first_name, full_name')
+                    .in('id', ownerIds);
+                if (errProfiles) {
+                    console.error('[freshness-cron] profiles lookup error:', errProfiles);
+                }
+                for (const p of (profileRows ?? []) as ClientProfileRow[]) {
+                    profilesById.set(p.id, p);
+                }
+            }
+
+            for (const job of expiredJobs) {
+                const owner = job.created_by ? profilesById.get(job.created_by) ?? null : null;
+                const guest = job.client_contact_info;
+                // Même préséance que le trigger on_job_moderated : compte
+                // client d'abord, repli invité sur client_contact_info.
+                const rawEmail = (owner?.email ?? guest?.email ?? '').trim();
+                const hasEmail = looksLikeEmail(rawEmail);
+                const name =
+                    firstWord(owner?.first_name) ||
+                    firstWord(owner?.full_name) ||
+                    firstWord(guest?.first_name) ||
+                    firstWord(guest?.name);
+
+                let sent = false;
+                if (hasEmail) {
+                    const result = await sendExpirationEmail({
+                        to: rawEmail,
+                        name,
+                        title: job.title,
+                        city: job.location_city ?? '',
+                        unlockCount: unlockCounts.get(job.id) ?? 0,
+                    });
+                    sent = result.ok;
+                    if (result.ok) {
+                        notice.sent++;
+                    } else {
+                        notice.failed++;
+                        console.error('[freshness-cron] expiration email failed:', job.id, result.reason);
+                    }
+                } else {
+                    notice.skippedNoEmail++;
+                }
+
+                // Marqueur posé aussi quand il n'y a pas d'adresse exploitable :
+                // sinon la ligne serait re-sélectionnée à chaque run. Un échec
+                // d'envoi, lui, reste re-tentable dans la fenêtre de 7 jours.
+                if (sent || !hasEmail) {
+                    await supabase
+                        .from('jobs')
+                        .update({ expiration_email_sent_at: now.toISOString() })
+                        .eq('id', job.id);
+                }
+            }
+        }
+    }
+
     return new Response(
         JSON.stringify({
             ok: true,
             emailsSent,
             expiredCount: expired?.length ?? 0,
+            expirationNotice: notice,
+            expirationNoticeError: errC?.message ?? null,
             timestamp: now.toISOString(),
             debug: {
                 a1Count: a1?.length ?? 0,

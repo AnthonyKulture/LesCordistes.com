@@ -3,12 +3,30 @@ import Link from 'next/link';
 import { Button } from '../ui/Button';
 import { Reveal } from '../ui/Reveal';
 import type { User } from '@supabase/supabase-js';
+import { showableMissions, showablePros, type PublicStats } from '@/lib/publicStats';
 
 interface CTAProps {
     user?: User | null;
+    stats?: PublicStats | null;
 }
 
-export const CTA: React.FC<CTAProps> = ({ user }) => {
+// Pas de « couvrent N départements » : les 101 départements sont cochés par les
+// zones déclarées des pros, la métrique est saturée et se lit comme une promesse
+// de couverture nationale qu'aucun effectif ne soutient.
+function reassurance(stats?: PublicStats | null): string {
+    const pros = showablePros(stats);
+    const missions = showableMissions(stats);
+
+    if (pros !== null && missions !== null) {
+        return `${pros} cordistes certifiés inscrits, ${missions} missions ouvertes en ce moment. Rejoignez-les.`;
+    }
+    if (pros !== null) {
+        return `${pros} cordistes certifiés sont déjà inscrits sur LesCordistes. Rejoignez-les.`;
+    }
+    return "Des cordistes certifiés CQP et IRATA partout en France. Le dépôt de mission prend 3 minutes et reste gratuit.";
+}
+
+export const CTA: React.FC<CTAProps> = ({ user, stats }) => {
     return (
         <section className="relative py-24 overflow-hidden bg-slate-950">
             {/* Decorative Premium Glows */}
@@ -22,7 +40,7 @@ export const CTA: React.FC<CTAProps> = ({ user }) => {
                     Prêt à commencer ?
                 </h2>
                 <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
-                    Rejoignez des milliers de professionnels et clients qui font confiance à LesCordistes
+                    {reassurance(stats)}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6 justify-center">
                     {user ? (

@@ -15,7 +15,9 @@ interface JobSidebarProps {
     isOwner: boolean;
     canViewContact: boolean;
     isFull: boolean;
-    unlockCount: number;
+    // undefined tant que le décompte n'a pas répondu : « inconnu » ne doit pas
+    // se lire « zéro », sans quoi la sidebar promet une exclusivité qu'elle ignore.
+    unlockCount: number | undefined;
     refetchUnlockCount: () => void;
     startConversation: any;
     navigate: (path: string) => void;
@@ -117,7 +119,15 @@ export const JobSidebar: React.FC<JobSidebarProps> = ({
                             <div className="bg-amber-50 border border-amber-100 rounded-xl p-3 mb-3">
                                 <p className="text-xs text-amber-700 font-medium mb-1">🔒 Coordonnées verrouillées</p>
                                 <p className="text-xs text-amber-600">
-                                    {unlockCount ?? 0}/5 pros ont déjà débloqué ce lead.
+                                    {unlockCount === undefined
+                                        ? '5 pros maximum par mission.'
+                                        : unlockCount >= 1
+                                          ? `${unlockCount}/5 pros ont déjà débloqué ce lead.${
+                                                unlockCount >= 3
+                                                    ? ` Il reste ${5 - unlockCount} place${5 - unlockCount > 1 ? 's' : ''}.`
+                                                    : ''
+                                            }`
+                                          : 'Vous seriez le premier à le débloquer. 5 pros maximum par mission.'}
                                 </p>
                             </div>
                             <UnlockLeadButton 

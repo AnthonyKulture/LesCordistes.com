@@ -2,12 +2,20 @@ import React from 'react'
 import Link from 'next/link'
 import { Shield, FileCheck, MapPin, Scale } from 'lucide-react'
 import { Reveal } from '../ui/Reveal'
+import { showablePros, type PublicStats } from '@/lib/publicStats'
 
-const SIGNALS: Array<{ icon: typeof Shield; title: string; desc: string; href?: string }> = [
+type Signal = { icon: typeof Shield; title: string; desc: string; href?: string }
+
+const buildSignals = (stats?: PublicStats | null): Signal[] => {
+    const pros = showablePros(stats)
+
+    return [
     {
         icon: Shield,
         title: 'Vérifiés CQP / IRATA',
-        desc: '50 cordistes certifiés avant publication',
+        desc: pros !== null
+            ? `${pros} cordistes certifiés, contrôlés avant publication`
+            : 'Certifications contrôlées avant publication',
         href: '/verification-pros',
     },
     {
@@ -28,14 +36,21 @@ const SIGNALS: Array<{ icon: typeof Shield; title: string; desc: string; href?: 
         desc: 'Code du travail · arrêté 4 août 2005',
         href: '/mentions-legales',
     },
-]
+    ]
+}
 
-export const TrustSignals: React.FC = () => {
+interface TrustSignalsProps {
+    stats?: PublicStats | null
+}
+
+export const TrustSignals: React.FC<TrustSignalsProps> = ({ stats }) => {
+    const signals = buildSignals(stats)
+
     return (
         <section className="py-16 bg-slate-50 border-y border-slate-200 relative z-10">
             <div className="container">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    {SIGNALS.map((s, idx) => {
+                    {signals.map((s, idx) => {
                         const Icon = s.icon
                         if (s.href) {
                             return (

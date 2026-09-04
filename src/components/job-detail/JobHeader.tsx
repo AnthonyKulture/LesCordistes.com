@@ -52,10 +52,10 @@ export const JobHeader: React.FC<JobHeaderProps> = ({ job, categories, clientTyp
                 {clientVerified && (
                     <span
                         className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border bg-blue-50 text-blue-700 border-blue-200"
-                        title="Client structuré (entreprise, syndic, agence) — pré-qualifié par notre équipe"
+                        title="Structure professionnelle (entreprise, syndic, collectivité, agence) d'après le type de client déclaré à la publication"
                     >
                         <ShieldCheck size={11} />
-                        Client vérifié
+                        Client professionnel
                     </span>
                 )}
             </div>
