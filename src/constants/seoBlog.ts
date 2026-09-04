@@ -2215,6 +2215,149 @@ export const SEO_BLOG: BlogArticle[] = [
             { label: 'Coût pour se lancer comme cordiste indépendant', href: '/blog/cout-lancer-cordiste-independant' },
         ],
     },
+    {
+        slug: 'formations-cordiste-centres-france',
+        authorSlug: 'benjamin-de-oliveira',
+        title: 'Formations cordiste 2026 : CQP, IRATA, GWO et centres agréés',
+        shortTitle: 'Formations et centres cordiste',
+        description:
+            'Comparez toutes les formations cordiste en 2026 : CQP initial, confirmé, OTC, IRATA, GWO, durées, prix, et les 18 centres agréés en France, région par région.',
+        category: 'Métier & Carrière',
+        readTime: 11,
+        datePublished: '2026-09-03',
+        dateModified: '2026-09-03',
+        intro:
+            'Choisir sa formation cordiste, c\'est d\'abord comprendre qu\'il n\'existe pas une certification mais trois familles : le **CQP** français délivré sous l\'autorité de France Travaux sur Cordes, l\'**IRATA** international, et le **GWO** propre à l\'éolien. Chacune a ses durées, ses prix, sa validité et ses centres. Et tous les organismes qui affichent « formation cordiste » ne peuvent pas te présenter à l\'examen. Ce répertoire recense les certifications et les centres agréés en France, région par région, avec les chiffres publiés par les centres eux-mêmes en septembre 2026. Vérifie toujours la liste officielle avant de t\'inscrire : un agrément se perd, un site ouvre ou ferme.',
+        sections: [
+            {
+                heading: 'Les trois familles de certification cordiste en France',
+                body: 'Le **CQP Travailler sur cordes** est la certification de référence sur les chantiers français. Il est déposé par France Travaux sur Cordes (FTC), l\'organisme né en 2021 de la fusion de la SFETH et du DPMC, auprès de la commission paritaire du BTP. Il existe en trois niveaux depuis le référentiel entré en vigueur au 1er janvier 2024 : niveau initial (ex-CQP1), niveau confirmé (ex-CQP2) et Organiser les travaux sur cordes, dit OTC (ex-CQP3). Seuls les organismes **agréés FTC** peuvent présenter leurs stagiaires à l\'examen.\n\nL\'**IRATA** (Industrial Rope Access Trade Association) est la certification internationale. Trois niveaux, un format court de cinq jours, un examen par un évaluateur indépendant et une validité de trois ans. C\'est la clé d\'entrée de l\'industrie, de l\'offshore et de l\'éolien, et des chantiers à l\'étranger.\n\nLe **GWO** (Global Wind Organisation) n\'est pas une certification de cordiste mais un socle sécurité exigé par les exploitants de parcs éoliens. Le module BST (Basic Safety Training) existe en version onshore et offshore, cette dernière avec survie en mer. Un cordiste pales cumule presque toujours IRATA et GWO.\n\nLe SPRAT nord-américain, parfois cité, n\'a pas de centre en France et ne remplace ni le CQP ni l\'IRATA sur un chantier français.',
+                listIntro: 'Les repères à retenir :',
+                list: [
+                    'CQP niveau initial : 175 h / 5 semaines en format standard, 3 000-4 000 €, validité 5 ans, MAC tous les 4 ans',
+                    'IRATA niveau 1 : 5 jours, 1 200-1 800 €, validité 3 ans, reconnaissance internationale',
+                    'GWO BST : 2 à 5 jours selon modules, exigé sur tous les parcs éoliens, obligatoire en version offshore pour Saint-Nazaire, Fécamp et Saint-Brieuc',
+                ],
+            },
+            {
+                heading: 'CQP Travailler sur cordes : initial, confirmé, OTC — durées et prix 2026',
+                body: 'Le **niveau initial** est le ticket d\'entrée. En format standard, il compte 175 heures sur cinq semaines : 22 jours de techniques de cordes, 2 jours de SST (sauveteur secouriste du travail) et 1 jour d\'examen. Le prix se situe entre 3 000 et 4 000 € dans la majorité des centres agréés. Certains proposent une version courte de 140 heures, d\'autres des parcours longs de 350 à 420 heures avec période en entreprise, facturés jusqu\'à 8 000 €. L\'écart s\'explique par la durée, la taille du groupe et le prêt ou non des EPI de catégorie III. Le seul prérequis est un certificat médical d\'aptitude au travail en hauteur.\n\nLe **niveau confirmé** vient après une première expérience de chantier. Comptez deux à trois semaines et 2 500 à 4 000 €. Il ouvre l\'autonomie sur les techniques complexes : déviations, fractionnements, secours vers le haut, équipements de levage.\n\nLe **CQP OTC** forme les chefs d\'équipe à l\'organisation des chantiers : 105 à 140 heures selon les centres, tarif sur devis. Prérequis : être titulaire du niveau initial ou confirmé, justifier d\'une expérience significative, avoir son SST à jour.\n\nLe CQP est valable **cinq ans**. Le **MAC** (maintien et actualisation des compétences) se fait sur deux jours consécutifs tous les quatre ans, dont un jour consacré au secours, pour 600 à 1 200 €. Attention : le MAC n\'est pas une certification France Compétences, c\'est une obligation de maintien.',
+            },
+            {
+                heading: 'IRATA et GWO : les centres agréés en France',
+                body: 'Les centres IRATA sont moins nombreux que les centres CQP, parce que l\'agrément est délivré par l\'association elle-même après audit, renouvelé tous les trois ans. Le format est identique partout : cinq jours (35 à 40 heures) puis un examen le dernier jour devant un évaluateur qui n\'appartient pas au centre. Les trois niveaux se passent dans le même cadre, avec des heures loguées obligatoires entre chaque niveau. Le prix constaté pour le niveau 1 va de 1 200 à 1 800 € ; un centre du Sud-Ouest affiche 1 350 €.\n\nPour le **GWO**, les centres sont adossés soit à un organisme de travaux sur cordes qui a ajouté l\'éolien à son catalogue, soit à un parc. Le centre de Saint-Nazaire propose BST et BTT directement au pied du parc offshore. Le profil que les exploitants recherchent en 2026 cumule GWO BST, BTT, ART et une habilitation électrique B2V/BR.',
+                listIntro: 'Centres IRATA et GWO recensés en septembre 2026 :',
+                list: [
+                    'HTC Techniques Verticales — Peypin (13), Châteaubriant (44), Sin-le-Noble (59) : IRATA niveaux 1 à 3 et GWO BST onshore/offshore',
+                    'ATIS School — Salon-de-Provence (13) et Osny (95) : IRATA 1 à 3 en 35 h, GWO BST, également agréé CQP',
+                    'Formacan — Mirmande (26) et Auzat (09) : IRATA 1 à 3, doublement agréé FTC et IRATA depuis 2006',
+                    'RIG\'UP Formation — Nantes (44) : centre IRATA agréé, également CQP',
+                    'Beal Training Center — près de Lyon (Isère) : IRATA 1 à 3 sur 5 jours, centre ouvert en 2025 par le fabricant de cordes',
+                    'CI.DES — Sud-Ouest, à environ 70 km de Bordeaux : IRATA 1 à 3, niveau 1 autour de 1 350 €',
+                    'Ifopse — formations éolien GWO ; centre GWO de Saint-Nazaire — BST et BTT au pied du parc offshore',
+                ],
+                cta: {
+                    text: 'Voir les missions ouvertes près de chez moi',
+                    href: '/jobs',
+                    variant: 'light',
+                },
+            },
+            {
+                heading: 'Centres agréés CQP : Sud-Est, Alpes et vallée du Rhône',
+                body: 'C\'est la région la plus dense de France pour la formation cordiste, héritage des métiers de la montagne et des grands chantiers industriels de l\'étang de Berre. On y trouve les centres historiques et les plateaux techniques les plus complets.\n\n**Dimension Corde**, agréé depuis 2012, est le réseau le plus étendu : Gardanne et Mimet dans les Bouches-du-Rhône, Nice, Digne, Veynes dans les Hautes-Alpes, Toulon, et un centre à Lyon. Il couvre les trois CQP et le MAC. **Atout Corde**, installé à Villard-de-Lans dans le Vercors avec un site d\'exercice à Saint-Laurent-en-Royans, propose initial, confirmé et OTC en stages intensifs sur sites naturels. **Formacan** et **Jarnias Formation** partagent le site de Mirmande, dans la Drôme, près de Valence ; Jarnias, agréé en 2016, y forme aux trois niveaux. La **CCI Hautes-Alpes** à Briançon dispense le niveau initial en 175 heures sur cinq semaines, et le **Greta Ardèche-Drôme** propose aussi le niveau initial. Côté Lyon, **CAIRN Formation**, agréé en 2018, a son plateau à Pierre-Bénite.\n\nUn cas à connaître : **Altius**, à Poisy près d\'Annecy, prépare aux CQP mais ne délivre pas la certification. La formation y est sérieuse, mais il faudra passer l\'examen dans un centre agréé.',
+                listIntro: 'Sud-Est, Alpes, Rhône — centres CQP :',
+                list: [
+                    'Dimension Corde — Gardanne/Mimet (13), Nice (06), Digne (04), Veynes (05), Toulon (83), Lyon (69) : initial, confirmé, OTC, MAC',
+                    'ATIS School — Salon-de-Provence (13) : initial, confirmé, plus IRATA et GWO',
+                    'Atout Corde — Villard-de-Lans (38), site Le Cube à Saint-Laurent-en-Royans (26) : initial, confirmé, OTC',
+                    'Jarnias Formation et Formacan — Mirmande (26) : initial, confirmé, OTC',
+                    'CCI Hautes-Alpes Formation — Briançon (05) : initial 175 h / 5 semaines',
+                    'Greta Ardèche-Drôme — initial',
+                    'CAIRN Formation — Pierre-Bénite (69) : initial, confirmé',
+                    'Altius — Poisy/Annecy (74) : préparation sans délivrance du CQP',
+                ],
+            },
+            {
+                heading: 'Centres agréés CQP : Île-de-France, Nord et Grand Ouest',
+                body: 'L\'Île-de-France concentre les donneurs d\'ordre mais peu de plateaux techniques. **CAIRN Formation** forme à Thiais, dans le Val-de-Marne. **Jarnias Formation** a son centre francilien à Maurepas, dans les Yvelines, et un centre dans le Nord. **ATIS School** a ouvert un site à Osny, dans le Val-d\'Oise, précisément pour les candidats qui ne peuvent pas descendre à Salon-de-Provence.\n\nDans le Nord, l\'offre IRATA de **HTC** à Sin-le-Noble, près de Douai, complète le centre CQP de Jarnias.\n\nLe Grand Ouest est devenu en dix ans le deuxième pôle du pays. **RIG\'UP Formation** à Nantes est agréé CQP et IRATA, et forme aussi au CQP accrocheur-rigger du spectacle : c\'est le seul centre où un cordiste peut cumuler bâtiment et événementiel. **Vertical Formation**, agréé en avril 2021, est installé à Laval, à équidistance de la Bretagne, de la Normandie et du Val de Loire, et travaille avec l\'entreprise Ouest Acro. **Positiv\'Formation** a son plateau technique à Orgères, au sud de Rennes, et un second à Nantes ; agréé en 2016 et certifié Qualiopi, c\'est aussi un centre d\'examen CQP. **HTC** ferme le tableau avec son site IRATA et GWO de Châteaubriant, en Loire-Atlantique.',
+                listIntro: 'Île-de-France, Nord, Ouest — centres CQP :',
+                list: [
+                    'CAIRN Formation — Thiais (94) : initial, confirmé',
+                    'Jarnias Formation — Maurepas (78) et centre Nord : initial, confirmé, OTC',
+                    'ATIS School — Osny (95) : initial, confirmé, plus IRATA et GWO',
+                    'RIG\'UP Formation — Nantes (44) : initial, confirmé, MAC, IRATA, CQP accrocheur-rigger',
+                    'Vertical Formation — Laval (53) : initial, confirmé',
+                    'Positiv\'Formation — Orgères (35) et Nantes (44) : initial, confirmé, OTC, centre d\'examen',
+                ],
+                cta: {
+                    text: 'Créer mon compte cordiste en 2 minutes',
+                    href: '/inscription-cordiste',
+                    variant: 'outline',
+                },
+            },
+            {
+                heading: 'Centres agréés CQP : Sud-Ouest, Occitanie, outre-mer et formation intra',
+                body: 'Le Sud-Ouest s\'appuie sur les Pyrénées. **Jarnias Formation** y dispose de deux sites, Auzat en Ariège et Pierrefitte-Nestalas dans les Hautes-Pyrénées ; **Formacan** partage celui d\'Auzat. **Maforpro Occitanie** propose le niveau initial autour de Toulouse, éligible CPF, avec un parcours qui ajoute un module parc acrobatique en hauteur pour ceux qui visent aussi l\'exploitation de loisirs. Pour l\'IRATA, **CI.DES** reçoit à une heure de Bordeaux.\n\nEn outre-mer, **AAF** est le seul organisme agréé de l\'océan Indien, sur le site de Plateau Caillou à La Réunion. Jarnias y intervient également.\n\nReste la formation **intra-entreprise** : **Valto** dispense les CQP initial, confirmé et le MAC en centre ou sur le site du client, sur 112 à 161 heures, pour des groupes de un à six stagiaires. C\'est la formule qu\'un employeur choisit quand il forme plusieurs salariés d\'un coup.\n\nLes trous de la carte sont réels : Grand Est, Bourgogne-Franche-Comté, Centre-Val de Loire et Normandie n\'ont pas de centre agréé identifié en septembre 2026. Depuis Strasbourg ou Rouen, il faut compter un déplacement de cinq semaines, ou une formation intra montée par l\'employeur.',
+                listIntro: 'Sud-Ouest, Occitanie, outre-mer, intra :',
+                list: [
+                    'Jarnias Formation — Auzat (09), Pierrefitte-Nestalas (65) : initial, confirmé, OTC',
+                    'Formacan — Auzat (09) : initial, confirmé, OTC, IRATA',
+                    'Maforpro Occitanie — Toulouse et région : initial, éligible CPF',
+                    'CI.DES — environ 70 km de Bordeaux : IRATA 1 à 3',
+                    'AAF — Plateau Caillou, La Réunion : seul centre agréé de l\'océan Indien',
+                    'Valto — en centre ou intra-entreprise : initial, confirmé, MAC',
+                ],
+            },
+            {
+                heading: 'Comment choisir son centre : les 6 vérifications avant de signer',
+                body: 'Une formation cordiste se choisit sur des critères vérifiables, pas sur une brochure. Le premier est l\'**agrément FTC**, sans lequel aucun examen CQP n\'est possible, à contrôler sur la liste officielle de France Travaux sur Cordes. Le deuxième est **Qualiopi**, sans lequel ni le CPF, ni France Travail, ni Constructys ne financeront. Demande l\'attestation.\n\nRegarde ensuite le **plateau technique** : un centre sérieux propose des situations réelles, façade, structure métallique, espace confiné, pas seulement un mur d\'escalade. Vérifie le **ratio formateurs-stagiaires**, six stagiaires par formateur étant une bonne référence. Compare le **contenu du prix** : EPI de catégorie III prêtés ou à acheter, hébergement, repas. Un tarif à 3 000 € sans EPI peut coûter plus cher qu\'un tarif à 3 800 € tout compris.\n\nEnfin, mesure la **distance** honnêtement. Cinq semaines loin de chez soi, c\'est un budget d\'hébergement de 1 000 à 2 000 € que personne ne finance. Un centre à deux heures de route vaut parfois mieux qu\'un centre réputé à l\'autre bout du pays.',
+                listIntro: 'La checklist avant inscription :',
+                list: [
+                    'Agrément France Travaux sur Cordes vérifié sur la liste officielle',
+                    'Certification Qualiopi et inscription du CQP au RNCP (indispensables au financement)',
+                    'Plateau technique avec situations réelles, pas seulement un mur',
+                    'Ratio formateurs-stagiaires annoncé, six stagiaires par formateur maximum',
+                    'Détail du prix : EPI prêtés ou non, hébergement, repas, frais d\'examen',
+                    'Distance et hébergement chiffrés sur la durée totale de la formation',
+                ],
+                cta: {
+                    text: 'Découvrir les chantiers de cette semaine',
+                    href: '/jobs',
+                    variant: 'blue',
+                },
+            },
+        ],
+        faqs: [
+            {
+                q: 'Combien de centres de formation cordiste agréés y a-t-il en France ?',
+                a: 'Une quinzaine d\'organismes agréés France Travaux sur Cordes présentent au CQP, sur une trentaine de sites concentrés en PACA, Rhône-Alpes, Île-de-France et Grand Ouest. S\'y ajoutent six centres IRATA et quelques centres GWO. Seuls les centres agréés peuvent délivrer le CQP.',
+            },
+            {
+                q: 'CQP ou IRATA : lequel choisir pour débuter ?',
+                a: 'Le CQP si tu vises le bâtiment et les chantiers français : c\'est ce que demandent les entreprises et les assureurs. L\'IRATA si tu vises l\'industrie, l\'éolien, l\'offshore ou l\'étranger. Beaucoup passent le CQP d\'abord, puis l\'IRATA niveau 1 en une semaine.',
+            },
+            {
+                q: 'Quelle est la durée d\'une formation CQP cordiste niveau initial ?',
+                a: '175 heures sur cinq semaines en format standard : 22 jours de cordes, 2 jours de SST et 1 jour d\'examen. Des versions courtes de 140 heures et des parcours longs de 350 à 420 heures avec période en entreprise existent aussi.',
+            },
+            {
+                q: 'La certification IRATA est-elle reconnue en France ?',
+                a: 'Oui, mais elle ne remplace pas le CQP sur la plupart des chantiers BTP français, où les donneurs d\'ordre et les assureurs attendent la certification nationale. Elle est en revanche la référence dans l\'industrie, l\'éolien et l\'offshore, et indispensable pour travailler à l\'étranger.',
+            },
+            {
+                q: 'Faut-il une formation GWO pour travailler dans l\'éolien ?',
+                a: 'Oui. Les exploitants exigent au minimum le GWO BST, en version offshore avec survie en mer pour les parcs de Saint-Nazaire, Fécamp et Saint-Brieuc. Le profil recherché en 2026 cumule GWO BST, BTT, ART et une habilitation électrique, en plus de l\'IRATA pour le travail sur pales.',
+            },
+        ],
+        ctaText: 'Créer mon compte cordiste',
+        ctaHref: '/inscription-cordiste',
+        relatedLinks: [
+            { label: 'Financer sa formation cordiste en 2026', href: '/blog/financer-formation-cordiste' },
+            { label: 'Devenir cordiste en 2026 : parcours, formation, premier salaire', href: '/blog/devenir-cordiste-2026' },
+            { label: 'Habilitations cordiste : CQP, IRATA, SPRAT', href: '/blog/habilitations-cordiste-cqp-irata-sprat' },
+            { label: 'Premier chantier après le CQP', href: '/blog/premier-chantier-cordiste-apres-cqp' },
+        ],
+    },
 ]
 
 export const BLOG_CATEGORIES: Record<string, string> = {
