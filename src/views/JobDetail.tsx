@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
@@ -13,6 +13,7 @@ import { useStartConversation } from '../hooks/useStartConversation';
 import { useJobContact } from '../hooks/useJobContact';
 import { JOB_PUBLIC_COLUMNS } from '../constants/jobColumns';
 import type { Job } from '../types';
+import { track } from '../lib/posthog-client';
 
 // Extracted Components
 import { JobHeader } from '../components/job-detail/JobHeader';
@@ -101,7 +102,7 @@ interface JobDetailProps {
 export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
     const { slug } = useParams<{ slug: string }>();
     const router = useRouter();
-    const { user, profile } = useAuth();
+    const { user, profile, loading: authLoading } = useAuth();
     const { isJobUnlocked } = useCredits();
     const startConversation = useStartConversation();
 
@@ -151,6 +152,23 @@ export const JobDetail: React.FC<JobDetailProps> = ({ initialJob }) => {
     const isUnlocked = job?.id ? isJobUnlocked(job.id) : false;
     const canViewContact = !!user && !!(isOwner || isUnlocked || isAdmin);
     const { data: contact } = useJobContact(job?.id, canViewContact);
+
+    const viewedJobIdRef = useRef<string | null>(null);
+    useEffect(() => {
+        if (!job || !isVisible || authLoading) return;
+        if (viewedJobIdRef.current === job.id) return;
+        viewedJobIdRef.current = job.id;
+        const viewerRole: 'anonymous' | 'client' | 'pro' | 'admin' = user ? (profile?.role ?? 'client') : 'anonymous';
+        const fromAlert = new URLSearchParams(window.location.search).get('utm_source') === 'pro-alert';
+        track('job_detail_view', {
+            job_id: job.id,
+            credit_cost: job.credit_cost || 1,
+            job_category: job.category,
+            job_type: job.type,
+            viewer_role: viewerRole,
+            from_alert: fromAlert,
+        });
+    }, [job, isVisible, authLoading, user, profile]);
 
     if (isLoading) {
         return (

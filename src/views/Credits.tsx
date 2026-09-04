@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Shield, HelpCircle, Building, Home, Factory, AlertTriangle, Search, Phone, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
@@ -11,15 +11,23 @@ import { CREDIT_PACKS } from '../constants/creditPacks';
 import { PromoCodeInput } from '../components/promo/PromoCodeInput';
 import Link from 'next/link';
 import posthog from 'posthog-js';
+import { track } from '../lib/posthog-client';
 
 export const Credits: React.FC = () => {
-    const { user } = useAuth();
-    const { balance } = useCredits();
+    const { user, loading: authLoading } = useAuth();
+    const { balance, isLoading: creditsLoading } = useCredits();
     const router = useRouter();
     const searchParams = useSearchParams();
     const isCanceled = searchParams.get('canceled') === 'true';
     const toast = useToast();
     const [isProcessing, setIsProcessing] = useState<string | null>(null);
+
+    const pageViewFired = useRef(false);
+    useEffect(() => {
+        if (pageViewFired.current || authLoading || (user && creditsLoading)) return;
+        pageViewFired.current = true;
+        track('credits_page_view', { balance: user ? balance : null, logged_in: !!user });
+    }, [authLoading, user, creditsLoading, balance]);
 
     const handleBuyCredits = async (packId: string, amount: number, stripePriceId: string) => {
         if (!user) {

@@ -623,7 +623,7 @@ function proMissionAlert(data: Record<string, string>): string {
       const city = escHtml(m.city || '');
       const dept = escHtml(m.departmentLabel || '');
       const slug = escHtml(m.slug || '');
-      const url = `https://www.lescordistes.com/jobs/${slug}`;
+      const url = `https://www.lescordistes.com/jobs/${slug}?utm_source=pro-alert&utm_medium=email&utm_campaign=mission-alert`;
       const renfortBadge = m.isRenfort
         ? `<span style="display:inline-block;background:${B};color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-right:6px;text-transform:uppercase;letter-spacing:0.04em;">Renfort PRO</span>`
         : '';

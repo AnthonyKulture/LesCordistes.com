@@ -3,7 +3,15 @@ import { notFound } from 'next/navigation'
 import { ArrowDownRight, ArrowUpRight, Minus } from 'lucide-react'
 import { isCurrentUserAdmin } from '@/lib/ops/guard'
 import { fetchAnalytics, isAnalyticsRange } from '@/lib/ops/fetchAnalytics'
-import type { AnalyticsData, AnalyticsOutcomeBucket, AnalyticsOutcomes, AnalyticsRange } from '@/lib/types/ops'
+import { fetchAcquisition } from '@/lib/ops/fetchAcquisition'
+import type {
+    AcquisitionData,
+    AcquisitionPageType,
+    AnalyticsData,
+    AnalyticsOutcomeBucket,
+    AnalyticsOutcomes,
+    AnalyticsRange,
+} from '@/lib/types/ops'
 import { LineChart } from '@/components/admin/charts/LineChart'
 import { BarChart } from '@/components/admin/charts/BarChart'
 
@@ -385,6 +393,169 @@ function OutcomesSection({ outcomes }: { outcomes: AnalyticsOutcomes | null }) {
     )
 }
 
+const PAGE_TYPE_LABEL: Record<AcquisitionPageType, string> = {
+    ville_service: 'Ville × service',
+    ville: 'Ville',
+    blog: 'Blog',
+    board: 'Tableau des missions',
+    mission: 'Fiche mission',
+    post_job: 'Dépôt de mission',
+    home: 'Accueil',
+    profil_pro: 'Profil pro',
+    credits: 'Crédits',
+    admin: 'Admin',
+    autre: 'Autre',
+}
+
+const SEO_PAGE_TYPES: readonly AcquisitionPageType[] = ['ville_service', 'ville', 'blog']
+
+type FunnelStep = { label: string; value: number }
+
+// Chaque marche affiche son effectif brut ; le taux de passage n'apparaît que si
+// la marche précédente atteint MIN_SAMPLE. Les marches ne sont pas ordonnées
+// dans le temps (personnes distinctes par étape), un taux peut dépasser 100 %.
+function FunnelBand({ title, steps }: { title: string; steps: FunnelStep[] }) {
+    return (
+        <div className="mt-3 md:mt-4 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-slate-500">
+            <span className="font-medium uppercase tracking-wider">{title}</span>
+            {steps.map((step, i) => {
+                const prev = i > 0 ? steps[i - 1].value : null
+                const pct = prev !== null && prev >= MIN_SAMPLE ? fmtPct(step.value / prev) : null
+                return (
+                    <span key={step.label}>
+                        <span className="font-semibold text-slate-700 tabular-nums">{fmtInt(step.value)}</span> {step.label}
+                        {pct !== null && <span className="text-slate-400 tabular-nums"> · {pct}</span>}
+                    </span>
+                )
+            })}
+        </div>
+    )
+}
+
+function AcquisitionSection({ acquisition }: { acquisition: AcquisitionData | null }) {
+    if (!acquisition) {
+        return (
+            <section aria-label="Acquisition">
+                <SectionTitle>Acquisition (PostHog)</SectionTitle>
+                <div className="bg-white border border-slate-200 rounded-xl p-8 text-center">
+                    <h3 className="text-base font-semibold text-slate-900">PostHog non connecté</h3>
+                    <p className="mt-2 text-sm text-slate-500 max-w-lg mx-auto">
+                        Variables{' '}
+                        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-700">POSTHOG_PERSONAL_API_KEY</code>{' '}
+                        /{' '}
+                        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-slate-700">POSTHOG_PROJECT_ID</code>{' '}
+                        absentes ou requête en échec (voir logs serveur).
+                    </p>
+                </div>
+            </section>
+        )
+    }
+
+    const { demand, supply } = acquisition
+    const rows = acquisition.traffic.filter(t => t.page_type !== 'admin')
+    const totalSessions = rows.reduce((acc, t) => acc + t.sessions, 0)
+    const totalVisitors = rows.reduce((acc, t) => acc + t.visitors, 0)
+    const totalPageviews = rows.reduce((acc, t) => acc + t.pageviews, 0)
+    const seoRows = rows.filter(t => SEO_PAGE_TYPES.includes(t.page_type))
+    const seoSessions = seoRows.reduce((acc, t) => acc + t.sessions, 0)
+    const seoPageviews = seoRows.reduce((acc, t) => acc + t.pageviews, 0)
+
+    const demandSteps: FunnelStep[] = [
+        { label: 'visiteurs pages SEO', value: demand.seo_visitors },
+        { label: 'visiteurs /post-job', value: demand.post_job_visitors },
+        {
+            label: `parcours choisi (${fmtInt(demand.path_by_kind.project)} projet · ${fmtInt(demand.path_by_kind.quick)} express · ${fmtInt(demand.path_by_kind.callback)} rappel)`,
+            value: demand.path_chosen,
+        },
+        { label: 'entrés dans le wizard (toute étape)', value: demand.wizard_entered },
+        { label: 'étape 1 · standard', value: demand.steps[0] },
+        { label: 'étape 2 · standard', value: demand.steps[1] },
+        { label: 'étape 3 · standard', value: demand.steps[2] },
+        { label: 'étape 4 · standard', value: demand.steps[3] },
+        { label: 'étape 5 · standard', value: demand.steps[4] },
+        { label: 'missions publiées', value: demand.job_posted },
+    ]
+
+    const supplySteps: FunnelStep[] = [
+        { label: 'inscriptions pro', value: supply.pro_signups },
+        { label: 'fiches mission vues', value: supply.job_detail_views },
+        { label: 'bloqués sans crédit', value: supply.unlock_blocked },
+        { label: 'page crédits', value: supply.credits_page_views },
+        { label: 'checkouts lancés', value: supply.checkout_initiated },
+        { label: 'achats de crédits', value: supply.credits_purchased },
+        { label: 'leads débloqués', value: supply.lead_unlocked },
+    ]
+
+    return (
+        <section aria-label="Acquisition">
+            <SectionTitle>Acquisition (PostHog)</SectionTitle>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                <Tile
+                    label="Sessions hors admin"
+                    value={fmtInt(totalSessions)}
+                    sub={`${fmtInt(totalVisitors)} visiteurs · ${fmtInt(totalPageviews)} pages vues — cumul par type de page`}
+                />
+                <Tile
+                    label="Sessions pages SEO"
+                    value={fmtInt(seoSessions)}
+                    sub={`ville, ville × service, blog · ${fmtInt(seoPageviews)} pages vues`}
+                />
+                <RatioTile
+                    label="Missions publiées / visiteurs SEO"
+                    num={demand.job_posted}
+                    den={demand.seo_visitors}
+                    sub={`${fmtInt(demand.job_posted)} publications pour ${fmtInt(demand.seo_visitors)} visiteurs SEO — sans contrainte d'ordre`}
+                    emptyLabel="aucun visiteur SEO sur la période"
+                />
+            </div>
+
+            <div className="mt-4 bg-white border border-slate-200 rounded-xl p-5">
+                <h3 className="text-sm font-semibold text-slate-900 mb-3">Par type de page</h3>
+                {rows.length === 0 ? (
+                    <p className="text-sm text-slate-500">Aucune page vue sur la période.</p>
+                ) : (
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-xs">
+                            <thead>
+                                <tr className="text-left text-slate-500 border-b border-slate-200">
+                                    <th className="py-1.5 pr-4 font-medium">Type</th>
+                                    <th className="py-1.5 px-2 text-right font-medium">Sessions</th>
+                                    <th className="py-1.5 px-2 text-right font-medium">Visiteurs</th>
+                                    <th className="py-1.5 px-2 text-right font-medium">Pages vues</th>
+                                    <th className="py-1.5 pl-2 text-right font-medium">Part des sessions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rows.map(t => (
+                                    <tr key={t.page_type} className="border-b border-slate-100">
+                                        <td className="py-1.5 pr-4 text-slate-700">{PAGE_TYPE_LABEL[t.page_type]}</td>
+                                        <td className="py-1.5 px-2 text-right text-slate-900 tabular-nums">{fmtInt(t.sessions)}</td>
+                                        <td className="py-1.5 px-2 text-right text-slate-900 tabular-nums">{fmtInt(t.visitors)}</td>
+                                        <td className="py-1.5 px-2 text-right text-slate-900 tabular-nums">{fmtInt(t.pageviews)}</td>
+                                        <td className="py-1.5 pl-2 text-right text-slate-500 tabular-nums">
+                                            {ratioCell(t.sessions, totalSessions)}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
+
+            <FunnelBand title="Entonnoir demande" steps={demandSteps} />
+            <FunnelBand title="Entonnoir offre" steps={supplySteps} />
+
+            <p className="mt-3 text-xs text-slate-400">
+                Entonnoirs : personnes distinctes par étape sur la période, sans contrainte d&apos;ordre — le taux à
+                côté d&apos;une marche rapporte son effectif à celui de la marche précédente et n&apos;apparaît que si
+                cette dernière atteint {MIN_SAMPLE}. Une session est comptée une fois par type de page visité. Visiteurs
+                ayant refusé le bandeau exclus ; cache 1 h.
+            </p>
+        </section>
+    )
+}
+
 function RangeSelector({ active }: { active: AnalyticsRange }) {
     return (
         <div className="inline-flex rounded-lg border border-slate-200 bg-white p-0.5" role="group" aria-label="Période">
@@ -419,11 +590,12 @@ function MigrationNotice() {
     )
 }
 
-function AnalyticsContent({ data }: { data: AnalyticsData }) {
+function AnalyticsContent({ data, acquisition = null }: { data: AnalyticsData; acquisition?: AcquisitionData | null }) {
     const { current: cur, previous: prev, all_time: allTime } = data.overview
 
     const revenueSeries = data.series.map(p => ({ month: p.month, value: p.revenue_eur }))
     const missionsSeries = data.series.map(p => ({ month: p.month, value: p.missions_published }))
+    const seoSessionsSeries = acquisition?.series.map(p => ({ month: p.month, value: p.seo_sessions })) ?? null
 
     return (
         <div className="space-y-8">
@@ -538,13 +710,22 @@ function AnalyticsContent({ data }: { data: AnalyticsData }) {
                             value={fmtInt(cur.demand.jobs_created)}
                             sub={`${fmtInt(cur.demand.mix_standard)} standard · ${fmtInt(cur.demand.mix_renfort_pro)} Renfort PRO`}
                         />
-                        <RatioTile
-                            label="Complétion wizard"
-                            num={cur.demand.wizard_completed}
-                            den={cur.demand.wizard_leads}
-                            sub={`${fmtInt(cur.demand.wizard_completed)}/${fmtInt(cur.demand.wizard_leads)} leads à l'étape 5`}
-                            emptyLabel="aucun lead sur la période"
-                        />
+                        {acquisition ? (
+                            <RatioTile
+                                label="Complétion wizard"
+                                num={acquisition.demand.job_posted}
+                                den={acquisition.demand.wizard_entered}
+                                sub={`${fmtInt(acquisition.demand.job_posted)}/${fmtInt(acquisition.demand.wizard_entered)} personnes entrées dans le wizard (toute étape) → publication`}
+                                emptyLabel="aucune entrée dans le wizard sur la période"
+                                badge="PostHog"
+                            />
+                        ) : (
+                            <Tile
+                                label="Complétion wizard"
+                                value="—"
+                                sub="non mesuré : leads.step_reached n'est jamais mis à jour"
+                            />
+                        )}
                         <RatioTile
                             label="Taux d'approbation"
                             num={cur.demand.approved}
@@ -560,6 +741,8 @@ function AnalyticsContent({ data }: { data: AnalyticsData }) {
                     </div>
                 </section>
             </div>
+
+            <AcquisitionSection acquisition={acquisition} />
 
             <section aria-label="Tendances sur 12 mois" className="space-y-6">
                 <SectionTitle>Tendances — 12 derniers mois</SectionTitle>
@@ -585,6 +768,21 @@ function AnalyticsContent({ data }: { data: AnalyticsData }) {
                         valueLabel="Missions publiées"
                     />
                 </div>
+                {seoSessionsSeries && (
+                    <div className="bg-white border border-slate-200 rounded-xl p-5">
+                        <div className="flex items-start justify-between gap-2 mb-4">
+                            <h3 className="text-sm font-semibold text-slate-900">Sessions SEO par mois</h3>
+                            <span className="shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500">
+                                PostHog
+                            </span>
+                        </div>
+                        <LineChart
+                            data={seoSessionsSeries}
+                            ariaLabel="Courbe des sessions sur les pages SEO par mois sur 12 mois"
+                            valueLabel="Sessions SEO"
+                        />
+                    </div>
+                )}
             </section>
 
             <section aria-label="Engagement" className="border-t border-slate-200 pt-4">
@@ -623,7 +821,7 @@ export default async function AdminAnalyticsPage({
 
     const sp = await searchParams
     const range: AnalyticsRange = isAnalyticsRange(sp.range) ? sp.range : '30d'
-    const data = await fetchAnalytics(range)
+    const [data, acquisition] = await Promise.all([fetchAnalytics(range), fetchAcquisition(range)])
     const periodLabel = RANGE_OPTIONS.find(o => o.value === range)?.periodLabel ?? ''
 
     return (
@@ -637,7 +835,7 @@ export default async function AdminAnalyticsPage({
                 </div>
                 <RangeSelector active={range} />
             </header>
-            {data ? <AnalyticsContent data={data} /> : <MigrationNotice />}
+            {data ? <AnalyticsContent data={data} acquisition={acquisition} /> : <MigrationNotice />}
         </div>
     )
 }

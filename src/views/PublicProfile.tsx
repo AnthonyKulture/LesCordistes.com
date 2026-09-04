@@ -13,6 +13,7 @@ import { Button } from '../components/ui/Button';
 import { useAuth } from '../contexts/AuthContext';
 import { useStartConversation } from '../hooks/useStartConversation';
 import type { Profile, Review } from '../types';
+import { track } from '../lib/posthog-client';
 
 interface PublicProfileProps {
     initialPro?: Profile | null;
@@ -275,6 +276,7 @@ export const PublicProfile: React.FC<PublicProfileProps> = ({ initialPro }) => {
                                     {pro.phone && (
                                         <a
                                             href={`tel:${pro.phone}`}
+                                            onClick={() => track('pro_profile_contact_click', { pro_id: pro.id, viewer_role: profile?.role ?? 'client', channel: 'tel' })}
                                             className="flex items-center gap-2 w-full px-4 py-2.5 bg-brand-blue text-white rounded-lg font-medium text-sm hover:bg-brand-blue/90 transition-colors"
                                         >
                                             <Phone size={16} />
@@ -284,6 +286,7 @@ export const PublicProfile: React.FC<PublicProfileProps> = ({ initialPro }) => {
                                     {pro.email && (
                                         <a
                                             href={`mailto:${pro.email}`}
+                                            onClick={() => track('pro_profile_contact_click', { pro_id: pro.id, viewer_role: profile?.role ?? 'client', channel: 'mail' })}
                                             className="flex items-center gap-2 w-full px-4 py-2.5 border border-slate-200 text-slate-700 rounded-lg font-medium text-sm hover:bg-slate-50 transition-colors"
                                         >
                                             <Mail size={16} />

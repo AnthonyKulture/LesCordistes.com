@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, MessageSquare, PhoneCall, CheckCircle2, Mail, Phone, Send } from 'lucide-react'
 import { CATEGORY_LABELS } from '@/constants/categories'
+import { track } from '@/lib/posthog-client'
 
 type CardId = 'wizard' | 'message' | 'callback'
 
@@ -39,14 +40,20 @@ export function ContactPathPicker({ onWizardSelected }: Props) {
             {/* 3 cartes minimales — empilées compactes sur mobile, colonnes sur desktop */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-4">
                 <Card
-                    onClick={() => onWizardSelected()}
+                    onClick={() => {
+                        track('wizard_path_chosen', { path: 'project' })
+                        onWizardSelected()
+                    }}
                     icon={<FileText className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.7} />}
                     title="Publier mon projet"
                     duration="5 min"
                     accent="blue"
                 />
                 <Card
-                    onClick={() => setActive(active === 'message' ? null : 'message')}
+                    onClick={() => {
+                        if (active !== 'message') track('wizard_path_chosen', { path: 'quick' })
+                        setActive(active === 'message' ? null : 'message')
+                    }}
                     selected={active === 'message'}
                     icon={<MessageSquare className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.7} />}
                     title="Message rapide"
@@ -54,7 +61,10 @@ export function ContactPathPicker({ onWizardSelected }: Props) {
                     accent="emerald"
                 />
                 <Card
-                    onClick={() => setActive(active === 'callback' ? null : 'callback')}
+                    onClick={() => {
+                        if (active !== 'callback') track('wizard_path_chosen', { path: 'callback' })
+                        setActive(active === 'callback' ? null : 'callback')
+                    }}
                     selected={active === 'callback'}
                     icon={<PhoneCall className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={1.7} />}
                     title="Être recontacté"

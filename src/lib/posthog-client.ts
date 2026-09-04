@@ -47,6 +47,15 @@ export async function optOutPostHog(): Promise<void> {
   posthog.opt_out_capturing()
 }
 
+export function track(event: string, properties?: Record<string, unknown>): void {
+  if (!initPromise) return
+  void initPromise.then(async () => {
+    if (!initialized) return
+    const { default: posthog } = await import('posthog-js')
+    posthog.capture(event, properties)
+  })
+}
+
 export function isPostHogInitialized() {
   return initialized
 }

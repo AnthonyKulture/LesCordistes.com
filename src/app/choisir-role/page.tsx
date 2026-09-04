@@ -6,6 +6,7 @@ import { Building2, HardHat } from 'lucide-react'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
 import { useAuth } from '@/contexts/AuthContext'
 import { AuthLayout } from '@/components/layout/AuthLayout'
+import { track } from '@/lib/posthog-client'
 
 export default function ChoisirRolePage() {
     const { user, profile, loading, refreshProfile } = useAuth()
@@ -28,6 +29,7 @@ export default function ChoisirRolePage() {
             const supabase = createSupabaseBrowserClient()
             await (supabase.from('profiles') as any).update({ role }).eq('id', user.id)
             await refreshProfile()
+            track('user_signed_up', { role, method: 'oauth' })
             // Welcome email envoyé par le trigger SQL handle_new_user_update
             // (OLD.full_name vide → NEW.full_name renseigné). Ne pas dupliquer.
             router.replace(role === 'pro' ? '/dashboard/pro?welcome=pro' : '/dashboard/client?welcome=client')

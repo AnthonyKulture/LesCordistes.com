@@ -6,6 +6,7 @@ import { Button } from './ui/Button';
 import { supabase } from '../lib/supabase';
 import { useToast } from './ui/Toast';
 import { useQueryClient } from '@tanstack/react-query';
+import { track } from '@/lib/posthog-client';
 
 interface RoleSelectionModalProps {
     userId: string;
@@ -41,6 +42,7 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({ userId, 
             // (déclenché par OLD.full_name vide → NEW.full_name renseigné).
             // Ne pas dupliquer ici.
             queryClient.invalidateQueries({ queryKey: ['profile'] });
+            track('user_signed_up', { role: selected, method: 'oauth' });
             toast.success(`Compte ${selected === 'pro' ? 'professionnel' : 'client'} activé !`);
             onComplete();
         } catch (err) {

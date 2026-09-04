@@ -231,3 +231,65 @@ export type AnalyticsData = {
 }
 
 export type AnalyticsRange = '30d' | '90d' | '12m'
+
+// Acquisition — lecture PostHog (HogQL) côté serveur, cf. src/lib/ops/fetchAcquisition.ts.
+// Les entonnoirs comptent des personnes distinctes par étape sur la période,
+// SANS contrainte d'ordre entre les étapes : ce ne sont pas des cohortes.
+
+export type AcquisitionPageType =
+  | 'ville_service'
+  | 'ville'
+  | 'blog'
+  | 'board'
+  | 'mission'
+  | 'post_job'
+  | 'home'
+  | 'profil_pro'
+  | 'credits'
+  | 'admin'
+  | 'autre'
+
+export type AcquisitionTraffic = {
+  page_type: AcquisitionPageType
+  pageviews: number
+  sessions: number
+  visitors: number
+}
+
+// Index 0 = étape 1 … index 4 = étape 5.
+export type AcquisitionFunnelSteps = [number, number, number, number, number]
+
+export type AcquisitionDemandFunnel = {
+  seo_visitors: number
+  post_job_visitors: number
+  path_chosen: number
+  path_by_kind: { project: number; quick: number; callback: number }
+  wizard_entered: number
+  steps: AcquisitionFunnelSteps
+  job_posted: number
+}
+
+export type AcquisitionSupplyFunnel = {
+  pro_signups: number
+  job_detail_views: number
+  unlock_blocked: number
+  credits_page_views: number
+  checkout_initiated: number
+  credits_purchased: number
+  lead_unlocked: number
+}
+
+export type AcquisitionMonthPoint = {
+  month: string
+  seo_sessions: number
+  jobs_posted: number
+  leads_unlocked: number
+}
+
+export type AcquisitionData = {
+  range: AnalyticsRange
+  traffic: AcquisitionTraffic[]
+  demand: AcquisitionDemandFunnel
+  supply: AcquisitionSupplyFunnel
+  series: AcquisitionMonthPoint[]
+}

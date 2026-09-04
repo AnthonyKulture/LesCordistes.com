@@ -6,6 +6,7 @@ import { useCredits } from '../../hooks/useCredits';
 import { CreditPurchaseModal } from '../credits/CreditWidget';
 import type { Job } from '../../types';
 import posthog from 'posthog-js';
+import { track } from '../../lib/posthog-client';
 
 interface UnlockLeadButtonProps {
     job: Job;
@@ -17,7 +18,7 @@ interface UnlockLeadButtonProps {
 import { motion } from 'framer-motion';
 
 export const UnlockLeadButton: React.FC<UnlockLeadButtonProps> = ({ job, onUnlocked, onSuccess, label }) => {
-    const { balance, isJobUnlocked, unlockLead } = useCredits();
+    const { balance, isLoading, isJobUnlocked, unlockLead } = useCredits();
     const [showBuyModal, setShowBuyModal] = useState(false);
     const [error, setError] = useState('');
 
@@ -48,8 +49,10 @@ export const UnlockLeadButton: React.FC<UnlockLeadButtonProps> = ({ job, onUnloc
 
     const handleUnlock = async () => {
         setError('');
+        if (isLoading) return;
         const cost = job.credit_cost || 1;
         if (balance < cost) {
+            track('unlock_blocked_no_credit', { job_id: job.id, credit_cost: cost, balance });
             setShowBuyModal(true);
             return;
         }
@@ -65,7 +68,7 @@ export const UnlockLeadButton: React.FC<UnlockLeadButtonProps> = ({ job, onUnloc
     return (
         <>
             <div className="w-full">
-                {balance === 0 ? (
+                {!isLoading && balance === 0 ? (
                     <div className="space-y-3">
                         <div className="flex items-center gap-2 p-3 bg-amber-50 rounded-xl border border-amber-100">
                             <Coins size={16} className="text-amber-600 shrink-0" />
@@ -76,7 +79,10 @@ export const UnlockLeadButton: React.FC<UnlockLeadButtonProps> = ({ job, onUnloc
                         <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            onClick={() => setShowBuyModal(true)}
+                            onClick={() => {
+                                track('unlock_blocked_no_credit', { job_id: job.id, credit_cost: job.credit_cost || 1, balance });
+                                setShowBuyModal(true);
+                            }}
                             className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-yellow-500/20 hover:shadow-yellow-500/40 transition-all uppercase tracking-wide"
                         >
                             <Coins size={16} /> Acheter des crédits
@@ -85,7 +91,7 @@ export const UnlockLeadButton: React.FC<UnlockLeadButtonProps> = ({ job, onUnloc
                 ) : (
                     <button
                         onClick={handleUnlock}
-                        disabled={unlockLead.isPending}
+                        disabled={unlockLead.isPending || isLoading}
                         className="w-full flex items-center justify-between px-4 py-2 bg-orange-500 text-white rounded-lg shadow-sm hover:bg-orange-600 transition-all disabled:opacity-60 group font-medium"
                     >
                         {unlockLead.isPending ? (

@@ -21,6 +21,7 @@ import { saveJobDraft, loadJobDraft, clearJobDraft } from '../lib/storage';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { JobFormData } from '../types';
 import posthog from 'posthog-js';
+import { track } from '../lib/posthog-client';
 
 export const PostJob: React.FC = () => {
     const router = useRouter();
@@ -36,6 +37,9 @@ export const PostJob: React.FC = () => {
     const [wizardActive, setWizardActive] = useState(false);
     const exitFired = useRef(false);
     const formDataRef = useRef(formData);
+    const wizardSourceRef = useRef<'seo_prefill' | 'direct' | 'resume'>('direct');
+    const prefilledRef = useRef(false);
+    const lastStepViewRef = useRef<string | null>(null);
 
     const isRenfort = formData.type === 'renfort_pro';
     const totalSteps = isRenfort ? 7 : 5;
@@ -93,12 +97,17 @@ export const PostJob: React.FC = () => {
         const draft = loadJobDraft();
         const savedStep = localStorage.getItem('lescordistes_postjob_step');
 
+        // Un brouillon ne vaut « reprise » que s'il contient une saisie : l'effet de
+        // montage persiste { type: 'standard' } dès la première visite.
+        const hasDraftData = !!draft && Object.keys(draft).some((k) => k !== 'type');
         if (draft) {
             setFormData(draft);
-            // Si on a déjà entamé le wizard, on le ré-affiche directement
-            if (Object.keys(draft).length > 0) setWizardActive(true);
+            if (hasDraftData) setWizardActive(true);
         }
         if (savedStep && parseInt(savedStep, 10) > 1) setWizardActive(true);
+        if (hasDraftData || (savedStep && parseInt(savedStep, 10) > 1)) {
+            wizardSourceRef.current = 'resume';
+        }
         // Utilisateur connecté : on présume qu'il sait ce qu'il fait, pas besoin de cacher le wizard
         if (authUser) setWizardActive(true);
 
@@ -142,6 +151,7 @@ export const PostJob: React.FC = () => {
         const prefillEmail = params.get('prefill_email');
         const prefillCategory = params.get('prefill_category');
         if (prefillCity && prefillEmail && prefillCategory) {
+            prefilledRef.current = true;
             const validCategories = ['cleaning', 'construction', 'masonry', 'painting', 'industry', 'event', 'securing', 'telecom', 'inspection', 'repair', 'pruning', 'other'] as const;
             const cat = validCategories.includes(prefillCategory as any) ? (prefillCategory as JobFormData['category']) : 'other';
             updateFormData({
@@ -152,6 +162,7 @@ export const PostJob: React.FC = () => {
             // Standard wizard: step 2 = Détails. On y envoie le user.
             setCurrentStep(2);
             setWizardActive(true);
+            wizardSourceRef.current = 'seo_prefill';
         }
     }, []);
 
@@ -160,6 +171,24 @@ export const PostJob: React.FC = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
         localStorage.setItem('lescordistes_postjob_step', currentStep.toString());
     }, [currentStep]);
+
+    useEffect(() => {
+        if (!wizardActive) {
+            lastStepViewRef.current = null;
+            return;
+        }
+        const jobType = isRenfort ? 'renfort_pro' : 'standard';
+        const key = `${jobType}:${currentStep}`;
+        if (lastStepViewRef.current === key) return;
+        lastStepViewRef.current = key;
+        track('wizard_step_view', {
+            step: currentStep,
+            total_steps: totalSteps,
+            job_type: jobType,
+            source: wizardSourceRef.current,
+            prefilled: prefilledRef.current,
+        });
+    }, [currentStep, wizardActive, isRenfort, totalSteps]);
 
     // Save draft on change
     useEffect(() => {
